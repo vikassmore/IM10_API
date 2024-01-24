@@ -20,8 +20,8 @@ namespace IM10.Models
     {
         public long CommentId { get; set; }
         public long ContentId { get; set; }
-        public long PlayerId { get; set; }
-        public string? Comment { get; set; }
+        public int ContentTypeId { get; set; }
+        public string? title { get; set; }
         public string Message { get; set; }
 
     }

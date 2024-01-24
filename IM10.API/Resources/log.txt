@@ -273,3 +273,326 @@ Log Entry : 11:58:18 24 January 2024
   :
   :NotRegistered
 -------------------------------
+
+Log Entry : 15:36:06 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:38:02 24 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:38:14 24 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:38:28 24 January 2024
+  :
+  :InvalidRegistration
+-------------------------------
+
+Log Entry : 15:38:35 24 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:38:42 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:38:49 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:39:07 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:40:12 24 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:40:16 24 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:40:25 24 January 2024
+  :
+  :InvalidRegistration
+-------------------------------
+
+Log Entry : 15:40:32 24 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:40:37 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:40:42 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:40:49 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:46:52 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:47:02 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:50:16 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:50:16 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:50:27 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:50:27 24 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 15:50:27 24 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 15:50:27 24 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 15:50:27 24 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 74
+-------------------------------
+
+Log Entry : 15:50:42 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:50:42 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:51:45 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:51:45 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:52:03 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:52:03 24 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 15:52:03 24 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 15:52:03 24 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 15:52:03 24 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 74
+-------------------------------
+
+Log Entry : 15:54:06 24 January 2024
+  :
+  :InvalidRegistration
+-------------------------------
+
+Log Entry : 15:55:28 24 January 2024
+  :
+  :InvalidRegistration
+-------------------------------
+
+Log Entry : 15:57:18 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:57:45 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:03:26 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:08:13 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:13:18 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:21:19 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:21:19 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:21:19 24 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:21:19 24 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 16:21:19 24 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:21:19 24 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 74
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:28:38 24 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 74
+-------------------------------
+
+Log Entry : 16:34:40 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:34:40 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:34:40 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 16:34:40 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 17:00:21 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 17:00:22 24 January 2024
+  :
+  :Notification sent successfully
+-------------------------------

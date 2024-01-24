@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static IM10.Models.FirebaseModel;
 using static IM10.Models.FirebaseModel.GoogleNotification;
+using static IM10.Models.FirebaseModel.GoogleNotification1;
 
 namespace IM10.BAL.Implementaion
 {
@@ -179,23 +180,23 @@ namespace IM10.BAL.Implementaion
                     httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorizationKey);
                     httpClient.DefaultRequestHeaders.Accept
                             .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    DataPayload dataPayload = new DataPayload();
+                    DataPayload1 dataPayload1 = new DataPayload1();
                     //dataPayload.PlayerId = playerId;
-                    dataPayload.contentId = contentId;
-                    dataPayload.commentId = commentId;
-                    dataPayload.Message = message;
-                    GoogleNotification notification = new GoogleNotification();
-                    notification.Data = dataPayload;
-                    notification.Notification = dataPayload;
+                    dataPayload1.contentId = contentId;
+                    dataPayload1.commentId = commentId;
+                    dataPayload1.Title = message;
+                    GoogleNotification1 notification1 = new GoogleNotification1();
+                    notification1.Data1 = dataPayload1;
+                    notification1.Notification1 = dataPayload1;
 
                     var fcm = new FcmSender(settings, httpClient);
-                    var fcmSendResponse = await fcm.SendAsync(deviceToken, notification);
+                    var fcmSendResponse = await fcm.SendAsync(deviceToken, notification1);
 
                     if (fcmSendResponse.IsSuccess())
                     {
                         response.IsSuccess = true;
                         response.Message = "Notification sent successfully";
-                        notification.Data = dataPayload;
+                        notification1.Data1 = dataPayload1;
                         var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
                         pathToSave1 = pathToSave1 + "\\";
                         using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))

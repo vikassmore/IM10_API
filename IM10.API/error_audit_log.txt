@@ -1,0 +1,26 @@
+LogId: 2
+LogType: abc
+StackTrace: abc
+AdditionalInformation: Not working properly
+CreatedDate: 12-06-2023 16:26:38
+LogSource: 
+UserId: 46
+LogMessage: Not working
+FirstName: Mobile
+LastName: User
+FullName: Mobile User
+EmailId: enduser@gmail.com
+----------------------------------------
+LogId: 1
+LogType: abc
+StackTrace: abc
+AdditionalInformation: Not working properly
+CreatedDate: 12-06-2023 16:26:38
+LogSource: 
+UserId: 46
+LogMessage: Not working
+FirstName: Mobile
+LastName: User
+FullName: Mobile User
+EmailId: enduser@gmail.com
+----------------------------------------

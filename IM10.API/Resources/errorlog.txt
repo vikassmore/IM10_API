@@ -1,0 +1,7 @@
+
+Error Log Entry : 17:56:50 03 January 2024
+  :
+  :Message: Object reference not set to an instance of an object.
+ stacktrace:    at IM10.BAL.Implementaion.ContentCommentService.AddContentCommentReply(ContentCommentModel model, ErrorResponseModel& errorResponseModel) in D:\IM10-API\IM10.BAL\Implementaion\ContentCommentService.cs:line 45
+   at IM10.API.Controllers.ContentCommentController.AddContentCommentReply(ContentCommentModel model) in D:\IM10-API\IM10.API\Controllers\ContentCommentController.cs:line 133
+-------------------------------

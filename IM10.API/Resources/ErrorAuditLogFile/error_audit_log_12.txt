@@ -1,0 +1,12 @@
+Log ID: 12
+Log Type: abc
+Created Date: 22-06-2023 10:20:56
+
+User ID: 46
+Email ID: enduser@gmail.com
+Full Name: Mobile User
+
+Stack Trace: Not working properly
+Log Source: 46
+Error: Not working
+Description: not available

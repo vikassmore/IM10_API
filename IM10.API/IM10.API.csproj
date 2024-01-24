@@ -1,0 +1,279 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Resourse\**" />
+    <Content Remove="Resourse\**" />
+    <EmbeddedResource Remove="Resourse\**" />
+    <None Remove="Resourse\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CorePush" Version="3.0.12" />
+    <PackageReference Include="FirebaseAdmin" Version="2.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IM10.BAL\IM10.BAL.csproj" />
+    <ProjectReference Include="..\IM10.Common\IM10.Common.csproj" />
+    <ProjectReference Include="..\IM10.Entity\IM10.Entity.csproj" />
+    <ProjectReference Include="..\IM10.Models\IM10.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\AdvtContentFile\" />
+    <Folder Include="Resources\CompanyLogoFile\" />
+    <Folder Include="Resources\ContentFile\thumbnail\" />
+    <Folder Include="Resources\ErrorAuditLogFile\" />
+    <Folder Include="Resources\PlayerDataDetails\" />
+    <Folder Include="Resources\ScreenShotFile\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\AdvContentFile\0acd5fd3-7181-44ce-b8b9-9ad256b8bdbf.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvContentFile\555077ea-625d-4bfb-814c-db6804709d64.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvContentFile\6ba585d6-1f34-4bf2-9595-913dd7d4fc92.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvContentFile\download %282%29.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvContentFile\pexels-bahadur-nirankari-11755921-4096x2160-60fps.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvContentFile\tufan.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvContentFile\tufanInsta.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvtContentFile\VID-20230508-WA0000.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvtContentFile\VID-20230508-WA0001.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvtContentFile\VID-20230508-WA0004.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvtContentFile\VID-20230508-WA0010.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\AdvtContentFile\VID-20230508-WA0011.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\CompanyLogoFile\download.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\04dfbd7f-88ea-48be-8298-d882daf2b3db.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\0612a8f4-c2ed-4074-848f-94f289584b76.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\73db6126-534d-47d6-8d0c-391a353e179a.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\7e5d9be5-010c-4609-b162-ddc934caacb7.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\be72c6d7-00d3-460b-88db-af7a55a91d24.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\d35bf3e0-ad19-4eee-95d6-beb7b37c04bf.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\dfcac0d1-5650-4b0e-aa73-d1c252ed6b6c.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\download2.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\e83a9489-98ea-4dec-b9ca-bbc5b3442a92.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\pexels-bahadur-nirankari-11755921-4096x2160-60fps.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\Snapinsta.app_video_301261917_159696979983921_298683708922067512_n.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\tufanInsta.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ErrorAuditLogFile\error_audit_log_1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\08076526-676e-4b37-b0ce-e9a54dc7b5df.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\104970a7-48db-4098-a07a-51c444b3aa72.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\11daffb0-5cd1-49df-bfcd-e48d60d14258.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\1afc1fde-a7b1-4ee8-a372-f32fa191170e.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\3cda303c-2fe0-4c06-9272-95b91e90f002.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\40cd9154-18e6-4575-961a-3a71c923490f.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\4fdeec11-2743-4bc1-8cff-504541effef9.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\543aa65b-8dbc-4533-a520-2b5c941f8dba.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\75a526f0-6d50-4850-8822-278b2c9e80b6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\7a2b5bc8-a160-4f7e-8ce7-23779a4e0e9a.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\8bdd75fc-8866-42e4-989a-8002aa998c98.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\9e033b29-e6d4-46f5-87d3-e017a170b628.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\aa839fe3-477d-4c63-a5ba-aabf8713822a.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\AadharCardImage\aadhar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\devikavaidya.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\divyanghingnekar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\ac3096df-056f-4ed9-9c5e-f4b67eabd63e.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\b1ef9618-1ec8-45eb-94b7-0ef9cdf6150c.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\b895b6d9-623a-4c63-9ad9-ec77185798b4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\c1033037-b01f-4399-b0ba-28230501357f.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\c3ea6538-37db-4afc-8493-52df8065b459.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\cef17bbe-ccd0-43ca-9ad9-21598eebb50b.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\DrivingLicenseImage\license.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\kedarjadhav.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\e8287bde-0067-4012-bedc-e98bca565898.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\f1ac8205-b047-42ae-858b-6793f62a1ccb.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\f271f2a4-c78c-4771-94fa-a4270a0b44d3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\f9971555-378c-417f-8004-fc4d4f521f64.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\kedarjadhav.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PanCardImage\pan.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\devikavaidya.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\divyanghingnekar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\kedarjadhav.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\rahultripathi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\rushabhrathod.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\rutujabhosle.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\ruturajgaikwad.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\smritimandhana.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\swapnilgugale.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\PlayerProfileImage\yashnahar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\rahultripathi.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\rushabhrathod.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\rutujabhosle.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\ruturajgaikwad.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\smritimandhana.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\swapnilgugale.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDocumentDetails\VotingCardImage\voting.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\PlayerDetails\yashnahar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ScreenShotFile\109dc3dd-beba-4cb1-94d3-ae92d78e9711.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ScreenShotFile\c09823e4-b2f1-4256-9b8f-1e036def6f7e.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ScreenShotFile\ScreenShot_20230306171455.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

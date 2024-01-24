@@ -1,0 +1,59 @@
+﻿using IM10.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IM10.BAL.Interface
+{
+    /// <summary>
+    /// Interface used for Auth related operations
+    /// </summary>
+    public interface IAuthService
+    {
+
+        /// <summary>
+        /// This method is used to validate user credentials
+        /// </summary>
+        /// <param name="emailId"></param>
+        /// <param name="password"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        AuthModel AuthenticateUser(string emailId, string password, ref ErrorResponseModel errorResponseModel);
+
+        /// <summary>
+        /// This method is used to validate user credentials
+        /// </summary>
+        /// <param name="emailId"></param>
+        /// <param name="password"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        AuthModel AuthenticationForMobile(MobileLoginModel loginModel, ref ErrorResponseModel errorResponseModel);
+
+        /// <summary>
+        /// Create OTP
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        string CreateNewOTP(long userId);
+
+        /// <summary>
+        /// OTP verify
+        /// </summary>
+        /// <param name="otp"></param>
+        /// <param name="userId"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        AuthModel OTPVerify(string otp, int userId, ref ErrorResponseModel errorResponseModel);
+
+        /// <summary>
+        /// Get Mobile User Profile
+        /// </summary>
+        /// <param name="otp"></param>
+        /// <param name="userId"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        AuthModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel);
+    }
+}

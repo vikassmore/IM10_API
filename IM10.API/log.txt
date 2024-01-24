@@ -1,0 +1,75 @@
+
+Log Entry : 10:08:58 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 10:08:58 16 June 2023
+  :
+  :Unable to read data from the transport connection: An established connection was aborted by the software in your host machine..
+-------------------------------
+
+Log Entry : 10:27:24 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 10:27:24 16 June 2023
+  :
+  :Unable to read data from the transport connection: An established connection was aborted by the software in your host machine..
+-------------------------------
+
+Log Entry : 10:53:55 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 10:53:55 16 June 2023
+  :
+  : Received an unexpected EOF or 0 bytes from the transport stream.
+-------------------------------
+
+Log Entry : 11:14:30 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 11:14:30 16 June 2023
+  :
+  :Unable to write data to the transport connection: An established connection was aborted by the software in your host machine..
+-------------------------------
+
+Log Entry : 11:43:06 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 11:43:06 16 June 2023
+  :
+  : Received an unexpected EOF or 0 bytes from the transport stream.
+-------------------------------
+
+Log Entry : 12:01:18 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 12:01:18 16 June 2023
+  :
+  :Unable to read data from the transport connection: An established connection was aborted by the software in your host machine..
+-------------------------------
+
+Log Entry : 12:21:33 16 June 2023
+  :
+  :Failure sending mail.
+-------------------------------
+
+Log Entry : 12:21:33 16 June 2023
+  :
+  :Unable to read data from the transport connection: The connection was closed.
+-------------------------------
+
+Log Entry : 15:03:11 12 October 2023
+  :
+  :The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
+-------------------------------

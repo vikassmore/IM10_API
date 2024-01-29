@@ -11,14 +11,13 @@ using System.Text;
 using System.Threading.Tasks;
 using static IM10.Models.FirebaseModel;
 using static IM10.Models.FirebaseModel.GoogleNotification;
-using static IM10.Models.FirebaseModel.GoogleNotification1;
 
 namespace IM10.BAL.Implementaion
 {
     public interface INotificationService
     {
-        Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice);
-        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice);
+        Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId,string thumbnail);
+        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId);
 
     }
     public class NotificationService : INotificationService
@@ -34,8 +33,9 @@ namespace IM10.BAL.Implementaion
             _context = dbContext;
         }
 
-        public async Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice)
+        public async Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail)
         {
+
             ResponseModel response = new ResponseModel();
             try
             {
@@ -56,8 +56,10 @@ namespace IM10.BAL.Implementaion
                     DataPayload dataPayload = new DataPayload();
                     dataPayload.PlayerId = playerId;
                     dataPayload.contentId = contentId;
+                    dataPayload.ContentTypeId = contentTypeId;
                     dataPayload.Title = title;
                     dataPayload.Description = description;
+                    dataPayload.Thumbnail = thumbnail;
                     GoogleNotification notification = new GoogleNotification();
                     notification.Data = dataPayload;
                     notification.Notification = dataPayload;
@@ -161,7 +163,7 @@ namespace IM10.BAL.Implementaion
             }
         }
 
-        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice)
+        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId)
         {
             ResponseModel response = new ResponseModel();
             try
@@ -180,14 +182,16 @@ namespace IM10.BAL.Implementaion
                     httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorizationKey);
                     httpClient.DefaultRequestHeaders.Accept
                             .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    DataPayload1 dataPayload1 = new DataPayload1();
+                    DataPayload dataPayload1 = new DataPayload();
                     //dataPayload.PlayerId = playerId;
                     dataPayload1.contentId = contentId;
                     dataPayload1.commentId = commentId;
-                    dataPayload1.Title = message;
-                    GoogleNotification1 notification1 = new GoogleNotification1();
-                    notification1.Data1 = dataPayload1;
-                    notification1.Notification1 = dataPayload1;
+                    dataPayload1.Message = message;
+                    dataPayload1.Title = "New Comment Arrived!";
+                    dataPayload1.ContentTypeId= contentTypeId;
+                    GoogleNotification notification1 = new GoogleNotification();
+                    notification1.Data = dataPayload1;
+                    notification1.Notification = dataPayload1;
 
                     var fcm = new FcmSender(settings, httpClient);
                     var fcmSendResponse = await fcm.SendAsync(deviceToken, notification1);
@@ -196,7 +200,7 @@ namespace IM10.BAL.Implementaion
                     {
                         response.IsSuccess = true;
                         response.Message = "Notification sent successfully";
-                        notification1.Data1 = dataPayload1;
+                        notification1.Data = dataPayload1;
                         var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
                         pathToSave1 = pathToSave1 + "\\";
                         using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))

@@ -596,3 +596,384 @@ Log Entry : 17:00:22 24 January 2024
   :
   :Notification sent successfully
 -------------------------------
+
+Log Entry : 11:27:17 29 January 2024
+  :
+  :InvalidRegistration
+-------------------------------
+
+Log Entry : 11:35:53 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 11:41:13 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:01:02 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:07:52 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:14:47 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 12:23:11 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 75
+-------------------------------
+
+Log Entry : 12:55:33 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 12:57:43 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 77
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 13:00:49 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 77
+-------------------------------
+
+Log Entry : 14:30:22 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 14:30:22 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 14:30:22 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 14:30:22 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 14:30:22 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 93
+-------------------------------
+
+Log Entry : 14:43:34 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 14:45:47 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 14:45:48 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 14:45:48 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 14:45:48 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 14:45:48 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 14:45:48 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 93
+-------------------------------
+
+Log Entry : 16:07:53 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 16:07:54 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:07:54 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 16:07:54 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:07:54 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 93
+-------------------------------
+
+Log Entry : 16:08:46 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 16:08:46 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 16:08:46 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 16:08:46 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 16:08:47 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:08:47 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 16:08:47 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:08:47 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail)
+-------------------------------
+
+Log Entry : 16:09:30 29 January 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 16:09:31 29 January 2024
+  :
+  :Failed to send notification: Error: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:09:31 29 January 2024
+  :
+  :Exception Type: System.IO.IOException
+-------------------------------
+
+Log Entry : 16:09:31 29 January 2024
+  :
+  :Exception Message: The process cannot access the file 'D:\IM10NewRepository\IM10.API\Resources\log.txt' because it is being used by another process.
+-------------------------------
+
+Log Entry : 16:09:31 29 January 2024
+  :
+  :Stack Trace:    at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategy(FileStream fileStream, String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.File.AppendText(String path)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Boolean IsAndroidDevice, Int32 contentTypeId, String thumbnail) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 93
+-------------------------------

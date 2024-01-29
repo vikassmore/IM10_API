@@ -598,10 +598,13 @@ namespace IM10.BAL.Implementaion
                 message.ContentId=contentId;
                 message.ContentTypeId = userplayerEntity.ContentTypeId;
                 message.Message= GlobalConstants.ApprovedSuccessfully;
+                message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(userplayerEntity.ContentFilePath) ? userplayerEntity.ContentFilePath : userplayerEntity.ContentFilePath));
+               // imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+
                 var existing = context.Fcmnotifications.Where(x => x.PlayerId == userplayerEntity.PlayerId).ToList();
                 foreach(var item in existing)
                 {
-                    _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true);
+                    _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true,message.ContentTypeId,message.Thumbnail);
                 }
             }
             var userAuditLog = new UserAuditLogModel();

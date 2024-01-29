@@ -3,6 +3,7 @@ using IM10.Common;
 using IM10.Entity.DataModels;
 using IM10.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -38,7 +39,6 @@ namespace IM10.BAL.Implementaion
             _configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
             _notificationService = notificationService;
-
         }  
 
         /// <summary>
@@ -66,7 +66,10 @@ namespace IM10.BAL.Implementaion
                 contentEntity.IsDeleted = false;
                 context.AdvContentMappings.Add(contentEntity);
                 context.SaveChanges();
+
                 var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentEntity.ContentId);
+                var thumbnailUrl = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(existingcontentEntity.ContentFilePath) ? existingcontentEntity.ContentFilePath : existingcontentEntity.ContentFilePath);
+
                 if (existingcontentEntity != null)
                 {
                     message.PlayerId = existingcontentEntity.PlayerId;
@@ -74,11 +77,12 @@ namespace IM10.BAL.Implementaion
                     message.Title = existingcontentEntity.Title;
                     message.Description = existingcontentEntity.Description;
                     message.ContentTypeId = existingcontentEntity.ContentTypeId;
+                    message.Thumbnail = ThumbnailPath(thumbnailUrl);
                     message.Message = GlobalConstants.AdvContentMappingAddedSuccessfully;
                     var existing = context.Fcmnotifications.Where(x => x.PlayerId == existingcontentEntity.PlayerId).ToList();
                     foreach (var item in existing)
                     {
-                        _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true);
+                        _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true,message.ContentTypeId,message.Thumbnail);
                     }
                 }              
             }
@@ -128,7 +132,6 @@ namespace IM10.BAL.Implementaion
                 contentEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.AdvContentMappingDeleteSuccessfully;
-
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Advertise Content Details";
@@ -332,6 +335,24 @@ namespace IM10.BAL.Implementaion
 
             });
             return contentlist;
-        }      
+        }
+
+        private string ThumbnailPath(string filePath)
+        {
+            byte[]? ms = null;
+            string extension = "";
+            if (!String.IsNullOrWhiteSpace(filePath))
+            {
+                extension = Path.GetExtension(filePath);
+                if (!String.IsNullOrWhiteSpace(extension))
+                {
+                    filePath = filePath.Replace(extension, ".jpeg");
+                   // filePath = filePath.Replace("ContentFile/", "ContentFile/thumbnail/");
+                }
+            }
+
+            return filePath;
+        }
+
     }
 }

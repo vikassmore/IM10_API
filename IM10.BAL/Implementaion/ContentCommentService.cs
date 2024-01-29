@@ -78,7 +78,7 @@ namespace IM10.BAL.Implementaion
             message.CommentId = commentreply.CommentId;
             message.ContentTypeId= commentreply.ContentTypeId;
             message.Message = GlobalConstants.ReplySaveSuccessfully;
-            _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true);
+            _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true,message.ContentTypeId);
             
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add Content Comment Reply";

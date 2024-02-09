@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,71 +48,80 @@ namespace IM10.BAL.Implementaion
         /// <param name="model"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public NotificationModel AddAdvContentMapping(AdvContentMappingModel model, ref ErrorResponseModel errorResponseModel)
+        public async Task<NotificationModel> AddAdvContentMapping(AdvContentMappingModel model)
         {
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             NotificationModel message = new NotificationModel();
-
-            if (model.AdvContentMapId == 0)
+            try
             {
-                AdvContentMapping contentEntity = new AdvContentMapping();
-                contentEntity.AdvContentMapId = model.AdvContentMapId;
-                contentEntity.ContentId = model.ContentId;
-                contentEntity.AdvertiseContentId = model.AdvertiseContentId;
-                contentEntity.CategoryId = model.CategoryId;
-                contentEntity.SubCategoryId = model.SubCategoryId;
-                contentEntity.Position = model.Position;
-                contentEntity.CreatedBy = model.CreatedBy;
-                contentEntity.CreatedDate = DateTime.Now;
-                contentEntity.UpdatedDate = DateTime.Now;
-                contentEntity.IsDeleted = false;
-                context.AdvContentMappings.Add(contentEntity);
-                context.SaveChanges();
-
-                var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentEntity.ContentId);
-                var thumbnailUrl = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(existingcontentEntity.ContentFilePath) ? existingcontentEntity.ContentFilePath : existingcontentEntity.ContentFilePath);
-
-                if (existingcontentEntity != null)
+                if (model.AdvContentMapId == 0)
                 {
-                    message.PlayerId = existingcontentEntity.PlayerId;
-                    message.ContentId = contentEntity.ContentId;
-                    message.Title = existingcontentEntity.Title;
-                    message.Description = existingcontentEntity.Description;
-                    message.ContentTypeId = existingcontentEntity.ContentTypeId;
-                    message.Thumbnail = ThumbnailPath(thumbnailUrl);
-                    message.Message = GlobalConstants.AdvContentMappingAddedSuccessfully;
-                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == existingcontentEntity.PlayerId).ToList();
-                    foreach (var item in existing)
-                    {
-                        _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true,message.ContentTypeId,message.Thumbnail);
-                    }
-                }              
-            }
-            else
-            {
-                var contentlist = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == model.AdvContentMapId);
-                if (contentlist != null)
-                {
-                    contentlist.AdvContentMapId = model.AdvContentMapId;
-                    contentlist.ContentId = model.ContentId;
-                    contentlist.AdvertiseContentId = model.AdvertiseContentId;
-                    contentlist.CategoryId = model.CategoryId;
-                    contentlist.SubCategoryId = model.SubCategoryId;
-                    contentlist.Position = model.Position;
-                    contentlist.UpdatedBy = model.UpdatedBy;
-                    contentlist.UpdatedDate = DateTime.Now;
-                    contentlist.IsDeleted = false;
-                    context.AdvContentMappings.Update(contentlist);
+                    AdvContentMapping contentEntity = new AdvContentMapping();
+                    contentEntity.AdvContentMapId = model.AdvContentMapId;
+                    contentEntity.ContentId = model.ContentId;
+                    contentEntity.AdvertiseContentId = model.AdvertiseContentId;
+                    contentEntity.CategoryId = model.CategoryId;
+                    contentEntity.SubCategoryId = model.SubCategoryId;
+                    contentEntity.Position = model.Position;
+                    contentEntity.CreatedBy = model.CreatedBy;
+                    contentEntity.CreatedDate = DateTime.Now;
+                    contentEntity.UpdatedDate = DateTime.Now;
+                    contentEntity.IsDeleted = false;
+                    context.AdvContentMappings.Add(contentEntity);
                     context.SaveChanges();
-                    message.Message = GlobalConstants.AdvContentMappingUpdateSuccessfully;
+
+                    var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentEntity.ContentId);
+                    var thumbnailUrl = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(existingcontentEntity.ContentFilePath) ? existingcontentEntity.ContentFilePath : existingcontentEntity.ContentFilePath);
+
+                    if (existingcontentEntity != null)
+                    {
+                        message.PlayerId = existingcontentEntity.PlayerId;
+                        message.ContentId = contentEntity.ContentId;
+                        message.Title = existingcontentEntity.Title;
+                        message.Description = existingcontentEntity.Description;
+                        message.ContentTypeId = existingcontentEntity.ContentTypeId;
+                        message.Thumbnail = ThumbnailPath(thumbnailUrl);
+                        message.Message = GlobalConstants.AdvContentMappingAddedSuccessfully;
+                        var existing = context.Fcmnotifications.Where(x => x.PlayerId == existingcontentEntity.PlayerId).ToList();
+                        foreach (var item in existing)
+                        {
+                            await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail);
+                        }
+                    }
                 }
+                else
+                {
+                    var contentlist = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == model.AdvContentMapId);
+                    if (contentlist != null)
+                    {
+                        contentlist.AdvContentMapId = model.AdvContentMapId;
+                        contentlist.ContentId = model.ContentId;
+                        contentlist.AdvertiseContentId = model.AdvertiseContentId;
+                        contentlist.CategoryId = model.CategoryId;
+                        contentlist.SubCategoryId = model.SubCategoryId;
+                        contentlist.Position = model.Position;
+                        contentlist.UpdatedBy = model.UpdatedBy;
+                        contentlist.UpdatedDate = DateTime.Now;
+                        contentlist.IsDeleted = false;
+                        context.AdvContentMappings.Update(contentlist);
+                        context.SaveChanges();
+                        message.Message = GlobalConstants.AdvContentMappingUpdateSuccessfully;
+                    }
+                }
+                var userAuditLog = new UserAuditLogModel();
+                userAuditLog.Action = " Add Advertise Content mapping Details";
+                userAuditLog.Description = "Advertise Content mapping Details Added";
+                userAuditLog.UserId = (int)model.CreatedBy;
+                userAuditLog.CreatedBy = model.CreatedBy;
+                userAuditLog.CreatedDate = DateTime.Now;
+                _userAuditLogService.AddUserAuditLog(userAuditLog);
             }
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = " Add Advertise Content mapping Details";
-            userAuditLog.Description = "Advertise Content mapping Details Added";
-            userAuditLog.UserId = (int)model.CreatedBy;
-            userAuditLog.CreatedBy = model.CreatedBy;
-            userAuditLog.CreatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                message.Message = ex.Message;
+                return message;
+            }
             return message;
         }
 

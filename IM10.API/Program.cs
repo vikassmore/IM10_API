@@ -20,6 +20,8 @@ namespace IM10.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseIISIntegration();
+                    webBuilder.UseIIS();
                     webBuilder.UseStartup<Startup>();
                 });
     }

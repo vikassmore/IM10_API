@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Options;
+using Serilog;
 using StartUpX.Common;
 using System;
 using System.Collections.Generic;
@@ -583,37 +584,50 @@ namespace IM10.BAL.Implementaion
         /// <param name="contentId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public NotificationModel ApproveContentDetail(long contentId, ref ErrorResponseModel errorResponseModel)
+        public async Task<NotificationModel> ApproveContentDetail(long contentId)
         {
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             NotificationModel message = new NotificationModel();
-            
-            var userplayerEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
-            if (userplayerEntity != null)
+            try
             {
-                userplayerEntity.Approved = true;
-                context.SaveChanges();
-                message.PlayerId = userplayerEntity.PlayerId;
-                message.Title = userplayerEntity.Title;
-                message.Description = userplayerEntity.Description;
-                message.ContentId=contentId;
-                message.ContentTypeId = userplayerEntity.ContentTypeId;
-                message.Message= GlobalConstants.ApprovedSuccessfully;
-                message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(userplayerEntity.ContentFilePath) ? userplayerEntity.ContentFilePath : userplayerEntity.ContentFilePath));
-               // imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                var userplayerEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
 
-                var existing = context.Fcmnotifications.Where(x => x.PlayerId == userplayerEntity.PlayerId).ToList();
-                foreach(var item in existing)
+                if (userplayerEntity != null)
                 {
-                    _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true,message.ContentTypeId,message.Thumbnail);
+                    userplayerEntity.Approved = true;
+                    context.SaveChanges();
+                    message.PlayerId = userplayerEntity.PlayerId;
+                    message.Title = userplayerEntity.Title;
+                    message.Description = userplayerEntity.Description;
+                    message.ContentId = contentId;
+                    message.ContentTypeId = userplayerEntity.ContentTypeId;
+                    message.Message = GlobalConstants.ApprovedSuccessfully;
+                    message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(userplayerEntity.ContentFilePath) ? userplayerEntity.ContentFilePath : userplayerEntity.ContentFilePath));
+
+                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == userplayerEntity.PlayerId).ToList();
+
+                    foreach (var item in existing)
+                    {
+                        await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail);
+                    }
+
+                    var userAuditLog = new UserAuditLogModel();
+                    userAuditLog.Action = " Approve Content Details";
+                    userAuditLog.Description = "Content Details Approved";
+                    userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
+                    userAuditLog.UpdatedBy = userplayerEntity.UpdatedBy;
+                    userAuditLog.UpdatedDate = DateTime.Now;
+                    _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }
             }
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = " Approve Content Details";
-            userAuditLog.Description = "Content Details Approved";
-            userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
-            userAuditLog.UpdatedBy = userplayerEntity.UpdatedBy;
-            userAuditLog.UpdatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
+            catch (Exception ex)
+            {
+                // Handle the exception, log it, or take appropriate action
+                Console.WriteLine($"An error Message : {ex.Message}");
+                message.Message= ex.Message;
+                return message;
+            }
+
             return message;
         }
 

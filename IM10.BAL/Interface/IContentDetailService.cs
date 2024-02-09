@@ -76,7 +76,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        NotificationModel ApproveContentDetail(long contentId, ref ErrorResponseModel errorResponseModel);
+        Task <NotificationModel> ApproveContentDetail(long contentId);
 
 
 

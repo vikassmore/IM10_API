@@ -5,6 +5,7 @@ using IM10.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,45 +49,54 @@ namespace IM10.BAL.Implementaion
         {
             CommentNotificationModel message = new CommentNotificationModel();
             errorResponseModel = new ErrorResponseModel();
-            var commentEntity = context.Comments.Where(x => x.CommentId == model.CommentId).FirstOrDefault();
-            
-            var commentreply = new Comment();
-            commentreply.UserId = model.UserId;
-            commentreply.ContentId = commentEntity.ContentId;
-            commentreply.ContentTypeId = commentEntity.ContentTypeId;
-            commentreply.DeviceId =commentEntity.DeviceId;
-            commentreply.Liked = false;
-            commentreply.Location = "";
-            commentreply.Shared = false;
-            commentreply.IsDeleted = false;
-            commentreply.CreatedBy = model.CreatedBy;
-            commentreply.CreatedDate = DateTime.Now;
-            commentreply.Comment1 = model.Comment1;
-            commentreply.ParentCommentId = model.CommentId;
-            commentreply.IsPublic = model.IsPublic;
-            context.Comments.Add(commentreply);
-            context.SaveChanges();
-            var comment = context.Comments.FirstOrDefault(x => x.CommentId == model.CommentId);
-            if (comment != null)
+            try
             {
-                comment.IsPublic = model.IsPublic;
-                context.Comments.Update(comment);
+                var commentEntity = context.Comments.Where(x => x.CommentId == model.CommentId).FirstOrDefault();
+
+                var commentreply = new Comment();
+                commentreply.UserId = model.UserId;
+                commentreply.ContentId = commentEntity.ContentId;
+                commentreply.ContentTypeId = commentEntity.ContentTypeId;
+                commentreply.DeviceId = commentEntity.DeviceId;
+                commentreply.Liked = false;
+                commentreply.Location = "";
+                commentreply.Shared = false;
+                commentreply.IsDeleted = false;
+                commentreply.CreatedBy = model.CreatedBy;
+                commentreply.CreatedDate = DateTime.Now;
+                commentreply.Comment1 = model.Comment1;
+                commentreply.ParentCommentId = model.CommentId;
+                commentreply.IsPublic = model.IsPublic;
+                context.Comments.Add(commentreply);
                 context.SaveChanges();
+                var comment = context.Comments.FirstOrDefault(x => x.CommentId == model.CommentId);
+                if (comment != null)
+                {
+                    comment.IsPublic = model.IsPublic;
+                    context.Comments.Update(comment);
+                    context.SaveChanges();
+                }
+                message.ContentId = commentreply.ContentId;
+                message.title = commentreply.Comment1;
+                message.CommentId = commentreply.CommentId;
+                message.ContentTypeId = commentreply.ContentTypeId;
+                message.Message = GlobalConstants.ReplySaveSuccessfully;
+                _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId);
+
+                var userAuditLog = new UserAuditLogModel();
+                userAuditLog.Action = " Add Content Comment Reply";
+                userAuditLog.Description = "Content Comment Reply Added";
+                userAuditLog.UserId = (int)model.CreatedBy;
+                userAuditLog.CreatedBy = model.CreatedBy;
+                userAuditLog.CreatedDate = DateTime.Now;
+                _userAuditLogService.AddUserAuditLog(userAuditLog);
             }
-            message.ContentId = commentreply.ContentId;
-            message.title = commentreply.Comment1;
-            message.CommentId = commentreply.CommentId;
-            message.ContentTypeId= commentreply.ContentTypeId;
-            message.Message = GlobalConstants.ReplySaveSuccessfully;
-            _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true,message.ContentTypeId);
-            
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = " Add Content Comment Reply";
-            userAuditLog.Description = "Content Comment Reply Added";
-            userAuditLog.UserId = (int)model.CreatedBy;
-            userAuditLog.CreatedBy = model.CreatedBy;
-            userAuditLog.CreatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
+            catch(Exception ex) 
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                message.Message = ex.Message;
+                return message;
+            }
             return message;
         }
 

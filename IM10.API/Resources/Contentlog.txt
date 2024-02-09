@@ -1,0 +1,385 @@
+
+Log Entry : 13:05:47 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:48 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:05:48 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:48 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:05:48 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:49 08 February 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:05:49 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:49 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:05:49 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:50 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:05:50 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:50 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:05:50 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:51 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:05:51 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:05:51 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:29 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:30 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:30 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:30 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:30 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:31 08 February 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:15:31 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:32 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:32 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:32 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:32 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:33 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:33 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:33 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:33 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:34 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:34 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:34 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 13:15:35 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:35 08 February 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 13:15:35 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 13:15:35 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:13 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:13 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:14 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:14 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:15 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:15 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:15 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:16 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:18 08 February 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:28:19 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:19 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:19 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:20 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:20 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:20 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:21 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:21 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:21 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:21 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:21 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:22 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:22 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:22 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:23 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:23 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:23 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:24 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:25 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:25 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:25 08 February 2024
+  :
+  :Notification sent successfully
+-------------------------------
+
+Log Entry : 15:28:25 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:25 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:26 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:26 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:26 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:27 08 February 2024
+  :
+  :NotRegistered
+-------------------------------
+
+Log Entry : 15:28:27 08 February 2024
+  :
+  :start notification api
+-------------------------------
+
+Log Entry : 15:28:27 08 February 2024
+  :
+  :try block start
+-------------------------------
+
+Log Entry : 15:28:27 08 February 2024
+  :
+  :Notification sent successfully
+-------------------------------

@@ -32,7 +32,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        NotificationModel AddAdvContentMapping(AdvContentMappingModel model, ref ErrorResponseModel errorResponseModel);
+        Task<NotificationModel> AddAdvContentMapping(AdvContentMappingModel model);
 
 
         /// <summary>

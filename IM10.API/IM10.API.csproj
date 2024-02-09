@@ -43,6 +43,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="im10-f32bd-firebase-adminsdk-ea3aj-efa6ba6ad0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Resources\AdvContentFile\0acd5fd3-7181-44ce-b8b9-9ad256b8bdbf.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -77,6 +83,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\AdvtContentFile\VID-20230508-WA0011.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Commentlog.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\CompanyLogoFile\download.png">
@@ -117,6 +126,9 @@
     </None>
     <None Update="Resources\ContentFile\tufanInsta.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Contentlog.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\ErrorAuditLogFile\error_audit_log_1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

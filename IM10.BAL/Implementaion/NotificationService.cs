@@ -3,6 +3,9 @@ using IM10.Entity.DataModels;
 using IM10.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +31,8 @@ namespace IM10.BAL.Implementaion
         private readonly FcmNotificationSetting _notificationSetting;
         private readonly IM10DbContext _context;
         private readonly ConfigurationModel _configuration;
+        private static object fileLock = new object();
+
 
         public NotificationService(IOptions<FcmNotificationSetting> settings, IOptions<ConfigurationModel> hostName, IM10DbContext dbContext)
         {
@@ -38,15 +43,15 @@ namespace IM10.BAL.Implementaion
 
         public async Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail)
         {
-
             ResponseModel response = new ResponseModel();
-            bool issuccess;
+            int success;
             try
             {
-                string applicationID = _notificationSetting.ServerKey;
-                string senderId =_notificationSetting.SenderId;
+                string SenderId = _notificationSetting.SenderId;
+                string ServerKey = _notificationSetting.ServerKey;
                 string deviceId = DeviceId;
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Proxy = null;
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";
                 var data = new
@@ -55,22 +60,16 @@ namespace IM10.BAL.Implementaion
                     to = deviceId,
                     notification = new
                     {
-                        title = title,
-                        playerId=playerId,
-                        contentId = contentId,
-                        ContentTypeId = contentTypeId,
-                        Title = title,
-                        Description = description,
-                        Thumbnail = thumbnail
-                     }
+                        body = $"DeviceId: {DeviceId}, PlayerId: {playerId}, ContentId: {contentId}, Title: {title}, Description: {description}, IsAndroidDevice: {IsAndroidDevice}, ContentTypeId: {contentTypeId}, Thumbnail: {thumbnail}",
+                        title = "New Content Arrived!",
+                        sound = "Enabled"
+                    }
                 };
-                //var serializer = new System.Web.Extensions.JavascriptSerializer();
-                var json = JsonConvert.SerializeObject(data);
-
-                //var json = serializer.Serialize(data);
+                
+                var json = System.Text.Json.JsonSerializer.Serialize(data);
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
-                tRequest.Headers.Add(string.Format("Authorization: key={0}", applicationID));
-                tRequest.Headers.Add(string.Format("Sender: id={0}", senderId));
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", ServerKey));
+                tRequest.Headers.Add(string.Format("Sender: id={0}", SenderId));
                 tRequest.ContentLength = byteArray.Length;
                 using (Stream dataStream = tRequest.GetRequestStream())
                 {
@@ -83,314 +82,86 @@ namespace IM10.BAL.Implementaion
                             {
                                 String sResponseFromServer = tReader.ReadToEnd();
                                 string str = sResponseFromServer;
+                                Console.WriteLine(str);
+                                dynamic json1 = JsonConvert.DeserializeObject(str);
+                                success = json1.success;
                             }
                         }
                     }
                 }
-                if (issuccess = true)
-                {
-                    response.IsSuccess = true;
-                    response.Message = "Notification sent successfully";
-                    //response.Message = json;
-                    var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
-                    pathToSave1 = pathToSave1 + "\\";
-                    using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))
-                    {
-                        Log((response.Message).ToString(), w);
-                    }
-                    using (StreamReader r = File.OpenText("log.txt"))
-                    {
-                        DumpLog(r);
-                    }
-                    return response;
-                }
-                else
-                {
-                    response.IsSuccess = false;
-                    response.Message = "Notification Not send successfully";
-                    var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
-                    pathToSave1 = pathToSave1 + "\\";
-                    using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))
-                    {
-                        Log((response.Message).ToString(), w);
-                    }
-                    using (StreamReader r = File.OpenText("log.txt"))
-                    {
-                        DumpLog(r);
-                    }
-                    return response;
-                }
-                
-            }
-
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = $"Error: {ex.Message}";
-                var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "log.txt");
-                // Log the detailed exception information
-                using (StreamWriter w = File.AppendText(pathToSave1))
-                {
-                    Log($"Failed to send notification: {response.Message}", w);
-                    // Log detailed exception information
-                    Log($"Exception Type: {ex.GetType().FullName}", w);
-                    Log($"Exception Message: {ex.Message}", w);
-                    Log($"Stack Trace: {ex.StackTrace}", w);
-
-                    // If it's an AggregateException, log details of inner exceptions
-                    if (ex is AggregateException aggregateException)
-                    {
-                        foreach (var innerException in aggregateException.InnerExceptions)
-                        {
-                            Log($"Inner Exception Type: {innerException.GetType().FullName}", w);
-                            Log($"Inner Exception Message: {innerException.Message}", w);
-                            Log($"Inner Exception Stack Trace: {innerException.StackTrace}", w);
-                        }
-                    }
-                }
-
-                // Optionally, you can read and dump the log
-                using (StreamReader r = File.OpenText(pathToSave1))
-                {
-                    DumpLog(r);
-                }
-                return response;
-            }
-            
-            /*try
-            {
-                if (IsAndroidDevice == true)
-                {
-                    *//* FCM Sender (Android Device) *//*
-                    FcmSettings settings = new FcmSettings()
-                    {
-                        SenderId = _notificationSetting.SenderId,
-                        ServerKey = _notificationSetting.ServerKey
-                    };
-                    HttpClient httpClient = new HttpClient();
-                    string authorizationKey = string.Format("key={0}", settings.ServerKey);
-                    string deviceToken = DeviceId;
-                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorizationKey);
-                    httpClient.DefaultRequestHeaders.Accept
-                            .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    DataPayload dataPayload = new DataPayload();
-                    dataPayload.PlayerId = playerId;
-                    dataPayload.contentId = contentId;
-                    dataPayload.ContentTypeId = contentTypeId;
-                    dataPayload.Title = title;
-                    dataPayload.Description = description;
-                    dataPayload.Thumbnail = thumbnail;
-                    GoogleNotification notification = new GoogleNotification();
-                    notification.Data = dataPayload;
-                    notification.Notification = dataPayload;
-
-                    var fcm = new FcmSender(settings, httpClient);
-                    var fcmSendResponse = await fcm.SendAsync(DeviceId, notification);
-
-                    if (fcmSendResponse.IsSuccess())
-                    {
-                        response.IsSuccess = true;
-                        response.Message = "Notification sent successfully";
-                        notification.Data = dataPayload;
-                        var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
-                        pathToSave1 = pathToSave1 + "\\";
-                        using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))
-                        {
-                            Log((response.Message).ToString(), w);
-                        }
-                        using (StreamReader r = File.OpenText("log.txt"))
-                        {
-                            DumpLog(r);
-                        }
-                        return response;
-                    }
-                    else
-                    {
-                        response.IsSuccess = false;
-                        response.Message = fcmSendResponse.Results[0].Error;
-                        var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
-                        pathToSave1 = pathToSave1 + "\\";
-                        using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))
-                        {
-                            Log((response.Message).ToString(), w);
-                        }
-                        using (StreamReader r = File.OpenText("log.txt"))
-                        {
-                            DumpLog(r);
-                        }
-                        return response;
-                    }
-
-                }
-                else
-                {
-                    *//* Code here for APN Sender (iOS Device) *//*
-                    //var apn = new ApnSender(apnSettings, httpClient);
-                    //await apn.SendAsync(notification, deviceToken);
-                }
-                return response;
             }
             catch (Exception ex)
             {
-                response.IsSuccess = false;
-                response.Message = $"Error: {ex.Message}";
-                var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "log.txt");
-                // Log the detailed exception information
-                using (StreamWriter w = File.AppendText(pathToSave1))
-                {
-                    Log($"Failed to send notification: {response.Message}", w);
-                    // Log detailed exception information
-                    Log($"Exception Type: {ex.GetType().FullName}", w);
-                    Log($"Exception Message: {ex.Message}", w);
-                    Log($"Stack Trace: {ex.StackTrace}", w);
-
-                    // If it's an AggregateException, log details of inner exceptions
-                    if (ex is AggregateException aggregateException)
-                    {
-                        foreach (var innerException in aggregateException.InnerExceptions)
-                        {
-                            Log($"Inner Exception Type: {innerException.GetType().FullName}", w);
-                            Log($"Inner Exception Message: {innerException.Message}", w);
-                            Log($"Inner Exception Stack Trace: {innerException.StackTrace}", w);
-                        }
-                    }
-                }
-
-                // Optionally, you can read and dump the log
-                using (StreamReader r = File.OpenText(pathToSave1))
-                {
-                    DumpLog(r);
-                }
+                Console.WriteLine($"Exception: {ex.Message}");
+                response.IsSuccess= false;
+                response.Message= ex.Message;
                 return response;
-            }*/
 
-        }
-        public static void Log(string logMessage, TextWriter w)
-        {
-            w.Write("\r\nLog Entry : ");
-            w.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
-            w.WriteLine("  :");
-            w.WriteLine($"  :{logMessage}");
-            w.WriteLine("-------------------------------");
-        }
-
-        public static void DumpLog(StreamReader r)
-        {
-            string line;
-            while ((line = r.ReadLine()) != null)
-            {
-                Console.WriteLine(line);
             }
+            return response;
+
+
         }
 
+
+        
         public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId)
         {
             ResponseModel response = new ResponseModel();
+            int success;
             try
             {
-                if (IsAndroidDevice == true)
+                string SenderId = _notificationSetting.SenderId;
+                string ServerKey = _notificationSetting.ServerKey;
+                string deviceId = DeviceId;
+                WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Proxy = null;
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                var data = new
                 {
-                    /* FCM Sender (Android Device) */
-                    FcmSettings settings = new FcmSettings()
+                    //to = deviceId,
+                    to = deviceId,
+                    notification = new
                     {
-                        SenderId = _notificationSetting.SenderId,
-                        ServerKey = _notificationSetting.ServerKey
-                    };
-                    HttpClient httpClient = new HttpClient();
-                    string authorizationKey = string.Format("key={0}", settings.ServerKey);
-                    string deviceToken = DeviceId;
-                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorizationKey);
-                    httpClient.DefaultRequestHeaders.Accept
-                            .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    DataPayload dataPayload1 = new DataPayload();
-                    //dataPayload.PlayerId = playerId;
-                    dataPayload1.contentId = contentId;
-                    dataPayload1.commentId = commentId;
-                    dataPayload1.Message = message;
-                    dataPayload1.Title = "New Comment Arrived!";
-                    dataPayload1.ContentTypeId= contentTypeId;
-                    GoogleNotification notification1 = new GoogleNotification();
-                    notification1.Data = dataPayload1;
-                    notification1.Notification = dataPayload1;
-
-                    var fcm = new FcmSender(settings, httpClient);
-                    var fcmSendResponse = await fcm.SendAsync(deviceToken, notification1);
-
-                    if (fcmSendResponse.IsSuccess())
-                    {
-                        response.IsSuccess = true;
-                        response.Message = "Notification sent successfully";
-                        notification1.Data = dataPayload1;
-                        var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
-                        pathToSave1 = pathToSave1 + "\\";
-                        using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))
-                        {
-                            Log((response.Message).ToString(), w);
-                        }
-                        using (StreamReader r = File.OpenText("log.txt"))
-                        {
-                            DumpLog(r);
-                        }
-                        return response;
+                        body = $"DeviceId: {DeviceId}, ContentId: {contentId}, CommentId: {commentId}, Message: {message}, IsAndroidDevice: {IsAndroidDevice}, ContentTypeId: {contentTypeId}",
+                        title = "New Comment Arrived!",
+                        sound = "Enabled"
                     }
-                    else
-                    {
-                        response.IsSuccess = false;
-                        response.Message = fcmSendResponse.Results[0].Error;
-                        var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
-                        pathToSave1 = pathToSave1 + "\\";
-                        using (StreamWriter w = File.AppendText(pathToSave1 + "log.txt"))
-                        {
-                            Log((response.Message).ToString(), w);
-                        }
-                        using (StreamReader r = File.OpenText("log.txt"))
-                        {
-                            DumpLog(r);
-                        }
-                        return response;
-                    }
+                };
 
-                }
-                else
+                var json = System.Text.Json.JsonSerializer.Serialize(data);
+                Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", ServerKey));
+                tRequest.Headers.Add(string.Format("Sender: id={0}", SenderId));
+                tRequest.ContentLength = byteArray.Length;
+                using (Stream dataStream = tRequest.GetRequestStream())
                 {
-                    /* Code here for APN Sender (iOS Device) */
-                    //var apn = new ApnSender(apnSettings, httpClient);
-                    //await apn.SendAsync(notification, deviceToken);
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    using (WebResponse tResponse = tRequest.GetResponse())
+                    {
+                        using (Stream dataStreamResponse = tResponse.GetResponseStream())
+                        {
+                            using (StreamReader tReader = new StreamReader(dataStreamResponse))
+                            {
+                                String sResponseFromServer = tReader.ReadToEnd();
+                                string str = sResponseFromServer;
+                                Console.WriteLine(str);
+                                dynamic json1 = JsonConvert.DeserializeObject(str);
+                                success = json1.success;
+                            }
+                        }
+                    }
                 }
-                return response;
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Exception: {ex.Message}");
                 response.IsSuccess = false;
-                response.Message = $"Error: {ex.Message}";
-                var pathToSave1 = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "log.txt");
-                // Log the detailed exception information
-                using (StreamWriter w = File.AppendText(pathToSave1))
-                {
-                    Log($"Failed to send notification: {response.Message}", w);
-                    // Log detailed exception information
-                    Log($"Exception Type: {ex.GetType().FullName}", w);
-                    Log($"Exception Message: {ex.Message}", w);
-                    Log($"Stack Trace: {ex.StackTrace}", w);
-
-                    // If it's an AggregateException, log details of inner exceptions
-                    if (ex is AggregateException aggregateException)
-                    {
-                        foreach (var innerException in aggregateException.InnerExceptions)
-                        {
-                            Log($"Inner Exception Type: {innerException.GetType().FullName}", w);
-                            Log($"Inner Exception Message: {innerException.Message}", w);
-                            Log($"Inner Exception Stack Trace: {innerException.StackTrace}", w);
-                        }
-                    }
-                }
-                // Optionally, you can read and dump the log
-                using (StreamReader r = File.OpenText(pathToSave1))
-                {
-                    DumpLog(r);
-                }
+                response.Message = ex.Message;
                 return response;
             }
+            return response;
         }
     } 
 }

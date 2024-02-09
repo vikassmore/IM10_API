@@ -2,6 +2,9 @@
 using Castle.Core.Smtp;
 using CorePush.Apple;
 using CorePush.Google;
+using FirebaseAdmin;
+using FirebaseAdmin.Messaging;
+using Google.Apis.Auth.OAuth2;
 using IM10.API.Hubs;
 using IM10.BAL.Implementaion;
 using IM10.BAL.Interface;
@@ -48,6 +51,11 @@ namespace IM10.API
             services.AddHttpClient<FcmSender>();
             services.AddHttpClient<ApnSender>();
             services.AddControllers();
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "im10-f32bd-firebase-adminsdk-ea3aj-efa6ba6ad0.json")),
+                 ProjectId = "im10-f32bd"
+            });
             //configure SignalR
             services.AddSignalR();
             services.AddCors(options => {
@@ -67,6 +75,11 @@ namespace IM10.API
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
+            services.AddHttpClient<FirebaseMessaging>()
+                .ConfigureHttpClient(client =>
+                {
+                    client.Timeout = TimeSpan.FromMinutes(2); 
+                });
 
             // Register all injecting interfaces with implemented class
             services.AddScoped<IUserService, UserService>();

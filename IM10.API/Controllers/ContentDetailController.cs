@@ -515,7 +515,9 @@ namespace IM10.API.Controllers
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        [HttpPut("ApproveContentDetail/{contentId}")]
+        [HttpPost("ApproveContentDetail")]
+       // [Authorize]
+        [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -525,7 +527,7 @@ namespace IM10.API.Controllers
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                NotificationModel contentModel = contentDetailService.ApproveContentDetail(contentId, ref errorResponseModel);
+                NotificationModel contentModel =await contentDetailService.ApproveContentDetail(contentId);
 
                 if (contentModel != null)
                 {
@@ -536,9 +538,9 @@ namespace IM10.API.Controllers
                 } 
                 return ReturnErrorResponse(errorResponseModel);               
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 

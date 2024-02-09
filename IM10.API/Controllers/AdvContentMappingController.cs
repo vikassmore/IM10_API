@@ -104,7 +104,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddAdvContentMapping")]
-        //[Authorize]
+       // [Authorize]
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -126,7 +126,7 @@ namespace IM10.API.Controllers
             try
             {
                 var errorMessage = new ErrorResponseModel();
-                NotificationModel contentModel = AdvContentMapping.AddAdvContentMapping(model, ref errorMessage);
+                NotificationModel contentModel =await AdvContentMapping.AddAdvContentMapping(model);
 
                 if (contentModel != null) 
                 {

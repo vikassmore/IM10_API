@@ -515,8 +515,8 @@ namespace IM10.API.Controllers
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        [HttpPost("ApproveContentDetail")]
-       // [Authorize]
+        [HttpPost("ApproveContentDetail/{contentId}")]
+        [Authorize]
         [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]

@@ -15,8 +15,6 @@ using System.Runtime;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using static IM10.Models.FirebaseModel;
-using static IM10.Models.FirebaseModel.GoogleNotification;
 
 namespace IM10.BAL.Implementaion
 {
@@ -41,7 +39,7 @@ namespace IM10.BAL.Implementaion
             _context = dbContext;
         }
 
-        public async Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail)
+        public async Task<ResponseModel> SendNotification (string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail)
         {
             ResponseModel response = new ResponseModel();
             int success;
@@ -56,11 +54,22 @@ namespace IM10.BAL.Implementaion
                 tRequest.ContentType = "application/json";
                 var data = new
                 {
-                    //to = deviceId,
                     to = deviceId,
+                    data= new
+                    {
+                        playerId = playerId.ToString(),
+                        contentId = contentId.ToString(),
+                        title = title,
+                        description = description,
+                        contentTypeId = contentTypeId.ToString(),
+                        thumbnail = thumbnail,
+                        IsAndroidDevice = IsAndroidDevice,
+                        message = "Approved Successfully"
+                        
+                    },
                     notification = new
                     {
-                        body = $"DeviceId: {DeviceId}, PlayerId: {playerId}, ContentId: {contentId}, Title: {title}, Description: {description}, IsAndroidDevice: {IsAndroidDevice}, ContentTypeId: {contentTypeId}, Thumbnail: {thumbnail}",
+                        body = $"{title}",
                         title = "New Content Arrived!",
                         sound = "Enabled"
                     }
@@ -120,11 +129,18 @@ namespace IM10.BAL.Implementaion
                 tRequest.ContentType = "application/json";
                 var data = new
                 {
-                    //to = deviceId,
                     to = deviceId,
+                    data = new
+                    {
+                        contentId = contentId,
+                        commentId = commentId,
+                        message = message,
+                        isAndroidDevice = IsAndroidDevice,
+                        contentTypeId = contentTypeId
+                    },
                     notification = new
                     {
-                        body = $"DeviceId: {DeviceId}, ContentId: {contentId}, CommentId: {commentId}, Message: {message}, IsAndroidDevice: {IsAndroidDevice}, ContentTypeId: {contentTypeId}",
+                        body = $"{message}",
                         title = "New Comment Arrived!",
                         sound = "Enabled"
                     }

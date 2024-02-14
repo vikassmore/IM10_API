@@ -531,10 +531,7 @@ namespace IM10.API.Controllers
 
                 if (contentModel != null)
                 {
-                    if (contentModel.ContentTypeId == ContentTypeHelper.ArticleContentTypeId)
-                    {
-                      return Ok(contentModel);
-                    }                   
+                   return Ok(contentModel);                  
                 } 
                 return ReturnErrorResponse(errorResponseModel);               
             }

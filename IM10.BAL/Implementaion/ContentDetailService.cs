@@ -362,6 +362,7 @@ namespace IM10.BAL.Implementaion
             if (userplayerEntity != null)
             {
                 userplayerEntity.IsDeleted = true;
+                userplayerEntity.Approved=null;
                 context.SaveChanges();
                 Message = GlobalConstants.ContentDetailDeleteSuccessfully;
             }
@@ -607,11 +608,13 @@ namespace IM10.BAL.Implementaion
 
                     var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId).ToList();
 
-                    foreach (var item in existing)
+                    if(message.ContentTypeId== ContentTypeHelper.ArticleContentTypeId)
                     {
-                        await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail,message.CategoryId);
+                        foreach (var item in existing)
+                        {
+                            await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail, message.CategoryId);
+                        }
                     }
-
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Approve Content Details";
                     userAuditLog.Description = "Content Details Approved";

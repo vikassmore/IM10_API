@@ -78,6 +78,7 @@ namespace IM10.BAL.Implementaion
                         message.PlayerId = existingcontentEntity.PlayerId;
                         message.ContentId = contentEntity.ContentId;
                         message.Title = existingcontentEntity.Title;
+                        message.CategoryId= existingcontentEntity.CategoryId;
                         message.Description = existingcontentEntity.Description;
                         message.ContentTypeId = existingcontentEntity.ContentTypeId;
                         message.Thumbnail = ThumbnailPath(thumbnailUrl);
@@ -85,7 +86,7 @@ namespace IM10.BAL.Implementaion
                         var existing = context.Fcmnotifications.Where(x => x.PlayerId == existingcontentEntity.PlayerId).ToList();
                         foreach (var item in existing)
                         {
-                            await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail);
+                            await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail,message.CategoryId);
                         }
                     }
                 }

@@ -20,7 +20,7 @@ namespace IM10.BAL.Implementaion
 {
     public interface INotificationService
     {
-        Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId,string thumbnail);
+        Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId,string thumbnail,int categoryId);
         Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId);
 
     }
@@ -39,7 +39,7 @@ namespace IM10.BAL.Implementaion
             _context = dbContext;
         }
 
-        public async Task<ResponseModel> SendNotification (string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail)
+        public async Task<ResponseModel> SendNotification (string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail, int categoryId)
         {
             ResponseModel response = new ResponseModel();
             int success;
@@ -55,12 +55,13 @@ namespace IM10.BAL.Implementaion
                 var data = new
                 {
                     to = deviceId,
-                    data= new
+                    data = new
                     {
                         playerId = playerId.ToString(),
                         contentId = contentId.ToString(),
                         title = title,
                         description = description,
+                        categoryId = categoryId,
                         contentTypeId = contentTypeId.ToString(),
                         thumbnail = thumbnail,
                         IsAndroidDevice = IsAndroidDevice,

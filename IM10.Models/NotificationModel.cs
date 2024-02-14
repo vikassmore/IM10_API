@@ -13,6 +13,8 @@ namespace IM10.Models
         public int ContentTypeId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public int CategoryId { get; set; }
+
         public string Message { get; set; }
         public string Thumbnail { get; set; }
     }

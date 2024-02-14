@@ -590,32 +590,33 @@ namespace IM10.BAL.Implementaion
             NotificationModel message = new NotificationModel();
             try
             {
-                var userplayerEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
+                var contentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
 
-                if (userplayerEntity != null)
+                if (contentEntity != null)
                 {
-                    userplayerEntity.Approved = true;
+                    contentEntity.Approved = true;
                     context.SaveChanges();
-                    message.PlayerId = userplayerEntity.PlayerId;
-                    message.Title = userplayerEntity.Title;
-                    message.Description = userplayerEntity.Description;
+                    message.PlayerId = contentEntity.PlayerId;
+                    message.Title = contentEntity.Title;
+                    message.Description = contentEntity.Description;
                     message.ContentId = contentId;
-                    message.ContentTypeId = userplayerEntity.ContentTypeId;
+                    message.CategoryId = contentEntity.CategoryId;
+                    message.ContentTypeId = contentEntity.ContentTypeId;
                     message.Message = GlobalConstants.ApprovedSuccessfully;
-                    message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(userplayerEntity.ContentFilePath) ? userplayerEntity.ContentFilePath : userplayerEntity.ContentFilePath));
+                    message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath) ? contentEntity.ContentFilePath : contentEntity.ContentFilePath));
 
-                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == userplayerEntity.PlayerId).ToList();
+                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId).ToList();
 
                     foreach (var item in existing)
                     {
-                        await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail);
+                        await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail,message.CategoryId);
                     }
 
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Approve Content Details";
                     userAuditLog.Description = "Content Details Approved";
-                    userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
-                    userAuditLog.UpdatedBy = userplayerEntity.UpdatedBy;
+                    userAuditLog.UserId = (int)contentEntity.CreatedBy;
+                    userAuditLog.UpdatedBy = contentEntity.UpdatedBy;
                     userAuditLog.UpdatedDate = DateTime.Now;
                     _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }

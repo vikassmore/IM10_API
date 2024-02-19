@@ -21,7 +21,7 @@ namespace IM10.BAL.Implementaion
     public interface INotificationService
     {
         Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId,string thumbnail,int categoryId);
-        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId);
+        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId, int categoryId);
 
     }
     public class NotificationService : INotificationService
@@ -115,7 +115,7 @@ namespace IM10.BAL.Implementaion
 
 
         
-        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId)
+        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId, int categoryId)
         {
             ResponseModel response = new ResponseModel();
             int success;
@@ -136,6 +136,7 @@ namespace IM10.BAL.Implementaion
                         contentId = contentId,
                         commentId = commentId,
                         message = message,
+                        categoryId=categoryId,
                         isAndroidDevice = IsAndroidDevice,
                         contentTypeId = contentTypeId
                     },

@@ -76,12 +76,15 @@ namespace IM10.BAL.Implementaion
                     context.Comments.Update(comment);
                     context.SaveChanges();
                 }
+                var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == commentreply.ContentId);
+
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
                 message.CommentId = commentreply.CommentId;
                 message.ContentTypeId = commentreply.ContentTypeId;
+                message.CategoryId=existingcontentEntity.CategoryId;
                 message.Message = GlobalConstants.ReplySaveSuccessfully;
-                _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId);
+                _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId,message.CategoryId);
 
                 var userAuditLog = new UserAuditLogModel();
                 userAuditLog.Action = " Add Content Comment Reply";

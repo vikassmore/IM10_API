@@ -23,6 +23,7 @@ namespace IM10.API
                     webBuilder.UseIISIntegration();
                     webBuilder.UseIIS();
                     webBuilder.UseStartup<Startup>();
+                    
                 });
     }
 }

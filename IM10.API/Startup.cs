@@ -51,6 +51,7 @@ namespace IM10.API
             services.AddHttpClient<FcmSender>();
             services.AddHttpClient<ApnSender>();
             services.AddControllers();
+            
             FirebaseApp.Create(new AppOptions()
             {
                 Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "im10-f32bd-firebase-adminsdk-ea3aj-efa6ba6ad0.json")),
@@ -59,9 +60,9 @@ namespace IM10.API
             //configure SignalR
             services.AddSignalR();
             services.AddCors(options => {
-                options.AddPolicy("CORSPolicy", builder =>
-                    builder.WithOrigins("http://localhost:4200","http://localhost:8081","http://im10api.meshbagroup.com","*")
-                           .AllowAnyMethod()
+                options.AddPolicy("AllowAnyOrigin", builder =>
+                    builder.WithOrigins()
+                           .AllowAnyMethod()                                          
                            .AllowAnyHeader()
                            .AllowCredentials());
             });
@@ -75,11 +76,7 @@ namespace IM10.API
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-            services.AddHttpClient<FirebaseMessaging>()
-                .ConfigureHttpClient(client =>
-                {
-                    client.Timeout = TimeSpan.FromMinutes(2); 
-                });
+            
 
             // Register all injecting interfaces with implemented class
             services.AddScoped<IUserService, UserService>();
@@ -170,11 +167,12 @@ namespace IM10.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
            
-
-            if (env.IsDevelopment())
+            
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();               
             }
+
 
             app.UseCors(builder => builder.AllowAnyOrigin()
                                .AllowAnyMethod()
@@ -256,7 +254,7 @@ namespace IM10.API
             app.UseAuthorization();
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().SetIsOriginAllowed(origin => true)
            .WithExposedHeaders("content-disposition"));
-            app.UseCors("CORSPolicy");
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseEndpoints(endpoints =>
             {

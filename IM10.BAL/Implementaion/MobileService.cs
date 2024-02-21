@@ -1500,6 +1500,7 @@ namespace IM10.BAL.Implementaion
                 content.Trending = model.Trending;
                 content.CreatedBy = model.CreatedBy;
                 content.CreatedDate = DateTime.Now;
+                content.UpdatedDate = DateTime.Now;
                 content.IsDeleted = false;
                 context.ContentViews.Add(content);
                 context.SaveChanges();

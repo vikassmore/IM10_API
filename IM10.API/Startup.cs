@@ -68,8 +68,7 @@ namespace IM10.API
             });
             services.AddDbContext<Entity.DataModels.IM10DbContext>(options => options
                                                  .UseLazyLoadingProxies()
-                                                 .UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"],
-                                                 sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
+                                                 .UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.Configure<FormOptions>(o =>
             {

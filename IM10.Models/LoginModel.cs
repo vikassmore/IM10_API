@@ -30,5 +30,9 @@ namespace IM10.Models
     public class MobileLoginModel
     {
         public string MobileNo { get; set; }
+        public string? DeviceToken { get; set; }
+        public string? CountryCode { get; set; }
+        public long PlayerId { get; set; }
+
     }
 }

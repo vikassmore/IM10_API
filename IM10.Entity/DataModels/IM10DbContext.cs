@@ -367,6 +367,11 @@ public partial class IM10DbContext : DbContext
                 .HasForeignKey(d => d.PlayerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FCMNotification_PlayerDetails");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Fcmnotifications)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FCMNotification_FCMNotification");
         });
 
         modelBuilder.Entity<Language>(entity =>
@@ -575,6 +580,9 @@ public partial class IM10DbContext : DbContext
             entity.ToTable("UserMaster");
 
             entity.Property(e => e.AppId).HasColumnName("AppID");
+            entity.Property(e => e.CountryCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.Dob).HasColumnName("DOB");
             entity.Property(e => e.EmailId).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(100);

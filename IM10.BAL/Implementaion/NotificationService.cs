@@ -39,6 +39,11 @@ namespace IM10.BAL.Implementaion
             _context = dbContext;
         }
 
+        private string GenerateCollapseKey()
+        {
+            // Use current timestamp to generate a unique collapse_key
+            return DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+        }
         public async Task<ResponseModel> SendNotification (string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail, int categoryId)
         {
             ResponseModel response = new ResponseModel();
@@ -48,6 +53,7 @@ namespace IM10.BAL.Implementaion
                 string SenderId = _notificationSetting.SenderId;
                 string ServerKey = _notificationSetting.ServerKey;
                 string deviceId = DeviceId;
+                string collapseKey = GenerateCollapseKey();
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Proxy = null;
                 tRequest.Method = "post";
@@ -72,7 +78,12 @@ namespace IM10.BAL.Implementaion
                     {
                         body = $"{title}",
                         title = "New Content Arrived!",
-                        sound = "Enabled"
+                        sound = "Enabled",
+                        android = new
+                        {
+                            collapse_key = collapseKey,
+                            icon = "ic_launcher"
+                        }
                     }
                 };
                 
@@ -124,6 +135,7 @@ namespace IM10.BAL.Implementaion
                 string SenderId = _notificationSetting.SenderId;
                 string ServerKey = _notificationSetting.ServerKey;
                 string deviceId = DeviceId;
+                string collapseKey = GenerateCollapseKey();
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Proxy = null;
                 tRequest.Method = "post";
@@ -136,7 +148,7 @@ namespace IM10.BAL.Implementaion
                         contentId = contentId,
                         commentId = commentId,
                         message = message,
-                        categoryId=categoryId,
+                        categoryId = categoryId,
                         isAndroidDevice = IsAndroidDevice,
                         contentTypeId = contentTypeId
                     },
@@ -144,10 +156,15 @@ namespace IM10.BAL.Implementaion
                     {
                         body = $"{message}",
                         title = "New Comment Arrived!",
-                        sound = "Enabled"
-                    }
-                };
-
+                        sound = "Enabled",
+                        android = new
+                        {
+                            collapse_key = collapseKey,
+                            icon = "ic_launcher"
+                        }
+                    }                                
+            };
+                Console.WriteLine(data);
                 var json = System.Text.Json.JsonSerializer.Serialize(data);
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
                 tRequest.Headers.Add(string.Format("Authorization: key={0}", ServerKey));

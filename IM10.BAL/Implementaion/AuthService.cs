@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Twilio.TwiML.Messaging;
 
 namespace IM10.BAL.Implementaion
 {
@@ -65,9 +66,30 @@ namespace IM10.BAL.Implementaion
         {
             var authModel = new AuthModel();
             errorResponseModel = new ErrorResponseModel();
-            var user = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsActive == true && x.IsDeleted == false);
+            var user = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsDeleted == false);
+            
             if (user != null)
             {
+                var existingUser = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsActive == false && x.IsDeleted == false);
+                {
+                    context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.IsActive).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.DeviceToken).IsModified = true;
+
+                    // Update values
+                    existingUser.IsLogin = true;
+                    existingUser.IsActive = true;
+                    existingUser.DeviceToken = loginModel.DeviceToken;
+                    context.SaveChanges();
+                }
+                var fcmexstingUser = context.Fcmnotifications.Where(x => x.DeviceToken == loginModel.DeviceToken && x.PlayerId == loginModel.PlayerId).FirstOrDefault();
+                if (fcmexstingUser != null)
+                {
+                    fcmexstingUser.UserId = user.UserId;
+                    context.SaveChanges();
+                }
+
+
                 Random generator = new Random();
                 string otp = CreateNewOTP((user.UserId));
 
@@ -75,12 +97,22 @@ namespace IM10.BAL.Implementaion
                 {
                     _emailSender.SendSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
                     //_emailSender.SendTwilioSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
+                    var userComment=context.Comments.Where(x=>x.UserId== user.UserId && x.ParentCommentId==null).OrderByDescending(x => x.CreatedDate).ToList();
+                    if (userComment.Count > 0)
+                    {
+                        var commentids = string.Join(",", userComment.Where(p => p.IsDeleted == false)
+                                 .Select(p => p.CommentId.ToString()));                 
+                        IEnumerable<long> ids = commentids.Split(',').Select(str => long.Parse(str));
+                         context.Comments.Where(rec => ids.Contains(rec.CommentId)).ToList().ForEach(x => x.DeviceId = loginModel.DeviceToken);
+                        context.SaveChanges();
+                    }
                 }
                 return new AuthModel
                 {
                     UserId = user.UserId,
                     RoleId = user.RoleId,
-                    MobileNo = user.MobileNo
+                    MobileNo = user.MobileNo,
+
                 };
             }
             else
@@ -93,7 +125,11 @@ namespace IM10.BAL.Implementaion
                 userEntity.MobileNo = loginModel.MobileNo;
                 userEntity.Dob = DateTime.Now;
                 userEntity.Password = "123456";
+                userEntity.DeviceToken=loginModel.DeviceToken;
+                userEntity.CountryCode=loginModel.CountryCode;
                 userEntity.RoleId = 12;
+                userEntity.IsLogin = true;
+                userEntity.AppId = (int?)loginModel.PlayerId;
                 userEntity.CreatedDate = DateTime.Now;
                 userEntity.IsActive = true;
                 userEntity.IsDeleted = false;
@@ -111,7 +147,8 @@ namespace IM10.BAL.Implementaion
                 {
                     UserId = userEntity.UserId,
                     RoleId = userEntity.RoleId,
-                    MobileNo = userEntity.MobileNo
+                    MobileNo = userEntity.MobileNo,
+                    DeviceToken=userEntity.DeviceToken,
                 };
             }
         }
@@ -222,6 +259,34 @@ namespace IM10.BAL.Implementaion
                 return null;
             }
             return authModel;
+        }
+
+
+        /// <summary>
+        /// method for logout user 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string MobileLogOut(long userId, ref ErrorResponseModel errorResponseModel)
+        {
+            var userModel = new UserMaster();
+            string message = "";
+            var existingUser = context.UserMasters.Where(x => x.UserId == userId).FirstOrDefault();
+            if (existingUser != null)
+            {
+                context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
+                context.Entry(existingUser).Property(x => x.IsActive).IsModified = true;
+                context.Entry(existingUser).Property(x => x.DeviceToken).IsModified = true;
+
+                // Update values
+                existingUser.IsLogin = false;
+                existingUser.IsActive = false;
+                existingUser.DeviceToken = null;
+               // context.UserMasters.Update(userModel);
+                context.SaveChanges();
+                message = GlobalConstants.LogOut;
+            }
+            return message;
         }
     }
 }

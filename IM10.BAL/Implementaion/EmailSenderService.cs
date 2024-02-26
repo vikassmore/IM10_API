@@ -82,11 +82,12 @@ namespace IM10.BAL.Implementaion
                    // string url = "http://bulksmsindia.mobi/sendurlcomma.aspx?user=20094643&pwd=serum@2020&senderid=SIIPLH&mobileno=9637871701&msgtext=SMSBell-Rx:%20You%20have%20received%20a%20SMS,%20from%20device:%20BLD%2012%20Warehouse%20Recorder%20with%20Sub:%20BLD%2012%20Warehouse%20Recorder.%20TF%20Cold%20Room-6%20(-24%20to%20-34%20%C2%B0C)%20Temperature%20High.-SERUMH&smstype=13&pe_id=1701163878251642932&template_id=1707164093652897825";
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                     string result = web.DownloadString(url);
+                    Console.WriteLine(result);
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     //Catch and show the exception if needed. Donot supress. :)  
-
                 }
             }
             return Task.FromResult(0);

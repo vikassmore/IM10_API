@@ -74,6 +74,7 @@ namespace IM10.Common
         public const string AddPlayerDetaMessage = "Player Data saved successfuly.";
         public const string SaveMessage = "Data saved successfuly.";
         public const string SaveToken = "Notification tokan pass successfully.";
+        public const string LogOut = "User Logout Successfully.";
 
     }
 }

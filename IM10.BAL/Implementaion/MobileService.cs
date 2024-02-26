@@ -665,7 +665,7 @@ namespace IM10.BAL.Implementaion
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
             int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
             int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-            int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId).Select(x => x.CommentId).Count();
+            int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic==true && x.IsDeleted==false).Select(x => x.CommentId).Count();
             bool Like = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
             bool Favourite1 = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
             imgmodel.FileName = imgmodel.url;
@@ -1315,6 +1315,7 @@ namespace IM10.BAL.Implementaion
             }
             foreach (var item in commentEntity)
             {
+
                 ContentCommentModelData modelData = new ContentCommentModelData();
                 if (item.CommentId != null && item.ParentCommentId == null)
                 {
@@ -1348,6 +1349,7 @@ namespace IM10.BAL.Implementaion
                                               join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                               join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                               where comment.ContentId == contentId && comment.IsDeleted == false && comment.ParentCommentId == item.CommentId
+                                              && comment.IsPublic==true
                                               select new ContentCommentModel
                                               {
                                                   CommentId = comment.CommentId,

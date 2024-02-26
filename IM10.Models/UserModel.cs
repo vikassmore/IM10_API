@@ -33,6 +33,9 @@ namespace IM10.Models
         public int? CityId { get; set; }
 
         public int? AppId { get; set; }
+        public string? CountryCode { get; set; }
+        public string? DeviceToken { get; set; }
+        public bool? IsLogin { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 

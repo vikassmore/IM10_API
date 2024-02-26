@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Drawing.Drawing2D;
 using IM10.BAL.Implementaion;
+using IM10.Entity.DataModels;
 
 namespace IM10.API.Controllers
 {
@@ -239,6 +240,44 @@ namespace IM10.API.Controllers
                     return BadRequest("Invalid data");
                 }
                 var userModel = _authService.GetMobileUserProfile(userId, ref errorResponseModel);
+
+                if (userModel != null)
+                {
+                    return Ok(userModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
+
+
+
+
+
+        /// <summary>
+        /// method for logout user 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpPost("MobileLogOut")]
+        [ProducesResponseType(typeof(UserModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult MobileLogOut(long userId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                if (userId <= 0)
+                {
+                    return BadRequest("Invalid data");
+                }
+                var userModel =_authService.MobileLogOut (userId, ref errorResponseModel);
 
                 if (userModel != null)
                 {

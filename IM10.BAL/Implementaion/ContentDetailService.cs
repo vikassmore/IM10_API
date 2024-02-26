@@ -648,15 +648,14 @@ namespace IM10.BAL.Implementaion
                     errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                     errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                     return null;
-
                 }
                 else
                 {
                     contentEntity.Title = model1.Title;
                     contentEntity.Description = model1.Description;
                     logEntity.Approved = model1.Approved;
-                    contentEntity.UpdatedDate=DateTime.Now;
-                    contentEntity.UpdatedBy= model1.UpdatedBy;
+                    contentEntity.UpdatedDate = DateTime.Now;
+                    contentEntity.UpdatedBy = model1.UpdatedBy;
                     context.ContentDetails.Update(contentEntity);
                     context.ContentAuditLogs.Update(logEntity);
                     context.SaveChanges();

@@ -27,6 +27,12 @@ public partial class UserMaster
 
     public int? AppId { get; set; }
 
+    public string? DeviceToken { get; set; }
+
+    public string? CountryCode { get; set; }
+
+    public bool? IsLogin { get; set; }
+
     public DateTime? CreatedDate { get; set; }
 
     public int? CreatedBy { get; set; }
@@ -42,6 +48,8 @@ public partial class UserMaster
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
 
     public virtual ICollection<ContentFlag> ContentFlags { get; } = new List<ContentFlag>();
+
+    public virtual ICollection<Fcmnotification> Fcmnotifications { get; } = new List<Fcmnotification>();
 
     public virtual ICollection<Otpautherization> Otpautherizations { get; } = new List<Otpautherization>();
 

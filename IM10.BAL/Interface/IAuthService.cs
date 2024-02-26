@@ -55,5 +55,14 @@ namespace IM10.BAL.Interface
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
         AuthModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel);
+
+
+        /// <summary>
+        /// method for logout user 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        string MobileLogOut(long userId, ref ErrorResponseModel errorResponseModel);
     }
 }

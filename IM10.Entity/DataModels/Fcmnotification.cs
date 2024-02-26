@@ -11,6 +11,8 @@ public partial class Fcmnotification
 
     public long PlayerId { get; set; }
 
+    public long UserId { get; set; }
+
     public DateTime? CreatedDate { get; set; }
 
     public int? CreatedBy { get; set; }
@@ -22,4 +24,6 @@ public partial class Fcmnotification
     public bool IsDeleted { get; set; }
 
     public virtual PlayerDetail Player { get; set; } = null!;
+
+    public virtual UserMaster User { get; set; } = null!;
 }

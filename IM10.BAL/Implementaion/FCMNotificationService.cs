@@ -42,6 +42,7 @@ namespace IM10.BAL.Implementaion
                 fcmnotification.FcmnotificationId = model.FcmnotificationId;
                 fcmnotification.DeviceToken= model.DeviceToken;
                 fcmnotification.PlayerId = model.PlayerId;
+                fcmnotification.UserId= model.UserId;
                 fcmnotification.CreatedDate=DateTime.Now;
                 fcmnotification.CreatedBy=model.CreatedBy;
                 fcmnotification.UpdatedDate=DateTime.Now;

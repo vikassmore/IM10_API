@@ -14,8 +14,11 @@ namespace IM10.Models
         public string? LastName { get; set; }
         public string? FullName { get; set; }
         public string? EmailId { get; set; }
-
+        public string? MobileNo { get; set; }
         public long ContentId { get; set; }
+        public string? ContentFileName { get; set; }
+        public string? ContentFilePath { get; set; }
+        public string? Thumbnail1 { get; set; }
 
         public int ContentTypeId { get; set; }
         public string? ContentTypeName { get; set; }

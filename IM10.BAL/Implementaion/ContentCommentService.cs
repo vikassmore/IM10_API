@@ -23,6 +23,7 @@ namespace IM10.BAL.Implementaion
     public class ContentCommentService : IContentCommentService
     {
         IM10DbContext context;
+        private ConfigurationModel _configuration;
         private readonly IUserAuditLogService _userAuditLogService;
         private readonly INotificationService _notificationService;
 
@@ -31,9 +32,10 @@ namespace IM10.BAL.Implementaion
         /// </summary>
         /// <param name="context_"></param>
 
-        public ContentCommentService(IM10DbContext context_, INotificationService notificationService, IUserAuditLogService userAuditLogService)
+        public ContentCommentService(IM10DbContext context_, IOptions<ConfigurationModel> hostName, INotificationService notificationService, IUserAuditLogService userAuditLogService)
         {
-            context = context_;
+             context = context_;
+             this._configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
             _notificationService = notificationService;
         }
@@ -77,14 +79,19 @@ namespace IM10.BAL.Implementaion
                     context.SaveChanges();
                 }
                 var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == commentreply.ContentId);
-
+                
+                var existingfcmUser=context.UserMasters.Where(x=>x.UserId== commentEntity.UserId).FirstOrDefault();                         
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
                 message.CommentId = commentreply.CommentId;
                 message.ContentTypeId = commentreply.ContentTypeId;
-                message.CategoryId=existingcontentEntity.CategoryId;
+                message.CategoryId = existingcontentEntity.CategoryId;
                 message.Message = GlobalConstants.ReplySaveSuccessfully;
-                _notificationService.SendCommentNotification(commentreply.DeviceId, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId,message.CategoryId);
+
+                if (commentreply.IsPublic == true && existingfcmUser.DeviceToken != null)
+                {
+                    _notificationService.SendCommentNotification(existingfcmUser.DeviceToken, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId, message.CategoryId);
+                }
 
                 var userAuditLog = new UserAuditLogModel();
                 userAuditLog.Action = " Add Content Comment Reply";
@@ -311,6 +318,9 @@ namespace IM10.BAL.Implementaion
                                      FirstName = user.FirstName,
                                      LastName = user.LastName,
                                      FullName = user.FirstName + " " + user.LastName,
+                                     MobileNo= user.MobileNo,
+                                     ContentFileName=content.ContentFileName,
+                                     ContentFilePath=content.ContentFilePath,
                                      DeviceId = comment.DeviceId,
                                      Location = comment.Location,
                                      Liked = comment.Liked,
@@ -337,6 +347,10 @@ namespace IM10.BAL.Implementaion
 
             commentEntity.ForEach(item =>
             {
+                var imgmodel = new VideoImageModel();
+                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
+                imgmodel.Type = String.IsNullOrEmpty(item.ContentFilePath) ? "video" : "image";
+                imgmodel.thumbnail = ThumbnailPath(imgmodel.url);
                 commentList.Add(new ContentCommentModel
                 {
                     CommentId = item.CommentId,
@@ -355,6 +369,10 @@ namespace IM10.BAL.Implementaion
                     FirstName = item.FirstName,
                     LastName = item.LastName,
                     FullName = item.FirstName + " " + item.LastName,
+                    MobileNo=item.MobileNo,
+                    Thumbnail1 = imgmodel.thumbnail,
+                    ContentFileName = item.ContentFileName,
+                    ContentFilePath = item.ContentFilePath,
                     ContentTypeId = item.ContentTypeId,
                     ContentTypeName = item.ContentTypeName,
                     UpdatedBy = item.UpdatedBy,
@@ -442,5 +460,28 @@ namespace IM10.BAL.Implementaion
             });
             return commentList;
         }
+
+
+        private string ThumbnailPath(string filePath)
+        {
+            byte[]? ms = null;
+            string extension = "";
+            if (!String.IsNullOrWhiteSpace(filePath))
+            {
+                extension = Path.GetExtension(filePath);
+                if (!String.IsNullOrWhiteSpace(extension))
+                {
+                    // filePath = filePath.Replace(extension, "*");
+                    //filePath = filePath.Replace("/Resources/ContentFile/");
+                    //ms = System.IO.File.ReadAllBytes(filePath);
+
+                    //var string1 = filePath;
+                    //filePath = string1.Replace(extension, ".jpeg");
+                }
+            }
+
+            return filePath;
+        }
+
     }
 }

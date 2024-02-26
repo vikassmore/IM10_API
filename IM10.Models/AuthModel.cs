@@ -17,7 +17,7 @@ namespace IM10.Models
         public string Role { get; set; } =null!;
         public string Token { get; set; } = null!;
        public string FullName { get;set; } = null!;
-
+        public string? DeviceToken { get; set; }
         public string MobileNo { get; set; } = null!;
 
 

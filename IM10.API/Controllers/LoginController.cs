@@ -220,6 +220,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+
         /// <summary>
         /// Get Mobile User Profile
         /// </summary>
@@ -255,9 +257,6 @@ namespace IM10.API.Controllers
         }
 
 
-
-
-
         /// <summary>
         /// method for logout user 
         /// </summary>
@@ -288,9 +287,44 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
             }
         }
+
+
+
+
+        /// <summary>
+        /// Get Mobile User Profile
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpPost("LoginStatusOfUser")]
+        [ProducesResponseType(typeof(LoginStaus), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult LoginStatusOfUser(string Mobile)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                
+                var userModel = _authService.LoginStatusOfUser(Mobile);
+
+                if (userModel != null)
+                {
+                    return Ok(userModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
+            }
+        }
+
     }
 }
 

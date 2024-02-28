@@ -61,6 +61,7 @@ namespace IM10.BAL.Implementaion
                 var data = new
                 {
                     to = deviceId,
+                    collapse_key = collapseKey,
                     data = new
                     {
                         playerId = playerId.ToString(),
@@ -78,12 +79,8 @@ namespace IM10.BAL.Implementaion
                     {
                         body = $"{title}",
                         title = "New Content Arrived!",
-                        sound = "Enabled",
-                        android = new
-                        {
-                            collapse_key = collapseKey,
-                            icon = "ic_launcher"
-                        }
+                        sound = "Enabled",                       
+                        icon = "ic_launcher"                       
                     }
                 };
                 
@@ -117,11 +114,8 @@ namespace IM10.BAL.Implementaion
                 response.IsSuccess= false;
                 response.Message= ex.Message;
                 return response;
-
             }
             return response;
-
-
         }
 
 
@@ -143,6 +137,7 @@ namespace IM10.BAL.Implementaion
                 var data = new
                 {
                     to = deviceId,
+                    collapse_key = collapseKey,
                     data = new
                     {
                         contentId = contentId,
@@ -157,11 +152,7 @@ namespace IM10.BAL.Implementaion
                         body = $"{message}",
                         title = "New Comment Arrived!",
                         sound = "Enabled",
-                        android = new
-                        {
-                            collapse_key = collapseKey,
-                            icon = "ic_launcher"
-                        }
+                        icon = "ic_launcher"                       
                     }                                
             };
                 Console.WriteLine(data);

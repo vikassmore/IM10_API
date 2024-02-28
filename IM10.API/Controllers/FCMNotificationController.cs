@@ -8,6 +8,7 @@ namespace IM10.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class FCMNotificationController : BaseAPIController
     {
         IFCMNotificationService service;

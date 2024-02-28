@@ -22,4 +22,11 @@ namespace IM10.Models
 
 
     }
+
+    public class LoginStaus
+    {
+        public bool? IsLogin { get; set; }
+        public long UserId { get; set; }
+
+    }
 }

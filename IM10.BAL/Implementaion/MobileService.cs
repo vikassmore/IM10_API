@@ -1315,7 +1315,7 @@ namespace IM10.BAL.Implementaion
             }
             foreach (var item in commentEntity)
             {
-
+                
                 ContentCommentModelData modelData = new ContentCommentModelData();
                 if (item.CommentId != null && item.ParentCommentId == null)
                 {
@@ -1403,7 +1403,12 @@ namespace IM10.BAL.Implementaion
                         }
                     }
                     modelData.contentCommentModels = commentList;
+                    modelData.CommentCount = context.Comments
+                           .Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false)
+                           .Select(x => x.CommentId)
+                           .Count();
                 }
+                
                 commentModelList.Add(modelData);
             }
             List<ContentCommentModelData> commentModelList1 = new List<ContentCommentModelData>();

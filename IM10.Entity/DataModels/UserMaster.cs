@@ -49,8 +49,6 @@ public partial class UserMaster
 
     public virtual ICollection<ContentFlag> ContentFlags { get; } = new List<ContentFlag>();
 
-    public virtual ICollection<Fcmnotification> Fcmnotifications { get; } = new List<Fcmnotification>();
-
     public virtual ICollection<Otpautherization> Otpautherizations { get; } = new List<Otpautherization>();
 
     public virtual ICollection<UserAuditLog> UserAuditLogs { get; } = new List<UserAuditLog>();

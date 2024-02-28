@@ -81,6 +81,7 @@ namespace IM10.BAL.Implementaion
                 var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == commentreply.ContentId);
                 
                 var existingfcmUser=context.UserMasters.Where(x=>x.UserId== commentEntity.UserId).FirstOrDefault();                         
+               
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
                 message.CommentId = commentreply.CommentId;

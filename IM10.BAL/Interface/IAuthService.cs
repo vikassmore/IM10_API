@@ -64,5 +64,12 @@ namespace IM10.BAL.Interface
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
         string MobileLogOut(long userId, ref ErrorResponseModel errorResponseModel);
+
+        /// <summary>
+        /// method for check login status of  user 
+        /// </summary>
+        /// <param name="Mobile"></param>
+        /// <returns></returns>
+        LoginStaus LoginStatusOfUser(string Mobile);
     }
 }

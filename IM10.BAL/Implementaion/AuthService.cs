@@ -66,19 +66,17 @@ namespace IM10.BAL.Implementaion
         {
             var authModel = new AuthModel();
             errorResponseModel = new ErrorResponseModel();
-            var user = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsDeleted == false);
+            var user = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsActive==true && x.IsDeleted == false);
             
             if (user != null)
             {
-                var existingUser = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsActive == false && x.IsDeleted == false);
+                var existingUser = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo && x.IsLogin == false && x.IsDeleted == false);
                 {
                     context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
-                    context.Entry(existingUser).Property(x => x.IsActive).IsModified = true;
                     context.Entry(existingUser).Property(x => x.DeviceToken).IsModified = true;
 
                     // Update values
                     existingUser.IsLogin = true;
-                    existingUser.IsActive = true;
                     existingUser.DeviceToken = loginModel.DeviceToken;
                     context.SaveChanges();
                 }
@@ -88,7 +86,6 @@ namespace IM10.BAL.Implementaion
                     fcmexstingUser.UserId = user.UserId;
                     context.SaveChanges();
                 }
-
 
                 Random generator = new Random();
                 string otp = CreateNewOTP((user.UserId));
@@ -271,22 +268,38 @@ namespace IM10.BAL.Implementaion
         {
             var userModel = new UserMaster();
             string message = "";
-            var existingUser = context.UserMasters.Where(x => x.UserId == userId).FirstOrDefault();
+            var existingUser = context.UserMasters.Where(x => x.UserId == userId ).FirstOrDefault();
             if (existingUser != null)
             {
                 context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
-                context.Entry(existingUser).Property(x => x.IsActive).IsModified = true;
                 context.Entry(existingUser).Property(x => x.DeviceToken).IsModified = true;
 
                 // Update values
                 existingUser.IsLogin = false;
-                existingUser.IsActive = false;
                 existingUser.DeviceToken = null;
                // context.UserMasters.Update(userModel);
                 context.SaveChanges();
                 message = GlobalConstants.LogOut;
             }
             return message;
+        }
+
+
+        /// <summary>
+        /// method for check login status of  user 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public LoginStaus LoginStatusOfUser(string Mobile)
+        {
+            LoginStaus login = new LoginStaus();
+            var existinglogin = context.UserMasters.Where(z => z.MobileNo == Mobile && z.IsDeleted == false).FirstOrDefault();
+            if (existinglogin != null)
+            {
+                login.IsLogin = existinglogin.IsLogin;
+                login.UserId=existinglogin.UserId;
+            }
+            return login;
         }
     }
 }

@@ -61,7 +61,7 @@ namespace IM10.API
             services.AddSignalR();
             services.AddCors(options => {
                 options.AddPolicy("AllowAnyOrigin", builder =>
-                    builder.WithOrigins()
+                    builder.WithOrigins("http://localhost:4200","http://im10ui.meshbagroup.com/")
                            .AllowAnyMethod()                                          
                            .AllowAnyHeader()
                            .AllowCredentials());
@@ -76,8 +76,11 @@ namespace IM10.API
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-            
 
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 60000000; // Set the maximum request size in bytes (60MB in this example)
+            });
             // Register all injecting interfaces with implemented class
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserPlayerService, UserPlayerService>();
@@ -175,13 +178,15 @@ namespace IM10.API
 
 
             app.UseCors(builder => builder.AllowAnyOrigin()
-                               .AllowAnyMethod()
-                               .WithHeaders("authorization", "accept", "content-type", "origin"));
+                                .AllowAnyMethod()
+                                .WithHeaders("authorization", "accept", "content-type", "origin"));
+
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()
                .WithExposedHeaders("content-disposition"));
 
-            //Accesing Physical Files like img, pdf
+            app.UseCors("AllowAnyOrigin");
 
+            //Accesing Physical Files like img, pdf
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -245,21 +250,15 @@ namespace IM10.API
                 
             });
 
-
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IM10.API v1"));
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().SetIsOriginAllowed(origin => true)
-           .WithExposedHeaders("content-disposition"));
-            app.UseCors("AllowSpecificOrigin");
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapHub<NotificationsHubService>("/Notify").RequireCors("CORSPolicy");
             });
             
         }

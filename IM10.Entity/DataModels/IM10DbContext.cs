@@ -367,11 +367,6 @@ public partial class IM10DbContext : DbContext
                 .HasForeignKey(d => d.PlayerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FCMNotification_PlayerDetails");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Fcmnotifications)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_FCMNotification_FCMNotification");
         });
 
         modelBuilder.Entity<Language>(entity =>

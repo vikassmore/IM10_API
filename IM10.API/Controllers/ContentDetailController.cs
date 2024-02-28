@@ -24,7 +24,6 @@ namespace IM10.API.Controllers
     /// <summary>
     /// APIs for ContentDetails entity 
     /// </summary>
-
     [Route("api/[controller]")]
     [ApiController]
     public class ContentDetailController : BaseAPIController

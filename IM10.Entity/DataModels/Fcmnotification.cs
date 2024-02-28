@@ -24,6 +24,4 @@ public partial class Fcmnotification
     public bool IsDeleted { get; set; }
 
     public virtual PlayerDetail Player { get; set; } = null!;
-
-    public virtual UserMaster User { get; set; } = null!;
 }

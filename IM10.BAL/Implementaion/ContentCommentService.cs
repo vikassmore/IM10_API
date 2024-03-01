@@ -47,10 +47,10 @@ namespace IM10.BAL.Implementaion
         /// <param name="model"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public CommentNotificationModel AddContentCommentReply(ContentCommentModel model, ref ErrorResponseModel errorResponseModel)
-        {
+        public async Task<CommentNotificationModel> AddContentCommentReply(ContentCommentModel model)
+         {
             CommentNotificationModel message = new CommentNotificationModel();
-            errorResponseModel = new ErrorResponseModel();
+          ErrorResponseModel  errorResponseModel = new ErrorResponseModel();
             try
             {
                 var commentEntity = context.Comments.Where(x => x.CommentId == model.CommentId).FirstOrDefault();
@@ -79,19 +79,47 @@ namespace IM10.BAL.Implementaion
                     context.SaveChanges();
                 }
                 var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == commentreply.ContentId);
-                
-                var existingfcmUser=context.UserMasters.Where(x=>x.UserId== commentEntity.UserId).FirstOrDefault();                         
-               
+                var existingMapping=context.UserDeviceMappings.Where(x=>x.UserId==commentEntity.UserId && x.IsDeleted==false).ToList();
+                var loggedInUsersWithDeviceTokens = (from mapping in existingMapping
+                                                     join user in context.UserMasters
+                                                     on mapping.UserId equals user.UserId
+                                                     where user.IsLogin == true && user.IsDeleted == false
+                                                     select new
+                                                     {
+                                                         UserId = user.UserId,
+                                                         DeviceToken = mapping.DeviceToken
+                                                     }).ToList();             
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
                 message.CommentId = commentreply.CommentId;
                 message.ContentTypeId = commentreply.ContentTypeId;
                 message.CategoryId = existingcontentEntity.CategoryId;
+                message.IsPublic = commentreply.IsPublic;
                 message.Message = GlobalConstants.ReplySaveSuccessfully;
 
-                if (commentreply.IsPublic == true && existingfcmUser.DeviceToken != null)
-                {
-                    _notificationService.SendCommentNotification(existingfcmUser.DeviceToken, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId, message.CategoryId);
+                foreach(var item in loggedInUsersWithDeviceTokens)
+                {               
+                  var notificationResponse = await _notificationService.SendCommentNotification(item.DeviceToken, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId, message.CategoryId, (bool)message.IsPublic);
+                    if (notificationResponse.IsSuccess == 0)
+                    {
+                        var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
+                        if (fcmNotification != null)
+                        {
+                            fcmNotification.IsDeleted = true;
+                            context.Fcmnotifications.Update(fcmNotification);
+                            context.SaveChanges();
+                        }
+
+                        // Set IsDeleted to true for the device token in UserDeviceMapping table
+                        var userMapping = context.UserDeviceMappings.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
+                        if (userMapping != null)
+                        {
+                            userMapping.IsDeleted = true;
+                            context.UserDeviceMappings.Update(userMapping);
+                            context.SaveChanges() ;
+                        }
+
+                    }
                 }
 
                 var userAuditLog = new UserAuditLogModel();
@@ -184,9 +212,7 @@ namespace IM10.BAL.Implementaion
                                      comment.UpdatedBy,
                                      comment.UpdatedDate,
                                      comment.ParentCommentId,
-
-                                 }
-                               ).ToList();
+                                 }).ToList();
 
             if (commentEntity.Count == 0)
             {
@@ -304,11 +330,12 @@ namespace IM10.BAL.Implementaion
             var commentList = new List<ContentCommentModel>();
             var commentEntity = (from comment in context.Comments
                                  join
-                                     content in context.ContentDetails on comment.ContentId equals content.ContentId
+                                 content in context.ContentDetails on comment.ContentId equals content.ContentId
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
-                                 where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null
+                                 where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null && content.IsDeleted==false
+                                 && content.Approved== true 
                                  orderby comment.CreatedDate descending
                                  select new ContentCommentModel
                                  {
@@ -335,10 +362,8 @@ namespace IM10.BAL.Implementaion
                                      ContentTypeName = contenttype.ContentName,
                                      UpdatedDate = comment.UpdatedDate,
                                      UpdatedBy = comment.UpdatedBy,
-                                 }
-
-                               ).ToList();
-            if (commentEntity == null)
+                                 }).ToList();
+            if (commentEntity.Count==0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
@@ -422,9 +447,7 @@ namespace IM10.BAL.Implementaion
                                      ContentTypeName = contenttype.ContentName,
                                      UpdatedDate = comment.UpdatedDate,
                                      UpdatedBy = comment.UpdatedBy,
-                                 }
-
-                               ).ToList();
+                                 }).ToList();
             if (commentEntity == null)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;

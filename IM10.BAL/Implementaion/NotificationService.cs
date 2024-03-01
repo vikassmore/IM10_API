@@ -21,7 +21,7 @@ namespace IM10.BAL.Implementaion
     public interface INotificationService
     {
         Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId,string thumbnail,int categoryId);
-        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId, int categoryId);
+        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId, int categoryId,bool IsPublic);
 
     }
     public class NotificationService : INotificationService
@@ -72,19 +72,19 @@ namespace IM10.BAL.Implementaion
                         contentTypeId = contentTypeId.ToString(),
                         thumbnail = thumbnail,
                         IsAndroidDevice = IsAndroidDevice,
-                        message = "Approved Successfully"
-                        
+                        message = "Approved Successfully"                        
                     },
                     notification = new
                     {
-                        body = $"{title}",
-                        title = "New Content Arrived!",
+                        body = $"{description}",
+                        title = $"{title}",
                         sound = "Enabled",                       
                         icon = "ic_launcher"                       
                     }
                 };
                 
                 var json = System.Text.Json.JsonSerializer.Serialize(data);
+                Console.WriteLine(json);
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
                 tRequest.Headers.Add(string.Format("Authorization: key={0}", ServerKey));
                 tRequest.Headers.Add(string.Format("Sender: id={0}", SenderId));
@@ -103,6 +103,7 @@ namespace IM10.BAL.Implementaion
                                 Console.WriteLine(str);
                                 dynamic json1 = JsonConvert.DeserializeObject(str);
                                 success = json1.success;
+                                response.IsSuccess = success;
                             }
                         }
                     }
@@ -111,7 +112,7 @@ namespace IM10.BAL.Implementaion
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
-                response.IsSuccess= false;
+                response.IsSuccess= 0;
                 response.Message= ex.Message;
                 return response;
             }
@@ -120,7 +121,7 @@ namespace IM10.BAL.Implementaion
 
 
         
-        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId, int categoryId)
+        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId, int categoryId,bool IsPublic)
         {
             ResponseModel response = new ResponseModel();
             int success;
@@ -145,7 +146,8 @@ namespace IM10.BAL.Implementaion
                         message = message,
                         categoryId = categoryId,
                         isAndroidDevice = IsAndroidDevice,
-                        contentTypeId = contentTypeId
+                        contentTypeId = contentTypeId,
+                        IsPublic = IsPublic
                     },
                     notification = new
                     {
@@ -175,6 +177,7 @@ namespace IM10.BAL.Implementaion
                                 Console.WriteLine(str);
                                 dynamic json1 = JsonConvert.DeserializeObject(str);
                                 success = json1.success;
+                                response.IsSuccess = success;
                             }
                         }
                     }
@@ -183,11 +186,13 @@ namespace IM10.BAL.Implementaion
             catch (Exception ex)
             {
                 Console.WriteLine($"Exception: {ex.Message}");
-                response.IsSuccess = false;
+                response.IsSuccess = 0;
                 response.Message = ex.Message;
                 return response;
             }
+            Console.WriteLine(response);
             return response;
+            
         }
     } 
 }

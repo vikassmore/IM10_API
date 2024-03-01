@@ -13,6 +13,8 @@ public partial class ContentAuditLog
 
     public long ContentId { get; set; }
 
+    public string? ContentTitle { get; set; }
+
     public string? Comment { get; set; }
 
     public bool? Approved { get; set; }

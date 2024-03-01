@@ -73,6 +73,8 @@ public partial class IM10DbContext : DbContext
 
     public virtual DbSet<UserAuditLog> UserAuditLogs { get; set; }
 
+    public virtual DbSet<UserDeviceMapping> UserDeviceMappings { get; set; }
+
     public virtual DbSet<UserMaster> UserMasters { get; set; }
 
     public virtual DbSet<UserPlayerMapping> UserPlayerMappings { get; set; }
@@ -223,6 +225,7 @@ public partial class IM10DbContext : DbContext
             entity.HasKey(e => e.ContentLogId).HasName("PK_VideoContentLog");
 
             entity.Property(e => e.Comment).HasMaxLength(200);
+            entity.Property(e => e.ContentTitle).HasMaxLength(100);
             entity.Property(e => e.Description).HasMaxLength(200);
             entity.Property(e => e.Title).HasMaxLength(100);
 
@@ -566,6 +569,18 @@ public partial class IM10DbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserAuditLogs_UserMaster");
+        });
+
+        modelBuilder.Entity<UserDeviceMapping>(entity =>
+        {
+            entity.HasKey(e => e.UserDeviceId);
+
+            entity.ToTable("UserDeviceMapping");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserDeviceMappings)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserDeviceMapping_UserMaster");
         });
 
         modelBuilder.Entity<UserMaster>(entity =>

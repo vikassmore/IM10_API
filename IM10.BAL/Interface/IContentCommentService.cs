@@ -43,7 +43,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        CommentNotificationModel AddContentCommentReply(ContentCommentModel model, ref ErrorResponseModel errorResponseModel);
+        Task<CommentNotificationModel> AddContentCommentReply(ContentCommentModel model);
 
 
         /// <summary>

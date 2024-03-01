@@ -17,6 +17,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Twilio.TwiML.Messaging;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IM10.BAL.Implementaion
 {
@@ -383,11 +384,14 @@ namespace IM10.BAL.Implementaion
             var contentEntityList = (from content in context.ContentDetails
                                      join
                                      category in context.Categories on content.CategoryId equals category.CategoryId
+                                     join update in context.ContentAuditLogs on content.ContentId equals update.ContentId into updates
+                                     from update in updates.DefaultIfEmpty()
                                      join subcategory in context.SubCategories on content.SubCategoryId equals subcategory.SubCategoryId
                                      join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                      join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                      join language in context.Languages on content.LanguageId equals language.LanguageId
-                                     where content.PlayerId == playerId && content.IsDeleted == false
+                                     where content.PlayerId == playerId && content.IsDeleted == false 
+
                                      orderby content.UpdatedDate descending
                                      select new ContentDetailModel
                                      {
@@ -396,14 +400,14 @@ namespace IM10.BAL.Implementaion
                                          ContentFilePath = content.ContentFilePath,
                                          ContentFileName1 = content.ContentFileName1,
                                          ContentFilePath1 = content.ContentFilePath1,
-                                         Title = content.Title,
+                                         Title = update.ContentTitle != null && update.Approved==true ? $"{content.Title} ({update.ContentTitle})" : content.Title,
                                          Description = content.Description,
                                          CreatedDate = content.CreatedDate,
                                          CreatedBy = content.CreatedBy,
                                          CategoryId = content.CategoryId,
                                          CategoryName = category.Name,
                                          SubCategoryId = content.SubCategoryId,
-                                         SubCategoryName = subcategory.Name,
+                                         SubCategoryName = subcategory.Name, 
                                          PlayerId = content.PlayerId,
                                          FirstName = player.FirstName,
                                          LastName = player.LastName,
@@ -612,7 +616,27 @@ namespace IM10.BAL.Implementaion
                     {
                         foreach (var item in existing)
                         {
-                            await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail, message.CategoryId);
+                          var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail, message.CategoryId);
+                            if (notificationResponse.IsSuccess == 0)
+                            {
+                                var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
+                                if (fcmNotification != null)
+                                {
+                                    fcmNotification.IsDeleted = true;
+                                    context.Fcmnotifications.Update(fcmNotification);
+                                    context.SaveChanges();
+                                }
+
+                                // Set IsDeleted to true for the device token in UserDeviceMapping table
+                                var userMapping = context.UserDeviceMappings.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
+                                if (userMapping != null)
+                                {
+                                    userMapping.IsDeleted = true;
+                                    context.UserDeviceMappings.Update(userMapping);
+                                    context.SaveChanges();
+                                }
+
+                            }
                         }
                     }
                     var userAuditLog = new UserAuditLogModel();

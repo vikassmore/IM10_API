@@ -1282,7 +1282,7 @@ namespace IM10.BAL.Implementaion
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
-                                 where comment.ContentId == contentId && comment.IsDeleted == false && comment.IsPublic == true
+                                 where comment.ContentId == contentId && comment.IsDeleted == false
                                  orderby comment.CreatedDate descending
                                  select new ContentCommentModel
                                  {
@@ -1349,7 +1349,7 @@ namespace IM10.BAL.Implementaion
                                               join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                               join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                               where comment.ContentId == contentId && comment.IsDeleted == false && comment.ParentCommentId == item.CommentId
-                                              && comment.IsPublic==true
+                                              
                                               select new ContentCommentModel
                                               {
                                                   CommentId = comment.CommentId,

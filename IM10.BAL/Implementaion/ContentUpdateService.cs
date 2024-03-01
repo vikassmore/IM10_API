@@ -45,10 +45,12 @@ namespace IM10.BAL.Implementaion
            
             if (model.ContentLogId==0)
             {
+                var updateEntity = context.ContentDetails.Where(x => x.ContentId == model.ContentId).FirstOrDefault();
                 var contentEntity = new ContentAuditLog();
                 contentEntity.ContentLogId = model.ContentLogId;
                 contentEntity.ContentId=model.ContentId;
                 contentEntity.Title=model.Title;
+                contentEntity.ContentTitle=updateEntity.Title;
                 contentEntity.Description=model.Description;
                 contentEntity.CreatedBy=model.CreatedBy;
                 contentEntity.CreatedDate=DateTime.Now;              
@@ -174,7 +176,7 @@ namespace IM10.BAL.Implementaion
                                      Approved= update.Approved,
                                      ApprovedBy = update.ApprovedBy,
                                      ApprovedDate = update.ApprovedDate,
-                                     ContentTitle = content.Title,
+                                     ContentTitle = update.ContentTitle,
 
                                  }).ToList();
             if (contentEntity.Count == 0)
@@ -234,7 +236,7 @@ namespace IM10.BAL.Implementaion
                                      CreatedDate = update.CreatedDate,
                                      ApprovedBy = update.ApprovedBy,
                                      ApprovedDate = update.ApprovedDate,
-                                     ContentTitle = content.Title
+                                     ContentTitle = update.ContentTitle
                                  }).ToList();
 
             if (contentEntity == null)
@@ -287,7 +289,7 @@ namespace IM10.BAL.Implementaion
                                      CreatedDate = update.CreatedDate,
                                      ApprovedBy = update.ApprovedBy,
                                      ApprovedDate = update.ApprovedDate,
-                                     ContentTitle = details.Title
+                                     ContentTitle = update.ContentTitle
                                  }).ToList();
             if (contentEntity == null)
             {
@@ -352,7 +354,7 @@ namespace IM10.BAL.Implementaion
                 .Select(group => new ContentUpdateModel
                 {
                     ContentId = group.Key,
-                    ContentTitle = group.First().Detail.Title,
+                    ContentTitle = group.First().Log.ContentTitle,
                     ContentLogId=group.First().Log.ContentLogId,
                     Title=group.First().Log.Title,
                     Description=group.First().Log.Description,

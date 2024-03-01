@@ -26,6 +26,7 @@ namespace IM10.Models
         public int CategoryId { get; set; }
         public string? title { get; set; }
         public string Message { get; set; }
+        public bool? IsPublic { get; set; }
 
     }
 }

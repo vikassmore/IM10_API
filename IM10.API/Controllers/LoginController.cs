@@ -119,7 +119,9 @@ namespace IM10.API.Controllers
                         authData.RoleId,
                         authData.Role,
                         authData.UserId,
-                        authData.MobileNo
+                        authData.MobileNo,
+                        authData.FirstName,
+                        authData.LastName,
                     });
                 }
                 return ReturnErrorResponse(errorResponseModel);

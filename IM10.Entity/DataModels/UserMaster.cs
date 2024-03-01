@@ -53,5 +53,7 @@ public partial class UserMaster
 
     public virtual ICollection<UserAuditLog> UserAuditLogs { get; } = new List<UserAuditLog>();
 
+    public virtual ICollection<UserDeviceMapping> UserDeviceMappings { get; } = new List<UserDeviceMapping>();
+
     public virtual ICollection<UserPlayerMapping> UserPlayerMappings { get; } = new List<UserPlayerMapping>();
 }

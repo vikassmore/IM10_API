@@ -20,7 +20,9 @@ namespace IM10.Models
         public string? DeviceToken { get; set; }
         public string MobileNo { get; set; } = null!;
 
+        public string FirstName { get; set; } = null!;
 
+        public string LastName { get; set; } = null!;
     }
 
     public class LoginStaus

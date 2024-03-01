@@ -127,7 +127,7 @@ namespace IM10.API.Controllers
             try
             {
 
-                CommentNotificationModel commentModel = contentCommentService.AddContentCommentReply(model,ref errorResponseModel);
+                CommentNotificationModel commentModel =await contentCommentService.AddContentCommentReply(model);
 
                 if (commentModel != null)
                 {

@@ -86,7 +86,27 @@ namespace IM10.BAL.Implementaion
                         var existing = context.Fcmnotifications.Where(x => x.PlayerId == existingcontentEntity.PlayerId).ToList();
                         foreach (var item in existing)
                         {
-                            await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail,message.CategoryId);
+                          var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail,message.CategoryId);
+                            if (notificationResponse.IsSuccess == 0)
+                            {
+                                var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
+                                if (fcmNotification != null)
+                                {
+                                    fcmNotification.IsDeleted = true;
+                                    context.Fcmnotifications.Update(fcmNotification);
+                                    context.SaveChanges();
+                                }
+
+                                // Set IsDeleted to true for the device token in UserDeviceMapping table
+                                var userMapping = context.UserDeviceMappings.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
+                                if (userMapping != null)
+                                {
+                                    userMapping.IsDeleted = true;
+                                    context.UserDeviceMappings.Update(userMapping);
+                                    context.SaveChanges();
+                                }
+
+                            }
                         }
                     }
                 }
@@ -174,6 +194,7 @@ namespace IM10.BAL.Implementaion
                                  join subcategory in context.SubCategories
                                  on update.SubCategoryId equals subcategory.SubCategoryId
                                  where content.PlayerId == playerId && advertise.IsDeleted==false &&  update.IsDeleted == false
+                                 && content.Approved==true && content.IsDeleted==false
                                  orderby update.UpdatedDate descending
 
                                  select new AdvContentMappingModel1

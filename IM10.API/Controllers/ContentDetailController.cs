@@ -202,7 +202,7 @@ namespace IM10.API.Controllers
                                 using (var stream = new FileStream(fullPath, FileMode.Create))
                                 {
                                     file.CopyTo(stream);
-                                }
+                                } 
                                 if (file.Name == "contentFilePath")
                                 {
                                     GetThumbnail(fullPath, fullPathbitmap);

@@ -84,10 +84,12 @@ namespace IM10.BAL.Implementaion
                                                      join user in context.UserMasters
                                                      on mapping.UserId equals user.UserId
                                                      where user.IsLogin == true && user.IsDeleted == false
+                                                     group new { user.UserId, mapping.DeviceToken } by new { user.UserId, mapping.DeviceToken } 
+                                                     into grouped
                                                      select new
                                                      {
-                                                         UserId = user.UserId,
-                                                         DeviceToken = mapping.DeviceToken
+                                                         UserId = grouped.Key.UserId,
+                                                         DeviceToken = grouped.Key.DeviceToken
                                                      }).ToList();             
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
@@ -334,8 +336,8 @@ namespace IM10.BAL.Implementaion
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
-                                 where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null && content.IsDeleted==false
-                                 && content.Approved== true 
+                                 where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null 
+                                 && content.IsDeleted==false && content.Approved== true 
                                  orderby comment.CreatedDate descending
                                  select new ContentCommentModel
                                  {

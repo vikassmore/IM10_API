@@ -102,11 +102,24 @@ namespace IM10.BAL.Interface
         string AddMobileContentComment(ContentCommentModel1 model, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
-        /// Method is used to get contentcomment by contentId
+        /// Method is used to get contentcomment by contentId,userid
+        /// </summary>
+        /// <param name="contentId"></param>\
+        /// <param name="errorResponseModel"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        CommentListData GetMobileCommentByContentId(long contentId,long UserId, ref ErrorResponseModel errorResponseModel);
+
+
+        /// <summary>
+        /// Method is used to GetMobileCommentCount by contentId,userid
         /// </summary>
         /// <param name="contentId"></param>
+        /// <param name="UserId"></param>
         /// <returns></returns>
-        List<ContentCommentModelData> GetMobileCommentByContentId(long contentId, ref ErrorResponseModel errorResponseModel);
+        CommentCountData GetMobileCommentCount(long contentId, long userId, ref ErrorResponseModel errorResponseModel);
+
+
 
         /// <summary>
         /// Method is used to get contentcomment by playerId

@@ -20,6 +20,7 @@ namespace IM10.Models
         public string? ContentFileName { get; set; }
         public string? ContentFilePath { get; set; }
         public string? Thumbnail1 { get; set; }
+        public long CommentedUserId { get; set; }
 
         public int ContentTypeId { get; set; }
         public string? ContentTypeName { get; set; }
@@ -47,12 +48,14 @@ namespace IM10.Models
         public int? UpdatedBy { get; set; }
 
         public bool IsDeleted { get; set; }
-
+        public string? ReplyedAdminName { get; set; }
+        
     }
 
 
     public class ContentCommentModel1
     {
+        
         public long CommentId { get; set; }
         public long UserId { get; set; }
         public long ContentId { get; set; }
@@ -69,13 +72,26 @@ namespace IM10.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public bool IsDeleted { get; set; }
+       
 
     }
     public class ContentCommentModelData
     {
         public long CommentId { get; set; }
-        public int CommentCount { get; set; }
+        public int CommentCount { get; set; }       
         public List<ContentCommentModel> contentCommentModels { get; set; }
 
+    }
+
+   public class CommentListData
+   {    
+        public int commentCount { get; set; }
+        public List<ContentCommentModelData> lstdatamodel { get;set; }
+   }
+
+
+    public class CommentCountData
+    {
+        public int CommentListCount { get; set; }
     }
 }

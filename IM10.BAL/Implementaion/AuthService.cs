@@ -70,6 +70,20 @@ namespace IM10.BAL.Implementaion
             
             if (user != null)
             {
+                var existingUser = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel
+                  .MobileNo && x.IsLogin == false && x.IsDeleted == false);
+                {
+                    context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.FirstName).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.LastName).IsModified = true;
+
+
+                    // Update values
+                    existingUser.IsLogin = true;
+                    existingUser.FirstName = loginModel.FirstName;
+                    existingUser.LastName= loginModel.LastName;
+                    context.SaveChanges();
+                }
                 var userDeviceMapping = new UserDeviceMapping
                 {
                     UserId = user.UserId,

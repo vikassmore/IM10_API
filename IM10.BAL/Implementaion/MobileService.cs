@@ -72,7 +72,8 @@ namespace IM10.BAL.Implementaion
                                  join player in context.PlayerDetails on flag.PlayerId equals player.PlayerId
                                  join content in context.ContentDetails on flag.ContentId equals content.ContentId
                                  join type in context.ContentTypes on flag.ContentTypeId equals type.ContentTypeId
-                                 where flag.IsDeleted == false && flag.Trending == true && flag.ContentTypeId == ContentTypeHelper.VideoContentTypeId && flag.PlayerId == playerId && content.Approved == true
+                                 where flag.IsDeleted == false && flag.Trending == true && flag.ContentTypeId == ContentTypeHelper.VideoContentTypeId
+                                 && flag.PlayerId == playerId && content.Approved == true
                                  orderby flag.UpdatedDate descending
                                  select new
                                  {
@@ -665,7 +666,7 @@ namespace IM10.BAL.Implementaion
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
             int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
             int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-            int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic==true && x.IsDeleted==false).Select(x => x.CommentId).Count();
+            int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
             bool Like = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
             bool Favourite1 = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
             imgmodel.FileName = imgmodel.url;
@@ -1273,16 +1274,20 @@ namespace IM10.BAL.Implementaion
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        public List<ContentCommentModelData> GetMobileCommentByContentId(long contentId, ref ErrorResponseModel errorResponseModel)
+        public CommentListData GetMobileCommentByContentId(long contentId, long UserId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
             List<ContentCommentModelData> commentModelList = new List<ContentCommentModelData>();
+            List<ContentCommentModel> ContentcommentList = new List<ContentCommentModel>();
+            CommentListData commentListData = new CommentListData();
+            commentListData.commentCount = 0;
             var commentEntity = (from comment in context.Comments
                                  join content in context.ContentDetails on comment.ContentId equals content.ContentId
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                  where comment.ContentId == contentId && comment.IsDeleted == false
+                                 && comment.IsPublic == true
                                  orderby comment.CreatedDate descending
                                  select new ContentCommentModel
                                  {
@@ -1307,15 +1312,51 @@ namespace IM10.BAL.Implementaion
                                      UpdatedDate = comment.UpdatedDate,
                                      UpdatedBy = comment.UpdatedBy,
                                  }).ToList();
+
+            var PrivatecommentEntity = (from comment in context.Comments
+                                        join content in context.ContentDetails on comment.ContentId equals content.ContentId
+                                        join user in context.UserMasters on comment.UserId equals user.UserId
+                                        join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
+                                        join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                        where comment.ContentId == contentId && comment.IsDeleted == false
+                                        && comment.IsPublic == false && comment.UserId == UserId
+                                        orderby comment.CreatedDate descending
+                                        select new ContentCommentModel
+                                        {
+                                            CommentId = comment.CommentId,
+                                            ContentId = comment.ContentId,
+                                            UserId = comment.UserId,
+                                            EmailId = user.EmailId,
+                                            FirstName = user.FirstName,
+                                            LastName = user.LastName,
+                                            FullName = user.FirstName + " " + user.LastName,
+                                            DeviceId = comment.DeviceId,
+                                            Location = comment.Location,
+                                            Liked = comment.Liked,
+                                            Comment1 = comment.Comment1,
+                                            Shared = comment.Shared,
+                                            IsPublic = comment.IsPublic,
+                                            CreatedBy = comment.CreatedBy,
+                                            CreatedDate = comment.CreatedDate,
+                                            ParentCommentId = comment.ParentCommentId,
+                                            ContentTypeId = content.ContentTypeId,
+                                            ContentTypeName = contenttype.ContentName,
+                                            UpdatedDate = comment.UpdatedDate,
+                                            UpdatedBy = comment.UpdatedBy,
+                                        }).ToList();
+
             if (commentEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-                return new List<ContentCommentModelData>();
+                return new CommentListData();
             }
-            foreach (var item in commentEntity)
+
+            ContentcommentList.AddRange(commentEntity.ToList());
+            ContentcommentList.AddRange(PrivatecommentEntity.ToList());
+            foreach (var item in ContentcommentList)
             {
-                
+
                 ContentCommentModelData modelData = new ContentCommentModelData();
                 if (item.CommentId != null && item.ParentCommentId == null)
                 {
@@ -1348,8 +1389,9 @@ namespace IM10.BAL.Implementaion
                                               join user in context.UserMasters on comment.UserId equals user.UserId
                                               join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                               join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
-                                              where comment.ContentId == contentId && comment.IsDeleted == false && comment.ParentCommentId == item.CommentId
-                                              
+                                              where comment.ContentId == contentId && comment.IsDeleted == false
+                                              && comment.ParentCommentId == item.CommentId
+
                                               select new ContentCommentModel
                                               {
                                                   CommentId = comment.CommentId,
@@ -1357,10 +1399,12 @@ namespace IM10.BAL.Implementaion
                                                   UserId = comment.UserId,
                                                   EmailId = user.EmailId,
                                                   FirstName = user.FirstName,
+                                                  ReplyedAdminName = "IM" + player.FirstName,
                                                   LastName = user.LastName,
                                                   FullName = user.FirstName + " " + user.LastName,
                                                   DeviceId = comment.DeviceId,
                                                   Location = comment.Location,
+                                                  CommentedUserId = model.UserId,
                                                   Liked = comment.Liked,
                                                   Comment1 = comment.Comment1,
                                                   Shared = comment.Shared,
@@ -1387,6 +1431,8 @@ namespace IM10.BAL.Implementaion
                             model1.DeviceId = item1.DeviceId;
                             model1.Location = item1.Location;
                             model1.Liked = item1.Liked;
+                            model1.ReplyedAdminName = item1.ReplyedAdminName;
+                            model1.CommentedUserId = item1.CommentedUserId;
                             model1.Shared = item1.Shared;
                             model1.IsPublic = item1.IsPublic;
                             model1.EmailId = item1.EmailId;
@@ -1403,17 +1449,16 @@ namespace IM10.BAL.Implementaion
                         }
                     }
                     modelData.contentCommentModels = commentList;
-                    modelData.CommentCount = context.Comments
-                           .Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false)
-                           .Select(x => x.CommentId)
-                           .Count();
+                    modelData.CommentCount = commentList.Count();
+                    commentListData.commentCount = modelData.CommentCount + commentListData.commentCount;
                 }
-                
+
                 commentModelList.Add(modelData);
             }
             List<ContentCommentModelData> commentModelList1 = new List<ContentCommentModelData>();
             commentModelList1 = commentModelList.Where(x => x.CommentId != 0).ToList();
-            return commentModelList1;
+            commentListData.lstdatamodel = commentModelList1;
+            return commentListData;
         }
 
         /// <summary>
@@ -1986,6 +2031,190 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
             return playerMobileLikeFavouriteData;
+        }
+
+        public CommentCountData GetMobileCommentCount(long contentId, long userId, ref ErrorResponseModel errorResponseModel)
+        {
+                errorResponseModel = new ErrorResponseModel();
+                List<ContentCommentModelData> commentModelList = new List<ContentCommentModelData>();
+                List<ContentCommentModel> ContentcommentList = new List<ContentCommentModel>();
+                CommentCountData commentListData = new CommentCountData();
+                commentListData.CommentListCount = 0;
+                var commentEntity = (from comment in context.Comments
+                                     join content in context.ContentDetails on comment.ContentId equals content.ContentId
+                                     join user in context.UserMasters on comment.UserId equals user.UserId
+                                     join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
+                                     join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                     where comment.ContentId == contentId && comment.IsDeleted == false
+                                     && comment.IsPublic == true
+                                     orderby comment.CreatedDate descending
+                                     select new ContentCommentModel
+                                     {
+                                         CommentId = comment.CommentId,
+                                         ContentId = comment.ContentId,
+                                         UserId = comment.UserId,
+                                         EmailId = user.EmailId,
+                                         FirstName = user.FirstName,
+                                         LastName = user.LastName,
+                                         FullName = user.FirstName + " " + user.LastName,
+                                         DeviceId = comment.DeviceId,
+                                         Location = comment.Location,
+                                         Liked = comment.Liked,
+                                         Comment1 = comment.Comment1,
+                                         Shared = comment.Shared,
+                                         IsPublic = comment.IsPublic,
+                                         CreatedBy = comment.CreatedBy,
+                                         CreatedDate = comment.CreatedDate,
+                                         ParentCommentId = comment.ParentCommentId,
+                                         ContentTypeId = content.ContentTypeId,
+                                         ContentTypeName = contenttype.ContentName,
+                                         UpdatedDate = comment.UpdatedDate,
+                                         UpdatedBy = comment.UpdatedBy,
+                                     }).ToList();
+
+                var PrivatecommentEntity = (from comment in context.Comments
+                                            join content in context.ContentDetails on comment.ContentId equals content.ContentId
+                                            join user in context.UserMasters on comment.UserId equals user.UserId
+                                            join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
+                                            join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                            where comment.ContentId == contentId && comment.IsDeleted == false
+                                            && comment.IsPublic == false && comment.UserId == userId
+                                            orderby comment.CreatedDate descending
+                                            select new ContentCommentModel
+                                            {
+                                                CommentId = comment.CommentId,
+                                                ContentId = comment.ContentId,
+                                                UserId = comment.UserId,
+                                                EmailId = user.EmailId,
+                                                FirstName = user.FirstName,
+                                                LastName = user.LastName,
+                                                FullName = user.FirstName + " " + user.LastName,
+                                                DeviceId = comment.DeviceId,
+                                                Location = comment.Location,
+                                                Liked = comment.Liked,
+                                                Comment1 = comment.Comment1,
+                                                Shared = comment.Shared,
+                                                IsPublic = comment.IsPublic,
+                                                CreatedBy = comment.CreatedBy,
+                                                CreatedDate = comment.CreatedDate,
+                                                ParentCommentId = comment.ParentCommentId,
+                                                ContentTypeId = content.ContentTypeId,
+                                                ContentTypeName = contenttype.ContentName,
+                                                UpdatedDate = comment.UpdatedDate,
+                                                UpdatedBy = comment.UpdatedBy,
+                                            }).ToList();
+
+                if (commentEntity.Count == 0)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                    return new CommentCountData();
+                }
+
+                ContentcommentList.AddRange(commentEntity.ToList());
+                ContentcommentList.AddRange(PrivatecommentEntity.ToList());
+                foreach (var item in ContentcommentList)
+                {
+                    ContentCommentModelData modelData = new ContentCommentModelData();
+                    if (item.CommentId != null && item.ParentCommentId == null)
+                    {
+                        modelData.CommentId = item.CommentId;
+                        List<ContentCommentModel> commentList = new List<ContentCommentModel>();
+                        var model = new ContentCommentModel();
+                        model.CommentId = item.CommentId;
+                        model.ContentId = item.ContentId;
+                        model.UserId = item.UserId;
+                        model.Comment1 = item.Comment1;
+                        model.ParentCommentId = item.ParentCommentId;
+                        model.DeviceId = item.DeviceId;
+                        model.Location = item.Location;
+                        model.Liked = item.Liked;
+                        model.Shared = item.Shared;
+                        model.IsPublic = item.IsPublic;
+                        model.EmailId = item.EmailId;
+                        model.CreatedDate = item.CreatedDate;
+                        model.CreatedBy = item.CreatedBy;
+                        model.FirstName = item.FirstName;
+                        model.LastName = item.LastName;
+                        model.FullName = item.FirstName + " " + item.LastName;
+                        model.ContentTypeId = item.ContentTypeId;
+                        model.ContentTypeName = item.ContentTypeName;
+                        model.UpdatedBy = item.UpdatedBy;
+                        model.UpdatedDate = item.UpdatedDate;
+                        commentList.Add(model);
+                        var commentreplyEntity = (from comment in context.Comments
+                                                  join content in context.ContentDetails on comment.ContentId equals content.ContentId
+                                                  join user in context.UserMasters on comment.UserId equals user.UserId
+                                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
+                                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                                  where comment.ContentId == contentId && comment.IsDeleted == false
+                                                  && comment.ParentCommentId == item.CommentId
+
+                                                  select new ContentCommentModel
+                                                  {
+                                                      CommentId = comment.CommentId,
+                                                      ContentId = comment.ContentId,
+                                                      UserId = comment.UserId,
+                                                      EmailId = user.EmailId,
+                                                      FirstName = user.FirstName,
+                                                      ReplyedAdminName = "IM" + player.FirstName,
+                                                      LastName = user.LastName,
+                                                      FullName = user.FirstName + " " + user.LastName,
+                                                      DeviceId = comment.DeviceId,
+                                                      Location = comment.Location,
+                                                      CommentedUserId = model.UserId,
+                                                      Liked = comment.Liked,
+                                                      Comment1 = comment.Comment1,
+                                                      Shared = comment.Shared,
+                                                      IsPublic = comment.IsPublic,
+                                                      CreatedBy = comment.CreatedBy,
+                                                      CreatedDate = comment.CreatedDate,
+                                                      ParentCommentId = comment.ParentCommentId,
+                                                      ContentTypeId = content.ContentTypeId,
+                                                      ContentTypeName = contenttype.ContentName,
+                                                      UpdatedDate = comment.UpdatedDate,
+                                                      UpdatedBy = comment.UpdatedBy,
+                                                  }).ToList();
+                        // var commentreplyEntity = context.Comments.FirstOrDefault(x => x.ParentCommentId == item.CommentId);
+                        if (commentreplyEntity.Count != 0)
+                        {
+                            foreach (var item1 in commentreplyEntity)
+                            {
+                                var model1 = new ContentCommentModel();
+                                model1.CommentId = item1.CommentId;
+                                model1.ContentId = item1.ContentId;
+                                model1.UserId = item1.UserId;
+                                model1.Comment1 = item1.Comment1;
+                                model1.ParentCommentId = item1.ParentCommentId;
+                                model1.DeviceId = item1.DeviceId;
+                                model1.Location = item1.Location;
+                                model1.Liked = item1.Liked;
+                                model1.ReplyedAdminName = item1.ReplyedAdminName;
+                                model1.CommentedUserId = item1.CommentedUserId;
+                                model1.Shared = item1.Shared;
+                                model1.IsPublic = item1.IsPublic;
+                                model1.EmailId = item1.EmailId;
+                                model1.CreatedDate = item1.CreatedDate;
+                                model1.CreatedBy = item1.CreatedBy;
+                                model1.FirstName = item1.FirstName;
+                                model1.LastName = item1.LastName;
+                                model1.FullName = item1.FirstName + " " + item1.LastName;
+                                model1.ContentTypeId = item1.ContentTypeId;
+                                model1.ContentTypeName = item1.ContentTypeName;
+                                model1.UpdatedBy = item1.UpdatedBy;
+                                model1.UpdatedDate = item1.UpdatedDate;
+                                commentList.Add(model1);
+                            }
+                        }
+                        modelData.contentCommentModels = commentList;
+                        modelData.CommentCount = commentList.Count();
+                        commentListData.CommentListCount = modelData.CommentCount + commentListData.CommentListCount;
+                    }
+                    commentModelList.Add(modelData);
+                }
+                List<ContentCommentModelData> commentModelList1 = new List<ContentCommentModelData>();
+                commentModelList1 = commentModelList.Where(x => x.CommentId != 0).ToList();
+                return commentListData;       
         }
     }
 }

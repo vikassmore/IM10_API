@@ -445,22 +445,56 @@ namespace IM10.API.Controllers
         }
 
         /// <summary>
-        /// Get contentcomment by contentId
+        /// Get contentcomment by contentId and userid
         /// </summary>
         /// <param name="">contentId</param>
+        /// <param name="UserId"></param>
         /// <returns></returns>
-        [HttpGet("GetMobileCommentByContentId/{contentId}")]
-        [ProducesResponseType(typeof(ContentCommentModel), 200)]
+        [HttpGet("GetMobileCommentByContentId/{contentId}/{UserId}")]
+        [ProducesResponseType(typeof(CommentListData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileCommentByContentId(long contentId)
+        public IActionResult GetMobileCommentByContentId(long contentId,long UserId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                var commentModel = services.GetMobileCommentByContentId(contentId, ref errorResponseModel);
-                if (commentModel.Count != 0)
+                var commentModel = services.GetMobileCommentByContentId(contentId, UserId,ref errorResponseModel);
+                if (commentModel != null)
+                {
+                    return Ok(commentModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Get MobileCommentCount by contentId and userid
+        /// </summary>
+        /// <param name="">contentId</param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("GetMobileCommentCount/{contentId}/{userId}")]
+        [ProducesResponseType(typeof(CommentCountData), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetMobileCommentCount(long contentId, long userId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                var commentModel = services.GetMobileCommentCount (contentId, userId, ref errorResponseModel);
+                if (commentModel != null)
                 {
                     return Ok(commentModel);
                 }

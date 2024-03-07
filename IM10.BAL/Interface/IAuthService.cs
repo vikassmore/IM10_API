@@ -61,9 +61,10 @@ namespace IM10.BAL.Interface
         /// method for logout user 
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="deviceToken"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        string MobileLogOut(long userId, ref ErrorResponseModel errorResponseModel);
+        string MobileLogOut(long userId,string deviceToken, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// method for check login status of  user 

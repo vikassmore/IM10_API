@@ -84,13 +84,17 @@ namespace IM10.BAL.Implementaion
                                                      join user in context.UserMasters
                                                      on mapping.UserId equals user.UserId
                                                      where user.IsLogin == true && user.IsDeleted == false
-                                                     group new { user.UserId, mapping.DeviceToken } by new { user.UserId, mapping.DeviceToken } 
+                                                     group new { user.UserId, mapping.DeviceToken, mapping.UserDeviceId, user.CreatedDate }
+                                                     by new { user.UserId, mapping.DeviceToken }
                                                      into grouped
+                                                     let latestUser = grouped.OrderByDescending(x => x.UserDeviceId).First()
                                                      select new
                                                      {
-                                                         UserId = grouped.Key.UserId,
-                                                         DeviceToken = grouped.Key.DeviceToken
-                                                     }).ToList();             
+                                                         UserId = latestUser.UserId,
+                                                         UserDeviceId = latestUser.UserDeviceId,
+                                                         DeviceToken = latestUser.DeviceToken
+                                                     }).ToList();
+
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
                 message.CommentId = commentreply.CommentId;

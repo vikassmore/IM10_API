@@ -71,32 +71,45 @@ namespace IM10.BAL.Implementaion
             if (user != null)
             {
                 var existingUser = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel
-                  .MobileNo && x.IsLogin == false && x.IsDeleted == false);
+                  .MobileNo  && x.IsDeleted == false);
                 {
-                    context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
                     context.Entry(existingUser).Property(x => x.FirstName).IsModified = true;
                     context.Entry(existingUser).Property(x => x.LastName).IsModified = true;
 
-
                     // Update values
-                    existingUser.IsLogin = true;
                     existingUser.FirstName = loginModel.FirstName;
                     existingUser.LastName= loginModel.LastName;
                     context.SaveChanges();
                 }
-                var userDeviceMapping = new UserDeviceMapping
-                {
-                    UserId = user.UserId,
-                    DeviceToken = loginModel.DeviceToken,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy= (int?)user.UserId,
-                    UpdatedDate = DateTime.Now,
-                    IsDeleted = false
-                };
 
-                context.UserDeviceMappings.Add(userDeviceMapping);
+                var existingUserDeviceMapping = context.UserDeviceMappings
+               .FirstOrDefault(x => x.UserId == user.UserId && x.DeviceToken == loginModel.DeviceToken);
+
+                if (existingUserDeviceMapping != null)
+                {
+                    // Update the existing record
+                    existingUserDeviceMapping.UpdatedBy = (int?)user.UserId;
+                    existingUserDeviceMapping.UpdatedDate = DateTime.Now;
+                    existingUserDeviceMapping.IsDeleted=false;
+                }
+                else
+                {
+                    // Create a new UserDeviceMapping record
+                    var userDeviceMapping = new UserDeviceMapping
+                    {
+                        UserId = user.UserId,
+                        DeviceToken = loginModel.DeviceToken,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = (int?)user.UserId,
+                        UpdatedDate = DateTime.Now,
+                        IsDeleted = false
+                    };
+
+                    context.UserDeviceMappings.Add(userDeviceMapping);
+                }
+
                 context.SaveChanges();
-             
+
                 var fcmexstingUser = context.Fcmnotifications.Where(x => x.DeviceToken == loginModel.DeviceToken && x.PlayerId == loginModel.PlayerId).FirstOrDefault();
                 if (fcmexstingUser != null)
                 {
@@ -288,18 +301,18 @@ namespace IM10.BAL.Implementaion
         /// method for logout user 
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="deviceToken"></param>
         /// <returns></returns>
-        public string MobileLogOut(long userId, ref ErrorResponseModel errorResponseModel)
+        public string MobileLogOut(long userId, string deviceToken, ref ErrorResponseModel errorResponseModel)
         {
             var userModel = new UserMaster();
             string message = "";
-            var existingUser = context.UserMasters.Where(x => x.UserId == userId ).FirstOrDefault();
+            var existingUser = context.UserDeviceMappings.Where(x => x.UserId == userId && x.DeviceToken==deviceToken).FirstOrDefault();
             if (existingUser != null)
             {
-                context.Entry(existingUser).Property(x => x.IsLogin).IsModified = true;
+                context.Entry(existingUser).Property(x => x.IsDeleted).IsModified = true;
                 // Update values
-                existingUser.IsLogin = false;
-               // context.UserMasters.Update(userModel);
+                existingUser.IsDeleted = true;
                 context.SaveChanges();
                 message = GlobalConstants.LogOut;
             }

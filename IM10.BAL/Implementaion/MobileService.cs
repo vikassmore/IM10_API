@@ -173,7 +173,7 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
                 topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                 topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
+                topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
@@ -424,7 +424,7 @@ namespace IM10.BAL.Implementaion
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
                     topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                     topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                    topModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
+                    topModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
@@ -1281,7 +1281,7 @@ namespace IM10.BAL.Implementaion
             List<ContentCommentModel> ContentcommentList = new List<ContentCommentModel>();
             CommentListData commentListData = new CommentListData();
             commentListData.commentCount = 0;
-            var commentEntity = (from comment in context.Comments
+            var PubliccommentEntity = (from comment in context.Comments
                                  join content in context.ContentDetails on comment.ContentId equals content.ContentId
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
@@ -1345,15 +1345,17 @@ namespace IM10.BAL.Implementaion
                                             UpdatedBy = comment.UpdatedBy,
                                         }).ToList();
 
-            if (commentEntity.Count == 0)
+            if (PubliccommentEntity.Count == 0 && PrivatecommentEntity.Count==0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return new CommentListData();
             }
 
-            ContentcommentList.AddRange(commentEntity.ToList());
+            ContentcommentList.AddRange(PubliccommentEntity.ToList());
             ContentcommentList.AddRange(PrivatecommentEntity.ToList());
+            ContentcommentList = ContentcommentList.OrderByDescending(x => x.CreatedDate).ToList();
+
             foreach (var item in ContentcommentList)
             {
 
@@ -2040,7 +2042,7 @@ namespace IM10.BAL.Implementaion
                 List<ContentCommentModel> ContentcommentList = new List<ContentCommentModel>();
                 CommentCountData commentListData = new CommentCountData();
                 commentListData.CommentListCount = 0;
-                var commentEntity = (from comment in context.Comments
+                var PubliccommentEntity = (from comment in context.Comments
                                      join content in context.ContentDetails on comment.ContentId equals content.ContentId
                                      join user in context.UserMasters on comment.UserId equals user.UserId
                                      join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
@@ -2104,15 +2106,16 @@ namespace IM10.BAL.Implementaion
                                                 UpdatedBy = comment.UpdatedBy,
                                             }).ToList();
 
-                if (commentEntity.Count == 0)
+                if (PubliccommentEntity.Count == 0 && PrivatecommentEntity.Count==0)
                 {
                     errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                     errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                     return new CommentCountData();
                 }
 
-                ContentcommentList.AddRange(commentEntity.ToList());
+                ContentcommentList.AddRange(PubliccommentEntity.ToList());
                 ContentcommentList.AddRange(PrivatecommentEntity.ToList());
+
                 foreach (var item in ContentcommentList)
                 {
                     ContentCommentModelData modelData = new ContentCommentModelData();

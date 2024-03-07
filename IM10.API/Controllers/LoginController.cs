@@ -263,13 +263,14 @@ namespace IM10.API.Controllers
         /// method for logout user 
         /// </summary>
         /// <param name="userId"></param>
+        /// <param name="deviceToken"></param>
         /// <returns></returns>
-        [HttpPost("MobileLogOut")]
+        [HttpPost("MobileLogOut/{userId}/{deviceToken}")]
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult MobileLogOut(long userId)
+        public IActionResult MobileLogOut(long userId, string deviceToken)
         {
             ErrorResponseModel errorResponseModel = null;
             try
@@ -278,7 +279,7 @@ namespace IM10.API.Controllers
                 {
                     return BadRequest("Invalid data");
                 }
-                var userModel =_authService.MobileLogOut (userId, ref errorResponseModel);
+                var userModel =_authService.MobileLogOut (userId,  deviceToken, ref errorResponseModel);
 
                 if (userModel != null)
                 {

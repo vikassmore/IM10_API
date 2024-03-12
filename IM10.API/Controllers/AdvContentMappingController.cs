@@ -109,7 +109,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> AddAdvContentMapping(AdvContentMappingModel model)
+        public  IActionResult AddAdvContentMapping(AdvContentMappingModel model)
         {
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
             {
@@ -126,7 +126,7 @@ namespace IM10.API.Controllers
             try
             {
                 var errorMessage = new ErrorResponseModel();
-                NotificationModel contentModel =await AdvContentMapping.AddAdvContentMapping(model);
+                var contentModel = AdvContentMapping.AddAdvContentMapping(model);
 
                 if (contentModel != null) 
                 {

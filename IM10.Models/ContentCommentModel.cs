@@ -21,6 +21,7 @@ namespace IM10.Models
         public string? ContentFilePath { get; set; }
         public string? Thumbnail1 { get; set; }
         public long CommentedUserId { get; set; }
+        public string? Title { get; set; }
 
         public int ContentTypeId { get; set; }
         public string? ContentTypeName { get; set; }

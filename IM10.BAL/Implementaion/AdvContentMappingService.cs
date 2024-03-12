@@ -48,10 +48,10 @@ namespace IM10.BAL.Implementaion
         /// <param name="model"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public async Task<NotificationModel> AddAdvContentMapping(AdvContentMappingModel model)
+        public string AddAdvContentMapping(AdvContentMappingModel model)
         {
             ErrorResponseModel errorResponseModel = new ErrorResponseModel();
-            NotificationModel message = new NotificationModel();
+            string message = "";
             try
             {
                 if (model.AdvContentMapId == 0)
@@ -69,46 +69,7 @@ namespace IM10.BAL.Implementaion
                     contentEntity.IsDeleted = false;
                     context.AdvContentMappings.Add(contentEntity);
                     context.SaveChanges();
-
-                    var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentEntity.ContentId);
-                    var thumbnailUrl = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(existingcontentEntity.ContentFilePath) ? existingcontentEntity.ContentFilePath : existingcontentEntity.ContentFilePath);
-
-                    if (existingcontentEntity != null)
-                    {
-                        message.PlayerId = existingcontentEntity.PlayerId;
-                        message.ContentId = contentEntity.ContentId;
-                        message.Title = existingcontentEntity.Title;
-                        message.CategoryId= existingcontentEntity.CategoryId;
-                        message.Description = existingcontentEntity.Description;
-                        message.ContentTypeId = existingcontentEntity.ContentTypeId;
-                        message.Thumbnail = ThumbnailPath(thumbnailUrl);
-                        message.Message = GlobalConstants.AdvContentMappingAddedSuccessfully;
-                        var existing = context.Fcmnotifications.Where(x => x.PlayerId == existingcontentEntity.PlayerId).ToList();
-                        foreach (var item in existing)
-                        {
-                          var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail,message.CategoryId);
-                            if (notificationResponse.IsSuccess == 0)
-                            {
-                                var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
-                                if (fcmNotification != null)
-                                {
-                                    fcmNotification.IsDeleted = true;
-                                    context.Fcmnotifications.Update(fcmNotification);
-                                    context.SaveChanges();
-                                }
-
-                                // Set IsDeleted to true for the device token in UserDeviceMapping table
-                                var userMapping = context.UserDeviceMappings.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
-                                if (userMapping != null)
-                                {
-                                    userMapping.IsDeleted = true;
-                                    context.UserDeviceMappings.Update(userMapping);
-                                    context.SaveChanges();
-                                }
-
-                            }
-                        }
-                    }
+                    message = GlobalConstants.AdvContentMappingAddedSuccessfully;
                 }
                 else
                 {
@@ -126,7 +87,7 @@ namespace IM10.BAL.Implementaion
                         contentlist.IsDeleted = false;
                         context.AdvContentMappings.Update(contentlist);
                         context.SaveChanges();
-                        message.Message = GlobalConstants.AdvContentMappingUpdateSuccessfully;
+                        message = GlobalConstants.AdvContentMappingUpdateSuccessfully;
                     }
                 }
                 var userAuditLog = new UserAuditLogModel();
@@ -140,7 +101,7 @@ namespace IM10.BAL.Implementaion
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                message.Message = ex.Message;
+                message = ex.Message;
                 return message;
             }
             return message;

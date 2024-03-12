@@ -545,27 +545,72 @@ namespace IM10.BAL.Implementaion
         {
             var subcategoryModelList = new List<SubCategoryModel>();
             errorResponseModel = new ErrorResponseModel();
-            var subcategoryEntityList = context.SubCategories.Where(x => x.CategoryId == categoryId && x.IsDeleted == false).ToList();
+
+            var subcategoryEntityList = context.SubCategories
+                .Where(x => x.CategoryId == categoryId && x.IsDeleted == false)
+                .ToList();
+
             if (subcategoryEntityList.Count == 0)
             {
+                // If no subcategories are found, add a default "Other" to the list
+                subcategoryModelList.Add(new SubCategoryModel
+                {
+                    SubCategoryId = 66, 
+                    Name = "Other",
+                    CategoryId = (int)categoryId, 
+                    CreatedDate = DateTime.Now,
+                });
+
+                // Set error response accordingly if needed
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            subcategoryEntityList.ForEach(item =>
+            else
             {
-                subcategoryModelList.Add(new SubCategoryModel
+                // Map subcategoryEntityList to subcategoryModelList
+                subcategoryEntityList.ForEach(item =>
                 {
-                    SubCategoryId = item.SubCategoryId,
-                    Name = item.Name,
-                    CategoryId = item.CategoryId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted
+                    subcategoryModelList.Add(new SubCategoryModel
+                    {
+                        SubCategoryId = item.SubCategoryId,
+                        Name = item.Name,
+                        CategoryId = item.CategoryId,
+                        CreatedDate = item.CreatedDate,
+                        CreatedBy = item.CreatedBy,
+                        UpdatedDate = item.UpdatedDate,
+                        UpdatedBy = item.UpdatedBy,
+                        IsDeleted = item.IsDeleted
+                    });
                 });
-            });
+            }
             return subcategoryModelList;
         }
+
+        /* public List<SubCategoryModel> GetSubcategoryByCategoryId(long categoryId, ref ErrorResponseModel errorResponseModel)
+         {
+             var subcategoryModelList = new List<SubCategoryModel>();
+             errorResponseModel = new ErrorResponseModel();
+             var subcategoryEntityList = context.SubCategories.Where(x => x.CategoryId == categoryId && x.IsDeleted == false).ToList();
+             if (subcategoryEntityList.Count == 0)
+             {
+                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+             }
+             subcategoryEntityList.ForEach(item =>
+             {
+                 subcategoryModelList.Add(new SubCategoryModel
+                 {
+                     SubCategoryId = item.SubCategoryId,
+                     Name = item.Name,
+                     CategoryId = item.CategoryId,
+                     CreatedDate = item.CreatedDate,
+                     CreatedBy = item.CreatedBy,
+                     UpdatedDate = item.UpdatedDate,
+                     UpdatedBy = item.UpdatedBy,
+                     IsDeleted = item.IsDeleted
+                 });
+             });
+             return subcategoryModelList;
+         }*/
     }
 }

@@ -595,7 +595,7 @@ namespace IM10.BAL.Implementaion
             NotificationModel message = new NotificationModel();
             try
             {
-                var contentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
+                var contentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId && x.IsDeleted==false);
 
                 if (contentEntity != null)
                 {
@@ -610,10 +610,9 @@ namespace IM10.BAL.Implementaion
                     message.Message = GlobalConstants.ApprovedSuccessfully;
                     message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath) ? contentEntity.ContentFilePath : contentEntity.ContentFilePath));
 
-                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId).ToList();
+                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId && x.IsDeleted==false).ToList();
 
-                    if(message.ContentTypeId== ContentTypeHelper.ArticleContentTypeId)
-                    {
+                    
                         foreach (var item in existing)
                         {
                           var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail, message.CategoryId);
@@ -638,7 +637,7 @@ namespace IM10.BAL.Implementaion
 
                             }
                         }
-                    }
+                    
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Approve Content Details";
                     userAuditLog.Description = "Content Details Approved";

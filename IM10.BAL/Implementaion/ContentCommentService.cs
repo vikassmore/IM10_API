@@ -340,8 +340,8 @@ namespace IM10.BAL.Implementaion
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
-                                 where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null 
-                                 && content.IsDeleted==false && content.Approved== true 
+                                 where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null
+                                 && content.IsDeleted == false && content.Approved == true
                                  orderby comment.CreatedDate descending
                                  select new ContentCommentModel
                                  {
@@ -352,9 +352,9 @@ namespace IM10.BAL.Implementaion
                                      FirstName = user.FirstName,
                                      LastName = user.LastName,
                                      FullName = user.FirstName + " " + user.LastName,
-                                     MobileNo= user.MobileNo,
-                                     ContentFileName=content.ContentFileName,
-                                     ContentFilePath=content.ContentFilePath,
+                                     MobileNo = user.MobileNo,
+                                     ContentFileName = content.ContentFileName,
+                                     ContentFilePath = content.ContentFilePath,
                                      DeviceId = comment.DeviceId,
                                      Location = comment.Location,
                                      Liked = comment.Liked,
@@ -362,6 +362,7 @@ namespace IM10.BAL.Implementaion
                                      Shared = comment.Shared,
                                      IsPublic = comment.IsPublic,
                                      CreatedBy = comment.CreatedBy,
+                                     Title = content.Title,
                                      CreatedDate = comment.CreatedDate,
                                      ParentCommentId = comment.ParentCommentId,
                                      ContentTypeId = content.ContentTypeId,
@@ -402,6 +403,7 @@ namespace IM10.BAL.Implementaion
                     LastName = item.LastName,
                     FullName = item.FirstName + " " + item.LastName,
                     MobileNo=item.MobileNo,
+                    Title=item.Title,
                     Thumbnail1 = imgmodel.thumbnail,
                     ContentFileName = item.ContentFileName,
                     ContentFilePath = item.ContentFilePath,

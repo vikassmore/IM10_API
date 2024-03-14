@@ -73,7 +73,7 @@ namespace IM10.BAL.Implementaion
                                  join content in context.ContentDetails on flag.ContentId equals content.ContentId
                                  join type in context.ContentTypes on flag.ContentTypeId equals type.ContentTypeId
                                  where flag.IsDeleted == false && flag.Trending == true && flag.ContentTypeId == ContentTypeHelper.VideoContentTypeId
-                                 && flag.PlayerId == playerId && content.Approved == true
+                                 && flag.PlayerId == playerId && content.Approved == true && content.IsDeleted==false
                                  orderby flag.UpdatedDate descending
                                  select new
                                  {
@@ -187,6 +187,9 @@ namespace IM10.BAL.Implementaion
             }
             return topList;
         }
+
+
+
         /// <summary>
         /// Method is used to get all Category top five video
         /// </summary>
@@ -305,6 +308,7 @@ namespace IM10.BAL.Implementaion
                         topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         topModel.CreatedDate = contentVideo.CreatedDate;
                         modelList.Add(topModel);
+                        modelList= modelList.OrderByDescending(x => x.CreatedDate).ToList();
                     }
                 }
                 categoryModel.mobileContentDatas = modelList;
@@ -436,7 +440,7 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            videoModel.mobileContentDatas = topList;
+            videoModel.mobileContentDatas = topList.OrderByDescending(x=>x.CreatedDate).ToList();
             return videoModel;
         }
         /// <summary>

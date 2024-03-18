@@ -73,3 +73,13 @@ Log Entry : 15:03:11 12 October 2023
   :
   :The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at
 -------------------------------
+
+Log Entry : 15:54:16 18 March 2024
+  :
+  :The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+-------------------------------
+
+Log Entry : 16:05:52 18 March 2024
+  :
+  :The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+-------------------------------

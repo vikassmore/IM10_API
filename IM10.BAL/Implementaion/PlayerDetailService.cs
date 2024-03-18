@@ -174,11 +174,6 @@ namespace IM10.BAL.Implementaion
                     Address = item.Address,
                     ProfileImageFileName = item.ProfileImageFileName,
                     ProfileImageFilePath = imgmodel.FileName,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-
                 });
             });
             return playerlist;

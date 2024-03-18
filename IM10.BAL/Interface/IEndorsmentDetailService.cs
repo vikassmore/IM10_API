@@ -27,13 +27,7 @@ namespace IM10.BAL.Interface
             /// <returns></returns>
             List<EndorsmentDetailModel> GetEndorsmentDetailPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
 
-            /// <summary>
-            /// Method is used to get all EndorsmentDetail
-            /// </summary>
-            /// <param name=""></param>
-            /// <returns></returns>
-            List<EndorsmentDetailModel> GetAllEndorsmentDetail(ref ErrorResponseModel errorResponseModel);
-
+           
             /// <summary>
             /// Method is used to add/edit EndorsmentDetail
             /// </summary>

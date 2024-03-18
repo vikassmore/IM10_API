@@ -21,13 +21,7 @@ namespace IM10.BAL.Interface
        List< CampaignSocialMediaDetailModel> GetCampaignSocialMediaDetailById(long marketingcampaignId, ref ErrorResponseModel errorResponseModel);
 
 
-        /// <summary>
-        /// Method is used to get all CampaignSocialMediaDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        List<CampaignSocialMediaDetailModel> GetAllCampaignSocialMediaDetail(ref ErrorResponseModel errorResponseModel);
-
+        
 
         /// <summary>
         /// Method is used to add/edit CampaignSocialMediaDetail

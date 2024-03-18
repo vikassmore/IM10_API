@@ -401,9 +401,7 @@ namespace IM10.BAL.Implementaion
                                          ContentFileName1 = content.ContentFileName1,
                                          ContentFilePath1 = content.ContentFilePath1,
                                          Title = update.ContentTitle != null && update.Approved==true ? $"{content.Title} ({update.ContentTitle})" : content.Title,
-                                         Description = content.Description,
-                                         CreatedDate = content.CreatedDate,
-                                         CreatedBy = content.CreatedBy,
+                                         Description = content.Description,                                      
                                          CategoryId = content.CategoryId,
                                          CategoryName = category.Name,
                                          SubCategoryId = content.SubCategoryId,
@@ -417,12 +415,8 @@ namespace IM10.BAL.Implementaion
                                          LanguageName = language.Name,
                                          Comment = content.Comment,
                                          Approved = content.Approved,
-                                         UpdatedDate = content.UpdatedDate,
-                                         UpdatedBy = content.UpdatedBy,
-                                     }
-
-                               ).ToList();
-            if (contentEntityList == null)
+                                     }).ToList();
+            if (contentEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
@@ -455,8 +449,6 @@ namespace IM10.BAL.Implementaion
                     Title = item.Title,
                     Description = item.Description,
                     Thumbnail1 = imgmodel.thumbnail,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
                     CategoryId = item.CategoryId,
                     CategoryName = item.CategoryName,
                     SubCategoryId = item.SubCategoryId,
@@ -471,8 +463,6 @@ namespace IM10.BAL.Implementaion
                     LanguageName = item.LanguageName,
                     Comment= item.Comment,
                     Approved = item.Approved,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
                 });
             });
             return contentList;
@@ -506,8 +496,6 @@ namespace IM10.BAL.Implementaion
                                          ContentFilePath1 = content.ContentFilePath1,
                                          Title = content.Title,
                                          Description = content.Description,
-                                         CreatedDate = content.CreatedDate,
-                                         CreatedBy = content.CreatedBy,
                                          CategoryId = content.CategoryId,
                                          CategoryName = category.Name,
                                          SubCategoryId = content.SubCategoryId,
@@ -521,12 +509,8 @@ namespace IM10.BAL.Implementaion
                                          LanguageName = language.Name,
                                          Comment = content.Comment,
                                          Approved = content.Approved,
-                                         UpdatedDate = content.UpdatedDate,
-                                         UpdatedBy = content.UpdatedBy,
-                                     }
-
-                               ).ToList();
-            if (contentEntityList == null)
+                                     }).ToList();
+            if (contentEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
@@ -559,8 +543,6 @@ namespace IM10.BAL.Implementaion
                     Title = item.Title,
                     Description = item.Description,
                     Thumbnail1 = imgmodel.thumbnail,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
                     CategoryId = item.CategoryId,
                     CategoryName = item.CategoryName,
                     SubCategoryId = item.SubCategoryId,
@@ -575,8 +557,6 @@ namespace IM10.BAL.Implementaion
                     LanguageName = item.LanguageName,
                     Comment = item.Comment,
                     Approved = item.Approved,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
                 });
             });
             return contentList;

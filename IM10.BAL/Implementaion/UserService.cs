@@ -107,61 +107,31 @@ namespace IM10.BAL.Implementaion
         public List<UserModel1> GetAllUser(ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var userModelList = new List<UserModel1>();
             var userEntityList = (from user in context.UserMasters
                                   join
                                   role in context.Roles on user.RoleId equals role.RoleId
                                   where user.IsDeleted == false && role.RoleId != 1 && role.RoleId != 12
+                                  && role.IsDeleted==false
                                   orderby user.UpdatedDate descending
-                                  select new
+                                  select new UserModel1
                                   {
-                                      user.UserId,
-                                      user.FirstName,
-                                      user.LastName,
-                                      user.EmailId,
-                                      user.MobileNo,
-                                      user.Dob,
-                                      user.RoleId,
-                                      user.CityId,
-                                      user.AppId,
-                                      user.CreatedBy,
-                                      user.UpdatedBy,
-                                      user.CreatedDate,
-                                      user.UpdatedDate,
-                                      user.IsActive,
-                                      role.Name
-                                  }
-                                  ).ToList();
+                                     UserId= user.UserId,
+                                     FirstName=user.FirstName,
+                                     LastName=user.LastName,
+                                     EmailId=user.EmailId,
+                                     MobileNo=user.MobileNo,
+                                     RoleId=user.RoleId,
+                                     Name=  role.Name,
+                                     FullName=user.FirstName + " " + user.LastName,
+                                  }).ToList();
             if (userEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
 
-            }
-            userEntityList.ForEach(item =>
-            {
-                userModelList.Add(new UserModel1
-                {
-                    UserId = item.UserId,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    EmailId = item.EmailId,
-                    MobileNo = item.MobileNo,
-                    Dob = item.Dob,
-                    RoleId = item.RoleId,
-                    CityId = item.CityId,
-                    AppId = item.AppId,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
-                    IsActive = item.IsActive,
-                    Name = item.Name,
-                    FullName = item.FirstName + " " + item.LastName,
-                });
-            });
-            return userModelList;
+            }          
+            return userEntityList.ToList();
         }
 
         /// <summary>
@@ -299,25 +269,21 @@ namespace IM10.BAL.Implementaion
         public string ForgetPassword(string email, ref ErrorResponseModel errorResponseModel)
         {
             string message = "";
-            var userEntity = context.UserMasters.FirstOrDefault(x => x.EmailId == email);
+            var userEntity = context.UserMasters.Where(x => x.EmailId == email && x.IsDeleted==false).FirstOrDefault();
 
             if (userEntity == null)
             {
-
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 message = GlobalConstants.EmailNotFound;
-
             }
             else
             {
                 userEntity.Password = EncryptionHelper.Decrypt(userEntity.Password.ToString());
-
                 try
                 {
                     //string subject = "Forgot password link sent on your email. Please check.";
 
                     StringBuilder strBody = new StringBuilder();
-
                     strBody.Append("<body>");
                     strBody.Append("Hello  " + userEntity.FirstName);
                     strBody.Append("<P>Your password for IM10 portal is - </P>");
@@ -330,13 +296,12 @@ namespace IM10.BAL.Implementaion
                     if (!string.IsNullOrEmpty(emailModel.ToAddress))
                     {
                         _emailSender.Execute(emailModel.ToAddress, emailModel.Subject, emailModel.Body);
-
                     }
                     message = GlobalConstants.ForgotPasswordMessage;
                 }
                 catch (Exception ex)
                 {
-
+                   return ex.Message;
                 }
 
             }
@@ -389,31 +354,21 @@ namespace IM10.BAL.Implementaion
         public List<UserModel1> GetOtherUser(ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var userModelList = new List<UserModel1>();
             var userEntityList = (from user in context.UserMasters
                                   join
                                   role in context.Roles on user.RoleId equals role.RoleId
                                   where user.IsDeleted == false && role.RoleId != 1 && role.RoleId != 12
-                                  select new
+                                  && role.IsDeleted == false
+                                  select new UserModel1
                                   {
-                                      user.UserId,
-                                      user.FirstName,
-                                      user.LastName,
-                                      user.EmailId,
-                                      user.MobileNo,
-                                      user.Dob,
-                                      user.RoleId,
-                                      user.CityId,
-                                      user.AppId,
-                                      user.CreatedBy,
-                                      user.UpdatedBy,
-                                      user.CreatedDate,
-                                      user.UpdatedDate,
-                                      user.IsActive,
-                                      role.Name,
-
-                                  }
-                                  ).ToList();
+                                     UserId= user.UserId,
+                                     FirstName= user.FirstName,
+                                     LastName = user.LastName,
+                                     EmailId= user.EmailId,
+                                     RoleId = user.RoleId,
+                                     Name= role.Name,
+                                     FullName=user.FirstName + " " + user.LastName,
+                                  }).ToList();
             if (userEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -421,29 +376,7 @@ namespace IM10.BAL.Implementaion
                 return null;
 
             }
-            userEntityList.ForEach(item =>
-            {
-                userModelList.Add(new UserModel1
-                {
-                    UserId = item.UserId,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    EmailId = item.EmailId,
-                    MobileNo = item.MobileNo,
-                    Dob = item.Dob,
-                    RoleId = item.RoleId,
-                    CityId = item.CityId,
-                    AppId = item.AppId,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
-                    IsActive = item.IsActive,
-                    Name = item.Name,
-                    FullName = item.FirstName + " " + item.LastName,
-                });
-            });
-            return userModelList;
+            return userEntityList.ToList();
         }
 
 

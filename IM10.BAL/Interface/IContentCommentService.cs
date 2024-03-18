@@ -28,16 +28,6 @@ namespace IM10.BAL.Interface
         /// <returns></returns>
        List< ContentCommentModel> GetContentCommentByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
 
-
-
-        /// <summary>
-        /// Method is used to get all contentcomment
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        List<ContentCommentModel> GetAllContentComment(ref ErrorResponseModel errorResponseModel);
-
-
         /// <summary>
         /// Method is used to add commentreply
         /// </summary>

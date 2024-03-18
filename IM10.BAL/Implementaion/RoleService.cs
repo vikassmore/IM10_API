@@ -52,11 +52,6 @@ namespace IM10.BAL.Implementaion
                 RoleId = roleEntity.RoleId,
                 Name = roleEntity.Name,
                 Description = roleEntity.Description,
-                CreatedBy = roleEntity.CreatedBy,
-                CreatedDate = roleEntity.CreatedDate,
-                UpdatedBy = roleEntity.UpdatedBy,
-                UpdatedDate = roleEntity.UpdatedDate,
-                IsDeleted = roleEntity.IsDeleted,
             };
             
         }
@@ -73,7 +68,7 @@ namespace IM10.BAL.Implementaion
             errorResponseModel = new ErrorResponseModel();
             var roleList=new List<RoleModel>();
             var roleEntity=context.Roles.Where(x=>x.IsDeleted==false).ToList();
-            if (roleEntity==null)
+            if (roleEntity.Count == 0)
             {
                 errorResponseModel.StatusCode= HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
@@ -88,11 +83,6 @@ namespace IM10.BAL.Implementaion
                     RoleId=item.RoleId,
                     Name = item.Name,
                     Description = item.Description,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return roleList;

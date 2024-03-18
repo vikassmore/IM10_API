@@ -75,39 +75,6 @@ namespace IM10.API.Controllers
         }
 
         /// <summary>
-        /// Get all listingDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        [HttpGet("GetAllListingDetail")]
-        [ProducesResponseType(typeof(ListingDetailModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllListingDetail()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-
-                var detailModel = listingDetailService.GetAllListingDetail(ref errorResponseModel);
-
-                if (detailModel != null)
-                {
-                    return Ok(detailModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
-        }
-
-
-
-        /// <summary>
         /// Create an listingDetail
         /// </summary>
         /// <param name="model"></param>

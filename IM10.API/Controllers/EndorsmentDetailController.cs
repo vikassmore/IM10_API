@@ -61,38 +61,7 @@ namespace IM10.API.Controllers
             }
         }
 
-        /// <summary>
-        /// Get all EndorsmentDetails
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        [HttpGet("GetAllEndorsmentDetail")]
-        [ProducesResponseType(typeof(EndorsmentDetailModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllEndorsmentDetail()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-
-                var endorsmentModel = service.GetAllEndorsmentDetail(ref errorResponseModel);
-
-                if (endorsmentModel != null)
-                {
-                    return Ok(endorsmentModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
-        }
-
-
+        
 
         /// <summary>
         /// Create/Update an EndorsmentDetails

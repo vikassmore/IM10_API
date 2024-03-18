@@ -202,11 +202,7 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var advList = new List<AdvContentDetailsModel>();
-            var advEntityList = (from adv in context.AdvContentDetails
-                                 join
-                                 country in context.Countries on adv.NationId equals country.CountryId
-                                 join state in context.States on adv.StateId equals state.StateId
-                                 join city in context.Cities on adv.CityId equals city.CityId
+            var advEntityList = (from adv in context.AdvContentDetails                                
                                  join content in context.ContentTypes on adv.ContentTypeId equals content.ContentTypeId
                                  where adv.PlayerId==playerId && adv.IsDeleted == false
                                  orderby adv.UpdatedDate descending
@@ -215,12 +211,6 @@ namespace IM10.BAL.Implementaion
                                      AdvertiseContentId = adv.AdvertiseContentId,
                                      Title = adv.Title,
                                      PlayerId = adv.PlayerId,
-                                     NationId = adv.NationId,
-                                     NationName = country.Name,
-                                     StateId = adv.StateId,
-                                     StateName = state.Name,
-                                     CityId = adv.CityId,
-                                     CityName = city.Name,
                                      IsGlobal = adv.IsGlobal,
                                      AdvertiseFileName = adv.AdvertiseFileName,
                                      AdvertiseFilePath = adv.AdvertiseFilePath,
@@ -231,12 +221,7 @@ namespace IM10.BAL.Implementaion
                                      Comment = adv.Comment,
                                      Approved= adv.Approved,
                                      FinalPrice = adv.FinalPrice,
-                                     IsFree = adv.IsFree,
-                                     CreatedBy = adv.CreatedBy,
-                                     CreatedDate = adv.CreatedDate,
-                                     UpdatedBy = adv.UpdatedBy,
-                                     UpdatedDate = adv.UpdatedDate,
-
+                                     IsFree = adv.IsFree                                
                                  }).ToList();
             if (advEntityList.Count == 0)
             {
@@ -255,13 +240,7 @@ namespace IM10.BAL.Implementaion
                 {
                     AdvertiseContentId = item.AdvertiseContentId,
                     Title = item.Title,
-                    PlayerId = item.PlayerId,
-                    NationId = item.NationId,
-                    NationName = item.NationName,
-                    StateId = item.StateId,
-                    StateName = item.StateName,
-                    CityId = item.CityId,
-                    CityName = item.CityName,
+                    PlayerId = item.PlayerId,                  
                     IsGlobal = item.IsGlobal,
                     AdvertiseFileName = item.AdvertiseFileName,
                     AdvertiseFilePath = imgmodel.FileName,
@@ -272,12 +251,7 @@ namespace IM10.BAL.Implementaion
                     Comment= item.Comment,
                     Approved = item.Approved,
                     FinalPrice = item.FinalPrice,
-                    IsFree = item.IsFree,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-
+                    IsFree = item.IsFree,                  
                 });
             });
             return advList;
@@ -293,12 +267,7 @@ namespace IM10.BAL.Implementaion
         public List<AdvContentDetailsModel> GetApprovedAdvContentByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var advList = new List<AdvContentDetailsModel>();
             var advEntityList = (from adv in context.AdvContentDetails
-                                 join
-                                 country in context.Countries on adv.NationId equals country.CountryId
-                                 join state in context.States on adv.StateId equals state.StateId
-                                 join city in context.Cities on adv.CityId equals city.CityId
                                  join content in context.ContentTypes on adv.ContentTypeId equals content.ContentTypeId
                                  where adv.PlayerId == playerId && adv.IsDeleted == false &&
                                  adv.Approved==true
@@ -307,73 +276,15 @@ namespace IM10.BAL.Implementaion
                                  {
                                      AdvertiseContentId = adv.AdvertiseContentId,
                                      Title = adv.Title,
-                                     PlayerId = adv.PlayerId,
-                                     NationId = adv.NationId,
-                                     NationName = country.Name,
-                                     StateId = adv.StateId,
-                                     StateName = state.Name,
-                                     CityId = adv.CityId,
-                                     CityName = city.Name,
-                                     IsGlobal = adv.IsGlobal,
-                                     AdvertiseFileName = adv.AdvertiseFileName,
-                                     AdvertiseFilePath = adv.AdvertiseFilePath,
-                                     ContentTypeId = adv.ContentTypeId,
-                                     ContentName = content.ContentName,
-                                     StartDate = adv.StartDate,
-                                     EndDate = adv.EndDate,
-                                     Comment = adv.Comment,
-                                     Approved = adv.Approved,
-                                     FinalPrice = adv.FinalPrice,
-                                     IsFree = adv.IsFree,
-                                     CreatedBy = adv.CreatedBy,
-                                     CreatedDate = adv.CreatedDate,
-                                     UpdatedBy = adv.UpdatedBy,
-                                     UpdatedDate = adv.UpdatedDate,
-
+                                     PlayerId = adv.PlayerId,                                                                    
                                  }).ToList();
             if (advEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
-            }
-            advEntityList.ForEach(item =>
-            {
-                var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.AdvertiseFilePath) ? item.AdvertiseFilePath : item.AdvertiseFilePath);
-                imgmodel.Type = String.IsNullOrEmpty(item.AdvertiseFilePath) ? "video" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
-                imgmodel.FileName = (imgmodel.url);
-                advList.Add(new AdvContentDetailsModel
-                {
-                    AdvertiseContentId = item.AdvertiseContentId,
-                    Title = item.Title,
-                    PlayerId = item.PlayerId,
-                    NationId = item.NationId,
-                    NationName = item.NationName,
-                    StateId = item.StateId,
-                    StateName = item.StateName,
-                    CityId = item.CityId,
-                    CityName = item.CityName,
-                    IsGlobal = item.IsGlobal,
-                    AdvertiseFileName = item.AdvertiseFileName,
-                    AdvertiseFilePath = imgmodel.FileName,
-                    ContentTypeId = item.ContentTypeId,
-                    ContentName = item.ContentName,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    Comment = item.Comment,
-                    Approved = item.Approved,
-                    FinalPrice = item.FinalPrice,
-                    IsFree = item.IsFree,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-
-                });
-            });
-            return advList;
+            }            
+            return advEntityList.ToList();
         }
 
         /// <summary>
@@ -459,95 +370,6 @@ namespace IM10.BAL.Implementaion
 
             };
            
-        }
-
-
-        /// <summary>
-        /// Method to get all advcontentdetails
-        /// </summary>
-        /// <param name=""></param>
-        /// <param name="errorResponseModel"></param>
-        /// <returns></returns>
-        public List<AdvContentDetailsModel> GetAllAdvContentDetail(ref ErrorResponseModel errorResponseModel)
-        {
-            errorResponseModel = new ErrorResponseModel();
-            var advList=new List<AdvContentDetailsModel>();
-            var advEntityList = (from adv in context.AdvContentDetails join
-                                 country in context.Countries on adv.NationId equals country.CountryId
-                                 join state in context.States on adv.StateId equals state.StateId
-                                 join city in context.Cities on adv.CityId equals city.CityId
-                                 join content in context.ContentTypes on adv.ContentTypeId equals content.ContentTypeId
-                                 where adv.IsDeleted == false
-                                     select new AdvContentDetailsModel
-                                     {
-                                        AdvertiseContentId=adv.AdvertiseContentId,
-                                        Title=adv.Title,
-                                        PlayerId=  adv.PlayerId,
-                                        NationId= adv.NationId,
-                                        NationName= country.Name,
-                                        StateId= adv.StateId,
-                                        StateName= state.Name,
-                                        CityId=  adv.CityId,
-                                        CityName= city.Name,
-                                        IsGlobal= adv.IsGlobal,
-                                        AdvertiseFileName= adv.AdvertiseFileName,
-                                        AdvertiseFilePath=adv.AdvertiseFilePath,
-                                        ContentTypeId=  adv.ContentTypeId,
-                                        ContentName= content.ContentName,
-                                        StartDate= adv.StartDate,
-                                        EndDate=  adv.EndDate,
-                                        Approved=adv.Approved,                                
-                                        FinalPrice= adv.FinalPrice,
-                                        IsFree=  adv.IsFree,
-                                        CreatedBy=  adv.CreatedBy,
-                                        CreatedDate= adv.CreatedDate,
-                                        UpdatedBy=  adv.UpdatedBy,
-                                        UpdatedDate=  adv.UpdatedDate,
-
-                                     }).ToList();
-            if (advEntityList.Count == 0)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-                return null;
-
-            }
-            advEntityList.ForEach(item =>
-            {
-                var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.AdvertiseFilePath) ? item.AdvertiseFilePath : item.AdvertiseFilePath);
-                imgmodel.Type = String.IsNullOrEmpty(item.AdvertiseFilePath) ? "video" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
-                imgmodel.FileName = (imgmodel.url);
-                advList.Add(new AdvContentDetailsModel
-                {
-                    AdvertiseContentId = item.AdvertiseContentId,
-                    Title = item.Title,
-                    PlayerId = item.PlayerId,
-                    NationId = item.NationId,
-                    NationName = item.NationName,
-                    StateId = item.StateId,
-                    StateName = item.StateName,
-                    CityId = item.CityId,
-                    CityName = item.CityName,
-                    IsGlobal = item.IsGlobal,
-                    AdvertiseFileName = item.AdvertiseFileName,
-                    AdvertiseFilePath =imgmodel.FileName,
-                    ContentTypeId = item.ContentTypeId,
-                    ContentName = item.ContentName,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    Approved= item.Approved,
-                    FinalPrice = item.FinalPrice,
-                    IsFree = item.IsFree,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-
-                });
-            });
-            return advList;
-        }
+        }       
     }
 }

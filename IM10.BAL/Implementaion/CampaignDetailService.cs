@@ -252,10 +252,6 @@ namespace IM10.BAL.Implementaion
                                       PlayerId = camp.PlayerId,
                                       ContentId = camp.ContentId,
                                       ContentTypeId = camp.ContentTypeId,
-                                      CreatedDate = camp.CreatedDate,
-                                      CreatedBy = camp.CreatedBy,
-                                      UpdatedDate = camp.UpdatedDate,
-                                      UpdatedBy = camp.UpdatedBy,
                                       ContentTitle = content.Title,
                                       ContentTypeName = type.ContentName
                                   }).ToList();
@@ -275,10 +271,6 @@ namespace IM10.BAL.Implementaion
                     PlayerId = item.PlayerId,
                     ContentId = item.ContentId,
                     ContentTypeId = item.ContentTypeId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
                     ContentTitle = item.ContentTitle,
                     ContentTypeName = item.ContentTypeName
                 });

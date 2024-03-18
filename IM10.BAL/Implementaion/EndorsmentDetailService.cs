@@ -123,64 +123,6 @@ namespace IM10.BAL.Implementaion
             return "{\"message\": \"" + Message + "\"}";
         }
 
-
-        /// <summary>
-        /// Method is used to get all EndorsmentDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        public List<EndorsmentDetailModel> GetAllEndorsmentDetail(ref ErrorResponseModel errorResponseModel)
-        {
-            errorResponseModel = new ErrorResponseModel();
-            var listEntity = new List<EndorsmentDetailModel>();
-            var endoresmentEntity = (from detail in context.EndorsmentDetails
-                                     join
-                                     list in context.ListingDetails on detail.ListingId equals list.ListingId
-                                     where detail.IsDeleted == false
-                                     select new
-                                     {
-                                         detail.EndorsmentId,
-                                         detail.ListingId,
-                                         detail.PlayerId, 
-                                         detail.EndorsmentType,
-                                         detail.StartDate,
-                                         detail.EndDate,
-                                         detail.FinalPrice,
-                                         detail.Notes,
-                                         detail.CreatedDate,
-                                         detail.CreatedBy,
-                                         detail.UpdatedDate,
-                                         detail.UpdatedBy,
-                                         list.CompanyName
-                                     }).ToList();
-            if (endoresmentEntity.Count == 0)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }
-            endoresmentEntity.ForEach(item =>
-            {
-                listEntity.Add(new EndorsmentDetailModel
-                {
-                    EndorsmentId= item.EndorsmentId,
-                    PlayerId= item.PlayerId,
-                    ListingId= item.ListingId,
-                    EndorsmentType= item.EndorsmentType,
-                    StartDate= item.StartDate,
-                    EndDate= item.EndDate,
-                    FinalPrice= item.FinalPrice,
-                    Notes= item.Notes,
-                    CreatedDate= item.CreatedDate,
-                    CreatedBy= item.CreatedBy,
-                    UpdatedBy= item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    CompanyName=item.CompanyName
-                });
-            });
-            return listEntity;
-        }
-
-
         /// <summary>
         /// Method is used to get EndorsmentDetail by endorsmentid
         /// </summary>
@@ -247,47 +189,24 @@ namespace IM10.BAL.Implementaion
                                      list in context.ListingDetails on detail.ListingId equals list.ListingId
                                      where detail.PlayerId == playerId && detail.IsDeleted == false
                                     orderby detail.UpdatedDate descending
-                                    select new
+                                    select new EndorsmentDetailModel
                                      {
-                                         detail.EndorsmentId,
-                                         detail.ListingId,
-                                         detail.PlayerId,
-                                         detail.EndorsmentType,
-                                         detail.StartDate,
-                                         detail.EndDate,
-                                         detail.FinalPrice,
-                                         detail.Notes,
-                                         detail.CreatedDate,
-                                         detail.CreatedBy,
-                                         detail.UpdatedDate,
-                                         detail.UpdatedBy,
-                                         list.CompanyName
+                                        EndorsmentId = detail.EndorsmentId,
+                                        ListingId = detail.ListingId,
+                                        PlayerId = detail.PlayerId, 
+                                        EndorsmentType = detail.EndorsmentType,
+                                        StartDate = detail.StartDate,
+                                        EndDate = detail.EndDate,
+                                        FinalPrice = detail.FinalPrice,
+                                        Notes = detail.Notes,
+                                        CompanyName = list.CompanyName
                                      }).ToList();
             if (endorsmentEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            endorsmentEntity.ForEach(item =>
-            {
-                listEntity.Add(new EndorsmentDetailModel
-                {
-                    EndorsmentId = item.EndorsmentId,
-                    PlayerId = item.PlayerId,
-                    ListingId = item.ListingId,
-                    EndorsmentType = item.EndorsmentType,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    FinalPrice = item.FinalPrice,
-                    Notes = item.Notes,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    CompanyName = item.CompanyName
-                });
-            });
-            return listEntity;
+            return endorsmentEntity.ToList();
         }
     }
 }

@@ -137,10 +137,6 @@ namespace IM10.BAL.Implementaion
                     EndorsmentTypeId= item.EndorsmentTypeId,
                     EndorsmentName= item.EndorsmentName,
                     EndorsmentDescription= item.EndorsmentDescription,
-                    CreatedBy= item.CreatedBy,
-                    CreatedDate= item.CreatedDate,
-                    UpdatedBy= item.UpdatedBy,
-                    UpdatedDate= item.UpdatedDate,
                 });
             });
             return ListEntity;

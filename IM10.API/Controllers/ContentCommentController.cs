@@ -67,43 +67,6 @@ namespace IM10.API.Controllers
         }
 
 
-
-
-
-
-        /// <summary>
-        /// Get all contentcomment
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        [HttpGet("GetAllContentComment")]
-        [ProducesResponseType(typeof(ContentCommentModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllContentComment()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-
-                var commentModel = contentCommentService.GetAllContentComment(ref errorResponseModel);
-
-                if (commentModel != null)
-                {
-                    return Ok(commentModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
-        }
-
-
-
         /// <summary>
         /// add contentcomment
         /// </summary>

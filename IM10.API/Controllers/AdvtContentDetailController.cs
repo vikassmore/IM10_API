@@ -74,39 +74,7 @@ namespace IM10.API.Controllers
             }
         }
 
-        /// <summary>
-        /// Get all AdvContentDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        [HttpGet("GetAllAdvContentDetail")]
-        [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllAdvContentDetail()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-
-                var detailModel = advContentservice.GetAllAdvContentDetail(ref errorResponseModel);
-
-                if (detailModel != null)
-                {
-                    return Ok(detailModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
-        }
-
-
-
+       
         /// <summary>
         /// Create an AdvContentDetail
         /// </summary>

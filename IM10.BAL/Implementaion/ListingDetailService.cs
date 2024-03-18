@@ -167,117 +167,6 @@ namespace IM10.BAL.Implementaion
             return "{\"message\": \"" + Message + "\"}";
         }
 
-
-        /// <summary>
-        /// Method to get all ListingDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <param name="errorResponseModel"></param>
-        /// <returns></returns>
-        public List<ListingDetailModel> GetAllListingDetail(ref ErrorResponseModel errorResponseModel)
-        {
-            errorResponseModel = new ErrorResponseModel();
-            var listEntityList = new List<ListingDetailModel>();
-            var listEntity = (from list in context.ListingDetails
-                              join
-                              nation in context.Countries on list.NationId equals nation.CountryId
-                              join state in context.States on list.StateId equals state.StateId
-                              join city in context.Cities on list.CityId equals city.CityId
-                              join category in context.Categories on list.CategoryId equals category.CategoryId
-                              join subcategory in context.SubCategories on list.SubCategoryId equals subcategory.SubCategoryId
-                              join user in context.UserMasters on list.CreatedBy equals (int)user.UserId
-                              where list.IsDeleted == false
-                              select new ListingDetailModel
-                              {
-                                  ListingId = list.ListingId,
-                                  PlayerId = list.PlayerId,
-                                  CompanyEmailId = list.CompanyEmailId,
-                                  CompanyLogoFileName = list.CompanyLogoFileName,
-                                  CompanyName = list.CompanyName,
-                                  Description = list.Description,
-                                  CompanyLogoFilePath = list.CompanyLogoFilePath,
-                                  CompanyWebSite = list.CompanyWebSite,
-                                  CompanyMobile = list.CompanyMobile,
-                                  CompanyPhone = list.CompanyPhone,
-                                  IsGlobal = list.IsGlobal,
-                                  NationId = list.NationId,
-                                  NationName = nation.Name,
-                                  StateId = list.StateId,
-                                  StateName = state.Name,
-                                  CityId = list.CityId,
-                                  CityName = city.Name,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = category.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subcategory.Name,
-                                  StartDate = list.StartDate,
-                                  EndDate = list.EndDate,
-                                  FinalPrice = list.FinalPrice,
-                                  Position = list.Position,
-                                  CreatedBy = list.CreatedBy,
-                                  CreatedDate = list.CreatedDate,
-                                  UpdatedBy = list.UpdatedBy,
-                                  UpdatedDate = list.UpdatedDate,
-                                  ContactPersonEmailId = list.ContactPersonEmailId,
-                                  ContactPersonName = list.ContactPersonName,
-                                  ContactPersonMobile = list.ContactPersonMobile,
-                                  RoleId = user.RoleId
-                              }).ToList();
-
-            if (listEntity.Count == 0)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }
-            listEntity.ForEach(item =>
-            {
-                var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.CompanyLogoFilePath) ? item.CompanyLogoFilePath : item.CompanyLogoFilePath);
-                imgmodel.Type = String.IsNullOrEmpty(item.CompanyLogoFilePath) ? "video" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
-                imgmodel.FileName = (imgmodel.url);
-
-                listEntityList.Add(new ListingDetailModel
-                {
-                    ListingId = item.ListingId,
-                    PlayerId = item.PlayerId,
-                    CompanyName = item.CompanyName,
-                    Description = item.Description,
-                    ContactPersonName = item.ContactPersonName,
-                    ContactPersonEmailId = item.ContactPersonEmailId,
-                    ContactPersonMobile = item.ContactPersonMobile,
-                    CompanyEmailId = item.CompanyEmailId,
-                    CompanyMobile = item.CompanyMobile,
-                    CompanyPhone = item.CompanyPhone,
-                    CompanyWebSite = item.CompanyWebSite,
-                    CompanyLogoFileName = item.CompanyLogoFileName,
-                    CompanyLogoFilePath = imgmodel.FileName,
-                    NationId = item.NationId,
-                    NationName = item.NationName,
-                    CityId = item.CityId,
-                    CityName = item.CityName,
-                    StateId = item.StateId,
-                    StateName = item.StateName,
-                    IsGlobal = item.IsGlobal,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    CategoryId = item.CategoryId,
-                    CategoryName = item.CategoryName,
-                    SubCategoryId = item.SubCategoryId,
-                    SubcategoryName = item.SubcategoryName,
-                    FinalPrice = item.FinalPrice,
-                    Position = item.Position,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    RoleId = item.RoleId,
-                });
-            });
-            return listEntityList;
-        }
-
-
         /// <summary>
         /// Method to get ListingDetail by listingId
         /// </summary>
@@ -379,11 +268,7 @@ namespace IM10.BAL.Implementaion
         public List<ListingDetailModel> GetListingDetailByplayerId(long playerId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var listdetailEntity = new List<ListingDetailModel>();
             var listEntity = (from list in context.ListingDetails
-                              join nation in context.Countries on list.NationId equals nation.CountryId
-                              join ct in context.Cities on list.CityId equals ct.CityId
-                              join st in context.States on list.StateId equals st.StateId
                               join cat in context.Categories on list.CategoryId equals cat.CategoryId
                               join subCat in context.SubCategories on list.SubCategoryId equals subCat.SubCategoryId
                               join user in context.UserMasters on list.CreatedBy equals (int)user.UserId
@@ -395,21 +280,8 @@ namespace IM10.BAL.Implementaion
                                   ListingId = list.ListingId,
                                   PlayerId = list.PlayerId,
                                   RoleId = user.RoleId,
-                                  CompanyEmailId = list.CompanyEmailId,
-                                  CompanyLogoFileName = list.CompanyLogoFileName,
                                   CompanyName = list.CompanyName,
-                                  Description = list.Description,
-                                  CompanyLogoFilePath = list.CompanyLogoFilePath,
-                                  CompanyWebSite = list.CompanyWebSite,
-                                  CompanyMobile = list.CompanyMobile,
-                                  CompanyPhone = list.CompanyPhone,
                                   IsGlobal = (list.IsGlobal == null) ? false : list.IsGlobal,
-                                  NationId = list.NationId,
-                                  NationName = nation.Name,
-                                  StateId = list.StateId,
-                                  StateName = st.Name,
-                                  CityId = list.CityId,
-                                  CityName = ct.Name,
                                   CategoryId = list.CategoryId,
                                   CategoryName = cat.Name,
                                   SubCategoryId = list.SubCategoryId,
@@ -418,66 +290,16 @@ namespace IM10.BAL.Implementaion
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),
                                   Position = (list.Position == null) ? null : list.Position,
-                                  ContactPersonEmailId = list.ContactPersonEmailId,
                                   ContactPersonName = list.ContactPersonName,
-                                  ContactPersonMobile = list.ContactPersonMobile,
-                                  CreatedBy = list.CreatedBy,
-                                  CreatedDate = list.CreatedDate,
-                                  UpdatedBy = list.UpdatedBy,
-                                  UpdatedDate = list.UpdatedDate,
                               }).ToList();
 
-            if (listEntity == null)
+            if (listEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            listEntity.ForEach(item =>
-            {
-                var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.CompanyLogoFilePath) ? item.CompanyLogoFilePath : item.CompanyLogoFilePath);
-                imgmodel.Type = String.IsNullOrEmpty(item.CompanyLogoFilePath) ? "video" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
-                imgmodel.FileName = (imgmodel.url);
 
-                listdetailEntity.Add(new ListingDetailModel
-                {
-                    ListingId = item.ListingId,
-                    PlayerId = item.PlayerId,
-                    CompanyName = item.CompanyName,
-                    Description = item.Description,
-                    ContactPersonName = item.ContactPersonName,
-                    ContactPersonEmailId = item.ContactPersonEmailId,
-                    ContactPersonMobile = item.ContactPersonMobile,
-                    CompanyEmailId = item.CompanyEmailId,
-                    CompanyMobile = item.CompanyMobile,
-                    CompanyPhone = item.CompanyPhone,
-                    CompanyWebSite = item.CompanyWebSite,
-                    CompanyLogoFileName = item.CompanyLogoFileName,
-                    CompanyLogoFilePath = imgmodel.FileName,
-                    NationId = item.NationId,
-                    NationName = item.NationName,
-                    CityId = item.CityId,
-                    CityName = item.CityName,
-                    StateId = item.StateId,
-                    StateName = item.StateName,
-                    IsGlobal = item.IsGlobal,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    CategoryId = item.CategoryId,
-                    CategoryName = item.CategoryName,
-                    SubCategoryId = item.SubCategoryId,
-                    SubcategoryName = item.SubcategoryName,
-                    FinalPrice = item.FinalPrice,
-                    Position = item.Position,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    RoleId = item.RoleId,
-                });
-            });
-            return listdetailEntity;
+            return listEntity.ToList();           
         }
     }
 }

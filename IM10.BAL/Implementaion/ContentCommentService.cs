@@ -181,80 +181,6 @@ namespace IM10.BAL.Implementaion
             return "{\"message\": \"" + Message + "\"}";
         }
 
-
-        /// <summary>
-        /// get all content comment
-        /// </summary>
-        /// <param name="errorResponseModel"></param>
-        /// <returns></returns>
-        public List<ContentCommentModel> GetAllContentComment(ref ErrorResponseModel errorResponseModel)
-        {
-            errorResponseModel = new ErrorResponseModel();
-            var commentList = new List<ContentCommentModel>();
-            var commentEntity = (from comment in context.Comments
-                                 join user in context.UserMasters
-                                 on comment.UserId equals user.UserId
-                                 join content in context.ContentTypes on
-                                 comment.ContentTypeId equals content.ContentTypeId
-                                 where comment.IsDeleted == false
-                                 select new
-                                 {
-                                     comment.CommentId,
-                                     comment.UserId,
-                                     user.EmailId,
-                                     user.FirstName,
-                                     user.LastName,
-                                     comment.ContentId,
-                                     comment.ContentTypeId,
-                                     content.ContentName,
-                                     comment.DeviceId,
-                                     comment.Location,
-                                     comment.Liked,
-                                     comment.Comment1,
-                                     comment.Shared,
-                                     comment.IsPublic,
-                                     comment.CreatedBy,
-                                     comment.CreatedDate,
-                                     comment.UpdatedBy,
-                                     comment.UpdatedDate,
-                                     comment.ParentCommentId,
-                                 }).ToList();
-
-            if (commentEntity.Count == 0)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }
-            commentEntity.ForEach(item =>
-            {
-                commentList.Add(new ContentCommentModel
-                {
-                    CommentId = item.CommentId,
-                    UserId = item.UserId,
-                    ContentId = item.ContentId,
-                    ContentTypeId = item.ContentTypeId,
-                    DeviceId = item.DeviceId,
-                    Location = item.Location,
-                    Liked = item.Liked,
-                    Comment1 = item.Comment1,
-                    Shared = item.Shared,
-                    IsPublic = item.IsPublic,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = DateTime.Now,
-                    ParentCommentId = item.ParentCommentId,
-                    EmailId = item.EmailId,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    ContentTypeName = item.ContentName,
-                    FullName = item.FirstName + " " + item.LastName,
-                });
-            });
-            return commentList;
-        }
-
-
         /// <summary>
         /// get content comment by id
         /// </summary>
@@ -274,24 +200,13 @@ namespace IM10.BAL.Implementaion
                                  {
                                      comment.CommentId,
                                      comment.UserId,
-                                     user.EmailId,
                                      user.FirstName,
                                      user.LastName,
                                      comment.ContentId,
                                      comment.ContentTypeId,
                                      content.ContentName,
-                                     comment.DeviceId,
-                                     comment.Location,
-                                     comment.Liked,
                                      comment.Comment1,
-                                     comment.Shared,
                                      comment.IsPublic,
-                                     comment.CreatedBy,
-                                     comment.CreatedDate,
-                                     comment.UpdatedBy,
-                                     comment.UpdatedDate,
-                                     comment.ParentCommentId,
-                                     comment.IsDeleted
                                  }).FirstOrDefault();
             if (commentEntity == null)
             {
@@ -304,19 +219,8 @@ namespace IM10.BAL.Implementaion
                 UserId = commentEntity.UserId,
                 ContentId = commentEntity.ContentId,
                 ContentTypeId = commentEntity.ContentTypeId,
-                DeviceId = commentEntity.DeviceId,
-                Location = commentEntity.Location,
-                Liked = commentEntity.Liked,
                 Comment1 = commentEntity.Comment1,
-                Shared = commentEntity.Shared,
                 IsPublic = commentEntity.IsPublic,
-                CreatedBy = commentEntity.CreatedBy,
-                CreatedDate = commentEntity.CreatedDate,
-                ParentCommentId = commentEntity.ParentCommentId,
-                UpdatedBy = commentEntity.UpdatedBy,
-                UpdatedDate = commentEntity.UpdatedDate,
-                IsDeleted = commentEntity.IsDeleted,
-                EmailId = commentEntity.EmailId,
                 FirstName = commentEntity.FirstName,
                 LastName = commentEntity.LastName,
                 ContentTypeName = commentEntity.ContentName,
@@ -339,7 +243,6 @@ namespace IM10.BAL.Implementaion
                                  content in context.ContentDetails on comment.ContentId equals content.ContentId
                                  join user in context.UserMasters on comment.UserId equals user.UserId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
-                                 join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                  where content.PlayerId == playerId && comment.IsDeleted == false && comment.ParentCommentId == null
                                  && content.IsDeleted == false && content.Approved == true
                                  orderby comment.CreatedDate descending
@@ -348,27 +251,16 @@ namespace IM10.BAL.Implementaion
                                      CommentId = comment.CommentId,
                                      ContentId = comment.ContentId,
                                      UserId = comment.UserId,
-                                     EmailId = user.EmailId,
-                                     FirstName = user.FirstName,
-                                     LastName = user.LastName,
-                                     FullName = user.FirstName + " " + user.LastName,
                                      MobileNo = user.MobileNo,
                                      ContentFileName = content.ContentFileName,
                                      ContentFilePath = content.ContentFilePath,
                                      DeviceId = comment.DeviceId,
-                                     Location = comment.Location,
                                      Liked = comment.Liked,
                                      Comment1 = comment.Comment1,
-                                     Shared = comment.Shared,
                                      IsPublic = comment.IsPublic,
-                                     CreatedBy = comment.CreatedBy,
                                      Title = content.Title,
-                                     CreatedDate = comment.CreatedDate,
-                                     ParentCommentId = comment.ParentCommentId,
                                      ContentTypeId = content.ContentTypeId,
                                      ContentTypeName = contenttype.ContentName,
-                                     UpdatedDate = comment.UpdatedDate,
-                                     UpdatedBy = comment.UpdatedBy,
                                  }).ToList();
             if (commentEntity.Count==0)
             {
@@ -390,18 +282,10 @@ namespace IM10.BAL.Implementaion
                     ContentId = item.ContentId,
                     UserId = item.UserId,
                     Comment1 = item.Comment1,
-                    ParentCommentId = item.ParentCommentId,
                     DeviceId = item.DeviceId,
-                    Location = item.Location,
                     Liked = item.Liked,
                     Shared = item.Shared,
                     IsPublic = item.IsPublic,
-                    EmailId = item.EmailId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    FullName = item.FirstName + " " + item.LastName,
                     MobileNo=item.MobileNo,
                     Title=item.Title,
                     Thumbnail1 = imgmodel.thumbnail,
@@ -409,8 +293,6 @@ namespace IM10.BAL.Implementaion
                     ContentFilePath = item.ContentFilePath,
                     ContentTypeId = item.ContentTypeId,
                     ContentTypeName = item.ContentTypeName,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
                 });
             });
             return commentList;
@@ -426,71 +308,26 @@ namespace IM10.BAL.Implementaion
             errorResponseModel = new ErrorResponseModel();
             var commentList = new List<ContentCommentModel>();
             var commentEntity = (from comment in context.Comments
-                                 join
-                                     content in context.ContentDetails on comment.ContentId equals content.ContentId
-                                 join user in context.UserMasters on comment.UserId equals user.UserId
+                                 join content in context.ContentDetails on comment.ContentId equals content.ContentId
                                  join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
-                                 join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                  where comment.IsDeleted == false && comment.ParentCommentId == commentId
                                  orderby comment.CreatedDate descending
                                  select new ContentCommentModel
                                  {
                                      CommentId = comment.CommentId,
-                                     ContentId = comment.ContentId,
-                                     UserId = comment.UserId,
-                                     EmailId = user.EmailId,
-                                     FirstName = user.FirstName,
-                                     LastName = user.LastName,
-                                     FullName = user.FirstName + " " + user.LastName,
-                                     DeviceId = comment.DeviceId,
-                                     Location = comment.Location,
-                                     Liked = comment.Liked,
                                      Comment1 = comment.Comment1,
-                                     Shared = comment.Shared,
-                                     IsPublic = comment.IsPublic,
-                                     CreatedBy = comment.CreatedBy,
-                                     CreatedDate = comment.CreatedDate,
-                                     ParentCommentId = comment.ParentCommentId,
                                      ContentTypeId = content.ContentTypeId,
                                      ContentTypeName = contenttype.ContentName,
-                                     UpdatedDate = comment.UpdatedDate,
-                                     UpdatedBy = comment.UpdatedBy,
+                                     IsPublic=comment.IsPublic,
                                  }).ToList();
-            if (commentEntity == null)
+            if (commentEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
 
             }
-
-            commentEntity.ForEach(item =>
-            {
-                commentList.Add(new ContentCommentModel
-                {
-                    CommentId = item.CommentId,
-                    ContentId = item.ContentId,
-                    UserId = item.UserId,
-                    Comment1 = item.Comment1,
-                    ParentCommentId = item.ParentCommentId,
-                    DeviceId = item.DeviceId,
-                    Location = item.Location,
-                    Liked = item.Liked,
-                    Shared = item.Shared,
-                    IsPublic = item.IsPublic,
-                    EmailId = item.EmailId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    FullName = item.FirstName + " " + item.LastName,
-                    ContentTypeId = item.ContentTypeId,
-                    ContentTypeName = item.ContentTypeName,
-                    UpdatedBy = item.UpdatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                });
-            });
-            return commentList;
+            return commentEntity.ToList();         
         }
 
 

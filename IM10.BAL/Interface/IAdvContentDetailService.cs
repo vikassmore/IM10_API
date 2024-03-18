@@ -37,16 +37,6 @@ namespace IM10.BAL.Interface
         List<AdvContentDetailsModel> GetApprovedAdvContentByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
 
 
-
-
-        /// <summary>
-        /// Method is used to get all AdvContentDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        List<AdvContentDetailsModel> GetAllAdvContentDetail(ref ErrorResponseModel errorResponseModel);
-
-
         /// <summary>
         /// Method is used to add/edit AdvContentDetail
         /// </summary>

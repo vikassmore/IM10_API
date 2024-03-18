@@ -85,63 +85,7 @@ namespace IM10.BAL.Implementaion
         }
 
 
-        /// <summary>
-        /// Method is used to get all CampaignSocialMediaDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        public List<CampaignSocialMediaDetailModel> GetAllCampaignSocialMediaDetail(ref ErrorResponseModel errorResponseModel)
-        {
-           errorResponseModel = new ErrorResponseModel();
-           var campaignList=new List<CampaignSocialMediaDetailModel>();
-            var campaignEntity = (from camp in context.CampaignDetails
-                                  join
-                                 details in context.MarketingCampaigns on
-                                 camp.MarketingCampaignId equals details.MarketingCampaignId
-                                  where camp.IsDeleted == false
-                                  select new
-                                  {
-                                      camp.CampaignId,
-                                      camp.SocialMediaViews,
-                                      camp.ScreenShotFileName,
-                                      camp.ScreenShotFilePath,
-                                      camp.MarketingCampaignId,
-                                      camp.CreatedDate,
-                                      camp.CreatedBy,
-                                      camp.UpdatedDate,
-                                      camp.UpdatedBy,
-                                      details.Title
-                                  }).ToList();
-            if (campaignEntity.Count == 0)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;                
-            }
-            campaignEntity.ForEach(item =>
-            {
-                var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ScreenShotFilePath) ? item.ScreenShotFilePath : item.ScreenShotFilePath);
-                imgmodel.Type = String.IsNullOrEmpty(item.ScreenShotFilePath) ? "video" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
-                imgmodel.FileName = (imgmodel.url);
-
-                campaignList.Add(new CampaignSocialMediaDetailModel
-                {
-                    CampaignId = item.CampaignId,
-                    SocialMediaViews = item.SocialMediaViews,
-                    ScreenShotFileName = item.ScreenShotFileName,
-                    ScreenShotFilePath = imgmodel.FileName,
-                    MarketingCampaignId = item.CampaignId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    CampaignTitle=item.Title,
-                });
-            });
-            return campaignList;
-                               
-        }
+        
 
 
         /// <summary>
@@ -166,10 +110,6 @@ namespace IM10.BAL.Implementaion
                                       camp.ScreenShotFileName,
                                       camp.ScreenShotFilePath,
                                       camp.MarketingCampaignId,
-                                      camp.CreatedDate,
-                                      camp.CreatedBy,
-                                      camp.UpdatedDate,
-                                      camp.UpdatedBy,
                                       details.Title
                                   }).ToList();
             if (campaignEntity.Count == 0)
@@ -192,10 +132,6 @@ namespace IM10.BAL.Implementaion
                     ScreenShotFileName = item.ScreenShotFileName,
                     ScreenShotFilePath = imgmodel.FileName,
                     MarketingCampaignId = item.CampaignId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
                     CampaignTitle = item.Title,
                 });
             });

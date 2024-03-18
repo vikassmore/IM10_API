@@ -20,13 +20,7 @@ namespace IM10.BAL.Interface
         /// <returns></returns>
         AdvContentMappingModel1 GetAdvContentMappingById(long AdvcontentmapId, ref ErrorResponseModel errorResponseModel);
      
-        /// <summary>
-        /// Method is used to get all AdvContentMapping
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        List<AdvContentMappingModel1> GetAllAdvContentMapping(ref ErrorResponseModel errorResponseModel);
-
+       
         /// <summary>
         /// Method is used to add AdvContentMapping
         /// </summary>

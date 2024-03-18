@@ -21,14 +21,7 @@ namespace IM10.BAL.Interface
             ListingDetailModel GetListingDetailById(long listingId, ref ErrorResponseModel errorResponseModel);
 
         
-            /// <summary>
-            /// Method is used to get all ListingDetail
-            /// </summary>
-            /// <param name=""></param>
-            /// <returns></returns>
-            List<ListingDetailModel> GetAllListingDetail(ref ErrorResponseModel errorResponseModel);
-
-
+            
             /// <summary>
             /// Method is used to add/edit ListingDetail
             /// </summary>

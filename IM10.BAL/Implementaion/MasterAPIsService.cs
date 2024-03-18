@@ -51,11 +51,6 @@ namespace IM10.BAL.Implementaion
                     CityId=item.CityId,
                     Name=item.Name,
                     StateId=item.StateId,
-                    CreatedDate=item.CreatedDate,
-                    CreatedBy=item.CreatedBy,
-                    UpdatedDate=item.UpdatedDate,
-                    UpdatedBy=item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return mastermodellist;
@@ -85,11 +80,6 @@ namespace IM10.BAL.Implementaion
                     CountryId=item.CountryId,
                     CountryCode=item.CountryCode,
                     Name=item.Name,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return countrymodelList;
@@ -116,11 +106,6 @@ namespace IM10.BAL.Implementaion
                 {
                     LanguageId = item.LanguageId,
                     Name = item.Name,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return languageModelList;
@@ -149,11 +134,6 @@ namespace IM10.BAL.Implementaion
                     StateCode = item.StateCode,
                     Name = item.Name,
                     CountryId = item.CountryId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return stateModelList;
@@ -182,11 +162,6 @@ namespace IM10.BAL.Implementaion
                     CityId = item.CityId,
                     Name = item.Name,
                     StateId = item.StateId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return cityModelList;
@@ -216,11 +191,6 @@ namespace IM10.BAL.Implementaion
                     CountryId = item.CountryId,
                     Name = item.Name,
                     CountryCode = item.CountryCode,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return countryModelList;
@@ -247,11 +217,6 @@ namespace IM10.BAL.Implementaion
                 {
                     LanguageId = item.LanguageId,
                     Name = item.Name,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return languageModelList;
@@ -280,11 +245,6 @@ namespace IM10.BAL.Implementaion
                     Name = item.Name,
                     StateCode = item.StateCode,
                     CountryId = item.CountryId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted=item.IsDeleted,
                 });
             });
             return stateModelList;
@@ -313,11 +273,6 @@ namespace IM10.BAL.Implementaion
                     CategoryId = item.CategoryId,
                     Name = item.Name,
                     Description = item.Description,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted,
                 });
             });
             return categorymodellist;
@@ -346,11 +301,6 @@ namespace IM10.BAL.Implementaion
                     CategoryId = item.CategoryId,
                     Name = item.Name,
                     Description = item.Description,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted,
                 });
             });
             return categoryModelList;
@@ -379,11 +329,6 @@ namespace IM10.BAL.Implementaion
                     Name = item.Name,
                     CategoryId = item.CategoryId,
                     Description = item.Description,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted
                 });
             });
             return subcategorymodellist;
@@ -411,12 +356,7 @@ namespace IM10.BAL.Implementaion
                 {
                     SubCategoryId = item.SubCategoryId,
                     Name = item.Name,
-                    CategoryId = item.CategoryId,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted
+                    CategoryId = item.CategoryId
                 });
             });
             return subcategoryModelList;
@@ -443,11 +383,6 @@ namespace IM10.BAL.Implementaion
                 {
                     ContentTypeId = item.ContentTypeId,
                     ContentName = item.ContentName,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted,
                 });
             });
             return contentmodellist;
@@ -474,11 +409,6 @@ namespace IM10.BAL.Implementaion
                 {
                     ContentTypeId = item.ContentTypeId,
                     ContentName = item.ContentName,
-                    CreatedDate = item.CreatedDate,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = item.UpdatedDate,
-                    UpdatedBy = item.UpdatedBy,
-                    IsDeleted = item.IsDeleted,
                 });
             });
             return contentModelList;
@@ -503,11 +433,6 @@ namespace IM10.BAL.Implementaion
                 model.Name = item.Name;
                 model.StateCode = item.StateCode;
                 model.CountryId = item.CountryId;
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = item.CreatedBy;
-                model.UpdatedDate = DateTime.Now;
-                model.UpdatedBy = item.UpdatedBy;
-                model.IsDeleted = false;
                 stateList.Add(model);
             }
             return stateList;
@@ -531,11 +456,6 @@ namespace IM10.BAL.Implementaion
                 model.CityId = item.CityId;
                 model.Name = item.Name;
                 model.StateId = item.StateId;
-                model.CreatedDate = DateTime.Now;
-                model.CreatedBy = item.CreatedBy;
-                model.UpdatedDate = DateTime.Now;
-                model.UpdatedBy = item.UpdatedBy;
-                model.IsDeleted=false;
                 cityList.Add(model);
             }
             return cityList;
@@ -585,32 +505,5 @@ namespace IM10.BAL.Implementaion
             }
             return subcategoryModelList;
         }
-
-        /* public List<SubCategoryModel> GetSubcategoryByCategoryId(long categoryId, ref ErrorResponseModel errorResponseModel)
-         {
-             var subcategoryModelList = new List<SubCategoryModel>();
-             errorResponseModel = new ErrorResponseModel();
-             var subcategoryEntityList = context.SubCategories.Where(x => x.CategoryId == categoryId && x.IsDeleted == false).ToList();
-             if (subcategoryEntityList.Count == 0)
-             {
-                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-             }
-             subcategoryEntityList.ForEach(item =>
-             {
-                 subcategoryModelList.Add(new SubCategoryModel
-                 {
-                     SubCategoryId = item.SubCategoryId,
-                     Name = item.Name,
-                     CategoryId = item.CategoryId,
-                     CreatedDate = item.CreatedDate,
-                     CreatedBy = item.CreatedBy,
-                     UpdatedDate = item.UpdatedDate,
-                     UpdatedBy = item.UpdatedBy,
-                     IsDeleted = item.IsDeleted
-                 });
-             });
-             return subcategoryModelList;
-         }*/
     }
 }

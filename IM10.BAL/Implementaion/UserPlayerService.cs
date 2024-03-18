@@ -99,25 +99,18 @@ namespace IM10.BAL.Implementaion
         public List<UserPlayerModel> GetAllUserPlayer(ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var userplayerList = new List<UserPlayerModel>();
-
             var userplyerentityList = (from userplayer in _context.UserPlayerMappings
                                        join
                                        user in _context.UserMasters on userplayer.UserId equals user.UserId
                                        join player in _context.PlayerDetails on userplayer.PlayerId equals player.PlayerId
-                                       join role in _context.Roles on user.RoleId equals role.RoleId
-                                       where userplayer.IsDeleted == false
+                                       join role in _context.Roles on user.RoleId equals role.RoleId 
+                                       where userplayer.IsDeleted == false && role.IsDeleted == false
                                        orderby userplayer.UserId , userplayer.UpdatedDate descending
                                        select new UserPlayerModel
                                        {
                                          UserPlayerId=  userplayer.UserPlayerId,
                                          UserId=  userplayer.UserId,
                                          PlayerId = userplayer.PlayerId,
-                                         CreatedDate = userplayer.CreatedDate,
-                                         CreatedBy = userplayer.CreatedBy,
-                                         UpdatedDate= userplayer.UpdatedDate,
-                                         UpdatedBy= userplayer.UpdatedBy,
-                                         EmailId=user.EmailId,
                                          RoleId=user.RoleId,
                                          RoleName=role.Name,
                                          UserFirstName=user.FirstName,
@@ -126,41 +119,14 @@ namespace IM10.BAL.Implementaion
                                          FullName=player.FirstName + " " + player.LastName,
                                          FirstName = player.FirstName,
                                          LastName= player.LastName,
-                                           
-                                       }
-                                       ).ToList();
+                                       }).ToList();
 
-
-            //var playerlist = string.Join(',',userplyerentityList.);
             if (userplyerentityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;             
             }
-
-            userplyerentityList.ForEach(item =>
-            {
-                userplayerList.Add(new UserPlayerModel
-                {
-                    UserPlayerId=item.UserPlayerId,
-                    UserId = item.UserId,
-                    PlayerId = item.PlayerId,
-                    EmailId = item.EmailId,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
-                    FullName =item.FirstName + " " + item.LastName,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    UserFirstName= item.UserFirstName,
-                    UserLastName= item.UserLastName,
-                    UserFullName=item.UserFirstName + " " + item.UserLastName,
-                    RoleId = item.RoleId,
-                    RoleName = item.RoleName,
-                });
-            });
-            return userplayerList;
+            return userplyerentityList.ToList();
         }
 
 
@@ -209,10 +175,6 @@ namespace IM10.BAL.Implementaion
 
                             
                         }
-                        //else
-                        //{
-                        //     message = GlobalConstants.AlreadySelectedplayer;
-                        //}
                     }
                     if (uncheckedplayerIds.Length > 1)
                     {
@@ -230,11 +192,6 @@ namespace IM10.BAL.Implementaion
                         }
                     }               
             }
-
-            //else
-            //{
-            //    message = GlobalConstants.AlreadyExists;
-            //}
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add User Player Mapping Details";
             userAuditLog.Description = "User Player Mapping Details Added";
@@ -245,54 +202,6 @@ namespace IM10.BAL.Implementaion
             return message;
         }
 
-
-        /// <summary>
-        /// Method to update userplayer
-        /// </summary>
-        /// <param name="playerModel"></param>
-        /// <param name="errorResponseModel"></param>
-        /// <returns></returns>
-        //public string EditUserPlayer(UserPlayerModel1 playerModel, ref ErrorResponseModel errorResponseModel)
-        //{
-        //    var message = "";
-        //    //   var playerEntity = _context.UserPlayerMappings.Where(x => x.PlayerId == playerModel.PlayerId && x.UserId == playerModel.UserId && x.IsDeleted == false).ToList();
-        //    var userplayerEntity = new UserPlayerMapping();
-        //    var userplayerIds = playerModel.UserPlayerIds.Split(',');
-
-
-        //    if (playerModel.UserPlayerId !=0)
-        //    {
-
-        //        foreach (var item in userplayerIds)
-        //        {
-        //            var playerEntity = _context.UserPlayerMappings.Where(x => x.UserId == playerModel.UserId && x.PlayerId == Convert.ToInt32(item)).ToList();
-        //            if (playerEntity.Any())
-        //            {
-        //                //  userplayerEntity.UserPlayerId = playerModel.UserPlayerId;
-        //               // userplayerEntity.UserId = playerModel.UserId;
-        //                //userplayerEntity.PlayerId = Convert.ToInt32(item);
-        //                userplayerEntity.UpdatedBy = playerModel.UpdatedBy;
-        //                userplayerEntity.UpdatedDate = DateTime.Now;
-        //                userplayerEntity.IsDeleted = true;
-        //                _context.UserPlayerMappings.Add(userplayerEntity);
-        //                _context.SaveChanges();
-        //                message = GlobalConstants.UserPlayerUpdateMessage;
-        //            }
-        //            else
-        //            {
-        //                message = GlobalConstants.AlreadySelectedplayer;
-        //            }
-        //        }
-
-
-        //    }
-        //    else
-        //    {
-        //        message = GlobalConstants.AlreadyExists;
-        //    }
-        //    return message;
-
-        //}
         public string EditUserPlayer(UserPlayerMappingModel playerModel, ref ErrorResponseModel errorResponseModel)
         {
             var message = "";
@@ -386,10 +295,6 @@ namespace IM10.BAL.Implementaion
                                         userplayer.UserPlayerId,
                                         userplayer.UserId,
                                         userplayer.PlayerId,
-                                        userplayer.CreatedDate,
-                                        userplayer.CreatedBy,
-                                        userplayer.UpdatedDate,
-                                        userplayer.UpdatedBy,
                                         user.EmailId,
                                         player.FirstName,
                                         player.LastName,
@@ -397,7 +302,7 @@ namespace IM10.BAL.Implementaion
                                         player.ProfileImageFilePath
                                     }).ToList();
 
-            if (userplayerEntityList == null)
+            if (userplayerEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
@@ -416,11 +321,7 @@ namespace IM10.BAL.Implementaion
                         UserPlayerId = item.UserPlayerId,
                         UserId = item.UserId,
                         PlayerId = item.PlayerId,
-                        CreatedDate = DateTime.Now,
                         EmailId = item.EmailId,
-                        CreatedBy = item.CreatedBy,
-                        UpdatedDate = DateTime.Now,
-                        UpdatedBy = item.UpdatedBy,
                         FullName =item.FirstName + " " + item.LastName,
                         FirstName = item.FirstName,
                         LastName = item.LastName,
@@ -454,11 +355,6 @@ namespace IM10.BAL.Implementaion
             {
                 playerList.Add(item.PlayerId);
                 playerList1.Add(item.Player.FirstName + " " + item.Player.LastName);
-                //list.Add(new UserPlayerModel2
-                //{
-                //    UserId = item.UserId,
-
-                //});
             });
             userPlayerModel.lstPlayers = playerList;
             userPlayerModel.lstPlayer = playerList1;
@@ -479,25 +375,15 @@ namespace IM10.BAL.Implementaion
                                        {
                                            userplayer.UserPlayerId,
                                            userplayer.UserId,
-                                           userplayer.PlayerId,
-                                           userplayer.CreatedDate,
-                                           userplayer.CreatedBy,
-                                           userplayer.UpdatedDate,
-                                           userplayer.UpdatedBy,
+                                           userplayer.PlayerId,                                          
                                            user.EmailId,
                                            player.FirstName,
                                            player.LastName,
-                                       }
-                                       ).ToList();
-
-
-            //var playerlist = string.Join(',',userplyerentityList.);
+                                       }).ToList();
             if (userplyerentityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-
-
             }
             var groupedUserPlayerEntities = userplyerentityList.GroupBy(x => x.UserId);
 
@@ -512,19 +398,10 @@ namespace IM10.BAL.Implementaion
                     UserId = group.Key,
                     PlayerIds = playerIds,
                     EmailId = group.First().EmailId,
-                    CreatedDate = DateTime.Now,
-                    CreatedBy = group.First().CreatedBy,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = group.First().UpdatedBy,
                     FullName = fullNames,
-                    //FirstName = group.First().FirstName,
-                    //LastName = group.First().LastName,
                 });
             }
-
             return userplayerList;
-
-
         }
 
         public List<UserPlayerModel> GetPlayerByRoleId(long roleId, ref ErrorResponseModel errorResponseModel)
@@ -536,14 +413,15 @@ namespace IM10.BAL.Implementaion
                                 .Join(_context.UserMasters,
                                       upm => upm.UserId,
                                       um => um.UserId,
-                                      (upm, um) => new { upm.PlayerId, um.RoleId, upm.IsDeleted })
+                                      (upm, um) => new
+                                      { upm.PlayerId, um.RoleId, upm.IsDeleted })
                                 .Any(joined => joined.RoleId == roleId && joined.IsDeleted == false &&
                                                joined.PlayerId == pd.PlayerId)
                                            && pd.IsDeleted == false
                                      select pd;
             var result = result1.ToList();
 
-            if (result == null)
+            if (result.Count== 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
@@ -555,26 +433,16 @@ namespace IM10.BAL.Implementaion
                 var imgmodel = new VideoImageModel();
                 imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ProfileImageFilePath) ? item.ProfileImageFilePath : item.ProfileImageFilePath);
                 imgmodel.Type = String.IsNullOrEmpty(item.ProfileImageFilePath) ? "image" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                 imgmodel.FileName = imgmodel.url;
 
                 userList.Add(new UserPlayerModel
                 {
-                   // UserPlayerId = item.UserPlayerId,
-                    //UserId = item.UserId,
                     PlayerId = item.PlayerId,
-                    CreatedDate = DateTime.Now,
-                    //EmailId = item.EmailId,
-                    CreatedBy = item.CreatedBy,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
                     FullName = item.FirstName + " " + item.LastName,
                     FirstName = item.FirstName,
                     LastName = item.LastName,
                     ProfileImageFileName = item.ProfileImageFileName,
                     ProfileImageFilePath = imgmodel.FileName,
-                   // RoleId=item.RoleId,
-                    IsDeleted=item.IsDeleted
                 });
             });
             return userList;

@@ -14,7 +14,7 @@ namespace IM10.Common
         public const string ReplyDeleteSuccessfully = "Comment Reply Delete Successfully";
         public const string CommentSaveSuccessfully = "Comment Saved Successfully";
         public const string CommentUpdateSuccessfully = "Comment Updated Successfully";
-        public const string ForgotPasswordMessage = "You have sent link on your email Please check";
+        public const string ForgotPasswordMessage = "You have sent password on your email Please check";
         public const string ChangePassword = "Password Change Successfully";
         public const string ForgotPassword = " IM10 Forgot Password";
         public const string ApprovedSuccessfully = "Approved Successfully";

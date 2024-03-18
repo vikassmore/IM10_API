@@ -164,7 +164,7 @@ namespace IM10.BAL.Implementaion
                                  content in context.ContentDetails
                                  on update.ContentId equals content.ContentId
                                  where update.IsDeleted == false
-
+                                 && content.IsDeleted == false
                                  select new ContentUpdateModel
                                  {
                                      ContentLogId = update.ContentLogId,
@@ -186,24 +186,7 @@ namespace IM10.BAL.Implementaion
                 return null;
 
             }
-            contentEntity.ForEach(item =>
-            {
-                contentlist.Add(new ContentUpdateModel
-                {
-                    ContentLogId=item.ContentLogId,
-                    ContentId=item.ContentId,
-                    Title=item.Title,
-                    Description=item.Description,
-                    CreatedBy=item.CreatedBy,
-                    Approved=item.Approved,
-                    CreatedDate=DateTime.Now,
-                    ApprovedBy=item.ApprovedBy,
-                    ApprovedDate=DateTime.Now,      
-                    ContentTitle=item.ContentTitle
-                });
-
-            });
-            return contentlist;
+            return contentEntity.ToList();
         }
 
 
@@ -223,7 +206,7 @@ namespace IM10.BAL.Implementaion
                                  content in context.ContentDetails 
                                  on update.ContentId equals content.ContentId
                                  where update.ContentId == contentId && update.IsDeleted == false
-
+                                 && content.IsDeleted == false
                                  select new ContentUpdateModel
                                  {
                                      ContentLogId = update.ContentLogId,
@@ -270,52 +253,29 @@ namespace IM10.BAL.Implementaion
         public List<ContentUpdateModel> GetContentUpdateByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel= new ErrorResponseModel();
-            var contentupldateList=new List<ContentUpdateModel>();
             var contentEntity = (from details in context.ContentDetails join
                                  update in context.ContentAuditLogs on details.ContentId equals update.ContentId
                                  where details.PlayerId==playerId && update.IsDeleted==false
+                                 && details.IsDeleted== false   
                                  orderby update.ContentLogId descending
 
                                  select new ContentUpdateModel
                                  {
-
                                      ContentLogId = update.ContentLogId,
                                      ContentId = update.ContentId,
                                      Title = update.Title,
                                      Description = update.Description,
-                                     CreatedBy = update.CreatedBy,
                                      Comment = update.Comment,
                                      Approved = update.Approved,
-                                     CreatedDate = update.CreatedDate,
-                                     ApprovedBy = update.ApprovedBy,
-                                     ApprovedDate = update.ApprovedDate,
                                      ContentTitle = update.ContentTitle
                                  }).ToList();
-            if (contentEntity == null)
+            if (contentEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
             }
-
-            contentEntity.ForEach(item =>
-            {
-                contentupldateList.Add(new ContentUpdateModel
-                {
-                    ContentLogId = item.ContentLogId,
-                    ContentId = item.ContentId,
-                    Title = item.Title,
-                    Description = item.Description,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = DateTime.Now,
-                    Comment = item.Comment,
-                    Approved = item.Approved,
-                    ApprovedBy = item.ApprovedBy,
-                    ApprovedDate = DateTime.Now,
-                    ContentTitle = item.ContentTitle,
-                });
-            });
-            return contentupldateList;
+            return contentEntity.ToList();
 
         }
 
@@ -323,25 +283,10 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var list=new List<ContentUpdateModel>();
-            ContentUpdateModel contentUpdateModel = new ContentUpdateModel();
-            //var contentEntity = (from update in context.ContentAuditLogs
-            //                     join
-            //                     content in context.ContentDetails
-            //                     on update.ContentId equals content.ContentId
-            //                     where content.PlayerId == playerId && update.IsDeleted == false
-            //                     orderby update.ContentLogId descending
-
-            //var groupedLogs =(from content in context.ContentAuditLogs join details in context.ContentDetails
-            //                  on content.ContentId equals details.ContentId select new ContentUpdateModel { })
-            //                 .GroupBy(log => log.ContentId)
-            //                 .ToList();
-
-            //var contentEntity =  groupedLogs 
-            //    .Select(groupedLogs => groupedLogs.OrderByDescending(log => log.ContentLogId).FirstOrDefault())
-            //    .ToList();          
+            ContentUpdateModel contentUpdateModel = new ContentUpdateModel();      
              var joinedData = context.ContentAuditLogs
                             .Join(
-                                context.ContentDetails,
+                                context.ContentDetails.Where(detail => !detail.IsDeleted),
                                 log => log.ContentId,
                                 detail => detail.ContentId,
                                 (log, detail) => new { Log = log, Detail = detail }).OrderByDescending(x=>x.Log.ContentLogId).ToList();
@@ -360,11 +305,6 @@ namespace IM10.BAL.Implementaion
                     Description=group.First().Log.Description,
                     Comment=group.First().Log.Comment,
                     Approved=group.First().Log.Approved,
-                    CreatedBy=group.First().Log.CreatedBy,
-                    CreatedDate=group.First().Log.CreatedDate,
-                    ApprovedBy=group.First().Log.ApprovedBy,
-                    ApprovedDate=group.First().Log.ApprovedDate,
-                    IsDeleted=group.First().Log.IsDeleted,
                 }).OrderByDescending(x=>x.ContentLogId).ToList();
 
 
@@ -381,11 +321,7 @@ namespace IM10.BAL.Implementaion
                     ContentId = item.ContentId,
                     Title = item.Title,
                     Description = item.Description,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = DateTime.Now,
                     Approved = item.Approved,
-                    ApprovedBy = item.ApprovedBy,
-                    ApprovedDate = DateTime.Now,
                     ContentTitle = item.ContentTitle,
                     Comment = item.Comment,
                 });

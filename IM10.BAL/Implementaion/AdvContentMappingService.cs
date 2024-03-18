@@ -169,40 +169,16 @@ namespace IM10.BAL.Implementaion
                                      CategoryName = category.Name,
                                      SubCategoryId = update.SubCategoryId,
                                      SubcategoryName = subcategory.Name,
-                                     CreatedBy = update.CreatedBy,
-                                     CreatedDate = update.CreatedDate,
                                      Position = update.Position,
-                                     UpdatedDate = DateTime.Now,
-                                     UpdatedBy = update.UpdatedBy,
                                  }).ToList();
-            if (contentEntity == null)
+            if (contentEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
 
             }
-            contentEntity.ForEach(item =>
-            {
-                advcontentmappinglist.Add(new AdvContentMappingModel1
-                {
-                    AdvContentMapId = item.AdvContentMapId,
-                    ContentId = item.ContentId,
-                    ContentName = item.ContentName,
-                    AdvertiseContentId = item.AdvertiseContentId,
-                    AdvertiseContentName = item.AdvertiseContentName,
-                    CategoryId = item.CategoryId,
-                    CategoryName = item.CategoryName,
-                    SubCategoryId = item.SubCategoryId,
-                    SubcategoryName = item.SubcategoryName,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    Position = item.Position,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
-                });
-            });
-            return advcontentmappinglist;
+            return contentEntity.ToList();
 
         }
 
@@ -263,88 +239,6 @@ namespace IM10.BAL.Implementaion
                 UpdatedBy = contentEntity.UpdatedBy,
             };
 
-        }
-
-
-        public List<AdvContentMappingModel1> GetAllAdvContentMapping(ref ErrorResponseModel errorResponseModel)
-        {
-            errorResponseModel = new ErrorResponseModel();
-            var contentlist = new List<AdvContentMappingModel1>();
-            var contentEntity = (from update in context.AdvContentMappings
-                                 join
-                                 content in context.ContentDetails
-                                 on update.ContentId equals content.ContentId
-                                 join advertise in context.AdvContentDetails 
-                                 on update.AdvertiseContentId equals advertise.AdvertiseContentId
-                                 join category in context.Categories 
-                                 on update.CategoryId equals category.CategoryId
-                                 join subcategory in context.SubCategories
-                                 on update.SubCategoryId equals subcategory.SubCategoryId
-                                 where update.IsDeleted == false
-
-                                 select new AdvContentMappingModel1
-                                 {
-                                     AdvContentMapId = update.AdvContentMapId,
-                                     ContentId = update.ContentId,
-                                     ContentName=content.Title,
-                                     AdvertiseContentId = update.AdvertiseContentId,
-                                     AdvertiseContentName=advertise.Title,
-                                     CategoryId = update.CategoryId,
-                                     CategoryName=category.Name,
-                                     SubCategoryId=update.SubCategoryId,
-                                     SubcategoryName=subcategory.Name,
-                                     CreatedBy = update.CreatedBy,
-                                     CreatedDate = update.CreatedDate,
-                                     Position = update.Position,
-                                     UpdatedDate = DateTime.Now,
-                                     UpdatedBy = update.UpdatedBy,
-                                 }).ToList();
-            if (contentEntity.Count == 0)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-                return null;
-
-            }
-            contentEntity.ForEach(item =>
-            {
-                contentlist.Add(new AdvContentMappingModel1
-                {
-                    AdvContentMapId = item.AdvContentMapId,
-                    ContentId = item.ContentId,
-                    ContentName = item.ContentName,
-                    AdvertiseContentId = item.AdvertiseContentId,
-                    AdvertiseContentName = item.AdvertiseContentName,
-                    CategoryId = item.CategoryId,
-                    CategoryName = item.CategoryName,
-                    SubCategoryId = item.SubCategoryId,
-                    SubcategoryName = item.SubcategoryName,
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    Position = item.Position,
-                    UpdatedDate = DateTime.Now,
-                    UpdatedBy = item.UpdatedBy,
-                });
-
-            });
-            return contentlist;
-        }
-
-        private string ThumbnailPath(string filePath)
-        {
-            byte[]? ms = null;
-            string extension = "";
-            if (!String.IsNullOrWhiteSpace(filePath))
-            {
-                extension = Path.GetExtension(filePath);
-                if (!String.IsNullOrWhiteSpace(extension))
-                {
-                    filePath = filePath.Replace(extension, ".jpeg");
-                   // filePath = filePath.Replace("ContentFile/", "ContentFile/thumbnail/");
-                }
-            }
-
-            return filePath;
         }
 
     }

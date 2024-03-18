@@ -71,38 +71,7 @@ namespace IM10.API.Controllers
             }
         }
 
-        /// <summary>
-        /// Get all CampaignSocialMediaDetail
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        [HttpGet("GetAllCampaignSocialMediaDetail")]
-        [ProducesResponseType(typeof(CampaignSocialMediaDetailModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllCampaignSocialMediaDetail()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-
-                var detailModel = service.GetAllCampaignSocialMediaDetail(ref errorResponseModel);
-
-                if (detailModel != null)
-                {
-                    return Ok(detailModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
-        }
-
-
+        
 
         /// <summary>
         /// Create/Update an CampaignSocialMediaDetail

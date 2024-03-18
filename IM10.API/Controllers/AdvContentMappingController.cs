@@ -65,38 +65,6 @@ namespace IM10.API.Controllers
             }
         }
 
-        /// <summary>
-        /// Get all advcontentmapping
-        /// </summary>
-        /// <param name=""></param>
-        /// <returns></returns>
-        [HttpGet("GetAllAdvContentMapping")]
-        [ProducesResponseType(typeof(AdvContentMappingModel1), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllAdvContentMapping()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-
-                var detailModel = AdvContentMapping.GetAllAdvContentMapping(ref errorResponseModel);
-
-                if (detailModel != null)
-                {
-                    return Ok(detailModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
-        }
-
-
 
         /// <summary>
         /// Create an advcontentmapping

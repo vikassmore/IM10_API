@@ -332,18 +332,21 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             MobileVideoCategoryData videoModel = new MobileVideoCategoryData();
-            var categoryEnitityList = (from flag in context.AdvContentMappings
-                                       join content in context.ContentDetails on flag.ContentId equals content.ContentId
-                                       where content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && flag.IsDeleted == false && content.Approved == true && content.PlayerId == playerId && content.CategoryId == categoryId
-                                       orderby flag.CreatedDate descending
+            var categoryEnitityList = (from content in context.ContentDetails
+                                       where content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && content.Approved == true && content.PlayerId == playerId &&  content.CategoryId == categoryId
+                                       join flag in context.AdvContentMappings
+                                       on content.ContentId equals flag.ContentId into gj
+                                       from subflag in gj.DefaultIfEmpty()
+                                       orderby subflag != null ? subflag.CreatedDate : content.CreatedDate descending
                                        select new
                                        {
-                                           flag.ContentId,
-                                           flag.CategoryId,
-                                           flag.Category.Name,
-                                           flag.Category.DisplayOrder
+                                           ContentId = content.ContentId,
+                                           CategoryId = subflag != null ? subflag.CategoryId : content.CategoryId,
+                                           CategoryName = subflag != null ? subflag.Category.Name : content.Category.Name,
+                                           DisplayOrder = subflag != null ? subflag.Category.DisplayOrder : 0,
+                                           HasAdvertisement = subflag != null // Indicates if there's an advertisement mapped
                                        }).ToList();
-            var contenttopfive = categoryEnitityList.GroupBy(x => new { x.ContentId, x.CategoryId, x.Name, x.DisplayOrder }).Select(x => new { ContentId = x.Key, CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Key.DisplayOrder, count = x.Count() }).ToList();
+            var contenttopfive = categoryEnitityList.GroupBy(x => new { x.ContentId, x.CategoryId, x.CategoryName, x.DisplayOrder }).Select(x => new { ContentId = x.Key, CategoryId = x.Key.CategoryId, Name = x.Key.CategoryName, DisplayOrder = x.Key.DisplayOrder, count = x.Count() }).ToList();
             List<MobileContentData> topList = new List<MobileContentData>();
             foreach (var item1 in contenttopfive)
             {

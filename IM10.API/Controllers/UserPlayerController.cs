@@ -220,7 +220,7 @@ namespace IM10.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetPlayerByUserId/{userId}")]
-        [ProducesResponseType(typeof(UserPlayerModel), 200)]
+        [ProducesResponseType(typeof(SportUserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]

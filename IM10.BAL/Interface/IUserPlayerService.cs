@@ -69,7 +69,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-       List< UserPlayerModel> GetPlayerByUserId(long userId, ref ErrorResponseModel errorResponseModel);
+       List<SportUserPlayerModel> GetPlayerByUserId(long userId, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Method is used to get player by roleId

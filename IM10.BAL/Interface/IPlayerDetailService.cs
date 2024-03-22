@@ -18,7 +18,15 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="PlayerId"></param>
         /// <returns></returns>
-        PlayerDetailModel GetPlayerDetailById(long playerId, ref ErrorResponseModel errorResponseModel);
+        PlayerSportsModel GetPlayerDetailById(long playerId, ref ErrorResponseModel errorResponseModel);
+
+
+        /// <summary>
+        /// Method is used to get playerDetails by playerid
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <returns></returns>
+        PlayerDetailModel GetPlayerDetailByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
 
 
         /// <summary>

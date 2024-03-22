@@ -117,13 +117,17 @@ namespace IM10.BAL.Implementaion
                         }
 
                         // Set IsDeleted to true for the device token in UserDeviceMapping table
-                        var userMapping = context.UserDeviceMappings.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
-                        if (userMapping != null)
+                        var userMapping = context.UserDeviceMappings.Where(x => x.DeviceToken == item.DeviceToken).ToList();
+                        foreach(var mapping in userMapping)
                         {
-                            userMapping.IsDeleted = true;
-                            context.UserDeviceMappings.Update(userMapping);
-                            context.SaveChanges() ;
+                            if (mapping != null)
+                            {
+                                mapping.IsDeleted = true;
+                                context.UserDeviceMappings.Update(mapping);
+                                context.SaveChanges();
+                            }
                         }
+                        
 
                     }
                 }

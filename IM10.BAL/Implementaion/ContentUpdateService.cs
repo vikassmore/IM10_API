@@ -104,7 +104,7 @@ namespace IM10.BAL.Implementaion
         public string DeniedContentUpdateDetail(ContentUpdateComment model, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
-            var contentupdateEntity = context.ContentAuditLogs.FirstOrDefault(x => x.ContentLogId == model.ContentLogId);
+            var contentupdateEntity = context.ContentAuditLogs.FirstOrDefault(x => x.ContentLogId == model.ContentLogId && x.IsDeleted==false);
             if (contentupdateEntity != null)
             {
                 contentupdateEntity.Approved = false;

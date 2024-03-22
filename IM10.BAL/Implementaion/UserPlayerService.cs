@@ -52,6 +52,7 @@ namespace IM10.BAL.Implementaion
                                     user in _context.UserMasters on userplayer.UserId equals user.UserId
                                     join player in _context.PlayerDetails on userplayer.PlayerId equals player.PlayerId
                                     where userplayer.UserPlayerId == userplayerId && userplayer.IsDeleted == false
+                                    && player.IsDeleted==false
                                     select new
                                     {
                                         userplayer.UserPlayerId,
@@ -105,6 +106,7 @@ namespace IM10.BAL.Implementaion
                                        join player in _context.PlayerDetails on userplayer.PlayerId equals player.PlayerId
                                        join role in _context.Roles on user.RoleId equals role.RoleId 
                                        where userplayer.IsDeleted == false && role.IsDeleted == false
+                                       && player.IsDeleted == false
                                        orderby userplayer.UserId , userplayer.UpdatedDate descending
                                        select new UserPlayerModel
                                        {
@@ -280,15 +282,17 @@ namespace IM10.BAL.Implementaion
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public List< UserPlayerModel> GetPlayerByUserId(long userId, ref ErrorResponseModel errorResponseModel)
+        public List<SportUserPlayerModel> GetPlayerByUserId(long userId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var userList=new List<UserPlayerModel>();
+            var userList=new List<SportUserPlayerModel>();
             var userplayerEntityList = (from userplayer in _context.UserPlayerMappings
                                     join
                                     user in _context.UserMasters on userplayer.UserId equals user.UserId
                                     join player in _context.PlayerDetails on userplayer.PlayerId equals player.PlayerId
+                                    join sport in _context.SportMasters on player.SportId equals sport.SportId
                                     where userplayer.UserId== userId  && userplayer.IsDeleted == false
+                                    && player.IsDeleted == false
                                     orderby userplayer.UpdatedDate descending
                                     select new
                                     {
@@ -299,7 +303,9 @@ namespace IM10.BAL.Implementaion
                                         player.FirstName,
                                         player.LastName,
                                         player.ProfileImageFileName,
-                                        player.ProfileImageFilePath
+                                        player.ProfileImageFilePath,
+                                        player.SportId,
+                                        sport.SportName
                                     }).ToList();
 
             if (userplayerEntityList.Count == 0)
@@ -316,7 +322,7 @@ namespace IM10.BAL.Implementaion
                     imgmodel.Type = String.IsNullOrEmpty(item.ProfileImageFilePath) ? "image" : "image";
                     // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                     imgmodel.FileName = imgmodel.url;
-                    userList.Add(new UserPlayerModel
+                    userList.Add(new SportUserPlayerModel
                     {
                         UserPlayerId = item.UserPlayerId,
                         UserId = item.UserId,
@@ -326,7 +332,9 @@ namespace IM10.BAL.Implementaion
                         FirstName = item.FirstName,
                         LastName = item.LastName,
                         ProfileImageFileName=item.ProfileImageFileName,
-                        ProfileImageFilePath=imgmodel.FileName
+                        ProfileImageFilePath=imgmodel.FileName,
+                        SportId = item.SportId,
+                        SportName = item.SportName,
                     });
             });
             return userList;
@@ -336,7 +344,7 @@ namespace IM10.BAL.Implementaion
         {
             string message = "";
             var list = new List<UserPlayerModel2>();
-            var userEntity=_context.UserPlayerMappings.Where(x=>x.UserPlayerId== userplayerId).FirstOrDefault();
+            var userEntity=_context.UserPlayerMappings.Where(x=>x.UserPlayerId== userplayerId && x.IsDeleted==false).FirstOrDefault();
             var playerEntity = _context.UserPlayerMappings.Include(x=>x.Player).Where(x => x.UserId == userEntity.UserId && x.IsDeleted==false).ToList();
 
             if (userEntity == null)
@@ -370,7 +378,7 @@ namespace IM10.BAL.Implementaion
                                        join
                                        user in _context.UserMasters on userplayer.UserId equals user.UserId
                                        join player in _context.PlayerDetails on userplayer.PlayerId equals player.PlayerId
-                                       where userplayer.IsDeleted == false
+                                       where userplayer.IsDeleted == false && player.IsDeleted==false
                                        select new
                                        {
                                            userplayer.UserPlayerId,

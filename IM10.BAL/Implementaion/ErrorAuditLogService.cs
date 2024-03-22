@@ -58,6 +58,7 @@ namespace IM10.BAL.Implementaion
             var errorEntity = (from user in context.UserMasters
                                join log in context.LogInformations
                                on (int)user.UserId equals log.UserId
+                               where user.IsDeleted==false
                                orderby log.LogId descending
 
                                select new

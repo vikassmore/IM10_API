@@ -20,7 +20,7 @@ namespace IM10.BAL.Implementaion
     /// <summary>
     /// This is implementation for the playerDetails operations 
     /// </summary>
-    public class PlayerDetailService: IPlayerDetailService
+    public class PlayerDetailService : IPlayerDetailService
     {
         IM10DbContext context;
         private ConfigurationModel _configuration;
@@ -43,67 +43,45 @@ namespace IM10.BAL.Implementaion
         /// <param name="PlayerId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public PlayerDetailModel GetPlayerDetailById(long playerId, ref ErrorResponseModel errorResponseModel)
+        public PlayerSportsModel GetPlayerDetailById(long playerId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var playerEntity=context.PlayerDetails.FirstOrDefault(x=>x.PlayerId==playerId && x.IsDeleted==false);
-            if (playerEntity==null)
+            var playerEntity = (from player in context.PlayerDetails
+                                join sport in context.SportMasters on player.SportId equals sport.SportId
+                                where player.PlayerId == playerId && player.IsDeleted == false
+                                select new
+                                {
+                                    player.PlayerId,
+                                    player.FirstName,
+                                    player.LastName,
+                                    player.SportId,
+                                    player.ProfileImageFileName,
+                                    player.ProfileImageFilePath,
+                                    sport.SportName
+                                }).FirstOrDefault();
+
+            if (playerEntity == null)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
-
             }
             var imgmodel = new VideoImageModel();
             imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.ProfileImageFilePath) ? playerEntity.ProfileImageFilePath : playerEntity.ProfileImageFilePath);
             imgmodel.Type = String.IsNullOrEmpty(playerEntity.ProfileImageFilePath) ? "image" : "image";
             imgmodel.FileName = imgmodel.url;
 
-            var aadharimg = new VideoImageModel();
-            aadharimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.AadharCardFilePath) ? playerEntity.AadharCardFilePath : playerEntity.AadharCardFilePath.Replace("\r\n", ""));
-            aadharimg.Type = String.IsNullOrEmpty(playerEntity.AadharCardFilePath) ? "image" : "image";
-            aadharimg.FileName = aadharimg.url;
-
-            var panimg = new VideoImageModel();
-            panimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.PanCardFilePath) ? playerEntity.PanCardFilePath : playerEntity.PanCardFilePath.Replace("\r\n", ""));
-            panimg.Type = String.IsNullOrEmpty(playerEntity.PanCardFilePath) ? "image" : "image";
-            panimg.FileName = panimg.url;
-
-            var votingimg = new VideoImageModel();
-            votingimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.VotingCardFilePath) ? playerEntity.VotingCardFilePath : playerEntity.VotingCardFilePath);
-            votingimg.Type = String.IsNullOrEmpty(playerEntity.VotingCardFilePath) ? "image" : "image";
-            votingimg.FileName = votingimg.url;
-
-            var licenseimg = new VideoImageModel();
-            licenseimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.DrivingLicenceFilePath) ? playerEntity.DrivingLicenceFilePath : playerEntity.DrivingLicenceFilePath.Replace("\r\n", ""));
-            licenseimg.Type = String.IsNullOrEmpty(playerEntity.DrivingLicenceFilePath) ? "image" : "image";
-            licenseimg.FileName = licenseimg.url;
-
-            return new PlayerDetailModel
+            return new PlayerSportsModel
             {
                 PlayerId = playerEntity.PlayerId,
-                PlayerName = playerEntity.FirstName+ " " + playerEntity.LastName,
-                AadharCardFileName = playerEntity.AadharCardFileName,
-                AadharCardFilePath = aadharimg.FileName,
-                PanCardFileName=playerEntity.PanCardFileName,
-                PanCardFilePath=panimg.FileName,
-                VotingCardFileName=playerEntity.VotingCardFileName,
-                VotingCardFilePath=votingimg.FileName,
-                DrivingLicenceFileName=playerEntity.DrivingLicenceFileName,
-                DrivingLicenceFilePath=licenseimg.FileName,
-                BankAcountNo=playerEntity.BankAcountNo,
-                PancardNo=playerEntity.PancardNo,
-                FirstName=playerEntity.FirstName,
-                LastName=playerEntity.LastName,
-                FullName =playerEntity.FirstName + " " +playerEntity.LastName,
-                Address=playerEntity.Address,
-                ProfileImageFileName=playerEntity.ProfileImageFileName,
-                ProfileImageFilePath=imgmodel.FileName,
-                CreatedBy=playerEntity.CreatedBy,
-                CreatedDate=playerEntity.CreatedDate,
-                UpdatedBy=playerEntity.UpdatedBy,
-                UpdatedDate=playerEntity.UpdatedDate,
-
+                PlayerName = playerEntity.FirstName + " " + playerEntity.LastName,
+                FirstName = playerEntity.FirstName,
+                LastName = playerEntity.LastName,
+                SportId = playerEntity.SportId,
+                SportName = playerEntity.SportName,
+                FullName = playerEntity.FirstName + " " + playerEntity.LastName,
+                ProfileImageFileName = playerEntity.ProfileImageFileName,
+                ProfileImageFilePath = imgmodel.FileName,
             };
         }
 
@@ -116,11 +94,11 @@ namespace IM10.BAL.Implementaion
         public List<PlayerDetailModel> GetAllPlayerDetail(ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var playerlist=new List<PlayerDetailModel>();
-            var playerEntity=context.PlayerDetails.Where(x=>x.IsDeleted==false).OrderByDescending(x=>x.UpdatedDate).ToList();
-            if(playerEntity.Count==0)
+            var playerlist = new List<PlayerDetailModel>();
+            var playerEntity = context.PlayerDetails.Where(x => x.IsDeleted == false).OrderByDescending(x => x.UpdatedDate).ToList();
+            if (playerEntity.Count == 0)
             {
-                errorResponseModel.StatusCode=HttpStatusCode.NotFound;
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
 
@@ -134,7 +112,7 @@ namespace IM10.BAL.Implementaion
                 // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                 imgmodel.FileName = imgmodel.url;
 
-                var aadharimg=new VideoImageModel();
+                var aadharimg = new VideoImageModel();
                 aadharimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.AadharCardFilePath) ? item.AadharCardFilePath : item.AadharCardFilePath.Replace("\r\n", ""));
                 aadharimg.Type = String.IsNullOrEmpty(item.AadharCardFilePath) ? "image" : "image";
                 aadharimg.FileName = aadharimg.url;
@@ -157,7 +135,7 @@ namespace IM10.BAL.Implementaion
                 playerlist.Add(new PlayerDetailModel
                 {
                     PlayerId = item.PlayerId,
-                    PlayerName = item.FirstName+ " " + item.LastName,
+                    PlayerName = item.FirstName + " " + item.LastName,
                     AadharCardFileName = item.AadharCardFileName,
                     AadharCardFilePath = aadharimg.FileName,
                     PanCardFileName = item.PanCardFileName,
@@ -187,7 +165,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string AddPlayerDetail(PlayerDetailModel model, ref ErrorResponseModel errorResponseModel)
         {
-           
+
             string message = "";
             if (model.PlayerId == 0)
             {
@@ -195,9 +173,9 @@ namespace IM10.BAL.Implementaion
                 playerEntity.PlayerId = model.PlayerId;
                 playerEntity.AadharCardFilePath = model.AadharCardFilePath;
                 playerEntity.AadharCardFileName = model.AadharCardFileName;
-                playerEntity.PanCardFileName =  model.PanCardFileName;
-                playerEntity.PanCardFilePath =  model.PanCardFilePath;
-                playerEntity.VotingCardFileName =  model.VotingCardFileName;
+                playerEntity.PanCardFileName = model.PanCardFileName;
+                playerEntity.PanCardFilePath = model.PanCardFilePath;
+                playerEntity.VotingCardFileName = model.VotingCardFileName;
                 playerEntity.VotingCardFilePath = model.VotingCardFilePath;
                 playerEntity.DrivingLicenceFileName = model.DrivingLicenceFileName;
                 playerEntity.DrivingLicenceFilePath = model.DrivingLicenceFilePath;
@@ -205,6 +183,7 @@ namespace IM10.BAL.Implementaion
                 playerEntity.PancardNo = model.PancardNo;
                 playerEntity.FirstName = model.FirstName;
                 playerEntity.LastName = model.LastName;
+                playerEntity.SportId = model.SportId;
                 playerEntity.Address = model.Address;
                 playerEntity.ProfileImageFileName = model.ProfileImageFileName;
                 playerEntity.ProfileImageFilePath = model.ProfileImageFilePath;
@@ -294,11 +273,12 @@ namespace IM10.BAL.Implementaion
                 {
                     playerEntity.ProfileImageFilePath = playerModel.ProfileImageFilePath;
                 }
-               
+
                 playerEntity.BankAcountNo = playerModel.BankAcountNo;
                 playerEntity.PancardNo = playerModel.PancardNo;
                 playerEntity.FirstName = playerModel.FirstName;
                 playerEntity.LastName = playerModel.LastName;
+                playerEntity.SportId = playerModel.SportId;
                 playerEntity.Address = playerModel.Address;
                 playerEntity.UpdatedBy = playerModel.UpdatedBy;
                 playerEntity.UpdatedDate = DateTime.Now;
@@ -310,7 +290,7 @@ namespace IM10.BAL.Implementaion
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Update Player Details";
             userAuditLog.Description = "Player Details Updated";
-            userAuditLog.UserId = (int)playerModel.CreatedBy;
+            userAuditLog.UserId = (int)playerModel.UpdatedBy;
             userAuditLog.UpdatedBy = playerModel.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
@@ -353,9 +333,9 @@ namespace IM10.BAL.Implementaion
         {
 
             string message = "";
-            foreach(var item in model)
+            foreach (var item in model)
             {
-                var playerDataEntity = context.PlayerData.FirstOrDefault(x =>x.PlayerDataId == item.PlayerDataId && x.PlayerId == item.PlayerId && x.FileCategoryTypeId == item.FileCategoryTypeId && x.IsDeleted == false);
+                var playerDataEntity = context.PlayerData.FirstOrDefault(x => x.PlayerDataId == item.PlayerDataId && x.PlayerId == item.PlayerId && x.FileCategoryTypeId == item.FileCategoryTypeId && x.IsDeleted == false);
                 if (playerDataEntity == null)
                 {
                     var playerDataEntity1 = new PlayerData();
@@ -391,7 +371,7 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var playerDatalist = new List<PlayerDataModel>();
-            var playerDataEntity = context.PlayerData.Where(x => x.IsDeleted == false).Include(x=>x.Player).OrderByDescending(x => x.CreatedBy).ToList();
+            var playerDataEntity = context.PlayerData.Where(x => x.IsDeleted == false).Include(x => x.Player).OrderByDescending(x => x.CreatedBy).ToList();
             if (playerDataEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -402,7 +382,7 @@ namespace IM10.BAL.Implementaion
             playerDataEntity.ForEach(item =>
             {
                 var imgmodel = new VideoImageModel();
-                if(item.FileCategoryTypeId == FileCategoryTypeHelper.SplashScreenTypeId)
+                if (item.FileCategoryTypeId == FileCategoryTypeHelper.SplashScreenTypeId)
                 {
                     imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.FilePath) ? item.FilePath : item.FilePath);
                     imgmodel.Type = String.IsNullOrEmpty(item.FilePath) ? "video" : "image";
@@ -419,7 +399,7 @@ namespace IM10.BAL.Implementaion
                 {
                     PlayerDataId = item.PlayerDataId,
                     PlayerId = item.PlayerId,
-                    PlayerName = item.Player.FirstName + " "+ item.Player.LastName,
+                    PlayerName = item.Player.FirstName + " " + item.Player.LastName,
                     FileName = item.FileName,
                     FilePath = imgmodel.thumbnail,
                     FileCategoryTypeId = item.FileCategoryTypeId,
@@ -453,7 +433,7 @@ namespace IM10.BAL.Implementaion
 
             return filePath;
         }
-       
+
         /// <summary>
         /// Method to delete player Data
         /// </summary>
@@ -479,5 +459,76 @@ namespace IM10.BAL.Implementaion
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
         }
-    }
+
+
+
+        /// <summary>
+        /// Method is used to get playerDetails by playerid
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <returns></returns>
+        public PlayerDetailModel GetPlayerDetailByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel = new ErrorResponseModel();
+            var playerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == playerId && x.IsDeleted == false);
+            if (playerEntity == null)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                return null;
+
+            }
+            var imgmodel = new VideoImageModel();
+            imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.ProfileImageFilePath) ? playerEntity.ProfileImageFilePath : playerEntity.ProfileImageFilePath);
+            imgmodel.Type = String.IsNullOrEmpty(playerEntity.ProfileImageFilePath) ? "image" : "image";
+            imgmodel.FileName = imgmodel.url;
+
+            var aadharimg = new VideoImageModel();
+            aadharimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.AadharCardFilePath) ? playerEntity.AadharCardFilePath : playerEntity.AadharCardFilePath.Replace("\r\n", ""));
+            aadharimg.Type = String.IsNullOrEmpty(playerEntity.AadharCardFilePath) ? "image" : "image";
+            aadharimg.FileName = aadharimg.url;
+
+            var panimg = new VideoImageModel();
+            panimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.PanCardFilePath) ? playerEntity.PanCardFilePath : playerEntity.PanCardFilePath.Replace("\r\n", ""));
+            panimg.Type = String.IsNullOrEmpty(playerEntity.PanCardFilePath) ? "image" : "image";
+            panimg.FileName = panimg.url;
+
+            var votingimg = new VideoImageModel();
+            votingimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.VotingCardFilePath) ? playerEntity.VotingCardFilePath : playerEntity.VotingCardFilePath);
+            votingimg.Type = String.IsNullOrEmpty(playerEntity.VotingCardFilePath) ? "image" : "image";
+            votingimg.FileName = votingimg.url;
+
+            var licenseimg = new VideoImageModel();
+            licenseimg.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.DrivingLicenceFilePath) ? playerEntity.DrivingLicenceFilePath : playerEntity.DrivingLicenceFilePath.Replace("\r\n", ""));
+            licenseimg.Type = String.IsNullOrEmpty(playerEntity.DrivingLicenceFilePath) ? "image" : "image";
+            licenseimg.FileName = licenseimg.url;
+
+            return new PlayerDetailModel
+            {
+                PlayerId = playerEntity.PlayerId,
+                PlayerName = playerEntity.FirstName + " " + playerEntity.LastName,
+                AadharCardFileName = playerEntity.AadharCardFileName,
+                AadharCardFilePath = aadharimg.FileName,
+                PanCardFileName = playerEntity.PanCardFileName,
+                PanCardFilePath = panimg.FileName,
+                VotingCardFileName = playerEntity.VotingCardFileName,
+                VotingCardFilePath = votingimg.FileName,
+                DrivingLicenceFileName = playerEntity.DrivingLicenceFileName,
+                DrivingLicenceFilePath = licenseimg.FileName,
+                BankAcountNo = playerEntity.BankAcountNo,
+                PancardNo = playerEntity.PancardNo,
+                FirstName = playerEntity.FirstName,
+                SportId=playerEntity.SportId,
+                LastName = playerEntity.LastName,
+                FullName = playerEntity.FirstName + " " + playerEntity.LastName,
+                Address = playerEntity.Address,
+                ProfileImageFileName = playerEntity.ProfileImageFileName,
+                ProfileImageFilePath = imgmodel.FileName,
+                CreatedBy = playerEntity.CreatedBy,
+                CreatedDate = playerEntity.CreatedDate,
+                UpdatedBy = playerEntity.UpdatedBy,
+                UpdatedDate = playerEntity.UpdatedDate,
+            };
+        }
+    } 
 }

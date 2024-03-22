@@ -1,5 +1,6 @@
 ﻿using IM10.BAL.Interface;
 using IM10.Common;
+using IM10.Entity.DataModels;
 using IM10.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -530,6 +531,66 @@ namespace IM10.API.Controllers
         }
 
 
+
+
+        /// <summary>
+        /// To get all Sports
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [HttpGet("GetAllSports")]
+        [ProducesResponseType(typeof(SportModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetAllSports()
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                var sportModel = masterAPIsService.GetAllSports(ref errorResponseModel);
+
+                if (sportModel != null)
+                {
+                    return Ok(sportModel);
+                }
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message );
+            }
+        }
+
+
+        /// <summary>
+        /// Method is used to get all Categories by sportId
+        /// </summary>
+        /// <param name="sportId"></param>
+        /// <returns></returns>
+        [HttpGet("GetAllCategoryBySportId/{sportId}")]
+        [ProducesResponseType(typeof(CategoryModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetAllCategoryBySportId(long sportId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                var sportModel = masterAPIsService.GetAllCategoryBySportId(sportId, ref errorResponseModel);
+
+                if (sportModel != null)
+                {
+                    return Ok(sportModel);
+                }
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
 

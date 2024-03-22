@@ -13,6 +13,8 @@ public partial class Category
 
     public int? DisplayOrder { get; set; }
 
+    public long? SportId { get; set; }
+
     public DateTime? CreatedDate { get; set; }
 
     public int? CreatedBy { get; set; }
@@ -28,6 +30,8 @@ public partial class Category
     public virtual ICollection<ContentDetail> ContentDetails { get; } = new List<ContentDetail>();
 
     public virtual ICollection<ListingDetail> ListingDetails { get; } = new List<ListingDetail>();
+
+    public virtual SportMaster? Sport { get; set; }
 
     public virtual ICollection<SubCategory> SubCategories { get; } = new List<SubCategory>();
 }

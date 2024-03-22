@@ -47,7 +47,7 @@ namespace IM10.API.Controllers
         /// <param name="playerId"></param>
         /// <returns></returns>
         [HttpGet("GetPlayerDetailById/{playerId}")]
-        [ProducesResponseType(typeof(PlayerDetailModel), 200)]
+        [ProducesResponseType(typeof(PlayerSportsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
@@ -142,7 +142,8 @@ namespace IM10.API.Controllers
                     model.LastName = formdata["lastName"];
                     model.PlayerId = Convert.ToInt32(formdata["playerId"]);
                     model.BankAcountNo = formdata["bankaccountNo"];
-                    model.PancardNo = formdata["pancardNo"];                  
+                    model.PancardNo = formdata["pancardNo"];
+                    model.SportId = Convert.ToInt32(formdata["sportId"]);
                     var existingFilesNotForDelete = formdata["existingFiles"].ToString().Split(",");
 
                     if (model.PlayerId != 0)
@@ -267,6 +268,8 @@ namespace IM10.API.Controllers
                     model.PlayerId = Convert.ToInt32(formdata["playerId"]);
                     model.BankAcountNo = formdata["bankaccountNo"];
                     model.PancardNo = formdata["pancardNo"];
+                    model.SportId = Convert.ToInt32(formdata["sportId"]);
+
                     var existingFilesNotForDelete = formdata["existingFiles"].ToString().Split(",");
 
                     if (model.PlayerId != 0)
@@ -579,6 +582,44 @@ namespace IM10.API.Controllers
                 return ReturnErrorResponse(errorResponseModel);
             }
             catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
+
+
+
+
+
+        /// <summary>
+        /// Method is used to get playerDetails by playerid
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <returns></returns>
+        [HttpGet("GetPlayerDetailByPlayerId/{playerId}")]
+        [ProducesResponseType(typeof(PlayerDetailModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetPlayerDetailByPlayerId(long playerId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                if (playerId <= 0)
+                {
+                    return BadRequest("Invalid data");
+                }
+                var userModel = playerDetailService.GetPlayerDetailByPlayerId(playerId, ref errorResponseModel);
+
+                if (userModel != null)
+                {
+                    return Ok(userModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }

@@ -325,7 +325,7 @@ namespace IM10.BAL.Implementaion
         public string ChangePassword(changepasswordModel userModel, ref ErrorResponseModel errorResponseModel)
         {
             string message = "";
-            var userEntity = context.UserMasters.Where(x => x.UserId == userModel.UserId).FirstOrDefault();
+            var userEntity = context.UserMasters.Where(x => x.UserId == userModel.UserId && x.IsDeleted == false).FirstOrDefault();
             userEntity.Password = EncryptionHelper.Encrypt(userEntity.Password.ToString());
             if (userEntity != null)
             {
@@ -437,7 +437,7 @@ namespace IM10.BAL.Implementaion
         public string ActivateUser(ActiveUserModel model, ref ErrorResponseModel errorResponseModel)
         {
             string message = "";
-            var appuserEntity = context.UserMasters.FirstOrDefault(x=>x.UserId==model.UserId);
+            var appuserEntity = context.UserMasters.FirstOrDefault(x=>x.UserId == model.UserId && x.IsDeleted == false);
             var otpEntity = context.Otpautherizations.FirstOrDefault(x => x.UserId == model.UserId && x.Otp == model.Otp);
 
             if (appuserEntity == null || otpEntity==null)

@@ -60,7 +60,7 @@ namespace IM10.BAL.Implementaion
                                  join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                  join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                  join language in context.Languages on content.LanguageId equals language.LanguageId
-                                 where content.ContentId == contentId && content.IsDeleted == false
+                                 where content.ContentId == contentId && content.IsDeleted == false && player.IsDeleted == false
                                  select new ContentDetailModel
                                  {
                                      ContentId = (int)content.ContentId,
@@ -154,7 +154,7 @@ namespace IM10.BAL.Implementaion
                                        join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                        join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                        join language in context.Languages on content.LanguageId equals language.LanguageId
-                                       where content.IsDeleted == false
+                                       where content.IsDeleted == false && player.IsDeleted == false
                                        select new
                                        {
                                            ContentId = (int)content.ContentId,
@@ -390,7 +390,7 @@ namespace IM10.BAL.Implementaion
                                      join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                      join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                      join language in context.Languages on content.LanguageId equals language.LanguageId
-                                     where content.PlayerId == playerId && content.IsDeleted == false 
+                                     where content.PlayerId == playerId && content.IsDeleted == false && player.IsDeleted == false
 
                                      orderby content.UpdatedDate descending
                                      select new ContentDetailModel
@@ -484,8 +484,8 @@ namespace IM10.BAL.Implementaion
                                      join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                      join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                      join language in context.Languages on content.LanguageId equals language.LanguageId
-                                     where content.PlayerId == playerId && content.IsDeleted == false &&
-                                     content.Approved==true && content.ContentTypeId == ContentTypeHelper.VideoContentTypeId
+                                     where content.PlayerId == playerId && content.IsDeleted == false && 
+                                     content.Approved==true && content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && player.IsDeleted==false
                                      orderby content.UpdatedDate descending
                                      select new ContentDetailModel
                                      {
@@ -590,9 +590,7 @@ namespace IM10.BAL.Implementaion
                     message.Message = GlobalConstants.ApprovedSuccessfully;
                     message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath) ? contentEntity.ContentFilePath : contentEntity.ContentFilePath));
 
-                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId && x.IsDeleted==false).ToList();
-
-                    
+                    var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId && x.IsDeleted==false).ToList();                    
                         foreach (var item in existing)
                         {
                           var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail, message.CategoryId);
@@ -607,14 +605,16 @@ namespace IM10.BAL.Implementaion
                                 }
 
                                 // Set IsDeleted to true for the device token in UserDeviceMapping table
-                                var userMapping = context.UserDeviceMappings.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
-                                if (userMapping != null)
+                                var userMapping = context.UserDeviceMappings.Where(x => x.DeviceToken == item.DeviceToken).ToList();
+                                foreach(var mapping in userMapping)
                                 {
-                                    userMapping.IsDeleted = true;
-                                    context.UserDeviceMappings.Update(userMapping);
-                                    context.SaveChanges();
-                                }
-
+                                    if (mapping != null)
+                                    {
+                                        mapping.IsDeleted = true;
+                                        context.UserDeviceMappings.Update(mapping);
+                                        context.SaveChanges();
+                                    }
+                                }                                
                             }
                         }
                     
@@ -641,7 +641,7 @@ namespace IM10.BAL.Implementaion
         public string ContentDetailUpdateByContentLog(ContentModel model1, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel= new ErrorResponseModel();
-            var logEntity = context.ContentAuditLogs.Where(x=>x.ContentLogId==model1.ContentLogId).FirstOrDefault();
+            var logEntity = context.ContentAuditLogs.Where(x=>x.ContentLogId==model1.ContentLogId && x.IsDeleted==false).FirstOrDefault();
             string message = "";
             if (model1.Approved==true)
             {
@@ -698,7 +698,7 @@ namespace IM10.BAL.Implementaion
         public string DeniedContentDetail(CommentModel model, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
-            var contentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == model.ContentId);
+            var contentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == model.ContentId && x.IsDeleted==false);
             if (contentEntity != null)
             {
                 contentEntity.Approved = false;

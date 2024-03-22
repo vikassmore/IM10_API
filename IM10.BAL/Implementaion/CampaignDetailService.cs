@@ -185,7 +185,7 @@ namespace IM10.BAL.Implementaion
                                 content in context.ContentDetails on camp.ContentId equals content.ContentId
                                 join type in context.ContentTypes on camp.ContentTypeId equals type.ContentTypeId
                                 join player in context.PlayerDetails on camp.PlayerId equals player.PlayerId
-                                where camp.MarketingCampaignId == marketingcampaignId
+                                where camp.MarketingCampaignId == marketingcampaignId && camp.IsDeleted == false && player.IsDeleted == false
                                 select new CampaignDetailModel
                                 {
                                     MarketingCampaignId = camp.MarketingCampaignId,

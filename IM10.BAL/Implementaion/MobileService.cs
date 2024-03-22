@@ -201,27 +201,34 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             List<MobileVideoCategoryData> mobileVideoCategoryData = new List<MobileVideoCategoryData>();
-            var categoryEnitityList = (from flag in context.AdvContentMappings
-                                       join content in context.ContentDetails on flag.ContentId equals content.ContentId
-                                       where content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && flag.IsDeleted == false && content.Approved == true && content.PlayerId == playerId
-                                       orderby flag.CreatedDate descending
+            var categoryEnitityList = (from content in context.ContentDetails
+                                       where content.ContentTypeId == ContentTypeHelper.VideoContentTypeId &&
+                                             content.Approved == true &&
+                                             content.PlayerId == playerId &&
+                                             content.IsDeleted == false
+                                       join flag in context.AdvContentMappings.Where(m => m.IsDeleted == false)
+                                       on content.ContentId equals flag.ContentId into gj
+                                       from subflag in gj.DefaultIfEmpty()
+                                       orderby subflag != null ? subflag.CreatedDate : content.CreatedDate descending
                                        select new
                                        {
-                                           flag.ContentId,
-                                           flag.CategoryId,
-                                           flag.Category.Name,
-                                           flag.Category.DisplayOrder
+                                           ContentId = content.ContentId,
+                                           CategoryId = subflag != null ? subflag.CategoryId : content.CategoryId,
+                                           Name = subflag != null ? subflag.Category.Name : content.Category.Name,
+                                           DisplayOrder = subflag != null ? subflag.Category.DisplayOrder : 0,
+                                           HasAdvertisement = subflag != null // Indicates if there's an advertisement mapped
                                        }).ToList();
-            var categoryList = categoryEnitityList.GroupBy(x => new { x.CategoryId, x.Name, x.DisplayOrder }).Select(x => new { CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Key.DisplayOrder, count = x.Count() }).ToList();
+            var categoryList = categoryEnitityList.GroupBy(x => new { x.CategoryId, x.Name }).Select(x => new { CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Max(x=>x.DisplayOrder), count = x.Count() }).ToList();
             foreach (var item in categoryList)
             {
+                var displayEntity = context.Categories.Where(x => x.CategoryId ==item.CategoryId).Select(z => z.DisplayOrder).FirstOrDefault();
                 var categoryModel = new MobileVideoCategoryData();
                 categoryModel.CategoryId = item.CategoryId;
                 categoryModel.CategoryName = item.Name;
-                categoryModel.DisplayOrder = item.DisplayOrder;
+                categoryModel.DisplayOrder = displayEntity.HasValue ? displayEntity.Value : 0;
                 List<MobileContentData> modelList = new List<MobileContentData>();
                 var contentEntity = categoryEnitityList.Where(x => x.CategoryId == item.CategoryId).ToList();
-                var contenttopfive = contentEntity.GroupBy(x => new { x.ContentId }).Select(x => new { ContentId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).Take(5).ToList();
+                var contenttopfive = contentEntity.GroupBy(x => new { x.ContentId }).Select(x => new { ContentId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).ToList();
                 foreach (var item1 in contenttopfive)
                 {
                     var topModel = new MobileContentData();
@@ -312,7 +319,10 @@ namespace IM10.BAL.Implementaion
                     }
                 }
                 categoryModel.mobileContentDatas = modelList;
-                mobileVideoCategoryData.Add(categoryModel);
+                if (modelList.Any())
+                {
+                    mobileVideoCategoryData.Add(categoryModel);
+                }
             }
             if (categoryEnitityList.Count == 0)
             {
@@ -333,8 +343,8 @@ namespace IM10.BAL.Implementaion
             errorResponseModel = new ErrorResponseModel();
             MobileVideoCategoryData videoModel = new MobileVideoCategoryData();
             var categoryEnitityList = (from content in context.ContentDetails
-                                       where content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && content.Approved == true && content.PlayerId == playerId &&  content.CategoryId == categoryId
-                                       join flag in context.AdvContentMappings
+                                       where content.IsDeleted==false && content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && content.Approved == true && content.PlayerId == playerId &&  content.CategoryId == categoryId
+                                       join flag in context.AdvContentMappings .Where(m=>m.IsDeleted==false)
                                        on content.ContentId equals flag.ContentId into gj
                                        from subflag in gj.DefaultIfEmpty()
                                        orderby subflag != null ? subflag.CreatedDate : content.CreatedDate descending
@@ -350,9 +360,10 @@ namespace IM10.BAL.Implementaion
             List<MobileContentData> topList = new List<MobileContentData>();
             foreach (var item1 in contenttopfive)
             {
+                var displayEntity = context.Categories.Where(x => x.CategoryId == categoryId).Select(z => z.DisplayOrder).FirstOrDefault();
                 videoModel.CategoryName = item1.Name;
                 videoModel.CategoryId = item1.CategoryId;
-                videoModel.DisplayOrder = item1.DisplayOrder;
+                videoModel.DisplayOrder = displayEntity.HasValue ? displayEntity.Value : 0;
                 var topModel = new MobileContentData();
                 var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item1.ContentId.ContentId && x.Approved == true && x.IsDeleted == false);
                 if (contentVideo != null)

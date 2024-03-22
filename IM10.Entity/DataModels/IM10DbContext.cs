@@ -67,6 +67,8 @@ public partial class IM10DbContext : DbContext
 
     public virtual DbSet<RoleMenuPageMapping> RoleMenuPageMappings { get; set; }
 
+    public virtual DbSet<SportMaster> SportMasters { get; set; }
+
     public virtual DbSet<State> States { get; set; }
 
     public virtual DbSet<SubCategory> SubCategories { get; set; }
@@ -175,6 +177,10 @@ public partial class IM10DbContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(200);
             entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             entity.Property(e => e.Name).HasMaxLength(100);
+
+            entity.HasOne(d => d.Sport).WithMany(p => p.Categories)
+                .HasForeignKey(d => d.SportId)
+                .HasConstraintName("FK_Category_SportMaster");
         });
 
         modelBuilder.Entity<City>(entity =>
@@ -505,6 +511,10 @@ public partial class IM10DbContext : DbContext
             entity.Property(e => e.PancardNo)
                 .HasMaxLength(15)
                 .HasColumnName("PANCardNo");
+
+            entity.HasOne(d => d.Sport).WithMany(p => p.PlayerDetails)
+                .HasForeignKey(d => d.SportId)
+                .HasConstraintName("FK_PlayerDetails_SportMaster");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -530,6 +540,15 @@ public partial class IM10DbContext : DbContext
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_RoleMenuPageMapping_Role");
+        });
+
+        modelBuilder.Entity<SportMaster>(entity =>
+        {
+            entity.HasKey(e => e.SportId);
+
+            entity.ToTable("SportMaster");
+
+            entity.Property(e => e.SportName).HasMaxLength(100);
         });
 
         modelBuilder.Entity<State>(entity =>

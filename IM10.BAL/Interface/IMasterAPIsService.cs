@@ -1,4 +1,5 @@
-﻿using IM10.Models;
+﻿using IM10.Entity.DataModels;
+using IM10.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +90,15 @@ namespace IM10.BAL.Interface
         /// <returns></returns>
         List<CategoryModel> GetAllCategory(ref ErrorResponseModel errorResponseModel);
 
+
+
+        /// <summary>
+        /// Method is used to get all Categories by sportId
+        /// </summary>
+        /// <param name="sportId"></param>
+        /// <returns></returns>
+        List<CategoryModel> GetAllCategoryBySportId(long sportId, ref ErrorResponseModel errorResponseModel);
+
         /// <summary>
         /// Method is used to get subcategory by id
         /// </summary>
@@ -141,6 +151,18 @@ namespace IM10.BAL.Interface
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
         List<CityModel> GetCityByStateId(long stateId, ref ErrorResponseModel errorResponseModel);
+
+
+
+        /// <summary>
+        /// Method is used to get all sports
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        List<SportModel> GetAllSports(ref ErrorResponseModel errorResponseModel);
+
+
+       
 
     }
 }

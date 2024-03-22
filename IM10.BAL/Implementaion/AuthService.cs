@@ -34,7 +34,7 @@ namespace IM10.BAL.Implementaion
         {
             var authModel = new AuthModel();
             errorResponseModel = new ErrorResponseModel();
-            var userEntity = context.UserMasters.FirstOrDefault(x => x.EmailId == emailId && x.Password == EncryptionHelper.Encrypt(password.ToString()) && x.IsActive == true);
+            var userEntity = context.UserMasters.FirstOrDefault(x => x.EmailId == emailId && x.Password == EncryptionHelper.Encrypt(password.ToString()) && x.IsActive == true && x.IsDeleted==false);
 
             if (userEntity == null)
             {
@@ -66,12 +66,12 @@ namespace IM10.BAL.Implementaion
         {
             var authModel = new AuthModel();
             errorResponseModel = new ErrorResponseModel();
-            var user = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel.MobileNo  && x.IsActive==true && x.IsDeleted == false);
+            var user = context.UserMasters.Where(x => x.MobileNo == loginModel.MobileNo  && x.IsActive==true && x.IsDeleted == false).FirstOrDefault();
             
             if (user != null)
             {
-                var existingUser = context.UserMasters.FirstOrDefault(x => x.MobileNo == loginModel
-                  .MobileNo  && x.IsDeleted == false);
+                var existingUser = context.UserMasters.Where(x => x.MobileNo == loginModel
+                  .MobileNo  && x.IsDeleted == false).FirstOrDefault();
                 {
                     context.Entry(existingUser).Property(x => x.FirstName).IsModified = true;
                     context.Entry(existingUser).Property(x => x.LastName).IsModified = true;
@@ -83,7 +83,7 @@ namespace IM10.BAL.Implementaion
                 }
 
                 var existingUserDeviceMapping = context.UserDeviceMappings
-               .FirstOrDefault(x => x.UserId == user.UserId && x.DeviceToken == loginModel.DeviceToken);
+               .Where(x => x.UserId == user.UserId && x.DeviceToken == loginModel.DeviceToken).FirstOrDefault();
 
                 if (existingUserDeviceMapping != null)
                 {
@@ -104,13 +104,12 @@ namespace IM10.BAL.Implementaion
                         UpdatedDate = DateTime.Now,
                         IsDeleted = false
                     };
-
                     context.UserDeviceMappings.Add(userDeviceMapping);
                 }
 
                 context.SaveChanges();
 
-                var fcmexstingUser = context.Fcmnotifications.Where(x => x.DeviceToken == loginModel.DeviceToken && x.PlayerId == loginModel.PlayerId).FirstOrDefault();
+                var fcmexstingUser = context.Fcmnotifications.Where(x => x.DeviceToken == loginModel.DeviceToken && x.PlayerId == loginModel.PlayerId && x.IsDeleted==false).FirstOrDefault();
                 if (fcmexstingUser != null)
                 {
                     fcmexstingUser.UserId = user.UserId;
@@ -313,6 +312,8 @@ namespace IM10.BAL.Implementaion
                 context.Entry(existingUser).Property(x => x.IsDeleted).IsModified = true;
                 // Update values
                 existingUser.IsDeleted = true;
+                existingUser.UpdatedDate= DateTime.Now;
+                existingUser.UpdatedBy = (int?)userId;
                 context.SaveChanges();
                 message = GlobalConstants.LogOut;
             }

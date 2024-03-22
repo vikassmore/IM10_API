@@ -151,7 +151,7 @@ namespace IM10.BAL.Implementaion
         public EndorsmentTypeModel GetEndorsmentTypeById(long endorsmenttypeId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var endorsmentEntity = context.EndorsmentTypes.Where(x => x.EndorsmentTypeId == endorsmenttypeId).FirstOrDefault();
+            var endorsmentEntity = context.EndorsmentTypes.Where(x => x.EndorsmentTypeId == endorsmenttypeId && x.IsDeleted==false).FirstOrDefault();
             if (endorsmentEntity == null)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;

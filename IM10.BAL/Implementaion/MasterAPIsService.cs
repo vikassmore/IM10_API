@@ -273,6 +273,7 @@ namespace IM10.BAL.Implementaion
                     CategoryId = item.CategoryId,
                     Name = item.Name,
                     Description = item.Description,
+                    SportId = item.SportId,
                 });
             });
             return categorymodellist;
@@ -425,7 +426,7 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var stateList = new List<StateModel>();
-            var stateEntity = context.States.Where(x => x.CountryId == countryId).ToList();
+            var stateEntity = context.States.Where(x => x.CountryId == countryId && x.IsDeleted == false).ToList();
             foreach (var item in stateEntity)
             {
                 var model = new StateModel();
@@ -449,7 +450,7 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var cityList = new List<CityModel>();
-            var cityEntity = context.Cities.Where(x => x.StateId == stateId ).ToList();
+            var cityEntity = context.Cities.Where(x => x.StateId == stateId && x.IsDeleted == false ).ToList();
             foreach (var item in cityEntity)
             {
                 var model = new CityModel();
@@ -461,6 +462,13 @@ namespace IM10.BAL.Implementaion
             return cityList;
         }
 
+
+        /// <summary>
+        /// Get Subcategory By CategoryId
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
         public List<SubCategoryModel> GetSubcategoryByCategoryId(long categoryId, ref ErrorResponseModel errorResponseModel)
         {
             var subcategoryModelList = new List<SubCategoryModel>();
@@ -504,6 +512,56 @@ namespace IM10.BAL.Implementaion
                 });
             }
             return subcategoryModelList;
+        }
+
+
+        /// <summary>
+        /// Get all sports
+        /// </summary>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        public List<SportModel> GetAllSports(ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel=new ErrorResponseModel();
+            var sportEntity=context.SportMasters.ToList();
+            if(sportEntity.Count == 0)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+            }
+            List<SportModel> sportModels = sportEntity.Select(sportEntity => new SportModel
+            {
+                SportId = sportEntity.SportId,
+                SportName = sportEntity.SportName,
+            }).ToList();
+
+            return sportModels;
+        }
+
+
+
+        /// <summary>
+        /// Method is used to get all Categories by sportId
+        /// </summary>
+        /// <param name="sportId"></param>
+        /// <returns></returns>
+        public List<CategoryModel> GetAllCategoryBySportId(long sportId, ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel=new ErrorResponseModel();
+            var categoryEntity=context.Categories.Where(x=>x.SportId == sportId || x.SportId==null && x.IsDeleted==false).ToList();
+            if(categoryEntity.Count == 0)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+            }
+            List<CategoryModel> categoryModels = categoryEntity.Select(categoryEntity => new CategoryModel
+            {
+                CategoryId = categoryEntity.CategoryId,
+                Name = categoryEntity.Name,
+                Description= categoryEntity.Description,
+                SportId=categoryEntity.SportId,
+            }).OrderByDescending(x=>x.SportId).ToList();
+            return categoryModels;
         }
     }
 }

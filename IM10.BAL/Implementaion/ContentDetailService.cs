@@ -67,6 +67,8 @@ namespace IM10.BAL.Implementaion
                                      ContentFileName = content.ContentFileName,
                                      ContentFilePath = content.ContentFilePath,
                                      Title = content.Title,
+                                     Thumbnail_2 = content.Thumbnail,
+                                     Thumbnail1 = content.Thumbnail1,
                                      ContentFileName1 = content.ContentFileName1,
                                      ContentFilePath1 = content.ContentFilePath1,
                                      Description = content.Description,
@@ -114,8 +116,8 @@ namespace IM10.BAL.Implementaion
                 ContentFileName1 = contentEntity.ContentFileName1,
                 ContentFilePath1 = contentEntity.ContentFilePath1,
                 Description = contentEntity.Description,
-                Thumbnail_2 = imgmodel1.thumbnail,
-                Thumbnail1 = imgmodel.thumbnail,//contentEntity.Thumbnail,
+                Thumbnail_2 = contentEntity.Thumbnail_2,
+                Thumbnail1 = contentEntity.Thumbnail1,//contentEntity.Thumbnail,
                 CreatedDate = contentEntity.CreatedDate,
                 CreatedBy = contentEntity.CreatedBy,
                 CategoryId = contentEntity.CategoryId,
@@ -320,10 +322,14 @@ namespace IM10.BAL.Implementaion
                 {
                     contentdetailEntity.ContentFilePath1 = contentModel.ContentFilePath1;
                 }
+                if (contentModel.Thumbnail3 != null)
+                {
+                    contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
+                }
                 //contentdetailEntity.ContentFileName = contentModel.ContentFileName;
                 //contentdetailEntity.ContentFilePath = contentModel.ContentFilePath ;
                 contentdetailEntity.Title = contentModel.Title;
-                contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
+                //contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
                 contentdetailEntity.Thumbnail = contentModel.Thumbnail2;
                 contentdetailEntity.Description = contentModel.Description;
                 contentdetailEntity.CategoryId = contentModel.CategoryId;
@@ -404,6 +410,7 @@ namespace IM10.BAL.Implementaion
                                          Description = content.Description,                                      
                                          CategoryId = content.CategoryId,
                                          CategoryName = category.Name,
+                                         Thumbnail3=content.Thumbnail1,
                                          SubCategoryId = content.SubCategoryId,
                                          SubCategoryName = subcategory.Name, 
                                          PlayerId = content.PlayerId,
@@ -443,12 +450,13 @@ namespace IM10.BAL.Implementaion
                     ContentId = item.ContentId,
                     ContentFileName = item.ContentFileName,
                     ContentFilePath = item.ContentFilePath,
-                    ContentFileName1= item.ContentFileName1,
+                    ContentFileName1 = item.ContentFileName1,
                     ContentFilePath1 = item.ContentFilePath1,
-                    Thumbnail_2=imgmodel1.thumbnail,
+                    Thumbnail_2 = _configuration.HostName + item.Thumbnail3,
+                    ContentThumbnail_2 = imgmodel1.thumbnail,
                     Title = item.Title,
                     Description = item.Description,
-                    Thumbnail1 = imgmodel.thumbnail,
+                    ContentThumbnail1 = imgmodel.thumbnail,
                     CategoryId = item.CategoryId,
                     CategoryName = item.CategoryName,
                     SubCategoryId = item.SubCategoryId,
@@ -461,9 +469,9 @@ namespace IM10.BAL.Implementaion
                     ContentTypeName = item.ContentTypeName,
                     LanguageId = item.LanguageId,
                     LanguageName = item.LanguageName,
-                    Comment= item.Comment,
+                    Comment = item.Comment,
                     Approved = item.Approved,
-                });
+                }) ;
             });
             return contentList;
         }

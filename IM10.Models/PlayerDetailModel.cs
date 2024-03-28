@@ -25,9 +25,11 @@ namespace IM10.Models
         public string? LastName { get; set; }
         public string FullName { get; set; }
         public string? Address { get; set; }
+        public DateTime? Dob { get; set; }
+
         public string? ProfileImageFileName { get; set; }
         public string? ProfileImageFilePath { get; set; }
-        public long? SportId { get; set; }
+        public long SportId { get; set; }
         public string? SportName { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
@@ -48,6 +50,8 @@ namespace IM10.Models
         public string? ProfileImageFilePath { get; set; }
         public long? SportId { get; set; }
         public string? SportName { get; set; }
+        public DateTime? Dob { get; set; }
+
     }
 
 

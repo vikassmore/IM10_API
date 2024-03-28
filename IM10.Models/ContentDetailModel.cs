@@ -20,6 +20,9 @@ namespace IM10.Models
         public byte[]? Thumbnail_1 { get; set; }
         public string? Thumbnail_2 { get; set; }
 
+        public string? ContentThumbnail_2 { get; set; }
+
+
         public string? Title { get; set; }
 
         public string? Description { get; set; }
@@ -27,6 +30,7 @@ namespace IM10.Models
         public byte[]? Thumbnail { get; set; }
         public string? Thumbnail1 { get; set; }
 
+        public string? ContentThumbnail1 { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 

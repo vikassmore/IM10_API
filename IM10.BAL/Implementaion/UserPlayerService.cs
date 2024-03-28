@@ -305,7 +305,8 @@ namespace IM10.BAL.Implementaion
                                         player.ProfileImageFileName,
                                         player.ProfileImageFilePath,
                                         player.SportId,
-                                        sport.SportName
+                                        sport.SportName,
+                                        player.Dob
                                     }).ToList();
 
             if (userplayerEntityList.Count == 0)
@@ -335,6 +336,7 @@ namespace IM10.BAL.Implementaion
                         ProfileImageFilePath=imgmodel.FileName,
                         SportId = item.SportId,
                         SportName = item.SportName,
+                        Dob=item.Dob,
                     });
             });
             return userList;

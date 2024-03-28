@@ -193,31 +193,41 @@ namespace IM10.API.Controllers
                                 var uniqueId = Guid.NewGuid().ToString();
                                 var fileExtension = Path.GetExtension(fileName);
                                 var uniqueFileName = $"{uniqueId}{fileExtension}";
-                                var uniqueFileName1 = $"{uniqueId}";
-
                                 var fullPath = Path.Combine(pathToSave, uniqueFileName);
-                                var fullPathbitmap = Path.Combine(pathToSave + "\\thumbnail\\", string.Format(@"{0}.jpeg", uniqueFileName1));
                                 var dbPath = Path.Combine(folderName, uniqueFileName);
 
-                                using (var stream = new FileStream(fullPath, FileMode.Create))
+                                if (file.Name.StartsWith("contentFilePath"))
                                 {
-                                    file.CopyTo(stream);
-                                } 
-                                if (file.Name == "contentFilePath")
-                                {
-                                    GetThumbnail(fullPath, fullPathbitmap);
-                                    model.ContentFilePath = "/ContentFile/" + uniqueFileName;
-                                    model.ContentFileName = uniqueFileName;
-                                }
-                                else if (file.Name == "contentFilePath_1")
-                                {
-                                    GetThumbnail(fullPath, fullPathbitmap);
-                                    model.ContentFilePath1 = "/ContentFile/" + uniqueFileName;
-                                    model.ContentFileName1 = uniqueFileName;
+                                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                                    {
+                                        file.CopyTo(stream);
+                                    }
 
+                                    if (file.Name == "contentFilePath")
+                                    {
+                                        model.ContentFilePath = "/ContentFile/" + uniqueFileName;
+                                        model.ContentFileName = uniqueFileName;
+                                    }
+                                    else if (file.Name == "contentFilePath_1")
+                                    {
+                                        model.ContentFilePath1 = "/ContentFile/" + uniqueFileName;
+                                        model.ContentFileName1 = uniqueFileName;
+                                    }
                                 }
+                                else if (file.Name == "thumbnail1")
+                                {
+                                    var thumbnailFolder = Path.Combine(pathToSave, "thumbnail");
+                                    var thumbnailFullPath = Path.Combine(thumbnailFolder, uniqueFileName);
+
+                                    Directory.CreateDirectory(thumbnailFolder);
+                                    using (var thumbnailStream = new FileStream(thumbnailFullPath, FileMode.Create))
+                                    {
+                                        file.CopyTo(thumbnailStream);
+                                    }
+                                    model.Thumbnail3 = "/ContentFile/thumbnail/" + uniqueFileName;
+                                }
+
                                 model.ContentId = Convert.ToInt32(formdata["contentId"]);
-
                             }
                         }
                     }
@@ -225,9 +235,9 @@ namespace IM10.API.Controllers
                 string productModel = "";
 
                 if (model.ContentId == 0)
+                {
                     productModel = contentDetailService.AddContentDetail(model, ref errorMessage);
-                else
-                    productModel = contentDetailService.EditContentDetail(model, ref errorMessage);
+                }
 
                 if (!string.IsNullOrEmpty(productModel))
                 {
@@ -344,31 +354,40 @@ namespace IM10.API.Controllers
                                 var uniqueId = Guid.NewGuid().ToString();
                                 var fileExtension = Path.GetExtension(fileName);
                                 var uniqueFileName = $"{uniqueId}{fileExtension}";
-                                var uniqueFileName1 = $"{uniqueId}";
                                 var fullPath = Path.Combine(pathToSave, uniqueFileName);
-                                var fullPathbitmap = Path.Combine(pathToSave + "\\thumbnail\\", string.Format(@"{0}.jpeg", uniqueFileName1));
-
                                 var dbPath = Path.Combine(folderName, uniqueFileName);
-                                using (var stream = new FileStream(fullPath, FileMode.Create))
-                                {
-                                    file.CopyTo(stream);
-                                }
-                                if (file.Name == "contentFilePath")
-                                {
-                                    GetThumbnail(fullPath, fullPathbitmap);
-                                    model.ContentFilePath = "/ContentFile/" + uniqueFileName;
-                                    model.ContentFileName = uniqueFileName;
-                                    model.Thumbnail2 = fullPathbitmap;
 
-                                }
-                                else if (file.Name == "contentFilePath_1")
+                                if (file.Name.StartsWith("contentFilePath"))
                                 {
-                                    GetThumbnail(fullPath, fullPathbitmap);
-                                    model.ContentFilePath1 = "/ContentFile/" + uniqueFileName;
-                                    model.ContentFileName1 = uniqueFileName;
-                                    model.Thumbnail3 = fullPathbitmap;
+                                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                                    {
+                                        file.CopyTo(stream);
+                                    }
 
+                                    if (file.Name == "contentFilePath")
+                                    {
+                                        model.ContentFilePath = "/ContentFile/" + uniqueFileName;
+                                        model.ContentFileName = uniqueFileName;
+                                    }
+                                    else if (file.Name == "contentFilePath_1")
+                                    {
+                                        model.ContentFilePath1 = "/ContentFile/" + uniqueFileName;
+                                        model.ContentFileName1 = uniqueFileName;
+                                    }
                                 }
+                                else if (file.Name == "thumbnail1")
+                                {
+                                    var thumbnailFolder = Path.Combine(pathToSave, "thumbnail");
+                                    var thumbnailFullPath = Path.Combine(thumbnailFolder, uniqueFileName);
+
+                                    Directory.CreateDirectory(thumbnailFolder);
+                                    using (var thumbnailStream = new FileStream(thumbnailFullPath, FileMode.Create))
+                                    {
+                                        file.CopyTo(thumbnailStream);
+                                    }
+                                    model.Thumbnail3 = "/ContentFile/thumbnail/" + uniqueFileName;
+                                }
+
                                 model.ContentId = Convert.ToInt32(formdata["contentId"]);
                             }
                         }
@@ -376,10 +395,10 @@ namespace IM10.API.Controllers
                 }
                 string productModel = "";
 
-                if (model.ContentId == 0)
-                    productModel = contentDetailService.AddContentDetail(model, ref errorMessage);
-                else
+                if (model.ContentId != 0)
+                {
                     productModel = contentDetailService.EditContentDetail(model, ref errorMessage);
+                }
 
                 if (!string.IsNullOrEmpty(productModel))
                 {

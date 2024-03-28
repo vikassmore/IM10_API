@@ -33,11 +33,13 @@ public partial class PlayerDetail
 
     public string? Address { get; set; }
 
+    public DateTime? Dob { get; set; }
+
     public string? ProfileImageFileName { get; set; }
 
     public string? ProfileImageFilePath { get; set; }
 
-    public long? SportId { get; set; }
+    public long SportId { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 
@@ -67,7 +69,7 @@ public partial class PlayerDetail
 
     public virtual ICollection<PlayerData> PlayerData { get; } = new List<PlayerData>();
 
-    public virtual SportMaster? Sport { get; set; }
+    public virtual SportMaster Sport { get; set; } = null!;
 
     public virtual ICollection<UserPlayerMapping> UserPlayerMappings { get; } = new List<UserPlayerMapping>();
 }

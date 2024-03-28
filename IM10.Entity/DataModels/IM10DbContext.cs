@@ -506,6 +506,7 @@ public partial class IM10DbContext : DbContext
 
             entity.Property(e => e.Address).HasMaxLength(200);
             entity.Property(e => e.BankAcountNo).HasMaxLength(50);
+            entity.Property(e => e.Dob).HasColumnName("DOB");
             entity.Property(e => e.FirstName).HasMaxLength(100);
             entity.Property(e => e.LastName).HasMaxLength(100);
             entity.Property(e => e.PancardNo)
@@ -514,6 +515,7 @@ public partial class IM10DbContext : DbContext
 
             entity.HasOne(d => d.Sport).WithMany(p => p.PlayerDetails)
                 .HasForeignKey(d => d.SportId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PlayerDetails_SportMaster");
         });
 

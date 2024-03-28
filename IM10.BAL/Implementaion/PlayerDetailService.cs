@@ -51,13 +51,15 @@ namespace IM10.BAL.Implementaion
                                 where player.PlayerId == playerId && player.IsDeleted == false
                                 select new
                                 {
+
                                     player.PlayerId,
                                     player.FirstName,
                                     player.LastName,
                                     player.SportId,
                                     player.ProfileImageFileName,
                                     player.ProfileImageFilePath,
-                                    sport.SportName
+                                    sport.SportName,
+                                    player.Dob,
                                 }).FirstOrDefault();
 
             if (playerEntity == null)
@@ -70,7 +72,7 @@ namespace IM10.BAL.Implementaion
             imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(playerEntity.ProfileImageFilePath) ? playerEntity.ProfileImageFilePath : playerEntity.ProfileImageFilePath);
             imgmodel.Type = String.IsNullOrEmpty(playerEntity.ProfileImageFilePath) ? "image" : "image";
             imgmodel.FileName = imgmodel.url;
-
+           
             return new PlayerSportsModel
             {
                 PlayerId = playerEntity.PlayerId,
@@ -82,7 +84,8 @@ namespace IM10.BAL.Implementaion
                 FullName = playerEntity.FirstName + " " + playerEntity.LastName,
                 ProfileImageFileName = playerEntity.ProfileImageFileName,
                 ProfileImageFilePath = imgmodel.FileName,
-            };
+                Dob = playerEntity.Dob
+             };
         }
 
         /// <summary>
@@ -152,6 +155,7 @@ namespace IM10.BAL.Implementaion
                     Address = item.Address,
                     ProfileImageFileName = item.ProfileImageFileName,
                     ProfileImageFilePath = imgmodel.FileName,
+                    Dob=item.Dob,
                 });
             });
             return playerlist;
@@ -185,6 +189,7 @@ namespace IM10.BAL.Implementaion
                 playerEntity.LastName = model.LastName;
                 playerEntity.SportId = model.SportId;
                 playerEntity.Address = model.Address;
+                playerEntity.Dob = model.Dob;
                 playerEntity.ProfileImageFileName = model.ProfileImageFileName;
                 playerEntity.ProfileImageFilePath = model.ProfileImageFilePath;
                 playerEntity.CreatedBy = model.CreatedBy;
@@ -279,6 +284,7 @@ namespace IM10.BAL.Implementaion
                 playerEntity.FirstName = playerModel.FirstName;
                 playerEntity.LastName = playerModel.LastName;
                 playerEntity.SportId = playerModel.SportId;
+                playerEntity.Dob=playerModel.Dob;
                 playerEntity.Address = playerModel.Address;
                 playerEntity.UpdatedBy = playerModel.UpdatedBy;
                 playerEntity.UpdatedDate = DateTime.Now;
@@ -522,6 +528,7 @@ namespace IM10.BAL.Implementaion
                 LastName = playerEntity.LastName,
                 FullName = playerEntity.FirstName + " " + playerEntity.LastName,
                 Address = playerEntity.Address,
+                Dob=playerEntity.Dob,
                 ProfileImageFileName = playerEntity.ProfileImageFileName,
                 ProfileImageFilePath = imgmodel.FileName,
                 CreatedBy = playerEntity.CreatedBy,

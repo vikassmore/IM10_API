@@ -126,7 +126,7 @@ namespace IM10.BAL.Implementaion
                     content1.Description = contentVideo.Description;
                     content1.Position = Helper.FirstHalfContentPostion;
                     content1.CategoryName = contentVideo.Category.Name;
-                    content1.Thumbnail = ThumbnailPath(imgmodel.url);
+                    content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     contentList.Add(content1);
                 }
                 if (contentVideo.ContentFileName1 != null)
@@ -167,7 +167,7 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentId = contentVideo.ContentId;
                 topModel.Title = contentVideo.Title;
                 topModel.Description = contentVideo.Description;
-                topModel.Thumbnail = ThumbnailPath(imgmodel.url);
+                topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -263,7 +263,7 @@ namespace IM10.BAL.Implementaion
                             content1.Description = contentVideo.Description;
                             content1.Position = Helper.FirstHalfContentPostion;
                             content1.CategoryName = contentVideo.Category.Name;
-                            content1.Thumbnail = ThumbnailPath(imgmodel.url);
+                            content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;// ThumbnailPath(imgmodel.url);
                             contentList.Add(content1);
                         }
                         if (contentVideo.ContentFileName1 != null)
@@ -304,7 +304,7 @@ namespace IM10.BAL.Implementaion
                         topModel.ContentId = contentVideo.ContentId;
                         topModel.Title = contentVideo.Title;
                         topModel.Description = contentVideo.Description;
-                        topModel.Thumbnail = ThumbnailPath(imgmodel.url);
+                        topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                         topModel.CategoryId = contentVideo.Category.CategoryId;
                         topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -396,7 +396,7 @@ namespace IM10.BAL.Implementaion
                         content1.Description = contentVideo.Description;
                         content1.Position = Helper.FirstHalfContentPostion;
                         content1.CategoryName = contentVideo.Category.Name;
-                        content1.Thumbnail = ThumbnailPath(imgmodel.url);
+                        content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                         contentList.Add(content1);
                     }
                     if (contentVideo.ContentFileName1 != null)
@@ -437,7 +437,7 @@ namespace IM10.BAL.Implementaion
                     topModel.ContentId = contentVideo.ContentId;
                     topModel.Title = contentVideo.Title;
                     topModel.Description = contentVideo.Description;
-                    topModel.Thumbnail = ThumbnailPath(imgmodel.url);
+                    topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
                     topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -565,6 +565,7 @@ namespace IM10.BAL.Implementaion
                         articleModel.CategoryName = contentArticle.Category.Name;
                         articleModel.FileName = contentArticle.ContentFileName1;
                         articleModel.FilePath = imgmodel2.url;
+                        articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
                         articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -1090,7 +1091,7 @@ namespace IM10.BAL.Implementaion
                         content1.Description = contentVideo.Description;
                         content1.Position = Helper.FirstHalfContentPostion;
                         content1.CategoryName = contentVideo.Category.Name;
-                        content1.Thumbnail = ThumbnailPath(imgmodel.url);
+                        content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
                         contentList.Add(content1);
                     }
                     if (contentVideo.ContentFileName1 != null)
@@ -1131,7 +1132,7 @@ namespace IM10.BAL.Implementaion
                     topModel.ContentId = contentVideo.ContentId;
                     topModel.Title = contentVideo.Title;
                     topModel.Description = contentVideo.Description;
-                    topModel.Thumbnail = ThumbnailPath(imgmodel.url);
+                    topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
                     topModel.CategoryId = contentVideo.CategoryId;
                     topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -1797,7 +1798,7 @@ namespace IM10.BAL.Implementaion
                     content1.Description = contentVideo.Description;
                     content1.Position = Helper.FirstHalfContentPostion;
                     content1.CategoryName = contentVideo.Category.Name;
-                    content1.Thumbnail = ThumbnailPath(imgmodel.url);
+                    content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     contentList.Add(content1);
                 }
                 if (contentVideo.ContentFileName1 != null)
@@ -1838,7 +1839,7 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentId = contentVideo.ContentId;
                 topModel.Title = contentVideo.Title;
                 topModel.Description = contentVideo.Description;
-                topModel.Thumbnail = ThumbnailPath(imgmodel.url);
+                topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -1952,7 +1953,7 @@ namespace IM10.BAL.Implementaion
                     content1.Description = contentVideo.Description;
                     content1.Position = Helper.FirstHalfContentPostion;
                     content1.CategoryName = contentVideo.Category.Name;
-                    content1.Thumbnail = ThumbnailPath(imgmodel.url);
+                    content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;
                     contentList.Add(content1);
                 }
                 if (contentVideo.ContentFileName1 != null)
@@ -1993,7 +1994,7 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentId = contentVideo.ContentId;
                 topModel.Title = contentVideo.Title;
                 topModel.Description = contentVideo.Description;
-                topModel.Thumbnail = ThumbnailPath(imgmodel.url);
+                topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;

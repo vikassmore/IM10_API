@@ -163,6 +163,7 @@ namespace IM10.Models
         public string? Description { get; set; }
         public string? FileName { get; set; }
         public string? FilePath { get; set; }
+        public string? Thumbnail { get; set; }
         public string CategoryName { get; set; }
         public int? ViewNo { get; set; }
         public int? LikedNo { get; set; }

@@ -91,6 +91,12 @@
     <None Update="Resources\CompanyLogoFile\download.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\ContentFile\01d245aa-0a63-44c3-8a36-cb96b0e82f33.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\021347c1-744e-4c71-9310-661e772303a9.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\ContentFile\04dfbd7f-88ea-48be-8298-d882daf2b3db.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -122,6 +128,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\ContentFile\Snapinsta.app_video_301261917_159696979983921_298683708922067512_n.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ContentFile\thumbnail\021347c1-744e-4c71-9310-661e772303a9.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\ContentFile\tufanInsta.mp4">

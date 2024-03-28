@@ -144,6 +144,8 @@ namespace IM10.API.Controllers
                     model.BankAcountNo = formdata["bankaccountNo"];
                     model.PancardNo = formdata["pancardNo"];
                     model.SportId = Convert.ToInt32(formdata["sportId"]);
+                    model.Dob = Convert.ToDateTime(formdata["dob"]);
+
                     var existingFilesNotForDelete = formdata["existingFiles"].ToString().Split(",");
 
                     if (model.PlayerId != 0)
@@ -269,6 +271,7 @@ namespace IM10.API.Controllers
                     model.BankAcountNo = formdata["bankaccountNo"];
                     model.PancardNo = formdata["pancardNo"];
                     model.SportId = Convert.ToInt32(formdata["sportId"]);
+                    model.Dob = Convert.ToDateTime(formdata["dob"]);
 
                     var existingFilesNotForDelete = formdata["existingFiles"].ToString().Split(",");
 

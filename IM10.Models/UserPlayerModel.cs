@@ -100,6 +100,8 @@ namespace IM10.Models
         public string? SportName { get; set; }
         public string? ProfileImageFileName { get; set; }
         public string? ProfileImageFilePath { get; set; }
+        public DateTime? Dob { get; set; }
+
     }
 
 }

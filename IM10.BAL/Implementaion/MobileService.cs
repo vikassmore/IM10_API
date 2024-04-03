@@ -624,6 +624,7 @@ namespace IM10.BAL.Implementaion
                     imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath1) ? contentArticle.ContentFilePath1 : contentArticle.ContentFilePath1);
                     imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath1) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
+                    articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
                     articleModel.ContentId = contentArticle.ContentId;
                     articleModel.Title = contentArticle.Title;
                     articleModel.Description = contentArticle.Description;

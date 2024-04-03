@@ -390,14 +390,13 @@ namespace IM10.BAL.Implementaion
             var contentEntityList = (from content in context.ContentDetails
                                      join
                                      category in context.Categories on content.CategoryId equals category.CategoryId
-                                     join update in context.ContentAuditLogs on content.ContentId equals update.ContentId into updates
+                                     join update in context.ContentAuditLogs.Where(u => !u.IsDeleted) on content.ContentId equals update.ContentId  into updates
                                      from update in updates.DefaultIfEmpty()
                                      join subcategory in context.SubCategories on content.SubCategoryId equals subcategory.SubCategoryId
                                      join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                      join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                      join language in context.Languages on content.LanguageId equals language.LanguageId
                                      where content.PlayerId == playerId && content.IsDeleted == false && player.IsDeleted == false
-
                                      orderby content.UpdatedDate descending
                                      select new ContentDetailModel
                                      {
@@ -715,6 +714,38 @@ namespace IM10.BAL.Implementaion
                 Message = GlobalConstants.DeniedSuccessfully;
             }
             return Message;  
+        }
+
+
+        /// <summary>
+        /// To get contenttitles by playerId 
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public List<ContentTitleModel> GetContentTitlesByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel = new ErrorResponseModel();
+            var contentEntityList = (from content in context.ContentDetails
+                                     join update in context.ContentAuditLogs on content.ContentId equals update.ContentId into updates
+                                     from update in updates.DefaultIfEmpty()
+                                     join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                     where content.PlayerId == playerId && content.IsDeleted == false && player.IsDeleted == false
+                                     && content.Approved == true && content.UpdatedBy == null
+                                     orderby content.UpdatedDate descending
+                                     select new ContentTitleModel
+                                     {
+                                         ContentId = (int)content.ContentId,
+                                         Title = update.ContentTitle != null && update.Approved == true ? $"{content.Title} ({update.ContentTitle})" : content.Title,
+
+                                     }).ToList();
+            if (contentEntityList.Count == 0)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                return null;
+
+            }
+            return contentEntityList.ToList();
         }
     }
 }

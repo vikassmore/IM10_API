@@ -625,5 +625,41 @@ namespace IM10.API.Controllers
         }
 
 
+
+
+        /// <summary>
+        /// To get contenttitles by playerId 
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        [HttpGet("GetContentTitlesByPlayerId/{playerId}")]
+        [ProducesResponseType(typeof(ContentTitleModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetContentTitlesByPlayerId(long playerId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                if (playerId <= 0)
+                {
+                    return BadRequest("Invalid data");
+                }
+                var contentdetailModel = contentDetailService.GetContentTitlesByPlayerId(playerId, ref errorResponseModel);
+
+                if (contentdetailModel != null)
+                {
+                    return Ok(contentdetailModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+
+        }
     }
 }

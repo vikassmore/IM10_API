@@ -95,5 +95,13 @@ namespace IM10.BAL.Interface
         /// <returns></returns>
         string ContentDetailUpdateByContentLog(ContentModel model1,ref ErrorResponseModel errorResponseModel);
 
+
+        /// <summary>
+        /// Method is used to get contenttitles by id
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <returns></returns>
+        List<ContentTitleModel> GetContentTitlesByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+
     }
 }

@@ -1185,6 +1185,7 @@ namespace IM10.BAL.Implementaion
                         articleModel.CategoryName = contentArticle.Category.Name;
                         articleModel.FileName = contentArticle.ContentFileName1;
                         articleModel.FilePath = imgmodel2.url;
+                        articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
                         articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -1876,6 +1877,7 @@ namespace IM10.BAL.Implementaion
                     imgmodel2.FileName = (imgmodel2.url);
                     articleModel.ContentId = contentArticle.ContentId;
                     articleModel.Title = contentArticle.Title;
+                    articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
                     articleModel.Description = contentArticle.Description;
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.FileName = contentArticle.ContentFileName1;
@@ -2035,6 +2037,7 @@ namespace IM10.BAL.Implementaion
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.FileName = contentArticle.ContentFileName1;
                     articleModel.FilePath = imgmodel2.url;
+                    articleModel.Thumbnail =_configuration.HostName + contentArticle.Thumbnail1;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();

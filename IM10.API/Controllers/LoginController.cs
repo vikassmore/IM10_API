@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using System.Drawing.Drawing2D;
 using IM10.BAL.Implementaion;
 using IM10.Entity.DataModels;
+using System.Threading.Tasks;
 
 namespace IM10.API.Controllers
 {
@@ -116,12 +117,14 @@ namespace IM10.API.Controllers
                 {
                     return Ok(new
                     {
-                        authData.RoleId,
-                        authData.Role,
                         authData.UserId,
+                        authData.RoleId,
                         authData.MobileNo,
                         authData.FirstName,
                         authData.LastName,
+                        authData.CountryCode,
+                        authData.StateId,
+                        authData.CityId
                     });
                 }
                 return ReturnErrorResponse(errorResponseModel);
@@ -138,7 +141,7 @@ namespace IM10.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost("VerifyOtp")]
-        public IActionResult VerifyOtp(string otp, int userId)
+        public IActionResult VerifyOtp(string otp, int userId, string deviceToken)
         {
             ErrorResponseModel errorResponseModel = null;
             try
@@ -148,7 +151,7 @@ namespace IM10.API.Controllers
                     var errorMessage = string.Join(",", ModelState.Values.ToList());
                     return BadRequest(new { message = errorMessage });
                 }
-                var authData = _authService.OTPVerify(otp, userId, ref errorResponseModel);
+                var authData = _authService.OTPVerify(otp, userId, deviceToken,ref errorResponseModel);
 
                 if (authData != null)
                 {
@@ -173,7 +176,11 @@ namespace IM10.API.Controllers
                         authData.RoleId,
                         authData.Role,
                         authData.UserId,
-                        authData.MobileNo
+                        authData.MobileNo,
+                        authData.CountryCode,
+                        authData.StateId,
+                        authData.CityId,
+                        authData.DeviceToken
                     });
                 }
                 else if(errorResponseModel.StatusCode == HttpStatusCode.Unauthorized)
@@ -191,10 +198,10 @@ namespace IM10.API.Controllers
         /// <summary>
         /// OTP reSent
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="mobileNo"></param>
         /// <returns></returns>
         [HttpPost("ReSentOtp")]
-        public IActionResult ReSentOtp(MobileLoginModel model)
+        public async Task<IActionResult> ReSentOtp(string mobileNo)
         {
             ErrorResponseModel errorResponseModel = null;
             try
@@ -204,15 +211,14 @@ namespace IM10.API.Controllers
                     var errorMessage = string.Join(",", ModelState.Values.ToList());
                     return BadRequest(new { message = errorMessage });
                 }
-                var reSentOtp = _authService.AuthenticationForMobile(model, ref errorResponseModel);
+                var reSentOtp =await _authService.ReSentOtp(mobileNo);
                 if (reSentOtp != null)
                 {
                     return Ok(new
                     {
-                        reSentOtp.RoleId,
-                        reSentOtp.Role,
+                        reSentOtp.MobileNo,
                         reSentOtp.UserId,
-                        reSentOtp.MobileNo
+                        reSentOtp.Otp
                     });
                 }
                 return ReturnErrorResponse(errorResponseModel);
@@ -230,7 +236,7 @@ namespace IM10.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetMobileUserProfile/{userId}")]
-        [ProducesResponseType(typeof(AuthModel), 200)]
+        [ProducesResponseType(typeof(UserProfileModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
@@ -254,7 +260,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -266,7 +272,7 @@ namespace IM10.API.Controllers
         /// <param name="deviceToken"></param>
         /// <returns></returns>
         [HttpPost("MobileLogOut/{userId}/{deviceToken}")]
-        [ProducesResponseType(typeof(UserModel), 200)]
+        [ProducesResponseType(typeof(LogOutModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
@@ -328,6 +334,37 @@ namespace IM10.API.Controllers
             }
         }
 
+
+
+        /// <summary>
+        /// This method is used to Get CountryId from ContryCode
+        /// </summary>
+        /// <param name="countryCode"></param>
+        [HttpGet("GetCountryIdbyContryCode")]
+        [ProducesResponseType(typeof(CountryModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetCountryIdbyContryCode(string countryCode)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+
+                var countryModel = _authService.GetCountryIdbyContryCode(countryCode);
+
+                if (countryModel != null)
+                {
+                    return Ok(countryModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
 

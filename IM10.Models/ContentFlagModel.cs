@@ -176,7 +176,7 @@ namespace IM10.Models
         public DateTime? CreatedDate { get; set; }
     }
     public class ListingLogoDetailsModel
-    {
+    {     
         public long ListingId { get; set; }
         public long PlayerId { get; set; }
         public string? CompanyName { get; set; }
@@ -191,45 +191,31 @@ namespace IM10.Models
         public List<ListingLogoDetailsModel> listingLogoDetailsModels { get; set; }
         public List<MobileContentData> mobileContentDatas { get; set; }
         public List<CategoryArticleModel> categoryArticleModels { get; set; }
-        public List<ListingLogoDetailsModel> listingDetailsModels { get; set; }
+      //  public List<ListingLogoDetailsModel> listingDetailsModels { get; set; }
     }
 
     public class ContentModelFlag
     {
         public long ContentFlagId { get; set; }
-
         public long PlayerId { get; set; }
         public long UserId { get; set; }
-
         public long ContentId { get; set; }
-
         public bool? MostLiked { get; set; }
         public bool? Favourite { get; set; }
-
         public int? ContentSequence { get; set; }
-
         public int ContentTypeId { get; set; }
-
         public DateTime? CreatedDate { get; set; }
-
         public int? CreatedBy { get; set; }
     }
     public class ContentModelView
     {
         public long ContentViewId { get; set; }
-
         public long PlayerId { get; set; }
-
         public long ContentId { get; set; }
-
         public bool? Trending { get; set; }
-
         public int? ContentSequence { get; set; }
-
         public int ContentTypeId { get; set; }
-
         public DateTime? CreatedDate { get; set; }
-
         public int? CreatedBy { get; set; }
     }
     public class PlayerMobileDataModel

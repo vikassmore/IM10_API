@@ -1,5 +1,4 @@
-﻿using CorePush.Google;
-using IM10.Entity.DataModels;
+﻿using IM10.Entity.DataModels;
 using IM10.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -20,36 +19,33 @@ namespace IM10.BAL.Implementaion
 {
     public interface INotificationService
     {
-        Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId,string thumbnail,int categoryId);
-        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice,int contentTypeId, int categoryId,bool IsPublic);
+        Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, int contentTypeId,string thumbnail,int categoryId);
+        Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message,int contentTypeId, int categoryId,bool IsPublic);
 
     }
     public class NotificationService : INotificationService
     {
         private readonly FcmNotificationSetting _notificationSetting;
-        private readonly IM10DbContext _context;
-        private readonly ConfigurationModel _configuration;
         private static object fileLock = new object();
 
 
-        public NotificationService(IOptions<FcmNotificationSetting> settings, IOptions<ConfigurationModel> hostName, IM10DbContext dbContext)
+        public NotificationService(IOptions<FcmNotificationSetting> settings)
         {
             _notificationSetting = settings.Value;
-            _configuration = hostName.Value;
-            _context = dbContext;
         }
 
         private string GenerateCollapseKey()
         {
-            // Use current timestamp to generate a unique collapse_key
-            return DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+            return Guid.NewGuid().ToString();
         }
-        public async Task<ResponseModel> SendNotification (string DeviceId, long playerId, long contentId, string title, string description, bool IsAndroidDevice, int contentTypeId, string thumbnail, int categoryId)
+       
+        public async Task<ResponseModel> SendNotification (string DeviceId, long playerId, long contentId, string title, string description, int contentTypeId, string thumbnail, int categoryId)
         {
             ResponseModel response = new ResponseModel();
             int success;
             try
             {
+                var uniqueId = Guid.NewGuid().ToString(); 
                 string SenderId = _notificationSetting.SenderId;
                 string ServerKey = _notificationSetting.ServerKey;
                 string deviceId = DeviceId;
@@ -61,7 +57,8 @@ namespace IM10.BAL.Implementaion
                 var data = new
                 {
                     to = deviceId,
-                    collapse_key = collapseKey,
+                    collapseKey = collapseKey,
+                    priority = "high",
                     data = new
                     {
                         playerId = playerId.ToString(),
@@ -71,16 +68,16 @@ namespace IM10.BAL.Implementaion
                         categoryId = categoryId,
                         contentTypeId = contentTypeId.ToString(),
                         thumbnail = thumbnail,
-                        IsAndroidDevice = IsAndroidDevice,
-                        message = "Approved Successfully"                        
+                        message = "Approved Successfully",
+                        uniqueId=uniqueId,
                     },
-                    notification = new
+                    /*notification = new
                     {
                         body = $"{description}",
                         title = $"{title}",
                         sound = "Enabled",                       
                         icon = "ic_launcher"                       
-                    }
+                    }*/
                 };
                 
                 var json = System.Text.Json.JsonSerializer.Serialize(data);
@@ -120,13 +117,14 @@ namespace IM10.BAL.Implementaion
         }
 
 
-        
-        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, bool IsAndroidDevice, int contentTypeId, int categoryId,bool IsPublic)
+
+        public async Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, int contentTypeId, int categoryId,bool IsPublic)
         {
             ResponseModel response = new ResponseModel();
             int success;
             try
             {
+                var uniqueId = Guid.NewGuid().ToString();
                 string SenderId = _notificationSetting.SenderId;
                 string ServerKey = _notificationSetting.ServerKey;
                 string deviceId = DeviceId;
@@ -135,28 +133,32 @@ namespace IM10.BAL.Implementaion
                 tRequest.Proxy = null;
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";
+                int timeToLiveSeconds = 86400;
                 var data = new
                 {
                     to = deviceId,
-                    collapse_key = collapseKey,
+                    collapseKey = collapseKey,
+                    priority = "high",
+                    time_to_live = timeToLiveSeconds, 
                     data = new
                     {
                         contentId = contentId,
                         commentId = commentId,
                         message = message,
                         categoryId = categoryId,
-                        isAndroidDevice = IsAndroidDevice,
                         contentTypeId = contentTypeId,
-                        IsPublic = IsPublic
+                        IsPublic = IsPublic,
+                        uniqueId = uniqueId,
                     },
-                    notification = new
+                   /* notification = new
                     {
                         body = $"{message}",
                         title = "New Comment Arrived!",
                         sound = "Enabled",
-                        icon = "ic_launcher"                       
-                    }                                
-            };
+                        icon = "ic_launcher"
+                    }*/
+                };
+
                 Console.WriteLine(data);
                 var json = System.Text.Json.JsonSerializer.Serialize(data);
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
@@ -192,7 +194,6 @@ namespace IM10.BAL.Implementaion
             }
             Console.WriteLine(response);
             return response;
-            
         }
-    } 
+    }
 }

@@ -15,24 +15,15 @@ namespace IM10.Models
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
     }
-    public class UserResponse
-    {
-        public string token { get; set; }
-        //public string UserName { get; set; }
-
-        public string EmailId { get; set; }
-        public long UserId { get; set; }
-       
-        public int RoleId { get; set; }
-        public string Role { get; set; }
-     
-    }
+   
     public class MobileLoginModel
     {
         public string MobileNo { get; set; }
         public string? DeviceToken { get; set; }
         public string? CountryCode { get; set; }
         public long PlayerId { get; set; }
+        public int? CityId { get; set; }
+        public int? StateId { get; set; }
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
 

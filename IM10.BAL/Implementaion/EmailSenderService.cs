@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using IM10.Models;
+using Serilog;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
@@ -73,16 +74,17 @@ namespace IM10.BAL.Implementaion
                 try
                 {
                     web.Proxy = null;
-                    // MeshBA's sms gateway
-                    string url = "http://103.233.79.217/api/mt/SendSMS?user=MeshBA&password=Mahesh@123&senderid=MESHBA&channel=Trans&DCS=0&flashsms=0&number="
-                        + phonenumber +
-                        "&text= Dear User, "
-                        + otp +
-                        " is the OTP for your login at Akshaya Agri app. In case you have not requested this, please contact us. - MeshBA&route=8&peid=1701159146303386050&dlttemplateid=1707165114455193951";
-                   // string url = "http://bulksmsindia.mobi/sendurlcomma.aspx?user=20094643&pwd=serum@2020&senderid=SIIPLH&mobileno=9637871701&msgtext=SMSBell-Rx:%20You%20have%20received%20a%20SMS,%20from%20device:%20BLD%2012%20Warehouse%20Recorder%20with%20Sub:%20BLD%2012%20Warehouse%20Recorder.%20TF%20Cold%20Room-6%20(-24%20to%20-34%20%C2%B0C)%20Temperature%20High.-SERUMH&smstype=13&pe_id=1701163878251642932&template_id=1707164093652897825";
+                    // MeshBA's sms gateway                   
+                    string url = "http://sms6.rmlconnect.net:8080/bulksms/bulksms?username=MeshBaS&password=P7nO!k8)&type=0&dlr=1&destination="
+                                    + phonenumber
+                                    + "&source=MESHBA&message=Dear User,"
+                                    + otp + " "
+                                    + " is the OTP for your login. In case you have not requested this, please contact us.-MeshBA&entityid=1701159146303386050&tempid=1707171283812216615";
+                  
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                     string result = web.DownloadString(url);
                     Console.WriteLine(result);
+                  
                 }
                 catch (Exception ex)
                 {

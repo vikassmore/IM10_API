@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Twilio.TwiML.Messaging;
@@ -75,39 +76,19 @@ namespace IM10.BAL.Implementaion
                 {
                     context.Entry(existingUser).Property(x => x.FirstName).IsModified = true;
                     context.Entry(existingUser).Property(x => x.LastName).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.CountryCode).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.StateId).IsModified = true;
+                    context.Entry(existingUser).Property(x => x.CityId).IsModified = true;
+
 
                     // Update values
                     existingUser.FirstName = loginModel.FirstName;
                     existingUser.LastName= loginModel.LastName;
+                    existingUser.CountryCode = loginModel.CountryCode;
+                    existingUser.StateId = loginModel.StateId;
+                    existingUser.CityId = loginModel.CityId;
                     context.SaveChanges();
                 }
-
-                var existingUserDeviceMapping = context.UserDeviceMappings
-               .Where(x => x.UserId == user.UserId && x.DeviceToken == loginModel.DeviceToken).FirstOrDefault();
-
-                if (existingUserDeviceMapping != null)
-                {
-                    // Update the existing record
-                    existingUserDeviceMapping.UpdatedBy = (int?)user.UserId;
-                    existingUserDeviceMapping.UpdatedDate = DateTime.Now;
-                    existingUserDeviceMapping.IsDeleted=false;
-                }
-                else
-                {
-                    // Create a new UserDeviceMapping record
-                    var userDeviceMapping = new UserDeviceMapping
-                    {
-                        UserId = user.UserId,
-                        DeviceToken = loginModel.DeviceToken,
-                        CreatedDate = DateTime.Now,
-                        CreatedBy = (int?)user.UserId,
-                        UpdatedDate = DateTime.Now,
-                        IsDeleted = false
-                    };
-                    context.UserDeviceMappings.Add(userDeviceMapping);
-                }
-
-                context.SaveChanges();
 
                 var fcmexstingUser = context.Fcmnotifications.Where(x => x.DeviceToken == loginModel.DeviceToken && x.PlayerId == loginModel.PlayerId && x.IsDeleted==false).FirstOrDefault();
                 if (fcmexstingUser != null)
@@ -121,9 +102,7 @@ namespace IM10.BAL.Implementaion
 
                 if (!string.IsNullOrEmpty(user.MobileNo))
                 {
-                    _emailSender.SendSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
-                    //_emailSender.SendTwilioSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
-                   
+                    _emailSender.SendSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);                   
                 }
                 return new AuthModel
                 {
@@ -132,6 +111,9 @@ namespace IM10.BAL.Implementaion
                     MobileNo = user.MobileNo,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    CountryCode = user.CountryCode,
+                    StateId = user.StateId,
+                    CityId = user.CityId,
                 };
             }
             else
@@ -145,6 +127,8 @@ namespace IM10.BAL.Implementaion
                 userEntity.Dob = DateTime.Now;
                 userEntity.Password = "123456";
                 userEntity.DeviceToken=null;
+                userEntity.CityId = loginModel.CityId;
+                userEntity.StateId=loginModel.StateId;
                 userEntity.CountryCode=loginModel.CountryCode;
                 userEntity.RoleId = 12;
                 userEntity.IsLogin = true;
@@ -173,16 +157,17 @@ namespace IM10.BAL.Implementaion
                 if (!string.IsNullOrEmpty(userEntity.MobileNo))
                 {
                     _emailSender.SendSmsAsync(userEntity.MobileNo, userEntity.FirstName + " " + userEntity.LastName, otp);
-                    //_emailSender.SendTwilioSmsAsync(userEntity.MobileNo, userEntity.FirstName + " " + userEntity.LastName, otp);
                 }
                 return new AuthModel
                 {
                     UserId = userEntity.UserId,
                     RoleId = userEntity.RoleId,
                     MobileNo = userEntity.MobileNo,
-                    DeviceToken=userEntity.DeviceToken,
                     FirstName = userEntity.FirstName,
                     LastName = userEntity.LastName,
+                    CountryCode = userEntity.CountryCode,
+                    StateId = userEntity.StateId,
+                    CityId = userEntity.CityId,
                 };
             }
         }
@@ -206,13 +191,13 @@ namespace IM10.BAL.Implementaion
                 {
                     existingRecord.Otp = otp;
                     existingRecord.IsActive = true;
-                    existingRecord.OtpvalidDateTime = DateTime.UtcNow;
+                    existingRecord.OtpvalidDateTime = DateTime.Now;
                     context.SaveChanges();
                 }
                 else
                 {
                     otpEntity.Otp = otp;
-                    otpEntity.OtpvalidDateTime = DateTime.UtcNow;
+                    otpEntity.OtpvalidDateTime = DateTime.Now;
                     otpEntity.UserId = userId;
                     otpEntity.IsActive = true;
                     context.Otpautherizations.Add(otpEntity);
@@ -222,6 +207,7 @@ namespace IM10.BAL.Implementaion
                 return otp;
             }
         }
+
         /// <summary>
         /// OTP verify
         /// </summary>
@@ -229,16 +215,41 @@ namespace IM10.BAL.Implementaion
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public AuthModel OTPVerify(string otp, int userId, ref ErrorResponseModel errorResponseModel)
+        public AuthModel OTPVerify(string otp, int userId, string deviceToken, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
             var User = context.UserMasters.Include(x => x.UserPlayerMappings).FirstOrDefault(m => m.UserId == userId && m.IsActive == true);
             if (User != null)
             {
+                var userdevicemapping = context.UserDeviceMappings.Where(z => z.UserId == User.UserId && z.DeviceToken==deviceToken).FirstOrDefault();
+                
+                if (userdevicemapping != null)
+                {
+                    // Update the existing record
+                    userdevicemapping.UpdatedBy = (int?)User.UserId;
+                    userdevicemapping.UpdatedDate = DateTime.Now;
+                    userdevicemapping.IsDeleted = false;
+                }
+                else
+                {
+                    // Create a new UserDeviceMapping record
+                    var userDeviceMapping = new UserDeviceMapping
+                    {
+                        UserId = User.UserId,
+                        DeviceToken = deviceToken,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = (int?)User.UserId,
+                        UpdatedDate = DateTime.Now,
+                        IsDeleted = false
+                    };
+                    context.UserDeviceMappings.Add(userDeviceMapping);
+                }
+
+                context.SaveChanges();
                 var otpEntity = context.Otpautherizations.FirstOrDefault(x => x.Otp == otp && x.UserId == User.UserId && x.IsActive == true);
                 if (otpEntity != null)
                 {
-                    var isValidOtp = DateTime.UtcNow.Subtract(otpEntity.OtpvalidDateTime.Value).TotalMinutes <= 5;
+                    var isValidOtp = DateTime.UtcNow.Subtract(otpEntity.OtpvalidDateTime.Value).TotalMinutes <= 2;
                     if (isValidOtp)
                     {
                         return new AuthModel
@@ -246,6 +257,10 @@ namespace IM10.BAL.Implementaion
                             UserId = User.UserId,
                             RoleId = User.RoleId,
                             MobileNo = User.MobileNo,
+                            CountryCode = User.CountryCode,
+                            StateId = User.StateId,
+                            CityId = User.CityId,
+                            DeviceToken=deviceToken
                         };
                     }
                     else
@@ -275,24 +290,35 @@ namespace IM10.BAL.Implementaion
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        public AuthModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel)
+        public UserProfileModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel)
         {
-            var authModel = new AuthModel();
             errorResponseModel = new ErrorResponseModel();
-            var user = context.UserMasters.FirstOrDefault(x => x.UserId == userId && x.IsActive == true && x.IsDeleted == false);
-            if (user != null)
-            {
-                authModel.UserId = user.UserId;
-                authModel.RoleId = user.RoleId;
-                authModel.MobileNo = user.MobileNo;
-            }
-            else
+            var userEntity = (from user in context.UserMasters
+                              join country in context.Countries on user.CountryCode equals country.CountryCode
+                              join state in context.States on user.StateId equals state.StateId
+                              join city in context.Cities on user.CityId equals city.CityId
+                              where user.UserId == userId && user.IsActive == true && user.IsDeleted == false
+                              select new UserProfileModel
+                              {
+                                  UserId=user.UserId,
+                                  RoleId=user.RoleId,
+                                  MobileNo=user.MobileNo,
+                                  FullName=user.FirstName + " " + user.LastName,
+                                  CountryCode=user.CountryCode,
+                                  CountryName=country.Name,
+                                  StateId=user.StateId,
+                                  StateName=state.Name,
+                                  CityId=user.CityId,
+                                  CityName=city.Name,
+                              }).FirstOrDefault();
+                
+            if (userEntity == null)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = "User Not Found";
                 return null;
             }
-            return authModel;
+            return userEntity;
         }
 
 
@@ -304,7 +330,6 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string MobileLogOut(long userId, string deviceToken, ref ErrorResponseModel errorResponseModel)
         {
-            var userModel = new UserMaster();
             string message = "";
             var existingUser = context.UserDeviceMappings.Where(x => x.UserId == userId && x.DeviceToken==deviceToken).FirstOrDefault();
             if (existingUser != null)
@@ -336,6 +361,61 @@ namespace IM10.BAL.Implementaion
                 login.UserId=existinglogin.UserId;
             }
             return login;
+        }
+
+
+        /// <summary>
+        /// This method is used to resend otp
+        /// </summary>
+        /// <param name="mobileno"></param>
+        /// <param name="errorResponseModel"></param>
+        public async Task<ResendOtp> ReSentOtp(string mobileNo)
+        {
+            var user = context.UserMasters.Where(x => x.MobileNo == mobileNo && x.IsActive == true && x.IsDeleted == false).FirstOrDefault();
+
+            if (user != null)
+            {                       
+                Random generator = new Random();
+                string otp = CreateNewOTP((user.UserId));
+
+                if (!string.IsNullOrEmpty(user.MobileNo))
+                {
+                    _emailSender.SendSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
+                }
+                return new ResendOtp
+                {
+                    UserId = user.UserId,
+                    MobileNo = user.MobileNo,  
+                    Otp=otp
+                };
+            }
+            else
+            {
+                throw new ArgumentException("User not found for the provided mobile number.");
+            }
+        }
+
+
+        /// <summary>
+        /// This method is used to Get CountryId from ContryCode
+        /// </summary>
+        /// <param name="countryCode"></param>
+        public CountryModel GetCountryIdbyContryCode(string countryCode)
+        {
+            var existingCountry = context.Countries.Where(z => z.CountryCode == countryCode && z.IsDeleted==false).FirstOrDefault();
+            if (existingCountry != null)
+            {
+                CountryModel countryModel = new CountryModel();
+                countryModel.CountryCode = countryCode;
+                countryModel.CountryId = existingCountry.CountryId;
+                countryModel.Name=existingCountry.Name;
+                return countryModel;
+            }
+            else
+            {
+                throw new Exception("Country with the provided country code was not found.");
+            }
+
         }
     }
 }

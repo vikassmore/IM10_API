@@ -1,10 +1,5 @@
 
 using Castle.Core.Smtp;
-using CorePush.Apple;
-using CorePush.Google;
-using FirebaseAdmin;
-using FirebaseAdmin.Messaging;
-using Google.Apis.Auth.OAuth2;
 using IM10.API.Hubs;
 using IM10.BAL.Implementaion;
 using IM10.BAL.Interface;
@@ -48,15 +43,8 @@ namespace IM10.API
         {
 
             services.AddOptions();
-            services.AddHttpClient<FcmSender>();
-            services.AddHttpClient<ApnSender>();
             services.AddControllers();
             
-            FirebaseApp.Create(new AppOptions()
-            {
-                Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "im10-f32bd-firebase-adminsdk-ea3aj-efa6ba6ad0.json")),
-                 ProjectId = "im10-f32bd"
-            });
             //configure SignalR
             services.AddSignalR();
             services.AddCors(options => {
@@ -168,14 +156,11 @@ namespace IM10.API
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-           
-            
+        {                     
             if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();               
             }
-
 
             app.UseCors(builder => builder.AllowAnyOrigin()
                                 .AllowAnyMethod()

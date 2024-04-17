@@ -45,7 +45,7 @@ namespace IM10.BAL.Interface
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        AuthModel OTPVerify(string otp, int userId, ref ErrorResponseModel errorResponseModel);
+        AuthModel OTPVerify(string otp, int userId,string deviceToken, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Get Mobile User Profile
@@ -54,7 +54,7 @@ namespace IM10.BAL.Interface
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        AuthModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel);
+        UserProfileModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel);
 
 
         /// <summary>
@@ -72,5 +72,21 @@ namespace IM10.BAL.Interface
         /// <param name="Mobile"></param>
         /// <returns></returns>
         LoginStaus LoginStatusOfUser(string Mobile);
+
+
+        /// <summary>
+        /// This method is used to resend otp
+        /// </summary>
+        /// <param name="mobileno"></param>
+         Task<ResendOtp> ReSentOtp(string mobileNo);
+
+
+
+        /// <summary>
+        /// This method is used to Get CountryId from ContryCode
+        /// </summary>
+        /// <param name="countryCode"></param>
+        CountryModel GetCountryIdbyContryCode(string countryCode);
+
     }
 }

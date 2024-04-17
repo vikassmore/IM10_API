@@ -123,12 +123,16 @@ namespace IM10.Models
 
     }
 
-
-
     public class ActiveUserModel
     {
         public long UserId { get; set; }
         public string Otp { get; set; }
         public int? UpdatedBy { get; set; }
+    }
+
+    public class LogOutModel
+    {
+        public long UserId { get; set; }
+        public string DeviceToken { get; set; }
     }
 }

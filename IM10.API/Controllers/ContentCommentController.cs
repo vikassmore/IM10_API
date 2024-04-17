@@ -62,7 +62,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -101,7 +101,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -134,7 +134,8 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -163,9 +164,9 @@ namespace IM10.API.Controllers
                 }
                 return ReturnErrorResponse(errorResponseModel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
@@ -196,7 +197,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

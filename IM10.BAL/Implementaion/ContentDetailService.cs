@@ -600,7 +600,7 @@ namespace IM10.BAL.Implementaion
                     var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId && x.IsDeleted==false).ToList();                    
                         foreach (var item in existing)
                         {
-                          var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, true, message.ContentTypeId, message.Thumbnail, message.CategoryId);
+                          var notificationResponse=  await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, message.ContentTypeId, message.Thumbnail, message.CategoryId);
                             if (notificationResponse.IsSuccess == 0)
                             {
                                 var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);

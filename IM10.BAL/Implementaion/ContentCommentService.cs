@@ -14,6 +14,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Twilio.TwiML.Messaging;
 
 namespace IM10.BAL.Implementaion
 {
@@ -48,9 +49,9 @@ namespace IM10.BAL.Implementaion
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
         public async Task<CommentNotificationModel> AddContentCommentReply(ContentCommentModel model)
-         {
+        {
             CommentNotificationModel message = new CommentNotificationModel();
-          ErrorResponseModel  errorResponseModel = new ErrorResponseModel();
+            ErrorResponseModel  errorResponseModel = new ErrorResponseModel();
             try
             {
                 var commentEntity = context.Comments.Where(x => x.CommentId == model.CommentId).FirstOrDefault();
@@ -80,21 +81,7 @@ namespace IM10.BAL.Implementaion
                 }
                 var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == commentreply.ContentId);
                 var existingMapping=context.UserDeviceMappings.Where(x=>x.UserId==commentEntity.UserId && x.IsDeleted==false).ToList();
-                var loggedInUsersWithDeviceTokens = (from mapping in existingMapping
-                                                     join user in context.UserMasters
-                                                     on mapping.UserId equals user.UserId
-                                                     where user.IsLogin == true && user.IsDeleted == false
-                                                     group new { user.UserId, mapping.DeviceToken, mapping.UserDeviceId, user.CreatedDate }
-                                                     by new { user.UserId, mapping.DeviceToken }
-                                                     into grouped
-                                                     let latestUser = grouped.OrderByDescending(x => x.UserDeviceId).First()
-                                                     select new
-                                                     {
-                                                         UserId = latestUser.UserId,
-                                                         UserDeviceId = latestUser.UserDeviceId,
-                                                         DeviceToken = latestUser.DeviceToken
-                                                     }).ToList();
-
+               
                 message.ContentId = commentreply.ContentId;
                 message.title = commentreply.Comment1;
                 message.CommentId = commentreply.CommentId;
@@ -103,9 +90,9 @@ namespace IM10.BAL.Implementaion
                 message.IsPublic = commentreply.IsPublic;
                 message.Message = GlobalConstants.ReplySaveSuccessfully;
 
-                foreach(var item in loggedInUsersWithDeviceTokens)
+                foreach(var item in existingMapping)
                 {               
-                  var notificationResponse = await _notificationService.SendCommentNotification(item.DeviceToken, message.ContentId, message.CommentId, message.title, true, message.ContentTypeId, message.CategoryId, (bool)message.IsPublic);
+                  var notificationResponse = await _notificationService.SendCommentNotification(item.DeviceToken, message.ContentId, message.CommentId, message.title, message.ContentTypeId, message.CategoryId, (bool)message.IsPublic);
                     if (notificationResponse.IsSuccess == 0)
                     {
                         var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
@@ -126,9 +113,7 @@ namespace IM10.BAL.Implementaion
                                 context.UserDeviceMappings.Update(mapping);
                                 context.SaveChanges();
                             }
-                        }
-                        
-
+                        }                      
                     }
                 }
 
@@ -159,78 +144,87 @@ namespace IM10.BAL.Implementaion
         public string DeleteCommentReply(long commentId, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
-            var commentEntity = context.Comments.FirstOrDefault(x => x.CommentId == commentId);
-            if (commentEntity != null)
+            try
             {
-                commentEntity.IsDeleted = true;
-                context.SaveChanges();
-                var commentReplyEntity = context.Comments.Where(x => x.ParentCommentId == commentEntity.CommentId).ToList();
-                if (commentReplyEntity.Count != 0)
+                var commentEntity = context.Comments.FirstOrDefault(x => x.CommentId == commentId);
+                if (commentEntity != null)
                 {
-                    foreach (var item in commentReplyEntity)
+                    commentEntity.IsDeleted = true;
+                    context.SaveChanges();
+                    var commentReplyEntity = context.Comments.Where(x => x.ParentCommentId == commentEntity.CommentId).ToList();
+                    if (commentReplyEntity.Count != 0)
                     {
-                        item.IsDeleted = true;
-                        context.SaveChanges();
+                        foreach (var item in commentReplyEntity)
+                        {
+                            item.IsDeleted = true;
+                            context.SaveChanges();
+                        }
                     }
+                    Message = GlobalConstants.ReplyDeleteSuccessfully;
                 }
-                Message = GlobalConstants.ReplyDeleteSuccessfully;
+                var userAuditLog = new UserAuditLogModel();
+                userAuditLog.Action = "Delete Content Comment Reply";
+                userAuditLog.Description = "Content Comment Reply Deleted";
+                userAuditLog.UserId = (int)commentEntity.CreatedBy;
+                userAuditLog.UpdatedBy = commentEntity.UpdatedBy;
+                userAuditLog.UpdatedDate = DateTime.Now;
+                _userAuditLogService.AddUserAuditLog(userAuditLog);
+                return "{\"message\": \"" + Message + "\"}";
             }
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = "Delete Content Comment Reply";
-            userAuditLog.Description = "Content Comment Reply Deleted";
-            userAuditLog.UserId = (int)commentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = commentEntity.UpdatedBy;
-            userAuditLog.UpdatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
-            return "{\"message\": \"" + Message + "\"}";
+            catch(Exception ex) 
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                Message = ex.Message;
+                return Message;
+            }
         }
 
-        /// <summary>
-        /// get content comment by id
-        /// </summary>
-        /// <param name="commentId"></param>
-        /// <param name="errorResponseModel"></param>
-        /// <returns></returns>
-        public ContentCommentModel GetContentCommentById(long commentId, ref ErrorResponseModel errorResponseModel)
-        {
-            errorResponseModel = new ErrorResponseModel();
-            var commentEntity = (from comment in context.Comments
-                                 join user in context.UserMasters
-                                 on comment.UserId equals user.UserId
-                                 join content in context.ContentTypes on
-                                 comment.ContentTypeId equals content.ContentTypeId
-                                 where comment.IsDeleted == false && comment.CommentId == commentId
-                                 select new
-                                 {
-                                     comment.CommentId,
-                                     comment.UserId,
-                                     user.FirstName,
-                                     user.LastName,
-                                     comment.ContentId,
-                                     comment.ContentTypeId,
-                                     content.ContentName,
-                                     comment.Comment1,
-                                     comment.IsPublic,
-                                 }).FirstOrDefault();
-            if (commentEntity == null)
-            {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }
-            return new ContentCommentModel
-            {
-                CommentId = commentEntity.CommentId,
-                UserId = commentEntity.UserId,
-                ContentId = commentEntity.ContentId,
-                ContentTypeId = commentEntity.ContentTypeId,
-                Comment1 = commentEntity.Comment1,
-                IsPublic = commentEntity.IsPublic,
-                FirstName = commentEntity.FirstName,
-                LastName = commentEntity.LastName,
-                ContentTypeName = commentEntity.ContentName,
-                FullName = commentEntity.FirstName + " " + commentEntity.LastName,
-            };
-        }
+            /// <summary>
+            /// get content comment by id
+            /// </summary>
+            /// <param name="commentId"></param>
+            /// <param name="errorResponseModel"></param>
+            /// <returns></returns>
+           public ContentCommentModel GetContentCommentById(long commentId, ref ErrorResponseModel errorResponseModel)
+           {
+                errorResponseModel = new ErrorResponseModel();
+                var commentEntity = (from comment in context.Comments
+                                     join user in context.UserMasters
+                                     on comment.UserId equals user.UserId
+                                     join content in context.ContentTypes on
+                                     comment.ContentTypeId equals content.ContentTypeId
+                                     where comment.IsDeleted == false && comment.CommentId == commentId
+                                     select new
+                                     {
+                                         comment.CommentId,
+                                         comment.UserId,
+                                         user.FirstName,
+                                         user.LastName,
+                                         comment.ContentId,
+                                         comment.ContentTypeId,
+                                         content.ContentName,
+                                         comment.Comment1,
+                                         comment.IsPublic,
+                                     }).FirstOrDefault();
+                if (commentEntity == null)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                }
+                return new ContentCommentModel
+                {
+                    CommentId = commentEntity.CommentId,
+                    UserId = commentEntity.UserId,
+                    ContentId = commentEntity.ContentId,
+                    ContentTypeId = commentEntity.ContentTypeId,
+                    Comment1 = commentEntity.Comment1,
+                    IsPublic = commentEntity.IsPublic,
+                    FirstName = commentEntity.FirstName,
+                    LastName = commentEntity.LastName,
+                    ContentTypeName = commentEntity.ContentName,
+                    FullName = commentEntity.FirstName + " " + commentEntity.LastName,
+                };
+           }
 
 
         /// <summary>

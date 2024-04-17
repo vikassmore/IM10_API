@@ -25,6 +25,8 @@ public partial class UserMaster
 
     public int? CityId { get; set; }
 
+    public int? StateId { get; set; }
+
     public int? AppId { get; set; }
 
     public string? DeviceToken { get; set; }

@@ -12,7 +12,7 @@ namespace IM10.Models
 
         public string Name { get; set; } = null!;
 
-        public int StateId { get; set; }
+        public long StateId { get; set; }
 
     }
 }

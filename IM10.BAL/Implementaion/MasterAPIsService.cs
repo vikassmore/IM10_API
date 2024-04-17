@@ -427,15 +427,30 @@ namespace IM10.BAL.Implementaion
             errorResponseModel = new ErrorResponseModel();
             var stateList = new List<StateModel>();
             var stateEntity = context.States.Where(x => x.CountryId == countryId && x.IsDeleted == false).ToList();
-            foreach (var item in stateEntity)
+            if (stateEntity.Any())
             {
-                var model = new StateModel();
-                model.StateId = item.StateId;
-                model.Name = item.Name;
-                model.StateCode = item.StateCode;
-                model.CountryId = item.CountryId;
-                stateList.Add(model);
+                foreach (var item in stateEntity)
+                {
+                    var model = new StateModel();
+                    model.StateId = item.StateId;
+                    model.Name = item.Name;
+                    model.StateCode = item.StateCode;
+                    model.CountryId = item.CountryId;
+                    stateList.Add(model);
+                }
             }
+            else
+            {
+                var otherOption = new StateModel
+                {
+                    StateId = 36,
+                    Name = "Other",
+                    StateCode = "Other",
+                    CountryId = countryId 
+                };
+                stateList.Add(otherOption);
+            }
+
             return stateList;
         }
 
@@ -451,14 +466,28 @@ namespace IM10.BAL.Implementaion
             errorResponseModel = new ErrorResponseModel();
             var cityList = new List<CityModel>();
             var cityEntity = context.Cities.Where(x => x.StateId == stateId && x.IsDeleted == false ).ToList();
-            foreach (var item in cityEntity)
+            if (cityEntity.Any())
             {
-                var model = new CityModel();
-                model.CityId = item.CityId;
-                model.Name = item.Name;
-                model.StateId = item.StateId;
-                cityList.Add(model);
+                foreach (var item in cityEntity)
+                {
+                    var model = new CityModel();
+                    model.CityId = item.CityId;
+                    model.Name = item.Name;
+                    model.StateId = item.StateId;
+                    cityList.Add(model);
+                }
             }
+            else
+            {
+                var otherOption = new CityModel
+                {
+                    CityId = 815,
+                    Name = "Other",
+                    StateId = stateId 
+                };
+                cityList.Add(otherOption);
+            }
+
             return cityList;
         }
 

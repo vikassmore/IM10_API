@@ -437,7 +437,6 @@ public partial class IM10DbContext : DbContext
             entity.Property(e => e.LogMessage).HasMaxLength(200);
             entity.Property(e => e.LogSource).HasMaxLength(100);
             entity.Property(e => e.LogType).HasMaxLength(100);
-            entity.Property(e => e.StackTrace).HasMaxLength(100);
         });
 
         modelBuilder.Entity<MarketingCampaign>(entity =>

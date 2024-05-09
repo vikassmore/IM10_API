@@ -21,4 +21,18 @@ namespace IM10.Models
         public string EmailId { get; set; } = null!;
         public string? LogMessage { get; set; }
     }
+
+
+
+    public class LogEntry
+    {
+        public long LogId { get; set; }
+        public string? LogType { get; set; }
+        public string? StackTrace { get; set; }
+        public string? AdditionalInformation { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string? LogSource { get; set; }
+        public int? UserId { get; set; }
+        public string? LogMessage { get; set; }
+    }
 }

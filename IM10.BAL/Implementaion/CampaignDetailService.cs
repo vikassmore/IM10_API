@@ -99,6 +99,12 @@ namespace IM10.BAL.Implementaion
             var campaignEntity = context.MarketingCampaigns.FirstOrDefault(x => x.MarketingCampaignId == marketingcampaignId);
             if (campaignEntity != null)
             {
+                if (campaignEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Campaign details already deleted.";
+                    return null;
+                }
                 campaignEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.CampaignDetailsDeleteMessage;

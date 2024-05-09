@@ -261,13 +261,19 @@ namespace IM10.BAL.Implementaion
             var userplayerEntity = _context.UserPlayerMappings.FirstOrDefault(x => x.UserPlayerId == userplayerId);
             if (userplayerEntity != null)
             {
+                if (userplayerEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "User player already deleted.";
+                    return null;
+                }
                 userplayerEntity.IsDeleted = true;
                 _context.SaveChanges();
                 Message = GlobalConstants.UserPlayerDeleteMessage;
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete User Player Mapping Details";
-            userAuditLog.Description = "User Player Mapping Details Added";
+            userAuditLog.Description = "User Player Mapping Details deleted";
             userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
             userAuditLog.UpdatedBy = userplayerEntity.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;

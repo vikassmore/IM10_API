@@ -15,6 +15,8 @@ namespace IM10.API.Controllers
     /// 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class CampaignDetailController : BaseAPIController
     {
         ICampaignDetailService detailService;
@@ -35,8 +37,9 @@ namespace IM10.API.Controllers
         /// <returns></returns>
         [HttpGet("GetCampaignDetailById/{marketingcampaignId}")]
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetCampaignDetailById(long marketingcampaignId)
         {
@@ -71,6 +74,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCampaignDetail()
         {
@@ -105,6 +109,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddCampaignDetail(CampaignDetailModel model)
         {
@@ -150,6 +155,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteCampaignDetail(long marketingcampaignId)
         {
@@ -180,6 +186,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetCampaignDetailByPlayerId(long playerId)
         {

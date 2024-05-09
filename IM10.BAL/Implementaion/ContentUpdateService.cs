@@ -86,6 +86,12 @@ namespace IM10.BAL.Implementaion
             var contentEntity = context.ContentAuditLogs.FirstOrDefault(x => x.ContentLogId == contentLogId);
             if (contentEntity != null)
             {
+                if (contentEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Content update already deleted.";
+                    return null;
+                }
                 contentEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.ContentDeleteMessage;             

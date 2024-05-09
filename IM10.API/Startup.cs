@@ -65,6 +65,14 @@ namespace IM10.API
                 o.MemoryBufferThreshold = int.MaxValue;
             });
 
+            services.AddHsts(options =>
+            {
+                options.IncludeSubDomains = true; 
+                options.Preload = true; 
+                options.MaxAge = TimeSpan.FromDays(365); 
+            });
+
+
             services.Configure<FormOptions>(options =>
             {
                 options.MultipartBodyLengthLimit = 60000000; // Set the maximum request size in bytes (60MB in this example)
@@ -159,9 +167,10 @@ namespace IM10.API
         {                     
             if (env.IsDevelopment() || env.IsProduction())
             {
-                app.UseDeveloperExceptionPage();               
+                app.UseDeveloperExceptionPage();
             }
 
+            app.UseHsts();
             app.UseCors(builder => builder.AllowAnyOrigin()
                                 .AllowAnyMethod()
                                 .WithHeaders("authorization", "accept", "content-type", "origin"));
@@ -245,7 +254,12 @@ namespace IM10.API
             {
                 endpoints.MapControllers();
             });
-            
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Remove("x-powered-by");
+                await next();
+            });
         }
     }
 }

@@ -26,6 +26,7 @@ namespace IM10.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ContentDetailController : BaseAPIController
     {
         IContentDetailService contentDetailService;
@@ -58,6 +59,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentDetailById(long contentId)
         {
@@ -92,6 +94,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllContentDetail()
         {
@@ -127,6 +130,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddContentDetail(IFormCollection formdata)
         {
@@ -287,6 +291,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult EditContentDetail(IFormCollection formdata)
         {
@@ -428,6 +433,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult ContentDetailUpdateByContentLog(ContentModel contentModel)
         {
@@ -469,6 +475,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteContentDetail(long contentId)
         {
@@ -500,6 +507,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentdetailByPlayerId(long playerId)
         {
@@ -539,6 +547,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public  async Task<IActionResult> ApproveContentDetail(long contentId)
         {
@@ -569,6 +578,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetApprovedContentdetailByPlayerId(long playerId)
         {
@@ -604,6 +614,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeniedContentDetail(CommentModel model)
         {
@@ -636,6 +647,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentTitleModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentTitlesByPlayerId(long playerId)
         {

@@ -9,7 +9,6 @@ namespace IM10.Models
     public class ConfigurationModel
     {
         public string HostName { get; set; }
-        public string SiteUrl { get; set; }
         public string URLffmpeg { get; set; }
     }
 }

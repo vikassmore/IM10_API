@@ -1,5 +1,6 @@
 ﻿using IM10.BAL.Implementaion;
 using IM10.BAL.Interface;
+using IM10.Entity.DataModels;
 using IM10.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,8 @@ namespace IM10.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class ErrorAuditLogController : BaseAPIController
     {
          IErrorAuditLogService auditLogService;
@@ -39,10 +42,10 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetErrorAuditLogById")]
-        // [Authorize]
         [ProducesResponseType(typeof(ErrorAuditLogModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetErrorAuditLogById(long logId)
         {
@@ -76,10 +79,10 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllErrorAuditLog")]
-       // [Authorize]
         [ProducesResponseType(typeof(ErrorAuditLogModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllErrorAuditLog()
         {

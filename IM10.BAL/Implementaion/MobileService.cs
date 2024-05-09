@@ -38,6 +38,8 @@ namespace IM10.BAL.Implementaion
             _configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
         }
+
+
         /// <summary>
         /// Video Thumbnail
         /// </summary>
@@ -55,7 +57,6 @@ namespace IM10.BAL.Implementaion
                     filePath = filePath.Replace("ContentFile/", "ContentFile/thumbnail/");
                 }
             }
-
             return filePath;
         }
 
@@ -332,6 +333,9 @@ namespace IM10.BAL.Implementaion
             List<MobileVideoCategoryData> mobileVideoCategoryListData = mobileVideoCategoryData.OrderBy(x => x.DisplayOrder).ToList();
             return mobileVideoCategoryListData;
         }
+
+
+
         /// <summary>
         /// Method is used to get all video By Category
         /// </summary>
@@ -457,6 +461,9 @@ namespace IM10.BAL.Implementaion
             videoModel.mobileContentDatas = topList.OrderByDescending(x=>x.CreatedDate).ToList();
             return videoModel;
         }
+
+
+
         /// <summary>
         /// Method is used to get mobileVideoview by contentId
         /// </summary>
@@ -518,6 +525,9 @@ namespace IM10.BAL.Implementaion
                 ContentTitle = articleEntity.Title
             };
         }
+
+
+
         /// <summary>
         /// Method is used to get all Category top five Article
         /// </summary>
@@ -588,6 +598,9 @@ namespace IM10.BAL.Implementaion
             List<MobileArticleCategoryData> mobileArticleListData = mobileArticleList.OrderBy(x => x.DisplayOrder).ToList();
             return mobileArticleListData;
         }
+
+
+
         /// <summary>
         /// Method is used to get all article By Category
         /// </summary>
@@ -650,6 +663,10 @@ namespace IM10.BAL.Implementaion
             categoryModel.categoryArticleModels = categoryArticleList;
             return categoryModel;
         }
+
+
+
+
         /// <summary>
         /// Method is used to get mobilearticleview by contentId
         /// </summary>
@@ -707,6 +724,9 @@ namespace IM10.BAL.Implementaion
                 CreatedDate = articleEntity.CreatedDate
             };
         }
+
+
+
         /// <summary>
         /// Method is used to get ListingDetail by playerId
         /// </summary>
@@ -787,6 +807,8 @@ namespace IM10.BAL.Implementaion
             });
             return listdetailEntity;
         }
+
+
 
         /// <summary>
         /// Method to get ListingDetail by listingId
@@ -878,6 +900,9 @@ namespace IM10.BAL.Implementaion
                 ContactPersonMobile = listEntity.ContactPersonMobile,
             };
         }
+
+
+
         /// <summary>
         /// Method is used to get To20ListingDetail by playerId
         /// </summary>
@@ -1490,6 +1515,8 @@ namespace IM10.BAL.Implementaion
             return commentListData;
         }
 
+
+
         /// <summary>
         /// Method is used to get contentcomment by playerId
         /// </summary>
@@ -1590,6 +1617,8 @@ namespace IM10.BAL.Implementaion
             return message;
         }
 
+
+
         /// <summary>
         /// Method is used to add like flag
         /// </summary>
@@ -1637,6 +1666,8 @@ namespace IM10.BAL.Implementaion
             return message;
         }
 
+
+
         /// <summary>
         /// Method is used to get splash screen by playerid
         /// </summary>
@@ -1674,6 +1705,10 @@ namespace IM10.BAL.Implementaion
                 FileName = playerSplashEntity.FileName
             };
         }
+
+
+
+
         /// <summary>
         /// Method is used to get logo image by playerid
         /// </summary>
@@ -1711,6 +1746,10 @@ namespace IM10.BAL.Implementaion
                 FileName = playerLogoEntity.FileName
             };
         }
+
+
+
+
         /// <summary>
         /// Method is used to get slide image by playerid
         /// </summary>
@@ -1751,6 +1790,8 @@ namespace IM10.BAL.Implementaion
             }
             return playerSlideModelList;
         }
+
+
 
         /// <summary>
         /// Method is used to get the liked data by playerId and userId
@@ -1908,6 +1949,8 @@ namespace IM10.BAL.Implementaion
             return playerMobileLikeFavouriteData;
         }
 
+
+
         /// <summary>
         /// Method is used to get the favourite data by playerId and userId
         /// </summary>
@@ -2064,6 +2107,14 @@ namespace IM10.BAL.Implementaion
             return playerMobileLikeFavouriteData;
         }
 
+
+
+        /// <summary>
+        /// Method is used to GetMobileCommentCount by contentId,userid
+        /// </summary>
+        /// <param name="contentId"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
         public CommentCountData GetMobileCommentCount(long contentId, long userId, ref ErrorResponseModel errorResponseModel)
         {
                 errorResponseModel = new ErrorResponseModel();

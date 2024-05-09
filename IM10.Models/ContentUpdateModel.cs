@@ -29,7 +29,6 @@ namespace IM10.Models
 
         public DateTime? ApprovedDate { get; set; }
 
-        public bool IsDeleted { get; set; }
 
     }
 

@@ -20,6 +20,8 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class ContentCommentController : BaseAPIController
     {
         IContentCommentService contentCommentService;
@@ -44,6 +46,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentCommentById(long commentId)
         {
@@ -77,6 +80,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> AddContentCommentReply(ContentCommentModel model)
         {
@@ -116,6 +120,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentCommentByPlayerId(long playerId)
         {
@@ -150,6 +155,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteCommentReply(long commentId)
         {
@@ -179,6 +185,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentCommentReplyByCommentId(long commentId)
         {

@@ -12,7 +12,6 @@ namespace IM10.Models
         public string Body { get; set; }
         public bool isHtml { get; set; }
         public string Subject { get; set; }
-        public bool sentStatus { get; set; }
 
     }
 }

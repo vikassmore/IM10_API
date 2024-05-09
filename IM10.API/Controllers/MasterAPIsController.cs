@@ -2,6 +2,7 @@
 using IM10.Common;
 using IM10.Entity.DataModels;
 using IM10.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ namespace IM10.API.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
+
     public class MasterAPIsController : BaseAPIController
     {
         IMasterAPIsService masterAPIsService;
@@ -36,9 +38,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllState")]
+        [Authorize]
         [ProducesResponseType(typeof(StateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllState()
         {
@@ -67,9 +71,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllCountry")]
+        [Authorize]
         [ProducesResponseType(typeof(CountryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCountry()
         {
@@ -96,9 +102,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllCity")]
+        [Authorize]
         [ProducesResponseType(typeof(CityModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCity()
         {
@@ -125,9 +133,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllLanguage")]
+        [Authorize]
         [ProducesResponseType(typeof(LanguageModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllLanguage()
         {
@@ -156,9 +166,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllCategory")]
+        [Authorize]
         [ProducesResponseType(typeof(CategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCategory()
         {
@@ -186,9 +198,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllSubCategory")]
+        [Authorize]
         [ProducesResponseType(typeof(SubCategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllSubCategory()
         {
@@ -217,9 +231,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllContentType")]
+        [Authorize]
         [ProducesResponseType(typeof(ContentTypeModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllContentType()
         {
@@ -246,9 +262,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByStateId/{stateId}")]
+        [Authorize]
         [ProducesResponseType(typeof(StateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetByStateId(long stateId)
         {
@@ -275,9 +293,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByCountryId/{countryId}")]
+        [Authorize]
         [ProducesResponseType(typeof(CountryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetByCountryId(long countryId)
         {
@@ -304,9 +324,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByCityId/{cityId}")]
+        [Authorize]
         [ProducesResponseType(typeof(CityModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetByCityId(long cityId)
         {
@@ -333,9 +355,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByLanguageId/{languageId}")]
+        [Authorize]
         [ProducesResponseType(typeof(LanguageModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetByLanguageId(long languageId)
         {
@@ -363,9 +387,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByCategoryId/{categoryId}")]
+        [Authorize]
         [ProducesResponseType(typeof(CategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetByCategoryId(long categoryId)
         {
@@ -393,9 +419,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetBySubCategoryId/{subcategoryId}")]
+        [Authorize]
         [ProducesResponseType(typeof(SubCategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetBySubCategoryId(long subcategoryId)
         {
@@ -423,9 +451,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByContentTypeId/{contenttypeId}")]
+        [Authorize]
         [ProducesResponseType(typeof(ContentTypeModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetByContentTypeId(long contenttypeId)
         {
@@ -451,6 +481,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(StateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetStateByCountyId(long CountryId)
         {
@@ -475,10 +506,10 @@ namespace IM10.API.Controllers
 
 
         [HttpGet("GetCityByStateId/{StateId}")]
-        //[Authorize]
         [ProducesResponseType(typeof(CityModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetCityByStateId(long StateId)
         {
@@ -507,9 +538,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetSubcategoryByCategoryId/{categoryId}")]
+        [Authorize]
         [ProducesResponseType(typeof(SubCategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetSubcategoryByCategoryId(long categoryId)
         {
@@ -539,9 +572,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllSports")]
+        [Authorize]
         [ProducesResponseType(typeof(SportModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllSports()
         {
@@ -569,9 +604,11 @@ namespace IM10.API.Controllers
         /// <param name="sportId"></param>
         /// <returns></returns>
         [HttpGet("GetAllCategoryBySportId/{sportId}")]
+        [Authorize]
         [ProducesResponseType(typeof(CategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCategoryBySportId(long sportId)
         {

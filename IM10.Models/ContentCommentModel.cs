@@ -47,8 +47,6 @@ namespace IM10.Models
         public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
-
-        public bool IsDeleted { get; set; }
         public string? ReplyedAdminName { get; set; }
         
     }
@@ -65,16 +63,9 @@ namespace IM10.Models
         public string? Location { get; set; }
         public bool? Liked { get; set; }
         public string? Comment1 { get; set; }
-        public bool? Shared { get; set; }
         public bool? IsPublic { get; set; }
-        public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
-        public long? ParentCommentId { get; set; }
-        public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
-        public bool IsDeleted { get; set; }
-       
-
     }
     public class ContentCommentModelData
     {

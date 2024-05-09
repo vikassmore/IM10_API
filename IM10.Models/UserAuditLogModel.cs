@@ -8,7 +8,7 @@ namespace IM10.Models
 {
     public class UserAuditLogModel
     {
-        public long AuditId { get; set; }
+      //  public long AuditId { get; set; }
 
         public string Action { get; set; } = null!;
 

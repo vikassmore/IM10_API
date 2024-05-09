@@ -16,9 +16,6 @@ namespace IM10.Models
         }
         public long ContentFlagId { get; set; }
         public long PlayerId { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? PlayerName { get; set; }
         public long ContentId { get; set; }
         public string? ContentTitle { get; set; }
         public string? ContentFileName { get; set; }
@@ -28,12 +25,10 @@ namespace IM10.Models
         public bool? Favourite { get; set; }
         public int? ContentSequence { get; set; }
         public int ContentTypeId { get; set; }
-        public string? ContentTypeName { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
-        public bool IsDeleted { get; set; }
         public int? CommentCount { get; set; }
         public int? ViewNo { get; set; }
         public int? LikedNo { get; set; }
@@ -42,12 +37,6 @@ namespace IM10.Models
         public List<ContentDetailMobileModel> ContentDetails { get; set; }
         public List<AdvertiseMobileModel> advertiseMobileModels { get; set; }
 
-    }
-    public class ArticleCategory
-    {
-        public int CategoryId { get; set; }
-        public string? CategoryName { get; set; }
-        public long ContentId { get; set; }
     }
 
     public class model
@@ -63,17 +52,14 @@ namespace IM10.Models
 
     public class ContentDetailMobileModel
     {
-        public ContentDetailMobileModel()
-        {
-        }
+        
         public long ContentId { get; set; }
 
         public string? ContentFileName { get; set; }
         public string? ContentFilePath { get; set; }
         public string? ContentFileName1 { get; set; }
         public string? ContentFilePath1 { get; set; }
-        //  public byte[]? Thumbnail_1 { get; set; }
-        // public byte[]? Thumbnail_2 { get; set; }
+       
         public string? Title { get; set; }
         public string? Description { get; set; }
 

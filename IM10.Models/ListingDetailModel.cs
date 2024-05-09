@@ -66,7 +66,6 @@ namespace IM10.Models
 
         public int? UpdatedBy { get; set; }
 
-        public bool IsDeleted { get; set; }
     }
 
     public class ListingDetailModel1
@@ -115,15 +114,11 @@ namespace IM10.Models
         public int SubCategoryId { get; set; }
 
         public int? Position { get; set; }
-        public DateTime? CreatedDate { get; set; }
 
         public int? CreatedBy { get; set; }
 
-        public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 
 }

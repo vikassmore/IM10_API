@@ -99,6 +99,12 @@ namespace IM10.BAL.Implementaion
             var endorsmentEntity = context.EndorsmentTypes.FirstOrDefault(x => x.EndorsmentTypeId == endorsmenttypeId);
             if (endorsmentEntity != null)
             {
+                if (endorsmentEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Endorsment type already deleted.";
+                    return null;
+                }
                 endorsmentEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.EndorsmentTypeDeleteMessage;

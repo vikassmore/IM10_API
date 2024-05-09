@@ -31,11 +31,10 @@ namespace IM10.Models
 
 
         public int? CityId { get; set; }
+        public int? StateId { get; set; }
 
         public int? AppId { get; set; }
         public string? CountryCode { get; set; }
-        public string? DeviceToken { get; set; }
-        public bool? IsLogin { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
@@ -47,46 +46,19 @@ namespace IM10.Models
 
         public bool IsActive { get; set; }
 
-        public bool IsDeleted { get; set; }
 
     }
 
     public class UserModel1
     {
         public long UserId { get; set; }
-
-      //  public string? Username { get; set; }
-
         public string FirstName { get; set; } = null!;
-
         public string LastName { get; set; } = null!;
         public string FullName { get; set; } = null!;
-
         public string EmailId { get; set; } = null!;
-
         public string MobileNo { get; set; } = null!;
-
-        public DateTime Dob { get; set; }
-
-      //  public string Password { get; set; } = null!;
-
         public int RoleId { get; set; }
         public string Name { get; set; } = null!;
-        public int? CityId { get; set; }
-
-        public int? AppId { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? CreatedBy { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
-
-        public int? UpdatedBy { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public bool IsDeleted { get; set; }
 
     }
 
@@ -134,5 +106,12 @@ namespace IM10.Models
     {
         public long UserId { get; set; }
         public string DeviceToken { get; set; }
+    }
+
+
+    public class UserDeleteModel
+    {
+        public long UserId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

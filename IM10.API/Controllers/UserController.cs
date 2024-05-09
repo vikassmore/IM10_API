@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
-
+using System.Net;
 
 namespace IM10.API.Controllers
 {
@@ -16,6 +16,7 @@ namespace IM10.API.Controllers
     
     [Route("api/user")]
     [ApiController]
+
     public class UserController :BaseAPIController
     {
         IUserService _userService;
@@ -35,9 +36,11 @@ namespace IM10.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetUserById/{userId}")]
+        [Authorize]
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetUserById(long userId)
         {
@@ -69,9 +72,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllUser")]
+        [Authorize]
         [ProducesResponseType(typeof(UserModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllUser()
         {
@@ -102,9 +107,11 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetOtherUser")]
+        [Authorize]
         [ProducesResponseType(typeof(UserModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetOtherUser()
         {
@@ -138,6 +145,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddUser(UserModel model)
         {
@@ -151,22 +159,21 @@ namespace IM10.API.Controllers
             {
                 return BadRequest("Invalid request, please verify details");
             }
-
-            try
+            else
             {
-                var errorMessage = new ErrorResponseModel();
-                var userModel = _userService.AddUser(model, ref errorMessage);
-                if (userModel != "")
+                try
                 {
-                    return Ok(userModel);
+                    ErrorResponseModel errorResponseModel = null;
+                    var userModel = _userService.AddUser(model, ref errorResponseModel);
+                    return userModel != null && userModel != "Email already exists" ? Ok(userModel) : Conflict(userModel);
                 }
-                return ReturnErrorResponse(errorMessage);
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
 
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
-            }
+
 
         }
 
@@ -178,9 +185,11 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("EditUser")]
+        [Authorize]
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult EditUser(UserModel users)
         {
@@ -201,11 +210,8 @@ namespace IM10.API.Controllers
 
                 var UserModel = _userService.EditUser(users, ref errorResponseModel);
 
-                if (UserModel != null)
-                {
-                    return Ok(UserModel);
-                }
-                return ReturnErrorResponse(errorResponseModel);
+                return UserModel != null && UserModel != "Email Id Already Exists" ? Ok(UserModel) : Conflict(UserModel);
+
             }
             catch (Exception)
             {
@@ -220,13 +226,15 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpDelete("DeleteUser")]
-        [ProducesResponseType(typeof(UserModel), 200)]
+        [Authorize]
+        [ProducesResponseType(typeof(UserDeleteModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteUser(long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var UserModel = _userService.DeleteUser(userId, ref errorResponseModel);
@@ -235,7 +243,14 @@ namespace IM10.API.Controllers
                 {
                     return Ok(UserModel);
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception)
             {
@@ -282,9 +297,11 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("ChangePassword")]
+        [Authorize]
         [ProducesResponseType(typeof(changepasswordModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult ChangePassword(changepasswordModel users)
         {

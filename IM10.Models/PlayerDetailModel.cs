@@ -30,7 +30,6 @@ namespace IM10.Models
         public string? ProfileImageFileName { get; set; }
         public string? ProfileImageFilePath { get; set; }
         public long SportId { get; set; }
-        public string? SportName { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }

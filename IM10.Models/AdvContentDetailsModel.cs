@@ -56,7 +56,6 @@ namespace IM10.Models
 
         public int? UpdatedBy { get; set; }
 
-        public bool IsDeleted { get; set; }
     }
 
 
@@ -74,14 +73,10 @@ namespace IM10.Models
         public int ContentTypeId { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public bool Approved { get; set; }
         public string? FinalPrice { get; set; }
         public bool? IsFree { get; set; }
-        public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
-        public bool IsDeleted { get; set; }
     }
 
 

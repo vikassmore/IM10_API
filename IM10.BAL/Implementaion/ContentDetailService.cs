@@ -365,19 +365,25 @@ namespace IM10.BAL.Implementaion
         public string DeleteContentDetail(long contentId, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
-            var userplayerEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
-            if (userplayerEntity != null)
+            var contentdetailsEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
+            if (contentdetailsEntity != null)
             {
-                userplayerEntity.IsDeleted = true;
-                userplayerEntity.Approved=null;
+                if (contentdetailsEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Content already deleted.";
+                    return null;
+                }
+                contentdetailsEntity.IsDeleted = true;
+                contentdetailsEntity.Approved=null;
                 context.SaveChanges();
                 Message = GlobalConstants.ContentDetailDeleteSuccessfully;
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Content Details";
             userAuditLog.Description = "Content Details Deleted";
-            userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
-            userAuditLog.UpdatedBy = userplayerEntity.UpdatedBy;
+            userAuditLog.UserId = (int)contentdetailsEntity.CreatedBy;
+            userAuditLog.UpdatedBy = contentdetailsEntity.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

@@ -183,9 +183,9 @@ namespace IM10.API.Controllers
                         authData.DeviceToken
                     });
                 }
-                else if(errorResponseModel.StatusCode == HttpStatusCode.Unauthorized)
+                else if(errorResponseModel != null && errorResponseModel.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    return Ok(errorResponseModel.Message);
+                    return StatusCode((int)HttpStatusCode.Unauthorized, errorResponseModel.Message);
                 }
                 return ReturnErrorResponse(errorResponseModel);
             }
@@ -195,6 +195,8 @@ namespace IM10.API.Controllers
 
             }
         }
+
+
         /// <summary>
         /// OTP reSent
         /// </summary>
@@ -239,6 +241,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserProfileModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileUserProfile(int userId)
         {
@@ -275,6 +278,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(LogOutModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult MobileLogOut(long userId, string deviceToken)
         {
@@ -303,7 +307,7 @@ namespace IM10.API.Controllers
 
 
 
-        /// <summary>
+        /*/// <summary>
         /// Get Mobile User Profile
         /// </summary>
         /// <param name="userId"></param>
@@ -332,7 +336,7 @@ namespace IM10.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
             }
-        }
+        }*/
 
 
 
@@ -344,6 +348,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CountryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetCountryIdbyContryCode(string countryCode)
         {

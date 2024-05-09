@@ -26,8 +26,6 @@ namespace IM10.BAL.Implementaion
     public class NotificationService : INotificationService
     {
         private readonly FcmNotificationSetting _notificationSetting;
-        private static object fileLock = new object();
-
 
         public NotificationService(IOptions<FcmNotificationSetting> settings)
         {
@@ -64,19 +62,19 @@ namespace IM10.BAL.Implementaion
                         playerId = playerId.ToString(),
                         contentId = contentId.ToString(),
                         title = title,
-                        description = description,
+                     // description = description,
                         categoryId = categoryId,
                         contentTypeId = contentTypeId.ToString(),
                         thumbnail = thumbnail,
-                        message = "Approved Successfully",
+                        message = description,
                         uniqueId=uniqueId,
                     },
-                    /*notification = new
+                   /* notification = new
                     {
                         body = $"{description}",
                         title = $"{title}",
-                        sound = "Enabled",                       
-                        icon = "ic_launcher"                       
+                        sound = "Enabled",
+                        icon = "ic_launcher"
                     }*/
                 };
                 
@@ -149,8 +147,9 @@ namespace IM10.BAL.Implementaion
                         contentTypeId = contentTypeId,
                         IsPublic = IsPublic,
                         uniqueId = uniqueId,
+                        title = "New Comment Arrived!",
                     },
-                   /* notification = new
+                    /*notification = new
                     {
                         body = $"{message}",
                         title = "New Comment Arrived!",

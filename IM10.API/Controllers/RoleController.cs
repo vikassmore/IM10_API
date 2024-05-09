@@ -14,7 +14,7 @@ namespace IM10.API.Controllers
 
     [Route("api/role")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class RoleController : BaseAPIController
     {
         IRoleService roleMasterService;
@@ -38,6 +38,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(RoleModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetRoleById(long roleId)
         {
@@ -72,6 +73,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(RoleModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllRoles()
         {

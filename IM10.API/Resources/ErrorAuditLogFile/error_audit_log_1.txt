@@ -1,12 +1,21 @@
 Log ID: 1
-Log Type: abc
-Created Date: 22-06-2023 10:30:40
+Log Type: Error
+Created Date: 03-05-2024 10:54:23
 
-User ID: 46
-Email ID: enduser@gmail.com
-Full Name: Mobile User
+User ID: 2
+Email ID: dipalivarute96@gmail.com
+Full Name: Dipali Varute
 
-Stack Trace: abc
-Log Source: 46
-Error: Not working
-Description: Not working properly
+Log Source: Add/EditAdvContentMapping
+Error: Exception occurred in AddAdvContentMapping method
+Description: An error occurred while saving the entity changes. See the inner exception for details.
+Stack Trace:    at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.Consume(RelationalDataReader reader)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.AdvContentMappingService.AddAdvContentMapping(AdvContentMappingModel model) in D:\IM10NewRepository\IM10.BAL\Implementaion\AdvContentMappingService.cs:line 77

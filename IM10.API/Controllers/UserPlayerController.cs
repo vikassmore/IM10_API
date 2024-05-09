@@ -15,7 +15,8 @@ namespace IM10.API.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Authorize]
+
     public class UserPlayerController : BaseAPIController
     {
         IUserPlayerService _userPlayerService;
@@ -40,6 +41,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetUserPlayerById(long userplayerId)
         {
@@ -74,6 +76,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllUserPlayer()
         {
@@ -104,10 +107,10 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddUserPlayer")]
-       // [Authorize]
         [ProducesResponseType(typeof(UserPlayerModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddUserPlayer(UserPlayerModel1 model)
         {
@@ -147,10 +150,10 @@ namespace IM10.API.Controllers
         /// <param name="playerModel"></param>
         /// <returns></returns>
         [HttpPut("EditUserPlayer")]
-       // [Authorize]
         [ProducesResponseType(typeof(UserPlayerMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult EditUserPlayer(UserPlayerMappingModel playerModel)
         {
@@ -191,6 +194,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteUserPlayer(long userplayerId)
         {
@@ -223,6 +227,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(SportUserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetPlayerByUserId(long userId)
         {
@@ -259,6 +264,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserPlayerModel2), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetuserplayerByUserplayerId(long userplayerId)
         {
@@ -295,6 +301,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserPlayerModel3), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllUserPlayerdetailsbycommaseparate()
         {
@@ -328,6 +335,8 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(UserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetPlayerByRoleId(long roleId)
         {

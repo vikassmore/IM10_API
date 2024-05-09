@@ -15,6 +15,7 @@ namespace IM10.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class MobileAppController : BaseAPIController
     {
         IMobileServices services;
@@ -39,6 +40,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> GetTop5TrendingVideoContent(long playerId, long userId)
         {
@@ -77,6 +79,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileVideoView(long contentId)
         {
@@ -112,6 +115,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(MobileVideoCategoryData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCategoryTopFiveVideoContent(long playerId, long userId)
         {
@@ -145,6 +149,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetVideoContentByCategory(long playerId, long categoryId, long userId)
         {
@@ -178,6 +183,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(MobileArticleCategoryData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCategoryTopFiveArticleContent(long playerId, long userId)
         {
@@ -211,6 +217,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetArticleContentByCategory(long playerId, long categoryId, long userId)
         {
@@ -244,6 +251,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileArticleView(long contentId, long userId)
         {
@@ -277,6 +285,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingLogoDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetListingDetailByplayerId(long playerId)
         {
@@ -310,6 +319,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetListingDetailById(long listingId)
         {
@@ -343,6 +353,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingLogoDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetTop20ListingDetailByplayerId(long playerId)
         {
@@ -377,6 +388,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(MobileSearchDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileSearchDetailByplayerId(long playerId, string searchData, long userId)
         {
@@ -411,6 +423,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddMobileContentComment(ContentCommentModel1 model)
         {
@@ -454,6 +467,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CommentListData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileCommentByContentId(long contentId,long UserId)
         {
@@ -487,6 +501,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CommentCountData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileCommentCount(long contentId, long userId)
         {
@@ -517,6 +532,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileCommentByPlayerId(long playerId)
         {
@@ -548,6 +564,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentModelView), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddMobileViewCount(ContentModelView model)
         {
@@ -582,6 +599,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentModelFlag), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddMobileLikeFavouriteCount(ContentModelFlag model)
         {
@@ -622,6 +640,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerMobileDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileSplashScreenByplayerId(long playerId)
         {
@@ -655,6 +674,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerMobileDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileLogoImageByplayerId(long playerId)
         {
@@ -688,6 +708,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerMobileDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileSlideImageByplayerId(long playerId)
         {
@@ -723,6 +744,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerMobileLikeFavouriteData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileLikeVideoArticle(long playerId, long userId)
         {
@@ -757,6 +779,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerMobileLikeFavouriteData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileFavouriteVideoArticle(long playerId, long userId)
         {

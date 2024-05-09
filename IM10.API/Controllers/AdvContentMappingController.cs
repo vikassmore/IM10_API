@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.VisualBasic;
 using System;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class AdvContentMappingController : BaseAPIController
     {
         IAdvContentMappingService AdvContentMapping;
@@ -40,6 +43,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAdvContentMappingById(long AdvcontentmapId)
         {
@@ -72,9 +76,9 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddAdvContentMapping")]
-        [Authorize]
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
         public  IActionResult AddAdvContentMapping(AdvContentMappingModel model)
@@ -96,15 +100,18 @@ namespace IM10.API.Controllers
                 var errorMessage = new ErrorResponseModel();
                 var contentModel = AdvContentMapping.AddAdvContentMapping(model);
 
-                if (contentModel != null) 
+                if (contentModel != null && contentModel != "Something went wrong!")
                 {
                   return Ok(contentModel);
                 }
-                return ReturnErrorResponse(errorMessage);
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+                }
 
             }
             catch (Exception ex)
-            {
+            {               
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
 
@@ -120,6 +127,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteAdvContentMapping(long advcontentmapId)
         {
@@ -149,6 +157,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAdvContentMappingByPlayerId(long playerId)
         {
@@ -172,9 +181,6 @@ namespace IM10.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
-        }
-
-
-       
+        }       
     }
 }

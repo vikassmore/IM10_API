@@ -1,5 +1,6 @@
 ﻿using IM10.BAL.Interface;
 using IM10.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ namespace IM10.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
 
     public class FCMNotificationController : BaseAPIController
     {
@@ -27,6 +29,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(FCMNotificationModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddFCMNotificaion(FCMNotificationModel model)
         {

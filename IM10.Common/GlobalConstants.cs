@@ -26,7 +26,7 @@ namespace IM10.Common
         public const string AdvContentDetailDeleteMessage = "Adv Content Detail Delete Successfully. ";
         public const string ContentSaveMessage = "Content  Save Successfully. ";
         public const string ContentUpdateMessage = "Content Update Successfully. ";
-        public const string ContentDeleteMessage = "Content  Delete Successfully. ";
+        public const string ContentDeleteMessage = "Content Update Deleted Successfully. ";
         public const string UserPlayerSavedSuccessfully = "User Player Saved Successfully";
         public const string UserPlayerUpdateMessage = "User Player Update Successfully. ";
         public const string UserPlayerDeleteMessage = "User Player Delete Successfully. ";
@@ -75,6 +75,5 @@ namespace IM10.Common
         public const string SaveMessage = "Data saved successfuly.";
         public const string SaveToken = "Notification tokan pass successfully.";
         public const string LogOut = "User Logout Successfully.";
-
     }
 }

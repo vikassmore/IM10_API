@@ -22,6 +22,8 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class AdvtContentDetailController : BaseAPIController
     {
         IAdvContentDetailService  advContentservice;
@@ -49,6 +51,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAdvContentDetailById(long AdvertiseContentId)
         {
@@ -86,6 +89,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentDetailsModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddAdvContentDetail(IFormCollection formdata)
         {
@@ -199,6 +203,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteAdvContentDetail(long AdvertiseContentId)
         {
@@ -230,6 +235,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAdvContentByPlayerId(long playerId)
         {
@@ -263,6 +269,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult ApproveAdvContentDetail(long advertisecontentId)
         {
@@ -294,6 +301,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetApprovedAdvContentByPlayerId(long playerId)
         {
@@ -326,6 +334,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(AdvContentComment), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeniedAdvContentDetail(AdvContentComment model)
         {

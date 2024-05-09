@@ -25,6 +25,8 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class PlayerDetailController : BaseAPIController
     {
         IPlayerDetailService playerDetailService;
@@ -50,6 +52,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerSportsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetPlayerDetailById(long playerId)
         {
@@ -84,6 +87,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllPlayerDetail()
         {
@@ -118,6 +122,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddPlayerDetail(IFormCollection formdata)
         {
@@ -245,6 +250,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult EditPlayerDetail(IFormCollection formdata)
         {
@@ -369,6 +375,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeletePlayerDetail(long playerId)
         {
@@ -399,6 +406,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddPlayerData(IFormCollection formdata)
         {
@@ -539,6 +547,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllPlayerData()
         {
@@ -570,6 +579,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeletePlayerData(long playerDataId)
         {
@@ -603,6 +613,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetPlayerDetailByPlayerId(long playerId)
         {

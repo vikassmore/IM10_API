@@ -49,24 +49,28 @@ namespace IM10.BAL.Implementaion
                               where user.IsDeleted == false && user.UserId == userId
                               orderby user.CreatedDate descending, user.UpdatedDate descending
 
-                              select new
+                              select new UserModel
                               {
-                                  user.UserId,
-                                  user.FirstName,
-                                  user.LastName,
-                                  user.EmailId,
-                                  user.MobileNo,
-                                  user.Dob,
-                                  user.RoleId,
-                                  user.CityId,
-                                  user.AppId,
-                                  user.CreatedBy,
-                                  user.UpdatedBy,
-                                  user.CreatedDate,
-                                  user.UpdatedDate,
-                                  user.IsActive,
-                                  user.Password,
-                                  role.Name
+                                 UserId= user.UserId,
+                                 FirstName= user.FirstName,
+                                 LastName= user.LastName,
+                                 EmailId= user.EmailId,
+                                 MobileNo =user.MobileNo,
+                                 Dob= user.Dob,
+                                 RoleId=   user.RoleId,
+                                 CityId= user.CityId,
+                                 AppId= user.AppId,
+                                 CreatedBy=  user.CreatedBy,
+                                 UpdatedBy=  user.UpdatedBy,
+                                 CreatedDate = user.CreatedDate,
+                                 UpdatedDate = user.UpdatedDate,
+                                 IsActive = user.IsActive,
+                                 Password = EncryptionHelper.Decrypt(user.Password.ToString()),
+                                 Name = role.Name,
+                                 CountryCode=user.CountryCode,
+                                 StateId=user.StateId,
+                                 FullName = user.FirstName + " " + user.LastName,
+
                               }).FirstOrDefault();
 
             if (userEntity == null)
@@ -76,26 +80,7 @@ namespace IM10.BAL.Implementaion
                 return null;
 
             }
-            return new UserModel
-            {
-                UserId = userEntity.UserId,
-                FirstName = userEntity.FirstName,
-                LastName = userEntity.LastName,
-                EmailId = userEntity.EmailId,
-                MobileNo = userEntity.MobileNo,
-                Dob = userEntity.Dob,
-                RoleId = userEntity.RoleId,
-                Password = EncryptionHelper.Decrypt(userEntity.Password.ToString()),
-                CityId = userEntity.CityId,
-                AppId = userEntity.AppId,
-                CreatedDate = DateTime.Now,
-                CreatedBy = userEntity.CreatedBy,
-                UpdatedDate = DateTime.Now,
-                UpdatedBy = userEntity.UpdatedBy,
-                IsActive = true,
-                Name = userEntity.Name,
-                FullName = userEntity.FirstName + " " + userEntity.LastName,
-            };
+            return userEntity;
         }
 
 
@@ -112,7 +97,8 @@ namespace IM10.BAL.Implementaion
                                   role in context.Roles on user.RoleId equals role.RoleId
                                   where user.IsDeleted == false && role.RoleId != 1 && role.RoleId != 12
                                   && role.IsDeleted==false
-                                  orderby user.UpdatedDate descending
+                                  let latestDate = user.UpdatedDate.HasValue ? user.UpdatedDate.Value : user.CreatedDate
+                                  orderby latestDate descending
                                   select new UserModel1
                                   {
                                      UserId= user.UserId,
@@ -131,7 +117,7 @@ namespace IM10.BAL.Implementaion
                 return null;
 
             }          
-            return userEntityList.ToList();
+            return userEntityList;
         }
 
         /// <summary>
@@ -141,7 +127,7 @@ namespace IM10.BAL.Implementaion
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
         public string AddUser(UserModel user, ref ErrorResponseModel errorResponseModel)
-        {
+        {            
             string message = "";
             var userentity = context.UserMasters.Where(x => (x.EmailId == user.EmailId) && x.IsDeleted == false).FirstOrDefault();
             if (userentity == null)
@@ -159,7 +145,7 @@ namespace IM10.BAL.Implementaion
                 userEntity.AppId = user.AppId;
                 userEntity.CreatedDate = DateTime.Now;
                 userEntity.CreatedBy = user.CreatedBy;
-                userEntity.UpdatedDate = DateTime.Now;
+               // userEntity.UpdatedDate = DateTime.Now;
                 userEntity.IsDeleted = false;
                 userEntity.IsActive = true;
                 context.UserMasters.Add(userEntity);
@@ -204,7 +190,6 @@ namespace IM10.BAL.Implementaion
                         return message;
                     }
                 }
-
                 userEntity.FirstName = users.FirstName;
                 userEntity.LastName = users.LastName;
                 userEntity.EmailId = users.EmailId;
@@ -225,7 +210,7 @@ namespace IM10.BAL.Implementaion
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Update User";
             userAuditLog.Description = "User Updated";
-            userAuditLog.UserId = (int)users.CreatedBy;
+            userAuditLog.UserId = (int)users.UpdatedBy;
             userAuditLog.UpdatedBy = users.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
@@ -242,9 +227,17 @@ namespace IM10.BAL.Implementaion
         public string DeleteUser(long userId, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
+            errorResponseModel = new ErrorResponseModel();
             var userEntity = context.UserMasters.FirstOrDefault(x => x.UserId == userId);
+            
             if (userEntity != null)
             {
+                if (userEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "User already deleted.";
+                    return null;
+                }
                 userEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.UserDeleteMessage;
@@ -365,6 +358,7 @@ namespace IM10.BAL.Implementaion
                                      FirstName= user.FirstName,
                                      LastName = user.LastName,
                                      EmailId= user.EmailId,
+                                     MobileNo= user.MobileNo,
                                      RoleId = user.RoleId,
                                      Name= role.Name,
                                      FullName=user.FirstName + " " + user.LastName,

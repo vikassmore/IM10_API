@@ -15,6 +15,8 @@ namespace IM10.API.Controllers
     
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class ContentUpdateController : BaseAPIController
     {
         IContentUpdateService contentUpdateService;
@@ -37,6 +39,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentUpdate(long contentId)
         {
@@ -71,6 +74,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllContentUpdate()
         {
@@ -105,6 +109,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddContentUpdate(ContentUpdateModel model)
         {
@@ -148,6 +153,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteContentUpdate(long contentLogId)
         {
@@ -179,6 +185,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentTitleModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllContentTitles()
         {
@@ -211,6 +218,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentUpdateforQA(long playerId)
         {
@@ -244,6 +252,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateComment), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeniedContentUpdateDetail(ContentUpdateComment model)
         {
@@ -274,6 +283,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetContentUpdateByPlayerId(long playerId)
         {

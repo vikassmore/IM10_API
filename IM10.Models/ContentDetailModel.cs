@@ -10,24 +10,19 @@ namespace IM10.Models
     public class ContentDetailModel
     {
         public int ContentId { get; set; }
-
         public string? ContentFileName { get; set; }
         public string? ContentFilePath { get; set; }
         public string? ContentFileName1 { get; set; }
 
         public string? ContentFilePath1 { get; set; }
 
-        public byte[]? Thumbnail_1 { get; set; }
         public string? Thumbnail_2 { get; set; }
 
         public string? ContentThumbnail_2 { get; set; }
-
-
         public string? Title { get; set; }
 
         public string? Description { get; set; }
 
-        public byte[]? Thumbnail { get; set; }
         public string? Thumbnail1 { get; set; }
 
         public string? ContentThumbnail1 { get; set; }
@@ -59,9 +54,6 @@ namespace IM10.Models
         public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
-
-        public bool IsDeleted { get; set; }
-        public string? Thumbnail2 { get; set; }
         public string? Thumbnail3 { get; set; }
 
     }
@@ -78,15 +70,9 @@ namespace IM10.Models
         public string? ContentFileName1 { get; set; }
 
         public string? ContentFilePath1 { get; set; }
-
-        public byte[]? Thumbnail1 { get; set; }
         public string? Title { get; set; }
 
         public string? Description { get; set; }
-
-        public byte[]? Thumbnail { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
 
         public int? CreatedBy { get; set; }
 
@@ -100,13 +86,8 @@ namespace IM10.Models
       
         public int? LanguageId { get; set; }
 
-        public bool Approved { get; set; }
-
-        public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public string? Thumbnail2 { get; set; }
         public string? Thumbnail3 { get; set; }
@@ -128,7 +109,6 @@ namespace IM10.Models
 
     public class VideoImageModel
     {
-        public int? ContentId { get; set; }
         public string url { get; set;}
         public string Type { get; set; }
         public string thumbnail { get; set; }

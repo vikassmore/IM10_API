@@ -315,6 +315,12 @@ namespace IM10.BAL.Implementaion
             var playerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == PlayerId);
             if (playerEntity != null)
             {
+                if (playerEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Player already deleted.";
+                    return null;
+                }
                 playerEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.PlayerDetailDeleteSuccessfully;

@@ -2,6 +2,7 @@
 using IM10.Common;
 using IM10.Entity.DataModels;
 using IM10.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -28,18 +29,18 @@ namespace IM10.BAL.Implementaion
         IM10DbContext context;
         private ConfigurationModel _configuration;
         private readonly IUserAuditLogService _userAuditLogService;
-        private readonly INotificationService _notificationService;
+        private readonly IErrorAuditLogService _logService;
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public AdvContentMappingService(IM10DbContext _context, INotificationService notificationService,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
+        public AdvContentMappingService(IErrorAuditLogService auditLogService,IM10DbContext _context,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
         {
             context = _context;
             _configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
-            _notificationService = notificationService;
+            _logService = auditLogService;
         }  
 
         /// <summary>
@@ -52,61 +53,84 @@ namespace IM10.BAL.Implementaion
         {
             ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             string message = "";
-            try
+            using (var transaction = context.Database.BeginTransaction())
             {
-                if (model.AdvContentMapId == 0)
+                try
                 {
-                    AdvContentMapping contentEntity = new AdvContentMapping();
-                    contentEntity.AdvContentMapId = model.AdvContentMapId;
-                    contentEntity.ContentId = model.ContentId;
-                    contentEntity.AdvertiseContentId = model.AdvertiseContentId;
-                    contentEntity.CategoryId = model.CategoryId;
-                    contentEntity.SubCategoryId = model.SubCategoryId;
-                    contentEntity.Position = model.Position;
-                    contentEntity.CreatedBy = model.CreatedBy;
-                    contentEntity.CreatedDate = DateTime.Now;
-                    contentEntity.UpdatedDate = DateTime.Now;
-                    contentEntity.IsDeleted = false;
-                    context.AdvContentMappings.Add(contentEntity);
-                    context.SaveChanges();
-                    message = GlobalConstants.AdvContentMappingAddedSuccessfully;
-                }
-                else
-                {
-                    var contentlist = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == model.AdvContentMapId);
-                    if (contentlist != null)
+                    if (model.AdvContentMapId == 0)
                     {
-                        contentlist.AdvContentMapId = model.AdvContentMapId;
-                        contentlist.ContentId = model.ContentId;
-                        contentlist.AdvertiseContentId = model.AdvertiseContentId;
-                        contentlist.CategoryId = model.CategoryId;
-                        contentlist.SubCategoryId = model.SubCategoryId;
-                        contentlist.Position = model.Position;
-                        contentlist.UpdatedBy = model.UpdatedBy;
-                        contentlist.UpdatedDate = DateTime.Now;
-                        contentlist.IsDeleted = false;
-                        context.AdvContentMappings.Update(contentlist);
+                        AdvContentMapping contentEntity = new AdvContentMapping();
+                        contentEntity.AdvContentMapId = model.AdvContentMapId;
+                        contentEntity.ContentId = model.ContentId;
+                        contentEntity.AdvertiseContentId = model.AdvertiseContentId;
+                        contentEntity.CategoryId = model.CategoryId;
+                        contentEntity.SubCategoryId = model.SubCategoryId;
+                        contentEntity.Position = model.Position;
+                        contentEntity.CreatedBy = model.CreatedBy;
+                        contentEntity.CreatedDate = DateTime.Now;
+                        contentEntity.UpdatedDate = DateTime.Now;
+                        contentEntity.IsDeleted = false;
+                        context.AdvContentMappings.Add(contentEntity);
                         context.SaveChanges();
-                        message = GlobalConstants.AdvContentMappingUpdateSuccessfully;
+                        transaction.Commit();
+                        message = GlobalConstants.AdvContentMappingAddedSuccessfully;
                     }
+                    else
+                    {
+                        var contentlist = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == model.AdvContentMapId);
+                        if (contentlist != null)
+                        {
+                            contentlist.AdvContentMapId = model.AdvContentMapId;
+                            contentlist.ContentId = model.ContentId;
+                            contentlist.AdvertiseContentId = model.AdvertiseContentId;
+                            contentlist.CategoryId = model.CategoryId;
+                            contentlist.SubCategoryId = model.SubCategoryId;
+                            contentlist.Position = model.Position;
+                            contentlist.UpdatedBy = model.UpdatedBy;
+                            contentlist.UpdatedDate = DateTime.Now;
+                            contentlist.IsDeleted = false;
+                            context.AdvContentMappings.Update(contentlist);
+                            context.SaveChanges();
+                            transaction.Commit();
+                            message = GlobalConstants.AdvContentMappingUpdateSuccessfully;
+                        }
+                    }
+                    var userAuditLog = new UserAuditLogModel();
+                    userAuditLog.Action = " Add Advertise Content mapping Details";
+                    userAuditLog.Description = "Advertise Content mapping Details Added";
+                    userAuditLog.UserId = (int)model.CreatedBy;
+                    userAuditLog.CreatedBy = model.CreatedBy;
+                    userAuditLog.CreatedDate = DateTime.Now;
+                    _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }
-                var userAuditLog = new UserAuditLogModel();
-                userAuditLog.Action = " Add Advertise Content mapping Details";
-                userAuditLog.Description = "Advertise Content mapping Details Added";
-                userAuditLog.UserId = (int)model.CreatedBy;
-                userAuditLog.CreatedBy = model.CreatedBy;
-                userAuditLog.CreatedDate = DateTime.Now;
-                _userAuditLogService.AddUserAuditLog(userAuditLog);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                message = ex.Message;
-                return message;
+
+                catch (Exception ex)
+                {
+                    int? userIdForLog;
+                    if (model.UpdatedBy != 0)
+                    {
+                        userIdForLog = model.UpdatedBy;
+                    }
+                    else
+                    {
+                        userIdForLog = model.CreatedBy;
+                    }
+                    transaction.Rollback();               
+                    var errorMessage = _logService.SaveErrorLogs(new LogEntry
+                    {
+                        LogType = "Error",
+                        StackTrace = ex.StackTrace,
+                        AdditionalInformation = ex.Message,
+                        CreatedDate = DateTime.Now,
+                        LogSource = "Add/EditAdvContentMapping",
+                        UserId = userIdForLog,
+                        LogMessage = "Exception occurred in AddAdvContentMapping method"
+                    });
+                    return "Something went wrong!";
+                }
             }
             return message;
         }
-
 
 
         /// <summary>
@@ -118,18 +142,24 @@ namespace IM10.BAL.Implementaion
         public string DeleteAdvContentMapping(long advcontentmapId, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
-            var contentEntity = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == advcontentmapId);
-            if (contentEntity != null)
+            var advtcontentEntity = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == advcontentmapId);
+            if (advtcontentEntity != null)
             {
-                contentEntity.IsDeleted = true;
+                if (advtcontentEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Adv content mapping already deleted.";
+                    return null;
+                }
+                advtcontentEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.AdvContentMappingDeleteSuccessfully;
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Advertise Content Details";
             userAuditLog.Description = "Advertise Content Details Deleted";
-            userAuditLog.UserId = (int)contentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = contentEntity.UpdatedBy;
+            userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
+            userAuditLog.UpdatedBy = advtcontentEntity.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
@@ -182,6 +212,12 @@ namespace IM10.BAL.Implementaion
 
         }
 
+
+        /// <summary>
+        /// Method is used to get AdvContentMapping by AdvcontentmapId
+        /// </summary>
+        /// <param name="AdvcontentmapId"></param>
+        /// <returns></returns>
         public AdvContentMappingModel1 GetAdvContentMappingById(long AdvcontentmapId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
@@ -238,7 +274,6 @@ namespace IM10.BAL.Implementaion
                 UpdatedDate = DateTime.Now,
                 UpdatedBy = contentEntity.UpdatedBy,
             };
-
         }
 
     }

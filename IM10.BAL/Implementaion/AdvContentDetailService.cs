@@ -64,7 +64,6 @@ namespace IM10.BAL.Implementaion
                 contentDetail.Approved = null;
                 contentDetail.CreatedBy = model.CreatedBy;
                 contentDetail.CreatedDate = DateTime.Now;
-                contentDetail.UpdatedDate= DateTime.Now;
                 contentDetail.FinalPrice = model.FinalPrice;
                 contentDetail.IsDeleted = false;
                 context.AdvContentDetails.Add(contentDetail);
@@ -153,10 +152,16 @@ namespace IM10.BAL.Implementaion
         public string DeleteAdvContentDetail(long AdvertiseContentId, ref ErrorResponseModel errorResponseModel)
         {
             string Message = "";
-            var contentEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == AdvertiseContentId);
-            if (contentEntity != null)
+            var advtcontentEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == AdvertiseContentId);
+            if (advtcontentEntity != null)
             {
-                contentEntity.IsDeleted = true;
+                if (advtcontentEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Advt content details already deleted.";
+                    return null;
+                }
+                advtcontentEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.AdvContentDetailDeleteMessage;
 
@@ -164,8 +169,8 @@ namespace IM10.BAL.Implementaion
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Advertise Content Details";
             userAuditLog.Description = "Advertise Content Details Deleted";
-            userAuditLog.UserId = (int)contentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = contentEntity.UpdatedBy;
+            userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
+            userAuditLog.UpdatedBy = advtcontentEntity.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

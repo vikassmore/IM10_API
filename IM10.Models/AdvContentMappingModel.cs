@@ -20,15 +20,12 @@ namespace IM10.Models
 
         public int? Position { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
 
         public int? CreatedBy { get; set; }
 
-        public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
 
-        public bool IsDeleted { get; set; }
 
     }
 
@@ -59,10 +56,5 @@ namespace IM10.Models
 
         public int? UpdatedBy { get; set; }
 
-        public bool IsDeleted { get; set; }
-
     }
-
-  
-
 }

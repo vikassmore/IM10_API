@@ -149,6 +149,12 @@ namespace IM10.BAL.Implementaion
                 var commentEntity = context.Comments.FirstOrDefault(x => x.CommentId == commentId);
                 if (commentEntity != null)
                 {
+                    if (commentEntity.IsDeleted == true)
+                    {
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        errorResponseModel.Message = "Comment reply already deleted.";
+                        return null;
+                    }
                     commentEntity.IsDeleted = true;
                     context.SaveChanges();
                     var commentReplyEntity = context.Comments.Where(x => x.ParentCommentId == commentEntity.CommentId).ToList();

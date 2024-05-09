@@ -108,6 +108,12 @@ namespace IM10.BAL.Implementaion
             var endorsmentEntity = context.EndorsmentDetails.FirstOrDefault(x => x.EndorsmentId == endorsmentId);
             if (endorsmentEntity != null)
             {
+                if (endorsmentEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Endorsment Details already deleted.";
+                    return null;
+                }
                 endorsmentEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.EndorsmentDetailsDeleteMessage;

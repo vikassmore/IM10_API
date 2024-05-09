@@ -71,25 +71,16 @@ namespace IM10.BAL.Implementaion
             
             if (user != null)
             {
-                var existingUser = context.UserMasters.Where(x => x.MobileNo == loginModel
-                  .MobileNo  && x.IsDeleted == false).FirstOrDefault();
+                if (user.FirstName != loginModel.FirstName || user.LastName != loginModel.LastName || user.CountryCode != loginModel.CountryCode || user.StateId != loginModel.StateId || user.CityId != loginModel.CityId)
                 {
-                    context.Entry(existingUser).Property(x => x.FirstName).IsModified = true;
-                    context.Entry(existingUser).Property(x => x.LastName).IsModified = true;
-                    context.Entry(existingUser).Property(x => x.CountryCode).IsModified = true;
-                    context.Entry(existingUser).Property(x => x.StateId).IsModified = true;
-                    context.Entry(existingUser).Property(x => x.CityId).IsModified = true;
-
-
                     // Update values
-                    existingUser.FirstName = loginModel.FirstName;
-                    existingUser.LastName= loginModel.LastName;
-                    existingUser.CountryCode = loginModel.CountryCode;
-                    existingUser.StateId = loginModel.StateId;
-                    existingUser.CityId = loginModel.CityId;
+                    user.FirstName = loginModel.FirstName;
+                    user.LastName = loginModel.LastName;
+                    user.CountryCode = loginModel.CountryCode;
+                    user.StateId = loginModel.StateId;
+                    user.CityId = loginModel.CityId;
                     context.SaveChanges();
                 }
-
                 var fcmexstingUser = context.Fcmnotifications.Where(x => x.DeviceToken == loginModel.DeviceToken && x.PlayerId == loginModel.PlayerId && x.IsDeleted==false).FirstOrDefault();
                 if (fcmexstingUser != null)
                 {
@@ -249,7 +240,7 @@ namespace IM10.BAL.Implementaion
                 var otpEntity = context.Otpautherizations.FirstOrDefault(x => x.Otp == otp && x.UserId == User.UserId && x.IsActive == true);
                 if (otpEntity != null)
                 {
-                    var isValidOtp = DateTime.UtcNow.Subtract(otpEntity.OtpvalidDateTime.Value).TotalMinutes <= 2;
+                    var isValidOtp = DateTime.Now.Subtract(otpEntity.OtpvalidDateTime.Value).TotalMinutes <= 2;
                     if (isValidOtp)
                     {
                         return new AuthModel
@@ -283,6 +274,9 @@ namespace IM10.BAL.Implementaion
                 return null;
             }
         }
+
+
+
         /// <summary>
         /// Get Mobile User Profile
         /// </summary>
@@ -334,7 +328,6 @@ namespace IM10.BAL.Implementaion
             var existingUser = context.UserDeviceMappings.Where(x => x.UserId == userId && x.DeviceToken==deviceToken).FirstOrDefault();
             if (existingUser != null)
             {
-                context.Entry(existingUser).Property(x => x.IsDeleted).IsModified = true;
                 // Update values
                 existingUser.IsDeleted = true;
                 existingUser.UpdatedDate= DateTime.Now;
@@ -380,7 +373,7 @@ namespace IM10.BAL.Implementaion
 
                 if (!string.IsNullOrEmpty(user.MobileNo))
                 {
-                    _emailSender.SendSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
+                  await _emailSender.SendSmsAsync(user.MobileNo, user.FirstName + " " + user.LastName, otp);
                 }
                 return new ResendOtp
                 {
@@ -415,7 +408,6 @@ namespace IM10.BAL.Implementaion
             {
                 throw new Exception("Country with the provided country code was not found.");
             }
-
         }
     }
 }

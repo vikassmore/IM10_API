@@ -152,6 +152,12 @@ namespace IM10.BAL.Implementaion
             var listingEntity = context.ListingDetails.FirstOrDefault(x => x.ListingId == listingId);
             if (listingEntity != null)
             {
+                if (listingEntity.IsDeleted == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = "Listing details already deleted.";
+                    return null;
+                }
                 listingEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.ListingDetailDeleteSuccessfully;

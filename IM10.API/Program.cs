@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +15,7 @@ namespace IM10.API
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -23,7 +25,10 @@ namespace IM10.API
                     webBuilder.UseIISIntegration();
                     webBuilder.UseIIS();
                     webBuilder.UseStartup<Startup>();
-                    
-                });
+                    webBuilder.ConfigureKestrel((context, options) =>
+                    {
+                        options.AddServerHeader = false;                       
+                    });
+                });       
     }
 }

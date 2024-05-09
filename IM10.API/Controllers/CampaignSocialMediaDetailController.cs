@@ -20,6 +20,8 @@ namespace IM10.API.Controllers
     /// 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class CampaignSocialMediaDetailController : BaseAPIController
     {
         ICampaignSocialMediaDetailService service;
@@ -46,6 +48,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CampaignSocialMediaDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetCampaignSocialMediaDetailById(long marketingcampaignId)
         {
@@ -83,6 +86,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(CampaignSocialMediaDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddCampaignSocialMediaDetail(IFormCollection formdata)
         {

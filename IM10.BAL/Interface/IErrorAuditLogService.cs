@@ -1,4 +1,5 @@
-﻿using IM10.Models;
+﻿using IM10.Entity.DataModels;
+using IM10.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +34,15 @@ namespace IM10.BAL.Interface
         /// <summary>
         /// Method is used to restore all ErrorAuditLog
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="">logId</param>
         /// <returns></returns>
         string ErrorAuditLogRestore(long logId,ref ErrorResponseModel errorResponseModel);
 
-
+        /// <summary>
+        /// Method is used to save all ErrorAuditLog
+        /// </summary>
+        /// <param name="">logEntry</param>
+        /// <returns></returns>
+        string SaveErrorLogs(LogEntry logEntry);
     }
 }

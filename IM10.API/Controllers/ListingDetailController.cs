@@ -38,8 +38,6 @@ namespace IM10.API.Controllers
             iwebhostingEnvironment = _iwebhostingEnvironment;
         }
 
-
-
         /// <summary>
         /// To get ListingDetail by listingId 
         /// </summary>
@@ -49,6 +47,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetListingDetailById(long listingId)
         {
@@ -83,6 +82,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingDetailModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult AddListingDetail(IFormCollection formdata)
         {
@@ -208,6 +208,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult DeleteListingDetail(long listingId)
         {
@@ -238,6 +239,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(ListingDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetListingDetailByplayerId(long playerId)
         {

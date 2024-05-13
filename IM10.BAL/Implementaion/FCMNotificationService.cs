@@ -44,7 +44,7 @@ namespace IM10.BAL.Implementaion
                 fcmnotification.PlayerId = model.PlayerId;
                 fcmnotification.UserId= model.UserId;
                 fcmnotification.CreatedDate=DateTime.Now;
-                fcmnotification.CreatedBy=model.CreatedBy;
+                fcmnotification.CreatedBy= (int?)model.UserId;
                 fcmnotification.UpdatedDate=DateTime.Now;
                 fcmnotification.IsDeleted = false;
                 context.Fcmnotifications.Add(fcmnotification);

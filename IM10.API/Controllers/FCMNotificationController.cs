@@ -9,7 +9,6 @@ namespace IM10.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
 
     public class FCMNotificationController : BaseAPIController
     {

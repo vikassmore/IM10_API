@@ -125,7 +125,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddContentDetail")]
-        [Authorize]
+        [Authorize(Roles = "Content Admin")]
         [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(ContentDetailModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
@@ -135,6 +135,7 @@ namespace IM10.API.Controllers
         public IActionResult AddContentDetail(IFormCollection formdata)
         {
             ContentDetailModel1 model = new ContentDetailModel1();
+            Console.WriteLine(formdata);
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
             {
                 var userId = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst(System.Security.Claims.ClaimTypes.Name).Value;
@@ -245,7 +246,14 @@ namespace IM10.API.Controllers
 
                 if (!string.IsNullOrEmpty(productModel))
                 {
-                    return Ok(productModel);
+                    if (productModel != "Player Id does not exist")
+                    {
+                        return Ok(productModel);
+                    }
+                    else if (productModel == "Player Id does not exist")
+                    {
+                        return NotFound(productModel);
+                    }
                 }
 
                 return ReturnErrorResponse(errorMessage);
@@ -286,7 +294,7 @@ namespace IM10.API.Controllers
         /// <param name="contentModel"></param>
         /// <returns></returns>
         [HttpPut("EditContentDetail")]
-        [Authorize]
+        [Authorize(Roles = "Content Admin")]
         [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(ContentDetailModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
@@ -407,7 +415,14 @@ namespace IM10.API.Controllers
 
                 if (!string.IsNullOrEmpty(productModel))
                 {
-                    return Ok(productModel);
+                    if (productModel != "Player Id does not exist")
+                    {
+                        return Ok(productModel);
+                    }
+                    else if (productModel == "Player Id does not exist")
+                    {
+                        return NotFound(productModel);
+                    }
                 }
 
                 return ReturnErrorResponse(errorMessage);
@@ -472,6 +487,7 @@ namespace IM10.API.Controllers
         /// <param name="contentId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteContentDetail")]
+        [Authorize(Roles = "Content Admin")]
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -484,9 +500,13 @@ namespace IM10.API.Controllers
             {
                 var contentModel = contentDetailService.DeleteContentDetail(contentId, ref errorResponseModel);
 
-                if (contentModel != null)
+                if (contentModel != null && contentModel != "Cannot delete approved content")
                 {
                     return Ok(contentModel);
+                }
+                else if(contentModel== "Cannot delete approved content")
+                {
+                    return BadRequest(contentModel);
                 }
                 return ReturnErrorResponse(errorResponseModel);
             }

@@ -70,6 +70,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddEndorsmentDetail")]
+        [Authorize(Roles = "Endorsement Manager Admin")]
         [ProducesResponseType(typeof(EndorsmentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -95,9 +96,13 @@ namespace IM10.API.Controllers
                 var errorMessage = new ErrorResponseModel();
                 var endorsmentModel = service.AddEndorsmentDetail(model, ref errorMessage);
 
-                if (endorsmentModel != "")
+                if (endorsmentModel != "" && endorsmentModel != null && endorsmentModel != "Player Id does not exist")
                 {
                     return Ok(endorsmentModel);
+                }
+                else if (endorsmentModel != null && endorsmentModel== "Player Id does not exist")
+                {
+                    return NotFound(endorsmentModel);
                 }
                 return ReturnErrorResponse(errorMessage);
 
@@ -116,6 +121,7 @@ namespace IM10.API.Controllers
         /// <param name="endorsmentId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteEndorsmentDetail")]
+        [Authorize(Roles = "Endorsement Manager Admin")]
         [ProducesResponseType(typeof(EndorsmentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

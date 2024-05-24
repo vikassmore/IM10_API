@@ -49,14 +49,7 @@ namespace IM10.Models
 
         public DateTime? EndDate { get; set; }
 
-        public string? FinalPrice { get; set; }
-
-        public int? CategoryId { get; set; }
-        public string CategoryName { get; set; } = null!;
-
-        public int? SubCategoryId { get; set; }
-        public string SubcategoryName { get; set; } = null!;
-
+        public string? FinalPrice { get; set; }       
         public int? Position { get; set; }
         public DateTime? CreatedDate { get; set; }
 
@@ -108,10 +101,6 @@ namespace IM10.Models
         public DateTime? EndDate { get; set; }
 
         public string? FinalPrice { get; set; }
-
-        public int CategoryId { get; set; }
-
-        public int SubCategoryId { get; set; }
 
         public int? Position { get; set; }
 

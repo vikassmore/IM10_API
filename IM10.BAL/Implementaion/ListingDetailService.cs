@@ -45,95 +45,106 @@ namespace IM10.BAL.Implementaion
             string message = "";
             if (model.ListingId == 0)
             {
-                ListingDetail detail = new ListingDetail();
-                detail.ListingId = model.ListingId;
-                detail.PlayerId = model.PlayerId;
-                detail.CompanyName = model.CompanyName;
-                detail.Description = model.Description;
-                detail.ContactPersonName = model.ContactPersonName;
-                detail.ContactPersonEmailId = model.ContactPersonEmailId;
-                detail.ContactPersonMobile = model.ContactPersonMobile;
-                detail.CompanyEmailId = model.CompanyEmailId;
-                detail.CompanyMobile = model.CompanyMobile;
-                detail.CompanyPhone = model.CompanyPhone;
-                detail.CompanyWebSite = model.CompanyWebSite;
-                detail.CompanyLogoFileName = model.CompanyLogoFileName;
-                detail.CompanyLogoFilePath = model.CompanyLogoFilePath;
-                detail.NationId = model.NationId;
-                detail.StateId = model.StateId;
-                detail.CityId = model.CityId;
-                detail.IsGlobal = model.IsGlobal;
-                detail.StartDate = model.StartDate;
-                detail.EndDate = model.EndDate;
-                detail.FinalPrice = model.FinalPrice;
-                if (model.CategoryId != 0)
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                if (existingPlayerEntity != null)
                 {
-                    detail.CategoryId = model.CategoryId;
+                    ListingDetail detail = new ListingDetail();
+                    detail.ListingId = model.ListingId;
+                    detail.PlayerId = model.PlayerId;
+                    detail.CompanyName = model.CompanyName;
+                    detail.Description = model.Description;
+                    detail.ContactPersonName = model.ContactPersonName;
+                    detail.ContactPersonEmailId = model.ContactPersonEmailId;
+                    detail.ContactPersonMobile = model.ContactPersonMobile;
+                    detail.CompanyEmailId = model.CompanyEmailId;
+                    detail.CompanyMobile = model.CompanyMobile;
+                    detail.CompanyPhone = model.CompanyPhone;
+                    detail.CompanyWebSite = model.CompanyWebSite;
+                    detail.CompanyLogoFileName = model.CompanyLogoFileName;
+                    detail.CompanyLogoFilePath = model.CompanyLogoFilePath;
+                    detail.NationId = model.NationId;
+                    detail.StateId = model.StateId;
+                    detail.CityId = model.CityId;
+                    detail.IsGlobal = model.IsGlobal;
+                    detail.StartDate = model.StartDate;
+                    detail.EndDate = model.EndDate;
+                    detail.FinalPrice = model.FinalPrice;
+                    detail.Position = model.Position;
+                    detail.CreatedBy = model.CreatedBy;
+                    detail.CreatedDate = DateTime.Now;
+                    detail.UpdatedDate = DateTime.Now;
+                    context.ListingDetails.Add(detail);
+                    context.SaveChanges();
+                    message = GlobalConstants.ListingDetailAddedSuccessfully;
+                    var userAuditLog = new UserAuditLogModel();
+                    userAuditLog.Action = " Add Listing Details";
+                    userAuditLog.Description = "Listing Details Added";
+                    userAuditLog.UserId = (int)model.CreatedBy;
+                    userAuditLog.CreatedBy = model.CreatedBy;
+                    userAuditLog.CreatedDate = DateTime.Now;
+                    _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }
-                detail.SubCategoryId = model.SubCategoryId;
-                detail.Position = model.Position;
-                detail.CreatedBy = model.CreatedBy;
-                detail.CreatedDate = DateTime.Now;
-                detail.UpdatedDate = DateTime.Now;
-                context.ListingDetails.Add(detail);
-                context.SaveChanges();
-                message = GlobalConstants.ListingDetailAddedSuccessfully;
-                var userAuditLog = new UserAuditLogModel();
-                userAuditLog.Action = " Add Listing Details";
-                userAuditLog.Description = "Listing Details Added";
-                userAuditLog.UserId = (int)model.CreatedBy;
-                userAuditLog.CreatedBy = model.CreatedBy;
-                userAuditLog.CreatedDate = DateTime.Now;
-                _userAuditLogService.AddUserAuditLog(userAuditLog);
+                else
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "Player Id does not exist";
+                }
             }
             else
             {
                 var listEntity = context.ListingDetails.FirstOrDefault(x => x.ListingId == model.ListingId);
                 if (listEntity != null)
                 {
-                    listEntity.ListingId = model.ListingId;
-                    listEntity.PlayerId = model.PlayerId;
-                    listEntity.CompanyName = model.CompanyName;
-                    listEntity.Description = model.Description;
-                    listEntity.ContactPersonName = model.ContactPersonName;
-                    listEntity.ContactPersonEmailId = model.ContactPersonEmailId;
-                    listEntity.ContactPersonMobile = model.ContactPersonMobile;
-                    listEntity.CompanyEmailId = model.CompanyEmailId;
-                    listEntity.CompanyMobile = model.CompanyMobile;
-                    listEntity.CompanyPhone = model.CompanyPhone;
-                    listEntity.CompanyWebSite = model.CompanyWebSite;
-                    if (model.CompanyLogoFileName != null)
+                    var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                    if (existingPlayerEntity != null)
                     {
-                        listEntity.CompanyLogoFileName = model.CompanyLogoFileName;
+                        listEntity.ListingId = model.ListingId;
+                        listEntity.PlayerId = model.PlayerId;
+                        listEntity.CompanyName = model.CompanyName;
+                        listEntity.Description = model.Description;
+                        listEntity.ContactPersonName = model.ContactPersonName;
+                        listEntity.ContactPersonEmailId = model.ContactPersonEmailId;
+                        listEntity.ContactPersonMobile = model.ContactPersonMobile;
+                        listEntity.CompanyEmailId = model.CompanyEmailId;
+                        listEntity.CompanyMobile = model.CompanyMobile;
+                        listEntity.CompanyPhone = model.CompanyPhone;
+                        listEntity.CompanyWebSite = model.CompanyWebSite;
+                        if (model.CompanyLogoFileName != null)
+                        {
+                            listEntity.CompanyLogoFileName = model.CompanyLogoFileName;
+                        }
+                        if (model.CompanyLogoFilePath != null)
+                        {
+                            listEntity.CompanyLogoFilePath = model.CompanyLogoFilePath;
+                        }
+                        //listEntity.CompanyLogoFileName = model.CompanyLogoFileName;
+                        //listEntity.CompanyLogoFilePath = model.CompanyLogoFilePath;
+                        listEntity.NationId = model.NationId;
+                        listEntity.StateId = model.StateId;
+                        listEntity.CityId = model.CityId;
+                        listEntity.IsGlobal = model.IsGlobal;
+                        listEntity.StartDate = model.StartDate;
+                        listEntity.EndDate = model.EndDate;
+                        listEntity.FinalPrice = model.FinalPrice;
+                        listEntity.Position = model.Position;
+                        listEntity.UpdatedBy = model.UpdatedBy;
+                        listEntity.UpdatedDate = DateTime.Now;
+                        context.ListingDetails.Update(listEntity);
+                        context.SaveChanges();
+                        message = GlobalConstants.ListingDetailUpdateSuccessfully;
+                        var userAuditLog = new UserAuditLogModel();
+                        userAuditLog.Action = " Update Listing Details";
+                        userAuditLog.Description = "Listing Details Updated";
+                        userAuditLog.UserId = (int)model.UpdatedBy;
+                        userAuditLog.UpdatedBy = model.UpdatedBy;
+                        userAuditLog.UpdatedDate = DateTime.Now;
+                        _userAuditLogService.AddUserAuditLog(userAuditLog);
                     }
-                    if (model.CompanyLogoFilePath != null)
+                    else
                     {
-                        listEntity.CompanyLogoFilePath = model.CompanyLogoFilePath;
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        message = "Player Id does not exist";
                     }
-                    //listEntity.CompanyLogoFileName = model.CompanyLogoFileName;
-                    //listEntity.CompanyLogoFilePath = model.CompanyLogoFilePath;
-                    listEntity.NationId = model.NationId;
-                    listEntity.StateId = model.StateId;
-                    listEntity.CityId = model.CityId;
-                    listEntity.IsGlobal = model.IsGlobal;
-                    listEntity.StartDate = model.StartDate;
-                    listEntity.EndDate = model.EndDate;
-                    listEntity.FinalPrice = model.FinalPrice;
-                    listEntity.CategoryId = model.CategoryId;
-                    listEntity.SubCategoryId = model.SubCategoryId;
-                    listEntity.Position = model.Position;
-                    listEntity.UpdatedBy = model.UpdatedBy;
-                    listEntity.UpdatedDate = DateTime.Now;
-                    context.ListingDetails.Update(listEntity);
-                    context.SaveChanges();
-                    message = GlobalConstants.ListingDetailUpdateSuccessfully;
-                    var userAuditLog = new UserAuditLogModel();
-                    userAuditLog.Action = " Update Listing Details";
-                    userAuditLog.Description = "Listing Details Updated";
-                    userAuditLog.UserId = (int)model.CreatedBy;
-                    userAuditLog.CreatedBy = model.CreatedBy;
-                    userAuditLog.CreatedDate = DateTime.Now;
-                    _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }
             }
             return message;
@@ -148,6 +159,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteListingDetail(long listingId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var listingEntity = context.ListingDetails.FirstOrDefault(x => x.ListingId == listingId);
             if (listingEntity != null)
@@ -167,7 +179,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Listing Details";
             userAuditLog.Description = "Listing Details Deleted";
             userAuditLog.UserId = (int)listingEntity.CreatedBy;
-            userAuditLog.UpdatedBy = listingEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = listingEntity.CreatedBy;
+            userAuditLog.UpdatedBy = listingEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
@@ -187,8 +201,6 @@ namespace IM10.BAL.Implementaion
                               nation in context.Countries on list.NationId equals nation.CountryId
                               join state in context.States on list.StateId equals state.StateId
                               join city in context.Cities on list.CityId equals city.CityId
-                              join category in context.Categories on list.CategoryId equals category.CategoryId
-                              join subcategory in context.SubCategories on list.SubCategoryId equals subcategory.SubCategoryId
                               where list.IsDeleted == false && list.ListingId == listingId
                               select new ListingDetailModel
                               {
@@ -209,10 +221,6 @@ namespace IM10.BAL.Implementaion
                                   StateName = state.Name,
                                   CityId = list.CityId,
                                   CityName = city.Name,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = category.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subcategory.Name,
                                   StartDate = list.StartDate,
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),
@@ -251,10 +259,6 @@ namespace IM10.BAL.Implementaion
                 StateName = listEntity.StateName,
                 CityId = listEntity.CityId,
                 CityName = listEntity.CityName,
-                CategoryId = listEntity.CategoryId,
-                CategoryName = listEntity.CategoryName,
-                SubCategoryId = listEntity.SubCategoryId,
-                SubcategoryName = listEntity.SubcategoryName,
                 StartDate = listEntity.StartDate,
                 EndDate = listEntity.EndDate,
                 FinalPrice = listEntity.FinalPrice,
@@ -274,9 +278,8 @@ namespace IM10.BAL.Implementaion
         public List<ListingDetailModel> GetListingDetailByplayerId(long playerId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
+
             var listEntity = (from list in context.ListingDetails
-                              join cat in context.Categories on list.CategoryId equals cat.CategoryId
-                              join subCat in context.SubCategories on list.SubCategoryId equals subCat.SubCategoryId
                               join user in context.UserMasters on list.CreatedBy equals (int)user.UserId
                               where list.IsDeleted == false && list.PlayerId == playerId
                               orderby list.UpdatedDate descending
@@ -288,15 +291,13 @@ namespace IM10.BAL.Implementaion
                                   RoleId = user.RoleId,
                                   CompanyName = list.CompanyName,
                                   IsGlobal = (list.IsGlobal == null) ? false : list.IsGlobal,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = cat.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subCat.Name,
                                   StartDate = list.StartDate,
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),
                                   Position = (list.Position == null) ? null : list.Position,
                                   ContactPersonName = list.ContactPersonName,
+                                  CompanyLogoFileName= list.CompanyLogoFileName,
+                                  CompanyLogoFilePath= _configuration.HostName + list.CompanyLogoFilePath,
                               }).ToList();
 
             if (listEntity.Count == 0)
@@ -304,7 +305,6 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-
             return listEntity.ToList();           
         }
     }

@@ -118,7 +118,8 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddPlayerDetail")]
-        [Authorize]
+        [Authorize(Roles = "IM10 Sales Admin")]
+        [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -246,7 +247,8 @@ namespace IM10.API.Controllers
         /// <param name="playerModel"></param>
         /// <returns></returns>
         [HttpPut("EditPlayerDetail")]
-        [Authorize]
+        [Authorize(Roles = "IM10 Sales Admin")]
+        [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -372,6 +374,7 @@ namespace IM10.API.Controllers
         /// <param name="playerId"></param>
         /// <returns></returns>
         [HttpDelete("DeletePlayerDetail")]
+        [Authorize(Roles = "IM10 Sales Admin")]
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -402,7 +405,8 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddPlayerData")]
-        [Authorize]
+        [Authorize(Roles = "IM10 Sales Admin")]
+        [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(PlayerDataModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -576,6 +580,7 @@ namespace IM10.API.Controllers
         /// <param name="playerId"></param>
         /// <returns></returns>
         [HttpDelete("DeletePlayerData")]
+        [Authorize(Roles = "IM10 Sales Admin")]
         [ProducesResponseType(typeof(PlayerDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

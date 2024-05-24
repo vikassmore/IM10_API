@@ -141,7 +141,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddUser")]
-        [Authorize]
+        [Authorize(Roles = "Super Admin")]
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -185,7 +185,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("EditUser")]
-        [Authorize]
+        [Authorize(Roles = "Super Admin")]
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -226,7 +226,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpDelete("DeleteUser")]
-        [Authorize]
+        [Authorize(Roles = "Super Admin")]
         [ProducesResponseType(typeof(UserDeleteModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

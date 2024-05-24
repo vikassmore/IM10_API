@@ -78,8 +78,6 @@ namespace IM10.BAL.Implementaion
                                    user.LastName,
                                    user.EmailId
                                }).ToList();
-
-
             if (errorEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;

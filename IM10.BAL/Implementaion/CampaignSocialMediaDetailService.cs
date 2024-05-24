@@ -77,9 +77,11 @@ namespace IM10.BAL.Implementaion
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add Campaign Social Media Details";
             userAuditLog.Description = "Campaign Social Media Added";
-            userAuditLog.UserId = (int)model.CreatedBy;
-            userAuditLog.CreatedBy = model.CreatedBy;
+            userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+            userAuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
             userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.UpdatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+            userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return message;
         }

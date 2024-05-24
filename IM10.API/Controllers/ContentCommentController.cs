@@ -20,7 +20,7 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
 
     public class ContentCommentController : BaseAPIController
     {
@@ -76,7 +76,7 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpPost("AddContentCommentReply")]
-        [Authorize]
+       // [Authorize(Roles = "Player Representative Admin")]
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -152,6 +152,7 @@ namespace IM10.API.Controllers
         /// <param name="commentId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteCommentReply")]
+        [Authorize(Roles = "Player Representative Admin")]
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

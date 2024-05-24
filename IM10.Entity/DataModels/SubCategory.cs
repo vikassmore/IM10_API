@@ -28,6 +28,4 @@ public partial class SubCategory
     public virtual Category Category { get; set; } = null!;
 
     public virtual ICollection<ContentDetail> ContentDetails { get; } = new List<ContentDetail>();
-
-    public virtual ICollection<ListingDetail> ListingDetails { get; } = new List<ListingDetail>();
 }

@@ -78,9 +78,9 @@ namespace IM10.BAL.Implementaion
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Update Endorsment Type ";
                     userAuditLog.Description = "Endorsment Type Updated";
-                    userAuditLog.UserId = (int)model.CreatedBy;
-                    userAuditLog.CreatedBy = model.CreatedBy;
-                    userAuditLog.CreatedDate = DateTime.Now;
+                    userAuditLog.UserId = (int)model.UpdatedBy;
+                    userAuditLog.UpdatedBy = model.UpdatedBy;
+                    userAuditLog.UpdatedDate = DateTime.Now;
                     _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }
             }
@@ -95,6 +95,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteEndorsmentType(long endorsmenttypeId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var endorsmentEntity = context.EndorsmentTypes.FirstOrDefault(x => x.EndorsmentTypeId == endorsmenttypeId);
             if (endorsmentEntity != null)
@@ -114,7 +115,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Endorsment Type";
             userAuditLog.Description = " Endorsment Type Deleted";
             userAuditLog.UserId = (int)endorsmentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = endorsmentEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = endorsmentEntity.CreatedBy;
+            userAuditLog.UpdatedBy = endorsmentEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

@@ -39,49 +39,68 @@ namespace IM10.BAL.Implementaion
         public string AddCampaignDetail(CampaignDetailModel model, ref ErrorResponseModel errorResponseModel)
         {
             string message = "";
-
             if (model.MarketingCampaignId == 0)
             {
-                var campaignEntity = new MarketingCampaign();
-                campaignEntity.MarketingCampaignId = model.MarketingCampaignId;
-                campaignEntity.Title = model.Title;
-                campaignEntity.Description = model.Description;
-                campaignEntity.PlayerId = model.PlayerId;
-                campaignEntity.ContentId = model.ContentId;
-                campaignEntity.ContentTypeId = model.ContentTypeId;
-                campaignEntity.CreatedDate = DateTime.Now;
-                campaignEntity.CreatedBy = model.CreatedBy;
-                campaignEntity.UpdatedDate= DateTime.Now;
-                campaignEntity.IsDeleted = false;
-                context.MarketingCampaigns.Add(campaignEntity);
-                context.SaveChanges();
-                message = GlobalConstants.CampaignDetailsSaveMessage;
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                if (existingPlayerEntity != null)
+                {
+                    var campaignEntity = new MarketingCampaign();
+                    campaignEntity.MarketingCampaignId = model.MarketingCampaignId;
+                    campaignEntity.Title = model.Title;
+                    campaignEntity.Description = model.Description;
+                    campaignEntity.PlayerId = model.PlayerId;
+                    campaignEntity.ContentId = model.ContentId;
+                    campaignEntity.ContentTypeId = model.ContentTypeId;
+                    campaignEntity.CreatedDate = DateTime.Now;
+                    campaignEntity.CreatedBy = model.CreatedBy;
+                    campaignEntity.UpdatedDate = DateTime.Now;
+                    campaignEntity.IsDeleted = false;
+                    context.MarketingCampaigns.Add(campaignEntity);
+                    context.SaveChanges();
+                    message = GlobalConstants.CampaignDetailsSaveMessage;
+                }
+                else
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "Player Id does not exist";
+                }
             }
             else
             {
                 var detailEntity = context.MarketingCampaigns.FirstOrDefault(x => x.MarketingCampaignId == model.MarketingCampaignId);
                 if (detailEntity != null)
                 {
-                    detailEntity.MarketingCampaignId = model.MarketingCampaignId;
-                    detailEntity.Title = model.Title;
-                    detailEntity.Description = model.Description;
-                    detailEntity.PlayerId = model.PlayerId;
-                    detailEntity.ContentId = model.ContentId;
-                    detailEntity.ContentTypeId = model.ContentTypeId;
-                    detailEntity.UpdatedDate = DateTime.Now;
-                    detailEntity.UpdatedBy = model.UpdatedBy;
-                    detailEntity.IsDeleted = false;
-                    context.MarketingCampaigns.Update(detailEntity);
-                    context.SaveChanges();
-                    message = GlobalConstants.CampaignDetailsUpdateMessage;
+                    var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                    if (existingPlayerEntity != null)
+                    {
+                        detailEntity.MarketingCampaignId = model.MarketingCampaignId;
+                        detailEntity.Title = model.Title;
+                        detailEntity.Description = model.Description;
+                        detailEntity.PlayerId = model.PlayerId;
+                        detailEntity.ContentId = model.ContentId;
+                        detailEntity.ContentTypeId = model.ContentTypeId;
+                        detailEntity.UpdatedDate = DateTime.Now;
+                        detailEntity.UpdatedBy = model.UpdatedBy;
+                        detailEntity.IsDeleted = false;
+                        context.MarketingCampaigns.Update(detailEntity);
+                        context.SaveChanges();
+                        message = GlobalConstants.CampaignDetailsUpdateMessage;
+                    }
+                    else
+                    {
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        message = "Player Id does not exist";
+                    }
                 }
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add Campaign Details";
             userAuditLog.Description = "Campaign Details Added";
-            userAuditLog.UserId = (int)model.CreatedBy;
-            userAuditLog.CreatedBy = model.CreatedBy;
+            userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+            userAuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
             userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.UpdatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+            userAuditLog.UpdatedDate = DateTime.Now;
             _auditLogService.AddUserAuditLog(userAuditLog);
             return message;
 
@@ -95,10 +114,17 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteCampaignDetail(long marketingcampaignId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var campaignEntity = context.MarketingCampaigns.FirstOrDefault(x => x.MarketingCampaignId == marketingcampaignId);
             if (campaignEntity != null)
             {
+                var socialCampaign=context.CampaignDetails.FirstOrDefault(x=>x.MarketingCampaignId==campaignEntity.MarketingCampaignId);
+                if (socialCampaign != null)
+                {
+                    socialCampaign.IsDeleted = true;
+                    context.SaveChanges();
+                }
                 if (campaignEntity.IsDeleted == true)
                 {
                     errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -114,7 +140,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Campaign Details";
             userAuditLog.Description = "Campaign Details Deleted";
             userAuditLog.UserId = (int)campaignEntity.CreatedBy;
-            userAuditLog.UpdatedBy = campaignEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = campaignEntity.CreatedBy;
+            userAuditLog.UpdatedBy = campaignEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _auditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
@@ -155,26 +183,8 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
-            }
-            campaignEntity.ForEach(item =>
-            {
-                campaignList.Add(new CampaignDetailModel
-                {
-                    MarketingCampaignId = item.MarketingCampaignId,
-                    Title= item.Title,
-                    Description= item.Description,
-                    PlayerId= item.PlayerId,
-                    ContentId= item.ContentId,
-                    ContentTypeId= item.ContentTypeId,
-                    CreatedDate= item.CreatedDate,
-                    CreatedBy= item.CreatedBy,
-                    UpdatedDate= item.UpdatedDate,
-                    UpdatedBy= item.UpdatedBy,
-                    ContentTitle=item.ContentTitle, 
-                    ContentTypeName= item.ContentTypeName
-                });
-            });
-            return campaignList;
+            }          
+            return campaignEntity.ToList();
         }
 
 

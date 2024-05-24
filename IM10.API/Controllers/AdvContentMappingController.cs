@@ -8,19 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.VisualBasic;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IM10.API.Controllers
 {
     /// <summary>
-    /// APIs for advcontentmapping entity 
+    /// APIs for advtcontentmapping entity 
     /// </summary>
 
 
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-
     public class AdvContentMappingController : BaseAPIController
     {
         IAdvContentMappingService AdvContentMapping;
@@ -76,6 +77,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddAdvContentMapping")]
+        [Authorize(Roles = "Sales Person Admin")]
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 401)]
@@ -100,9 +102,13 @@ namespace IM10.API.Controllers
                 var errorMessage = new ErrorResponseModel();
                 var contentModel = AdvContentMapping.AddAdvContentMapping(model);
 
-                if (contentModel != null && contentModel != "Something went wrong!")
+                if (contentModel != null && contentModel != "Advertise Ads On already exist.")
                 {
-                  return Ok(contentModel);
+                    return Ok(contentModel);
+                }
+                else if (contentModel != null && contentModel == "Advertise Ads On already exist.")
+                {
+                    return Conflict(contentModel);
                 }
                 else
                 {
@@ -124,6 +130,7 @@ namespace IM10.API.Controllers
         /// <param name="advcontentmapId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteAdvContentMapping")]
+        [Authorize(Roles = "Sales Person Admin")]
         [ProducesResponseType(typeof(AdvContentMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

@@ -252,28 +252,37 @@ namespace IM10.BAL.Implementaion
             string message = "";
             if (model.ContentId == 0)
             {
-                var contentEntity = new ContentDetail();
-                contentEntity.ContentFileName = model.ContentFileName;
-                contentEntity.ContentFilePath = model.ContentFilePath;//contentfilepath;
-                contentEntity.ContentFileName1 = model.ContentFileName1;
-                contentEntity.ContentFilePath1 = model.ContentFilePath1;
-                contentEntity.Thumbnail1= model.Thumbnail3;
-                contentEntity.Title = model.Title;
-                contentEntity.Thumbnail = model.Thumbnail2;
-                contentEntity.Description = model.Description;
-                contentEntity.CreatedBy = model.CreatedBy;
-                contentEntity.CreatedDate = DateTime.Now;
-                contentEntity.CategoryId = model.CategoryId;
-                contentEntity.UpdatedDate = DateTime.Now;
-                contentEntity.SubCategoryId = model.SubCategoryId;
-                contentEntity.PlayerId = model.PlayerId;
-                contentEntity.ContentTypeId = model.ContentTypeId;
-                contentEntity.LanguageId = model.LanguageId;
-                contentEntity.Approved = null;
-                contentEntity.IsDeleted = false;
-                context.ContentDetails.Add(contentEntity);
-                context.SaveChanges();
-                message = GlobalConstants.ContentDetailAddSuccessfully;
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted==false);
+                if (existingPlayerEntity != null)
+                {
+                    var contentEntity = new ContentDetail();
+                    contentEntity.ContentFileName = model.ContentFileName;
+                    contentEntity.ContentFilePath = model.ContentFilePath;//contentfilepath;
+                    contentEntity.ContentFileName1 = model.ContentFileName1;
+                    contentEntity.ContentFilePath1 = model.ContentFilePath1;
+                    contentEntity.Thumbnail1 = model.Thumbnail3;
+                    contentEntity.Title = model.Title;
+                    contentEntity.Thumbnail = model.Thumbnail2;
+                    contentEntity.Description = model.Description;
+                    contentEntity.CreatedBy = model.CreatedBy;
+                    contentEntity.CreatedDate = DateTime.Now;
+                    contentEntity.CategoryId = model.CategoryId;
+                    contentEntity.UpdatedDate = DateTime.Now;
+                    contentEntity.SubCategoryId = model.SubCategoryId;
+                    contentEntity.PlayerId = model.PlayerId;
+                    contentEntity.ContentTypeId = model.ContentTypeId;
+                    contentEntity.LanguageId = model.LanguageId;
+                    contentEntity.Approved = null;
+                    contentEntity.IsDeleted = false;
+                    context.ContentDetails.Add(contentEntity);
+                    context.SaveChanges();
+                    message = GlobalConstants.ContentDetailAddSuccessfully;
+                }
+                else
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "Player Id does not exist";
+                }
             }
 
             else
@@ -302,48 +311,57 @@ namespace IM10.BAL.Implementaion
             var message = "";
             var contentdetailEntity = context.ContentDetails.Where(x => x.ContentId == contentModel.ContentId).FirstOrDefault();
             if (contentdetailEntity != null)
-            {            
-                contentdetailEntity.ContentId = contentModel.ContentId;
-                if (contentModel.ContentFileName != null)
+            {
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == contentModel.PlayerId && x.IsDeleted == false);
+                if (existingPlayerEntity != null)
                 {
-                    contentdetailEntity.ContentFileName = contentModel.ContentFileName;
-                }
-                if (contentModel.ContentFilePath != null)
-                {
-                    contentdetailEntity.ContentFilePath = contentModel.ContentFilePath;
-                }
+                    contentdetailEntity.ContentId = contentModel.ContentId;
+                    if (contentModel.ContentFileName != null)
+                    {
+                        contentdetailEntity.ContentFileName = contentModel.ContentFileName;
+                    }
+                    if (contentModel.ContentFilePath != null)
+                    {
+                        contentdetailEntity.ContentFilePath = contentModel.ContentFilePath;
+                    }
 
-                if (contentModel.ContentFileName1 != null)
-                {
-                    contentdetailEntity.ContentFileName1 = contentModel.ContentFileName1;
-                }
+                    if (contentModel.ContentFileName1 != null)
+                    {
+                        contentdetailEntity.ContentFileName1 = contentModel.ContentFileName1;
+                    }
 
-                if (contentModel.ContentFilePath1 != null)
-                {
-                    contentdetailEntity.ContentFilePath1 = contentModel.ContentFilePath1;
+                    if (contentModel.ContentFilePath1 != null)
+                    {
+                        contentdetailEntity.ContentFilePath1 = contentModel.ContentFilePath1;
+                    }
+                    if (contentModel.Thumbnail3 != null)
+                    {
+                        contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
+                    }
+                    //contentdetailEntity.ContentFileName = contentModel.ContentFileName;
+                    //contentdetailEntity.ContentFilePath = contentModel.ContentFilePath ;
+                    contentdetailEntity.Title = contentModel.Title;
+                    //contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
+                    contentdetailEntity.Thumbnail = contentModel.Thumbnail2;
+                    contentdetailEntity.Description = contentModel.Description;
+                    contentdetailEntity.CategoryId = contentModel.CategoryId;
+                    contentdetailEntity.SubCategoryId = contentModel.SubCategoryId;
+                    contentdetailEntity.PlayerId = contentModel.PlayerId;
+                    contentdetailEntity.ContentTypeId = contentModel.ContentTypeId;
+                    contentdetailEntity.LanguageId = contentModel.LanguageId;
+                    contentdetailEntity.Approved = null;
+                    contentdetailEntity.UpdatedDate = DateTime.Now;
+                    contentdetailEntity.UpdatedBy = contentModel.UpdatedBy;
+                    contentdetailEntity.IsDeleted = false;
+                    context.ContentDetails.Update(contentdetailEntity);
+                    context.SaveChanges();
+                    message = GlobalConstants.ContentDetailUpdateSuccessfully;
                 }
-                if (contentModel.Thumbnail3 != null)
+                else
                 {
-                    contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "Player Id does not exist";
                 }
-                //contentdetailEntity.ContentFileName = contentModel.ContentFileName;
-                //contentdetailEntity.ContentFilePath = contentModel.ContentFilePath ;
-                contentdetailEntity.Title = contentModel.Title;
-                //contentdetailEntity.Thumbnail1 = contentModel.Thumbnail3;
-                contentdetailEntity.Thumbnail = contentModel.Thumbnail2;
-                contentdetailEntity.Description = contentModel.Description;
-                contentdetailEntity.CategoryId = contentModel.CategoryId;
-                contentdetailEntity.SubCategoryId = contentModel.SubCategoryId;
-                contentdetailEntity.PlayerId = contentModel.PlayerId;
-                contentdetailEntity.ContentTypeId = contentModel.ContentTypeId;
-                contentdetailEntity.LanguageId = contentModel.LanguageId;
-                contentdetailEntity.Approved = null;
-                contentdetailEntity.UpdatedDate = DateTime.Now;
-                contentdetailEntity.UpdatedBy = contentModel.UpdatedBy;
-                contentdetailEntity.IsDeleted = false;
-                context.ContentDetails.Update(contentdetailEntity);
-                context.SaveChanges();
-                message = GlobalConstants.ContentDetailUpdateSuccessfully;
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = "Edit Content Details";
@@ -364,10 +382,17 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteContentDetail(long contentId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var contentdetailsEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == contentId);
             if (contentdetailsEntity != null)
             {
+                if (contentdetailsEntity.Approved == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.BadRequest; 
+                    Message= "Cannot delete approved content";
+                    return Message;
+                }
                 if (contentdetailsEntity.IsDeleted == true)
                 {
                     errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -383,7 +408,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Content Details";
             userAuditLog.Description = "Content Details Deleted";
             userAuditLog.UserId = (int)contentdetailsEntity.CreatedBy;
-            userAuditLog.UpdatedBy = contentdetailsEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = contentdetailsEntity.CreatedBy;
+            userAuditLog.UpdatedBy = contentdetailsEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
@@ -736,20 +763,18 @@ namespace IM10.BAL.Implementaion
                                      from update in updates.DefaultIfEmpty()
                                      join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
                                      where content.PlayerId == playerId && content.IsDeleted == false && player.IsDeleted == false
-                                     && content.Approved == true && content.UpdatedBy == null
+                                     && content.Approved == true 
                                      orderby content.UpdatedDate descending
                                      select new ContentTitleModel
                                      {
                                          ContentId = (int)content.ContentId,
                                          Title = update.ContentTitle != null && update.Approved == true ? $"{content.Title} ({update.ContentTitle})" : content.Title,
-
                                      }).ToList();
             if (contentEntityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
-
             }
             return contentEntityList.ToList();
         }

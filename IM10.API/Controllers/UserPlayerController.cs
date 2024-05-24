@@ -107,6 +107,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddUserPlayer")]
+        [Authorize(Roles = "Super Admin")]
         [ProducesResponseType(typeof(UserPlayerModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -150,6 +151,7 @@ namespace IM10.API.Controllers
         /// <param name="playerModel"></param>
         /// <returns></returns>
         [HttpPut("EditUserPlayer")]
+        [Authorize(Roles = "Super Admin")]
         [ProducesResponseType(typeof(UserPlayerMappingModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -191,6 +193,7 @@ namespace IM10.API.Controllers
         /// <param name="userplayerId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteUserPlayer")]
+        [Authorize(Roles = "Super Admin")]
         [ProducesResponseType(typeof(UserPlayerModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

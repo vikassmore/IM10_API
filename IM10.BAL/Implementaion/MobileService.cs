@@ -740,8 +740,6 @@ namespace IM10.BAL.Implementaion
                               join nation in context.Countries on list.NationId equals nation.CountryId
                               join ct in context.Cities on list.CityId equals ct.CityId
                               join st in context.States on list.StateId equals st.StateId
-                              join cat in context.Categories on list.CategoryId equals cat.CategoryId
-                              join subCat in context.SubCategories on list.SubCategoryId equals subCat.SubCategoryId
                               join user in context.UserMasters on list.CreatedBy equals (int)user.UserId
                               where list.IsDeleted == false && list.PlayerId == playerId
                               orderby list.UpdatedDate descending
@@ -766,10 +764,6 @@ namespace IM10.BAL.Implementaion
                                   StateName = st.Name,
                                   CityId = list.CityId,
                                   CityName = ct.Name,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = cat.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subCat.Name,
                                   StartDate = list.StartDate,
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),
@@ -824,8 +818,6 @@ namespace IM10.BAL.Implementaion
                               nation in context.Countries on list.NationId equals nation.CountryId
                               join state in context.States on list.StateId equals state.StateId
                               join city in context.Cities on list.CityId equals city.CityId
-                              join category in context.Categories on list.CategoryId equals category.CategoryId
-                              join subcategory in context.SubCategories on list.SubCategoryId equals subcategory.SubCategoryId
                               where list.IsDeleted == false && list.ListingId == listingId
                               select new ListingDetailModel
                               {
@@ -846,10 +838,6 @@ namespace IM10.BAL.Implementaion
                                   StateName = state.Name,
                                   CityId = list.CityId,
                                   CityName = city.Name,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = category.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subcategory.Name,
                                   StartDate = list.StartDate,
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),
@@ -887,10 +875,6 @@ namespace IM10.BAL.Implementaion
                 StateName = listEntity.StateName,
                 CityId = listEntity.CityId,
                 CityName = listEntity.CityName,
-                CategoryId = listEntity.CategoryId,
-                CategoryName = listEntity.CategoryName,
-                SubCategoryId = listEntity.SubCategoryId,
-                SubcategoryName = listEntity.SubcategoryName,
                 StartDate = listEntity.StartDate,
                 EndDate = listEntity.EndDate,
                 FinalPrice = listEntity.FinalPrice,
@@ -916,8 +900,6 @@ namespace IM10.BAL.Implementaion
                               join nation in context.Countries on list.NationId equals nation.CountryId
                               join ct in context.Cities on list.CityId equals ct.CityId
                               join st in context.States on list.StateId equals st.StateId
-                              join cat in context.Categories on list.CategoryId equals cat.CategoryId
-                              join subCat in context.SubCategories on list.SubCategoryId equals subCat.SubCategoryId
                               join user in context.UserMasters on list.CreatedBy equals (int)user.UserId
                               where list.IsDeleted == false && list.PlayerId == playerId
                               orderby list.UpdatedDate descending
@@ -942,10 +924,6 @@ namespace IM10.BAL.Implementaion
                                   StateName = st.Name,
                                   CityId = list.CityId,
                                   CityName = ct.Name,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = cat.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subCat.Name,
                                   StartDate = list.StartDate,
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),
@@ -1009,10 +987,8 @@ namespace IM10.BAL.Implementaion
                               join nation in context.Countries on list.NationId equals nation.CountryId
                               join ct in context.Cities on list.CityId equals ct.CityId
                               join st in context.States on list.StateId equals st.StateId
-                              join cat in context.Categories on list.CategoryId equals cat.CategoryId
-                              join subCat in context.SubCategories on list.SubCategoryId equals subCat.SubCategoryId
                               join user in context.UserMasters on list.CreatedBy equals (int)user.UserId
-                              where list.IsDeleted == false && list.PlayerId == playerId && (list.Category.Name.ToLower().Contains(searchData.ToLower()) || list.CompanyName.ToLower().Contains(searchData.ToLower()) || list.Description.ToLower().Contains(searchData.ToLower()))
+                              where list.IsDeleted == false && list.PlayerId == playerId &&  ( list.CompanyName.ToLower().Contains(searchData.ToLower()) || list.Description.ToLower().Contains(searchData.ToLower()))
                               orderby list.UpdatedDate descending
 
                               select new ListingDetailModel
@@ -1035,10 +1011,6 @@ namespace IM10.BAL.Implementaion
                                   StateName = st.Name,
                                   CityId = list.CityId,
                                   CityName = ct.Name,
-                                  CategoryId = list.CategoryId,
-                                  CategoryName = cat.Name,
-                                  SubCategoryId = list.SubCategoryId,
-                                  SubcategoryName = subCat.Name,
                                   StartDate = list.StartDate,
                                   EndDate = list.EndDate,
                                   FinalPrice = (list.FinalPrice == null) ? null : list.FinalPrice.ToString(),

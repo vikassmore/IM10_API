@@ -107,7 +107,8 @@ namespace IM10.BAL.Implementaion
                                        join role in _context.Roles on user.RoleId equals role.RoleId 
                                        where userplayer.IsDeleted == false && role.IsDeleted == false
                                        && player.IsDeleted == false
-                                       orderby userplayer.UserId , userplayer.UpdatedDate descending
+                                       orderby (userplayer.UpdatedDate == null ? userplayer.CreatedDate : userplayer.UpdatedDate) descending
+
                                        select new UserPlayerModel
                                        {
                                          UserPlayerId=  userplayer.UserPlayerId,
@@ -152,7 +153,7 @@ namespace IM10.BAL.Implementaion
                 var roleEntity = (from userplayer in _context.UserPlayerMappings
                                   join user in _context.UserMasters on userplayer.UserId equals user.UserId
                                   where user.RoleId == roleid && userplayer.IsDeleted == false
-                                  select userplayer).ToList();
+                                  select userplayer).OrderByDescending(x=>x.CreatedDate).ToList();
 
                 var playerIds=(from player in roleEntity select player.PlayerId).ToList();
 
@@ -257,6 +258,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteUserPlayer(long userplayerId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var userplayerEntity = _context.UserPlayerMappings.FirstOrDefault(x => x.UserPlayerId == userplayerId);
             if (userplayerEntity != null)
@@ -275,7 +277,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete User Player Mapping Details";
             userAuditLog.Description = "User Player Mapping Details deleted";
             userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
-            userAuditLog.UpdatedBy = userplayerEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = userplayerEntity.CreatedBy;
+            userAuditLog.UpdatedBy = userplayerEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

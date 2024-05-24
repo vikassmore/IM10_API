@@ -401,10 +401,6 @@ public partial class IM10DbContext : DbContext
             entity.Property(e => e.IsGlobal).HasDefaultValueSql("((0))");
             entity.Property(e => e.Position).HasDefaultValueSql("((0))");
 
-            entity.HasOne(d => d.Category).WithMany(p => p.ListingDetails)
-                .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK_ListingDetails_Category");
-
             entity.HasOne(d => d.City).WithMany(p => p.ListingDetails)
                 .HasForeignKey(d => d.CityId)
                 .HasConstraintName("FK_ListingDetails_City");
@@ -421,10 +417,6 @@ public partial class IM10DbContext : DbContext
             entity.HasOne(d => d.State).WithMany(p => p.ListingDetails)
                 .HasForeignKey(d => d.StateId)
                 .HasConstraintName("FK_ListingDetails_State");
-
-            entity.HasOne(d => d.SubCategory).WithMany(p => p.ListingDetails)
-                .HasForeignKey(d => d.SubCategoryId)
-                .HasConstraintName("FK_ListingDetails_SubCategory");
         });
 
         modelBuilder.Entity<LogInformation>(entity =>

@@ -82,10 +82,17 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteContentUpdate(long contentLogId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var contentEntity = context.ContentAuditLogs.FirstOrDefault(x => x.ContentLogId == contentLogId);
             if (contentEntity != null)
             {
+                if (contentEntity.Approved == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.BadRequest;
+                    Message = "Cannot delete approved contentupdate";
+                    return Message;
+                }
                 if (contentEntity.IsDeleted == true)
                 {
                     errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -101,6 +108,8 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Content Update Details";
             userAuditLog.Description = " Content Update Details Deleted";
             userAuditLog.UserId = (int)contentEntity.CreatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = contentEntity.CreatedBy;
             userAuditLog.UpdatedBy = contentEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _auditLogService.AddUserAuditLog(userAuditLog);
@@ -288,54 +297,30 @@ namespace IM10.BAL.Implementaion
         public List< ContentUpdateModel> GetContentUpdateforQA(long playerId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var list=new List<ContentUpdateModel>();
-            ContentUpdateModel contentUpdateModel = new ContentUpdateModel();      
-             var joinedData = context.ContentAuditLogs
-                            .Join(
-                                context.ContentDetails.Where(detail => !detail.IsDeleted),
-                                log => log.ContentId,
-                                detail => detail.ContentId,
-                                (log, detail) => new { Log = log, Detail = detail }).OrderByDescending(x=>x.Log.ContentLogId).ToList();
+            errorResponseModel = new ErrorResponseModel();
+            var contentEntity = (from details in context.ContentDetails join
+                                 update in context.ContentAuditLogs on details.ContentId equals update.ContentId
+                                 where details.PlayerId == playerId && update.IsDeleted == false
+                                 && details.IsDeleted == false
+                                 orderby update.ContentLogId descending
 
-             var groupedData = joinedData
-                 .Where(data => !data.Log.IsDeleted) // Filter out deleted content
-                .GroupBy(data => data.Log.ContentId).ToList();
-
-            var contentEntity = groupedData
-                .Select(group => new ContentUpdateModel
-                {
-                    ContentId = group.Key,
-                    ContentTitle = group.First().Log.ContentTitle,
-                    ContentLogId=group.First().Log.ContentLogId,
-                    Title=group.First().Log.Title,
-                    Description=group.First().Log.Description,
-                    Comment=group.First().Log.Comment,
-                    Approved=group.First().Log.Approved,
-                }).OrderByDescending(x=>x.ContentLogId).ToList();
-
-
-            if (contentEntity == null)
+                                 select new ContentUpdateModel
+                                 {
+                                     ContentLogId = update.ContentLogId,
+                                     ContentId = update.ContentId,
+                                     Title = update.Title,
+                                     Description = update.Description,
+                                     Comment = update.Comment,
+                                     Approved = update.Approved,
+                                     ContentTitle = update.ContentTitle
+                                 }).ToList();
+            if (contentEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                return null;
             }
-            contentEntity.ForEach(item =>
-            {
-                list.Add(new ContentUpdateModel
-                {
-                    ContentLogId = item.ContentLogId,
-                    ContentId = item.ContentId,
-                    Title = item.Title,
-                    Description = item.Description,
-                    Approved = item.Approved,
-                    ContentTitle = item.ContentTitle,
-                    Comment = item.Comment,
-                });
-            });
-            return list;
-            
-        }
-
-       
+            return contentEntity.ToList();           
+        }     
     }
 }

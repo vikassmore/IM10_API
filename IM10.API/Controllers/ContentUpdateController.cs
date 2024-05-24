@@ -105,7 +105,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddContentUpdate")]
-        [Authorize]
+        [Authorize(Roles = "Content Admin")]
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -150,6 +150,7 @@ namespace IM10.API.Controllers
         /// <param name="contentLogId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteContentUpdate")]
+        [Authorize(Roles = "Content Admin")]
         [ProducesResponseType(typeof(ContentUpdateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -162,9 +163,13 @@ namespace IM10.API.Controllers
             {
                 var contentModel = contentUpdateService.DeleteContentUpdate(contentLogId, ref errorResponseModel);
 
-                if (contentModel != null)
+                if (contentModel != null && contentModel != "Cannot delete approved contentupdate")
                 {
                     return Ok(contentModel);
+                }
+                else if (contentModel == "Cannot delete approved contentupdate")
+                {
+                    return BadRequest(contentModel);
                 }
                 return ReturnErrorResponse(errorResponseModel);
             }

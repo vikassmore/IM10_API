@@ -105,7 +105,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddCampaignDetail")]
-        [Authorize]
+        [Authorize(Roles = "IM10 Marketing Campaigns")]
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -131,9 +131,13 @@ namespace IM10.API.Controllers
                 var errorMessage = new ErrorResponseModel();
                 var contentModel = detailService.AddCampaignDetail(model, ref errorMessage);
 
-                if (contentModel != "")
+                if (contentModel != "" && contentModel != null && contentModel != "Player Id does not exist")
                 {
                     return Ok(contentModel);
+                }
+                else if( contentModel !=null && contentModel == "Player Id does not exist")
+                {
+                    return NotFound(contentModel);
                 }
                 return ReturnErrorResponse(errorMessage);
 
@@ -152,6 +156,7 @@ namespace IM10.API.Controllers
         /// <param name="marketingcampaignId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteCampaignDetail")]
+        [Authorize(Roles = "IM10 Marketing Campaigns")]
         [ProducesResponseType(typeof(CampaignDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

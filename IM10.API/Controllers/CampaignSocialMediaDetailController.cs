@@ -82,7 +82,8 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddCampaignSocialMediaDetail")]
-        [Authorize]
+        [Authorize(Roles = "IM10 Marketing Campaigns")]
+        [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(CampaignSocialMediaDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

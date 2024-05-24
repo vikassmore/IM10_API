@@ -246,7 +246,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete User";
             userAuditLog.Description = "User Deleted";
             userAuditLog.UserId = (int)userEntity.CreatedBy;
-            userAuditLog.UpdatedBy = userEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = userEntity.CreatedBy;
+            userAuditLog.UpdatedBy = userEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

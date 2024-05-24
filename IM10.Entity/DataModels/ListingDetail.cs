@@ -45,10 +45,6 @@ public partial class ListingDetail
 
     public string? FinalPrice { get; set; }
 
-    public int? CategoryId { get; set; }
-
-    public int? SubCategoryId { get; set; }
-
     public int? Position { get; set; }
 
     public DateTime? CreatedDate { get; set; }
@@ -61,8 +57,6 @@ public partial class ListingDetail
 
     public bool IsDeleted { get; set; }
 
-    public virtual Category? Category { get; set; }
-
     public virtual City? City { get; set; }
 
     public virtual ICollection<EndorsmentDetail> EndorsmentDetails { get; } = new List<EndorsmentDetail>();
@@ -72,6 +66,4 @@ public partial class ListingDetail
     public virtual PlayerDetail Player { get; set; } = null!;
 
     public virtual State? State { get; set; }
-
-    public virtual SubCategory? SubCategory { get; set; }
 }

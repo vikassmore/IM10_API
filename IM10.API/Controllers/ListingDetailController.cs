@@ -13,8 +13,6 @@ using System.Net.Http.Headers;
 
 namespace IM10.API.Controllers
 {
-
-
     /// <summary>
     /// APIs for listingdetails entity 
     /// </summary>
@@ -31,7 +29,6 @@ namespace IM10.API.Controllers
         /// Used to initialize controller and inject listingdetails service
         /// </summary>
         /// <param name="_listingDetailService"></param>
-
         public ListingDetailController(IListingDetailService _listingDetailService, IWebHostEnvironment _iwebhostingEnvironment)
         {
             listingDetailService = _listingDetailService;
@@ -79,6 +76,8 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddListingDetail")]
+        [Authorize(Roles = "Sales Person Admin,Endorsement Manager Admin")]
+        [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(ListingDetailModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -123,8 +122,6 @@ namespace IM10.API.Controllers
                     model.EndDate = Convert.ToDateTime(formdata["endDate"]);
                     model.FinalPrice = formdata["finalPrice"];
                     model.PlayerId = Convert.ToInt32(formdata["playerId"]);
-                    model.CategoryId = Convert.ToInt32(formdata["categoryId"]);
-                    model.SubCategoryId = Convert.ToInt32(formdata["subcategoryId"]);
                     model.Position = Convert.ToInt32(formdata["position"]);
 
                     var existingFilesNotForDelete = formdata["existingFiles"].ToString().Split(",");
@@ -185,12 +182,17 @@ namespace IM10.API.Controllers
 
                 if (!string.IsNullOrEmpty(productModel))
                 {
-                    return Ok(productModel);
+                    if (productModel != "Player Id does not exist")
+                    {
+                        return Ok(productModel);
+                    }
+                    else if (productModel == "Player Id does not exist")
+                    {
+                        return NotFound(productModel);
+                    }
                 }
 
                 return ReturnErrorResponse(errorMessage);
-
-
             }
             catch (Exception ex)
             {
@@ -205,6 +207,7 @@ namespace IM10.API.Controllers
         /// <param name="listingId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteListingDetail")]
+        [Authorize(Roles = "Sales Person Admin")]
         [ProducesResponseType(typeof(ListingDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]

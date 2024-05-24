@@ -104,11 +104,9 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
-
             }
             playerEntity.ForEach(item =>
             {
-
                 var imgmodel = new VideoImageModel();
                 imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ProfileImageFilePath) ? item.ProfileImageFilePath : item.ProfileImageFilePath);
                 imgmodel.Type = String.IsNullOrEmpty(item.ProfileImageFilePath) ? "image" : "image";
@@ -311,6 +309,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeletePlayerDetail(long PlayerId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var playerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == PlayerId);
             if (playerEntity != null)
@@ -329,7 +328,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Player Details";
             userAuditLog.Description = "Player Details Deleted";
             userAuditLog.UserId = (int)playerEntity.CreatedBy;
-            userAuditLog.UpdatedBy = playerEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = playerEntity.CreatedBy;
+            userAuditLog.UpdatedBy = playerEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
@@ -383,13 +384,16 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var playerDatalist = new List<PlayerDataModel>();
-            var playerDataEntity = context.PlayerData.Where(x => x.IsDeleted == false).Include(x => x.Player).OrderByDescending(x => x.CreatedBy).ToList();
+            var playerDataEntity =(from player in context.PlayerDetails join playerdata in 
+                                   context.PlayerData on player.PlayerId equals playerdata.PlayerId 
+                                   where playerdata.IsDeleted == false && player.IsDeleted==false
+                                   select playerdata).Include(x => x.Player)
+                                   .OrderByDescending(x => x.CreatedDate).ToList();
             if (playerDataEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
-
             }
             playerDataEntity.ForEach(item =>
             {
@@ -420,7 +424,6 @@ namespace IM10.BAL.Implementaion
                     UpdatedBy = item.UpdatedBy,
                     UpdatedDate = item.UpdatedDate,
                     IsDeleted = item.IsDeleted,
-
                 });
             });
             return playerDatalist;
@@ -466,7 +469,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Player Data";
             userAuditLog.Description = "Player Data Deleted";
             userAuditLog.UserId = (int)playerdataEntity.CreatedBy;
-            userAuditLog.UpdatedBy = playerdataEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = playerdataEntity.CreatedBy;
+            userAuditLog.UpdatedBy = playerdataEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

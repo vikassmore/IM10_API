@@ -41,56 +41,74 @@ namespace IM10.BAL.Implementaion
             string message = "";
             if (model.EndorsmentId == 0)
             {
-                EndorsmentDetail type = new EndorsmentDetail();
-                type.EndorsmentId = model.EndorsmentId;
-                type.PlayerId = model.PlayerId;
-                type.ListingId= model.ListingId;
-                type.EndorsmentType = model.EndorsmentType;
-                type.StartDate = model.StartDate;
-                type.EndDate = model.EndDate;
-                type.FinalPrice = model.FinalPrice;
-                type.Notes = model.Notes;
-                type.CreatedDate = DateTime.Now;
-                type.CreatedBy = model.CreatedBy;
-                type.UpdatedDate = DateTime.Now;
-                type.IsDeleted = false;
-                context.EndorsmentDetails.Add(type);
-                context.SaveChanges();
-                message = GlobalConstants.EndorsmentDetaisSaveMessage;
-                var userAuditLog = new UserAuditLogModel();
-                userAuditLog.Action = " Add Endorsment Details";
-                userAuditLog.Description = " Endorsment Details Added";
-                userAuditLog.UserId = (int)model.CreatedBy;
-                userAuditLog.CreatedBy = model.CreatedBy;
-                userAuditLog.CreatedDate = DateTime.Now;
-                _userAuditLogService.AddUserAuditLog(userAuditLog);
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                if (existingPlayerEntity != null)
+                {
+                    EndorsmentDetail type = new EndorsmentDetail();
+                    type.EndorsmentId = model.EndorsmentId;
+                    type.PlayerId = model.PlayerId;
+                    type.ListingId= model.ListingId;
+                    type.EndorsmentType = model.EndorsmentType;
+                    type.StartDate = model.StartDate;
+                    type.EndDate = model.EndDate;
+                    type.FinalPrice = model.FinalPrice;
+                    type.Notes = model.Notes;
+                    type.CreatedDate = DateTime.Now;
+                    type.CreatedBy = model.CreatedBy;
+                    type.UpdatedDate = DateTime.Now;
+                    type.IsDeleted = false;
+                    context.EndorsmentDetails.Add(type);
+                    context.SaveChanges();
+                    message = GlobalConstants.EndorsmentDetaisSaveMessage;
+                    var userAuditLog = new UserAuditLogModel();
+                    userAuditLog.Action = " Add Endorsment Details";
+                    userAuditLog.Description = " Endorsment Details Added";
+                    userAuditLog.UserId = (int)model.CreatedBy;
+                    userAuditLog.CreatedBy = model.CreatedBy;
+                    userAuditLog.CreatedDate = DateTime.Now;
+                    _userAuditLogService.AddUserAuditLog(userAuditLog);
+                }
+                else
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "Player Id does not exist";
+                }
             }
             else
             {
                 var typeEntity = context.EndorsmentDetails.FirstOrDefault(x => x.EndorsmentId == model.EndorsmentId);
                 if (typeEntity != null)
                 {
-                    typeEntity.EndorsmentId = model.EndorsmentId;
-                    typeEntity.PlayerId = model.PlayerId;
-                    typeEntity.ListingId = model.ListingId;
-                    typeEntity.EndorsmentType = model.EndorsmentType;
-                    typeEntity.StartDate = model.StartDate;
-                    typeEntity.EndDate = model.EndDate;
-                    typeEntity.FinalPrice = model.FinalPrice;
-                    typeEntity.Notes = model.Notes;
-                    typeEntity.UpdatedBy = model.UpdatedBy;
-                    typeEntity.UpdatedDate = DateTime.Now;
-                    typeEntity.IsDeleted = false;
-                    context.EndorsmentDetails.Update(typeEntity);
-                    context.SaveChanges();
-                    message = GlobalConstants.EndorsmentDetailsUpdateMessage;
-                    var userAuditLog = new UserAuditLogModel();
-                    userAuditLog.Action = " Update Endorsment Details";
-                    userAuditLog.Description = "Endorsment Details Update";
-                    userAuditLog.UserId = (int)model.CreatedBy;
-                    userAuditLog.UpdatedBy = model.UpdatedBy;
-                    userAuditLog.UpdatedDate = DateTime.Now;
-                    _userAuditLogService.AddUserAuditLog(userAuditLog);
+                    var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                    if (existingPlayerEntity != null)
+                    {
+                        typeEntity.EndorsmentId = model.EndorsmentId;
+                        typeEntity.PlayerId = model.PlayerId;
+                        typeEntity.ListingId = model.ListingId;
+                        typeEntity.EndorsmentType = model.EndorsmentType;
+                        typeEntity.StartDate = model.StartDate;
+                        typeEntity.EndDate = model.EndDate;
+                        typeEntity.FinalPrice = model.FinalPrice;
+                        typeEntity.Notes = model.Notes;
+                        typeEntity.UpdatedBy = model.UpdatedBy;
+                        typeEntity.UpdatedDate = DateTime.Now;
+                        typeEntity.IsDeleted = false;
+                        context.EndorsmentDetails.Update(typeEntity);
+                        context.SaveChanges();
+                        message = GlobalConstants.EndorsmentDetailsUpdateMessage;
+                        var userAuditLog = new UserAuditLogModel();
+                        userAuditLog.Action = " Update Endorsment Details";
+                        userAuditLog.Description = "Endorsment Details Update";
+                        userAuditLog.UserId = (int)model.UpdatedBy;
+                        userAuditLog.UpdatedBy = (int)model.UpdatedBy;
+                        userAuditLog.UpdatedDate = DateTime.Now;
+                        _userAuditLogService.AddUserAuditLog(userAuditLog);
+                    }
+                    else
+                    {
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        message = "Player Id does not exist";
+                    }
                 }
             }
             return message;
@@ -104,6 +122,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteEndorsmentDetail(long endorsmentId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel= new ErrorResponseModel();
             string Message = "";
             var endorsmentEntity = context.EndorsmentDetails.FirstOrDefault(x => x.EndorsmentId == endorsmentId);
             if (endorsmentEntity != null)
@@ -123,7 +142,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Endorsment Details";
             userAuditLog.Description = "Endorsment Details Deleted";
             userAuditLog.UserId = (int)endorsmentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = endorsmentEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = endorsmentEntity.CreatedBy;
+            userAuditLog.UpdatedBy = endorsmentEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";

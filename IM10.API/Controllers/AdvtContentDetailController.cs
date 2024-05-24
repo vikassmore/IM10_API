@@ -19,11 +19,9 @@ namespace IM10.API.Controllers
     /// APIs for advcontentdetails entity 
     /// </summary>
 
-
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-
     public class AdvtContentDetailController : BaseAPIController
     {
         IAdvContentDetailService  advContentservice;
@@ -33,13 +31,11 @@ namespace IM10.API.Controllers
         /// Used to initialize controller and inject advcontentdetails service
         /// </summary>
         /// <param name="_advContentservice"></param>
-
         public AdvtContentDetailController(IAdvContentDetailService _advContentservice, IWebHostEnvironment _iwebhostingEnvironment)
         {
             advContentservice = _advContentservice;
             iwebhostingEnvironment = _iwebhostingEnvironment;
         }
-
 
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace IM10.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("AddAdvContentDetail")]
-        [Authorize]
+        [Authorize(Roles = "Sales Person Admin")]
         [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(AdvContentDetailsModel1), 200)]
         [ProducesResponseType(typeof(string), 404)]
@@ -179,12 +175,16 @@ namespace IM10.API.Controllers
                
                 if (!string.IsNullOrEmpty(productModel))
                 {
-                    return Ok(productModel);
+                    if (productModel != "Player Id does not exist")
+                    {
+                        return Ok(productModel);
+                    }
+                    else if (productModel == "Player Id does not exist")
+                    {
+                        return NotFound(productModel);
+                    }
                 }
-
                 return ReturnErrorResponse(errorMessage);
-
-
             }
             catch (Exception ex)
             {
@@ -200,6 +200,7 @@ namespace IM10.API.Controllers
         /// <param name="AdvertiseContentId"></param>
         /// <returns></returns>
         [HttpDelete("DeleteAdvContentDetail")]
+        [Authorize(Roles = "Sales Person Admin")]
         [ProducesResponseType(typeof(AdvContentDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -212,9 +213,13 @@ namespace IM10.API.Controllers
             {
                 var contentModel = advContentservice.DeleteAdvContentDetail(AdvertiseContentId, ref errorResponseModel);
 
-                if (contentModel != null)
+                if (contentModel != null && contentModel != "Cannot delete approved advtcontent")
                 {
                     return Ok(contentModel);
+                }
+                else if(contentModel == "Cannot delete approved advtcontent")
+                {
+                    return BadRequest(contentModel);
                 }
                 return ReturnErrorResponse(errorResponseModel);
             }

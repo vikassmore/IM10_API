@@ -47,71 +47,91 @@ namespace IM10.BAL.Implementaion
             string message = "";
             if (model.AdvertiseContentId == 0)
             {
-                AdvContentDetail contentDetail = new AdvContentDetail();
-                contentDetail.AdvertiseContentId = model.AdvertiseContentId;
-                contentDetail.Title = model.Title;
-                contentDetail.NationId = model.NationId;
-                contentDetail.StateId = model.StateId;
-                contentDetail.CityId = model.CityId;
-                contentDetail.PlayerId = model.PlayerId;
-                contentDetail.AdvertiseFileName = model.AdvertiseFileName;
-                contentDetail.AdvertiseFilePath = model.AdvertiseFilePath;
-                contentDetail.IsGlobal = model.IsGlobal;
-                contentDetail.ContentTypeId = model.ContentTypeId;
-                contentDetail.IsFree = model.IsFree;
-                contentDetail.StartDate = model.StartDate;
-                contentDetail.EndDate = model.EndDate;
-                contentDetail.Approved = null;
-                contentDetail.CreatedBy = model.CreatedBy;
-                contentDetail.CreatedDate = DateTime.Now;
-                contentDetail.FinalPrice = model.FinalPrice;
-                contentDetail.IsDeleted = false;
-                context.AdvContentDetails.Add(contentDetail);
-                context.SaveChanges();
-                message = GlobalConstants.AdvContentDetailSaveMessage;
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                if (existingPlayerEntity != null)
+                {
+                    AdvContentDetail contentDetail = new AdvContentDetail();
+                    contentDetail.AdvertiseContentId = model.AdvertiseContentId;
+                    contentDetail.Title = model.Title;
+                    contentDetail.NationId = model.NationId;
+                    contentDetail.StateId = model.StateId;
+                    contentDetail.CityId = model.CityId;
+                    contentDetail.PlayerId = model.PlayerId;
+                    contentDetail.AdvertiseFileName = model.AdvertiseFileName;
+                    contentDetail.AdvertiseFilePath = model.AdvertiseFilePath;
+                    contentDetail.IsGlobal = model.IsGlobal;
+                    contentDetail.ContentTypeId = model.ContentTypeId;
+                    contentDetail.IsFree = model.IsFree;
+                    contentDetail.StartDate = model.StartDate;
+                    contentDetail.EndDate = model.EndDate;
+                    contentDetail.Approved = null;
+                    contentDetail.CreatedBy = model.CreatedBy;
+                    contentDetail.CreatedDate = DateTime.Now;
+                    contentDetail.FinalPrice = model.FinalPrice;
+                    contentDetail.IsDeleted = false;
+                    context.AdvContentDetails.Add(contentDetail);
+                    context.SaveChanges();
+                    message = GlobalConstants.AdvContentDetailSaveMessage;
+                }
+                else
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "Player Id does not exist";
+                }
             }
             else
             {
                 var advEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == model.AdvertiseContentId);
                 if (advEntity != null)
                 {
-                    advEntity.Title = model.Title;
-                    advEntity.NationId = model.NationId;
-                    advEntity.StateId = model.StateId;
-                    advEntity.CityId = model.CityId;
-                    advEntity.PlayerId = model.PlayerId;
-                    if (model.AdvertiseFileName != null)
+                    var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                    if (existingPlayerEntity != null)
                     {
-                        advEntity.AdvertiseFileName = model.AdvertiseFileName;
+                        advEntity.Title = model.Title;
+                        advEntity.NationId = model.NationId;
+                        advEntity.StateId = model.StateId;
+                        advEntity.CityId = model.CityId;
+                        advEntity.PlayerId = model.PlayerId;
+                        if (model.AdvertiseFileName != null)
+                        {
+                            advEntity.AdvertiseFileName = model.AdvertiseFileName;
+                        }
+                        if (model.AdvertiseFilePath != null)
+                        {
+                            advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
+                        }
+                        //advEntity.AdvertiseFileName = model.AdvertiseFileName;
+                        //advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
+                        advEntity.IsGlobal = model.IsGlobal;
+                        advEntity.ContentTypeId = model.ContentTypeId;
+                        advEntity.IsFree = model.IsFree;
+                        advEntity.StartDate = model.StartDate;
+                        advEntity.EndDate = model.EndDate;
+                        advEntity.Approved = null;
+                        advEntity.UpdatedBy = model.UpdatedBy;
+                        advEntity.UpdatedDate = DateTime.Now;
+                        advEntity.FinalPrice = model.FinalPrice;
+                        advEntity.IsDeleted = false;
+                        context.AdvContentDetails.Update(advEntity);
+                        context.SaveChanges();
+                        message = GlobalConstants.AdvContentDetailUpdateMessage;
                     }
-                    if (model.AdvertiseFilePath != null)
+                    else
                     {
-                        advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        message = "Player Id does not exist";
                     }
-                    //advEntity.AdvertiseFileName = model.AdvertiseFileName;
-                    //advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
-                    advEntity.IsGlobal = model.IsGlobal;
-                    advEntity.ContentTypeId = model.ContentTypeId;
-                    advEntity.IsFree = model.IsFree;
-                    advEntity.StartDate = model.StartDate;
-                    advEntity.EndDate = model.EndDate;
-                    advEntity.Approved = null;
-                    advEntity.UpdatedBy = model.UpdatedBy;
-                    advEntity.UpdatedDate = DateTime.Now;
-                    advEntity.FinalPrice = model.FinalPrice;
-                    advEntity.IsDeleted = false;
-                    context.AdvContentDetails.Update(advEntity);
-                    context.SaveChanges();
-                    message = GlobalConstants.AdvContentDetailUpdateMessage;
                 }
             }
 
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add Advertise Content Details";
             userAuditLog.Description = "Advertise Content Details Added";
-            userAuditLog.UserId = (int)model.CreatedBy;
-            userAuditLog.CreatedBy = model.CreatedBy;
+            userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+            userAuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
             userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.UpdatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+            userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return message;
         }
@@ -151,10 +171,17 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteAdvContentDetail(long AdvertiseContentId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             var advtcontentEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == AdvertiseContentId);
             if (advtcontentEntity != null)
             {
+                if (advtcontentEntity.Approved == true)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.BadRequest;
+                    Message = "Cannot delete approved advtcontent";
+                    return Message;
+                }
                 if (advtcontentEntity.IsDeleted == true)
                 {
                     errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -170,7 +197,9 @@ namespace IM10.BAL.Implementaion
             userAuditLog.Action = " Delete Advertise Content Details";
             userAuditLog.Description = "Advertise Content Details Deleted";
             userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = advtcontentEntity.UpdatedBy;
+            userAuditLog.CreatedDate = DateTime.Now;
+            userAuditLog.CreatedBy = advtcontentEntity.CreatedBy;
+            userAuditLog.UpdatedBy = advtcontentEntity.CreatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
             _userAuditLogService.AddUserAuditLog(userAuditLog);
             return "{\"message\": \"" + Message + "\"}";
@@ -210,7 +239,7 @@ namespace IM10.BAL.Implementaion
             var advEntityList = (from adv in context.AdvContentDetails                                
                                  join content in context.ContentTypes on adv.ContentTypeId equals content.ContentTypeId
                                  where adv.PlayerId==playerId && adv.IsDeleted == false
-                                 orderby adv.UpdatedDate descending
+                                 orderby (adv.UpdatedDate == null ? adv.CreatedDate : adv.UpdatedDate) descending
                                  select new AdvContentDetailsModel
                                  {
                                      AdvertiseContentId = adv.AdvertiseContentId,
@@ -301,8 +330,7 @@ namespace IM10.BAL.Implementaion
         public AdvContentDetailsModel GetAdvContentDetailById(long AdvertiseContentId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
-            var advEntity = (from adv in context.AdvContentDetails
-                                 join
+            var advEntity = (from adv in context.AdvContentDetails join
                                  country in context.Countries on adv.NationId equals country.CountryId
                                  join state in context.States on adv.StateId equals state.StateId
                                  join city in context.Cities on adv.CityId equals city.CityId
@@ -372,9 +400,7 @@ namespace IM10.BAL.Implementaion
                 CreatedDate = advEntity.CreatedDate,
                 UpdatedBy = advEntity.UpdatedBy,
                 UpdatedDate = advEntity.UpdatedDate,
-
-            };
-           
+            };          
         }       
     }
 }

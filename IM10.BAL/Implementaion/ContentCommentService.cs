@@ -143,6 +143,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteCommentReply(long commentId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string Message = "";
             try
             {
@@ -172,8 +173,9 @@ namespace IM10.BAL.Implementaion
                 userAuditLog.Action = "Delete Content Comment Reply";
                 userAuditLog.Description = "Content Comment Reply Deleted";
                 userAuditLog.UserId = (int)commentEntity.CreatedBy;
-                userAuditLog.UpdatedBy = commentEntity.UpdatedBy;
-                userAuditLog.UpdatedDate = DateTime.Now;
+                userAuditLog.CreatedDate = DateTime.Now;
+                userAuditLog.CreatedBy = commentEntity.CreatedBy;
+                userAuditLog.UpdatedBy = commentEntity.CreatedBy;
                 _userAuditLogService.AddUserAuditLog(userAuditLog);
                 return "{\"message\": \"" + Message + "\"}";
             }

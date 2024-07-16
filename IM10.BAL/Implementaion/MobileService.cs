@@ -1104,6 +1104,7 @@ namespace IM10.BAL.Implementaion
                                   UpdatedDate = list.UpdatedDate,
                               }).ToList();
 
+
             if (listEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;

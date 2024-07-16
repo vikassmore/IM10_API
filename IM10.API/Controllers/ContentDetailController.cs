@@ -380,7 +380,6 @@ namespace IM10.API.Controllers
                             string fileName = "/" + fileArr[3] + "/" + fileArr[4].ToString();
                             model.ContentFileName = fileName;
                             model.ContentFilePath = formdata["imageUrl"];
-
                         }
                     }
 

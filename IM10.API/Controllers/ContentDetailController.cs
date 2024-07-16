@@ -382,7 +382,6 @@ namespace IM10.API.Controllers
                             model.ContentFilePath = formdata["imageUrl"];
 
                         }
-
                     }
 
                     if (Request.Form.Files.Count > 0)

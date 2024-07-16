@@ -1,0 +1,16 @@
+
+Log Entry : 14:48:31 18 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Error creating credential: Network connectivity test failed.
+IsException: True
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Error creating credential: Network connectivity test failed.
+IsException: True
+DataPayload: 
+

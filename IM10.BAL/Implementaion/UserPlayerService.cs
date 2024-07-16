@@ -106,7 +106,7 @@ namespace IM10.BAL.Implementaion
                                        join player in _context.PlayerDetails on userplayer.PlayerId equals player.PlayerId
                                        join role in _context.Roles on user.RoleId equals role.RoleId 
                                        where userplayer.IsDeleted == false && role.IsDeleted == false
-                                       && player.IsDeleted == false
+                                       && player.IsDeleted == false && user.IsDeleted == false
                                        orderby (userplayer.UpdatedDate == null ? userplayer.CreatedDate : userplayer.UpdatedDate) descending
 
                                        select new UserPlayerModel
@@ -151,7 +151,7 @@ namespace IM10.BAL.Implementaion
                 var userRolId = (from user in _context.UserMasters where user.UserId == model.UserId select user.RoleId).FirstOrDefault();
                 int roleid = Convert.ToInt32(userRolId);
                 var roleEntity = (from userplayer in _context.UserPlayerMappings
-                                  join user in _context.UserMasters on userplayer.UserId equals user.UserId
+                                  join user in _context.UserMasters on userplayer.UserId equals user.UserId where user.IsDeleted==false
                                   where user.RoleId == roleid && userplayer.IsDeleted == false
                                   select userplayer).OrderByDescending(x=>x.CreatedDate).ToList();
 
@@ -197,7 +197,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add User Player Mapping Details";
-            userAuditLog.Description = "User Player Mapping Details Added";
+            userAuditLog.Description = "User Player Mapping Details Added Successfully";
             userAuditLog.UserId = (int)model.CreatedBy;
             userAuditLog.CreatedBy = model.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
@@ -239,7 +239,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Update User Player Mapping Details";
-            userAuditLog.Description = "User Player Mapping Details Update";
+            userAuditLog.Description = "User Player Mapping Details Update Successfully";
             userAuditLog.UserId = (int)playerModel.UpdatedBy;
             userAuditLog.UpdatedBy = playerModel.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
@@ -275,7 +275,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete User Player Mapping Details";
-            userAuditLog.Description = "User Player Mapping Details deleted";
+            userAuditLog.Description = "User Player Mapping Details deleted Successfully";
             userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = userplayerEntity.CreatedBy;
@@ -428,27 +428,24 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var userList = new List<UserPlayerModel>();
-            var result1 = from pd in _context.PlayerDetails
-                         where !_context.UserPlayerMappings
-                                .Join(_context.UserMasters,
-                                      upm => upm.UserId,
-                                      um => um.UserId,
-                                      (upm, um) => new
-                                      { upm.PlayerId, um.RoleId, upm.IsDeleted })
-                                .Any(joined => joined.RoleId == roleId && joined.IsDeleted == false &&
-                                               joined.PlayerId == pd.PlayerId)
-                                           && pd.IsDeleted == false
-                                     select pd;
-            var result = result1.ToList();
+            var subquery = (from upm in _context.UserPlayerMappings
+                             join um in _context.UserMasters on upm.UserId equals um.UserId
+                             where _context.PlayerDetails.Any(pd => pd.PlayerId == upm.PlayerId) &&
+                             um.RoleId == roleId && upm.IsDeleted == false && um.IsDeleted == false
+                             select upm.PlayerId).ToList();
 
-            if (result.Count== 0)
+            var result1 = (from pd in _context.PlayerDetails
+                            where pd.IsDeleted == false && !subquery.Contains(pd.PlayerId)
+                            select pd).ToList();
+
+            if (result1.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
             }
 
-            result.ForEach(item =>
+            result1.ForEach(item =>
             {
                 var imgmodel = new VideoImageModel();
                 imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ProfileImageFilePath) ? item.ProfileImageFilePath : item.ProfileImageFilePath);

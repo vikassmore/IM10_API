@@ -75,5 +75,8 @@ namespace IM10.Common
         public const string SaveMessage = "Data saved successfuly.";
         public const string SaveToken = "Notification tokan pass successfully.";
         public const string LogOut = "User Logout Successfully.";
+        public const string ErrorLogDeleteSuccessfully = "Error Log Delete Successfully";
+        public const string DeleteMobileAccount = "User Mobile Account Deleted Successfully.";
+
     }
 }

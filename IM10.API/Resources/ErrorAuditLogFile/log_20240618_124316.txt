@@ -1,0 +1,60 @@
+
+Log Entry : 12:43:16 18 June 2024
+  :
+  :DeviceId: 
+AccessToken: ya29.c.c0AY_VpZiyY2dqActAZVPvTHHalVj6UBP4okX0px0YLMWR4PuRhwQ-hI9ub8fd3RjJBwUyg3N5RRVzbNPCLchKHmk1L5pTv7UR_0woFxT-CQgyE76--HvQacHzKYhCzkV8-jSxnum_xlaz-QMbMLnpl29d3moztjQa4XX8Ak387ghKPaep4KlJTldyDw9dEUxBxC4Wp7-H8ezMUOCTeBtDCyp_SziefT-6woszT0bOg7HOtnfQL0RMXEmyqSTQDss8OxNV3icBlujtEaJsnhFGYxH2jf1xA9zxf99NZSosAHKp2yPWhDrQ44L06k0kRPO4zlS5XRwu-LtPvhznAxwXdcV3wyQKyMBUBq8A6YUw7w0Yw36kZrIRzo13kgG387A8b4lh_p34j5ox7kc7rc4--mB4WgFBcOnosQa5Vb3bFrxn7ZfwgS8xQRp3xpMnOzkfBuFo3VQm4YfO3SB8kjkv1rlnxZaz4wSYrfYoRcMl1mqlXeSbgXyqpVFhpQi-ypSovS0naRIsF6ZFQRls3w7j1tokgp-5SebmJ4IQuZvjhYlQnkwQnsBBmvUhcW35gJeg04mgJmQrZhRUXY0m-7bg_tFOWpUzhdq3jMSaQjwFWl_vRW5cU7lZ8YnnMVxFqmXbkdjdm-Bf_Xi43B-mW65b48VFn4bimhBJpqJOoVY-oWlYjtxRzBSFhSh80qj7Se9jkSvOcapSb9nUsUzFyS42_1yy6UQ3bjnSSFQFretgMJaJxMXFXbq4QUS9uyyykthsY78lb2QV5uUlbX58mzg7na21k0uXbFor--7mVdxM2J2UI-Oz1mBVkrg-4pXveSzmZr8isk2yJ6ynwB6i7fUboX7knoQ1U8f5F7ZrYU_hBMqQz2w8dv6ifB-fSjlphvgkMbx0dje9qukReRm8F4zQh6fwMXr4Sf9t1r1l-jwF5slidnUyul7fBF951IznrVSOze4erlVfMRxW1yzoJXkURn2Ydyv6pedy2zMjlUu8fcfZhfV9h_3U1Vr
+Error: {
+  "error": {
+    "code": 400,
+    "message": "Recipient of the message is not set.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "field": "message",
+            "description": "Recipient of the message is not set."
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+        "errorCode": "INVALID_ARGUMENT"
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":null,"data":{"contentId":"0","commentId":"0","title":"New Comment Arrived!","message":null,"categoryId":"0","contentTypeId":"0","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: 
+AccessToken: ya29.c.c0AY_VpZiyY2dqActAZVPvTHHalVj6UBP4okX0px0YLMWR4PuRhwQ-hI9ub8fd3RjJBwUyg3N5RRVzbNPCLchKHmk1L5pTv7UR_0woFxT-CQgyE76--HvQacHzKYhCzkV8-jSxnum_xlaz-QMbMLnpl29d3moztjQa4XX8Ak387ghKPaep4KlJTldyDw9dEUxBxC4Wp7-H8ezMUOCTeBtDCyp_SziefT-6woszT0bOg7HOtnfQL0RMXEmyqSTQDss8OxNV3icBlujtEaJsnhFGYxH2jf1xA9zxf99NZSosAHKp2yPWhDrQ44L06k0kRPO4zlS5XRwu-LtPvhznAxwXdcV3wyQKyMBUBq8A6YUw7w0Yw36kZrIRzo13kgG387A8b4lh_p34j5ox7kc7rc4--mB4WgFBcOnosQa5Vb3bFrxn7ZfwgS8xQRp3xpMnOzkfBuFo3VQm4YfO3SB8kjkv1rlnxZaz4wSYrfYoRcMl1mqlXeSbgXyqpVFhpQi-ypSovS0naRIsF6ZFQRls3w7j1tokgp-5SebmJ4IQuZvjhYlQnkwQnsBBmvUhcW35gJeg04mgJmQrZhRUXY0m-7bg_tFOWpUzhdq3jMSaQjwFWl_vRW5cU7lZ8YnnMVxFqmXbkdjdm-Bf_Xi43B-mW65b48VFn4bimhBJpqJOoVY-oWlYjtxRzBSFhSh80qj7Se9jkSvOcapSb9nUsUzFyS42_1yy6UQ3bjnSSFQFretgMJaJxMXFXbq4QUS9uyyykthsY78lb2QV5uUlbX58mzg7na21k0uXbFor--7mVdxM2J2UI-Oz1mBVkrg-4pXveSzmZr8isk2yJ6ynwB6i7fUboX7knoQ1U8f5F7ZrYU_hBMqQz2w8dv6ifB-fSjlphvgkMbx0dje9qukReRm8F4zQh6fwMXr4Sf9t1r1l-jwF5slidnUyul7fBF951IznrVSOze4erlVfMRxW1yzoJXkURn2Ydyv6pedy2zMjlUu8fcfZhfV9h_3U1Vr
+Error: {
+  "error": {
+    "code": 400,
+    "message": "Recipient of the message is not set.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "field": "message",
+            "description": "Recipient of the message is not set."
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+        "errorCode": "INVALID_ARGUMENT"
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":null,"data":{"contentId":"0","commentId":"0","title":"New Comment Arrived!","message":null,"categoryId":"0","contentTypeId":"0","IsPublic":"True"}}}
+

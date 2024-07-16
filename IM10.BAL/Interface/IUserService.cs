@@ -18,7 +18,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        UserModel GetUserById(long userId,ref ErrorResponseModel errorResponseModel);
+        UserInformation GetUserById(long userId,ref ErrorResponseModel errorResponseModel);
 
 
         /// <summary>

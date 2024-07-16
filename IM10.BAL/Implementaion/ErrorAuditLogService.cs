@@ -253,5 +253,25 @@ namespace IM10.BAL.Implementaion
             }
             return "Error log saved successfully.";           
         }
+
+        /// <summary>
+        /// Method is used to delete ErrorAuditLog
+        /// </summary>
+        /// <param name="">logEntry</param>
+        /// <returns></returns>
+        public string DeleteErrorLogs(long logId)
+        {
+           ErrorResponseModel errorResponseModel = new ErrorResponseModel();
+            string Message = "";
+            var logEntity = context12.LogInformations.FirstOrDefault(x => x.LogId == logId);
+            if (logEntity != null)
+            {
+                context12.LogInformations.Remove(logEntity); 
+                context12.SaveChanges();
+                Message = GlobalConstants.ErrorLogDeleteSuccessfully;
+            }           
+            return "{\"message\": \"" + Message + "\"}";
+        }
+        
     }
 }

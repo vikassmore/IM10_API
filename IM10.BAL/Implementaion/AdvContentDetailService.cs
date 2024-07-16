@@ -22,119 +22,157 @@ namespace IM10.BAL.Implementaion
         IM10DbContext context;
         private ConfigurationModel _configuration;
         private readonly IUserAuditLogService _userAuditLogService;
-
+        private readonly IErrorAuditLogService _logService;
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public AdvContentDetailService(IM10DbContext _context ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
+        public AdvContentDetailService(IErrorAuditLogService auditLogService, IM10DbContext _context ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
         {
              context= _context;
             _configuration= hostName.Value;
             _userAuditLogService= userAuditLogService;
+            _logService = auditLogService;
         }
 
 
-        /// <summary>
-        /// Method to add AdvContentDetail
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="errorResponseModel"></param>
-        /// <returns></returns>
-        public string AddAdvContentDetail(AdvContentDetailsModel1 model, ref ErrorResponseModel errorResponseModel)
-        {
-            string message = "";
-            if (model.AdvertiseContentId == 0)
-            {
-                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
-                if (existingPlayerEntity != null)
-                {
-                    AdvContentDetail contentDetail = new AdvContentDetail();
-                    contentDetail.AdvertiseContentId = model.AdvertiseContentId;
-                    contentDetail.Title = model.Title;
-                    contentDetail.NationId = model.NationId;
-                    contentDetail.StateId = model.StateId;
-                    contentDetail.CityId = model.CityId;
-                    contentDetail.PlayerId = model.PlayerId;
-                    contentDetail.AdvertiseFileName = model.AdvertiseFileName;
-                    contentDetail.AdvertiseFilePath = model.AdvertiseFilePath;
-                    contentDetail.IsGlobal = model.IsGlobal;
-                    contentDetail.ContentTypeId = model.ContentTypeId;
-                    contentDetail.IsFree = model.IsFree;
-                    contentDetail.StartDate = model.StartDate;
-                    contentDetail.EndDate = model.EndDate;
-                    contentDetail.Approved = null;
-                    contentDetail.CreatedBy = model.CreatedBy;
-                    contentDetail.CreatedDate = DateTime.Now;
-                    contentDetail.FinalPrice = model.FinalPrice;
-                    contentDetail.IsDeleted = false;
-                    context.AdvContentDetails.Add(contentDetail);
-                    context.SaveChanges();
-                    message = GlobalConstants.AdvContentDetailSaveMessage;
-                }
-                else
-                {
-                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                    message = "Player Id does not exist";
-                }
-            }
-            else
-            {
-                var advEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == model.AdvertiseContentId);
-                if (advEntity != null)
-                {
-                    var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
-                    if (existingPlayerEntity != null)
-                    {
-                        advEntity.Title = model.Title;
-                        advEntity.NationId = model.NationId;
-                        advEntity.StateId = model.StateId;
-                        advEntity.CityId = model.CityId;
-                        advEntity.PlayerId = model.PlayerId;
-                        if (model.AdvertiseFileName != null)
+         /// <summary>
+         /// Method to add AdvContentDetail
+         /// </summary>
+         /// <param name="model"></param>
+         /// <param name="errorResponseModel"></param>
+         /// <returns></returns>
+          public string AddAdvContentDetail(AdvContentDetailsModel1 model, ref ErrorResponseModel errorResponseModel)
+          {
+              string message = "";
+              using (var transaction = context.Database.BeginTransaction())
+              {
+                   try
+                   {
+                        if (model.AdvertiseContentId == 0)
                         {
-                            advEntity.AdvertiseFileName = model.AdvertiseFileName;
-                        }
-                        if (model.AdvertiseFilePath != null)
-                        {
-                            advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
-                        }
-                        //advEntity.AdvertiseFileName = model.AdvertiseFileName;
-                        //advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
-                        advEntity.IsGlobal = model.IsGlobal;
-                        advEntity.ContentTypeId = model.ContentTypeId;
-                        advEntity.IsFree = model.IsFree;
-                        advEntity.StartDate = model.StartDate;
-                        advEntity.EndDate = model.EndDate;
-                        advEntity.Approved = null;
-                        advEntity.UpdatedBy = model.UpdatedBy;
-                        advEntity.UpdatedDate = DateTime.Now;
-                        advEntity.FinalPrice = model.FinalPrice;
-                        advEntity.IsDeleted = false;
-                        context.AdvContentDetails.Update(advEntity);
-                        context.SaveChanges();
-                        message = GlobalConstants.AdvContentDetailUpdateMessage;
-                    }
-                    else
-                    {
-                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                        message = "Player Id does not exist";
-                    }
-                }
-            }
+                            var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                            if (existingPlayerEntity != null)
+                            {
+                                AdvContentDetail contentDetail = new AdvContentDetail();
+                                contentDetail.AdvertiseContentId = model.AdvertiseContentId;
+                                contentDetail.Title = model.Title;
+                                contentDetail.NationId = model.NationId;
+                                contentDetail.StateId = model.StateId;
+                                contentDetail.CityId = model.CityId;
+                                contentDetail.PlayerId = model.PlayerId;
+                                contentDetail.AdvertiseFileName = model.AdvertiseFileName;
+                                contentDetail.AdvertiseFilePath = model.AdvertiseFilePath;
+                                contentDetail.IsGlobal = model.IsGlobal;
+                                contentDetail.ContentTypeId = model.ContentTypeId;
+                                contentDetail.IsFree = model.IsFree;
+                                contentDetail.StartDate = model.StartDate;
+                                contentDetail.EndDate = model.EndDate;
+                                contentDetail.Approved = null;
+                                contentDetail.CreatedBy = model.CreatedBy;
+                                contentDetail.CreatedDate = DateTime.Now;
+                                contentDetail.FinalPrice = model.FinalPrice;
+                                contentDetail.IsDeleted = false;
+                                context.AdvContentDetails.Add(contentDetail);
+                                context.SaveChanges();
+                                transaction.Commit();
+                                message = GlobalConstants.AdvContentDetailSaveMessage;
+                                var AuditLog = new UserAuditLogModel();
+                                AuditLog.Action = " Add Advertise Content Details";
+                                AuditLog.Description = "Advertise Content Details Added Successfully";
+                                AuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+                                AuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+                                AuditLog.CreatedDate = DateTime.Now;
+                               _userAuditLogService.AddUserAuditLog(AuditLog);
 
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = " Add Advertise Content Details";
-            userAuditLog.Description = "Advertise Content Details Added";
-            userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
-            userAuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
-            userAuditLog.CreatedDate = DateTime.Now;
-            userAuditLog.UpdatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
-            userAuditLog.UpdatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
+                            }
+                            else
+                            {
+                                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                                message = "Player Id does not exist";
+                            }
+                        }
+                       else
+                       {
+                            var advEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == model.AdvertiseContentId);
+                            if (advEntity != null)
+                            {
+                                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PlayerId == model.PlayerId && x.IsDeleted == false);
+                                if (existingPlayerEntity != null)
+                                {
+                                    advEntity.Title = model.Title;
+                                    advEntity.NationId = model.NationId;
+                                    advEntity.StateId = model.StateId;
+                                    advEntity.CityId = model.CityId;
+                                    advEntity.PlayerId = model.PlayerId;
+                                    if (model.AdvertiseFileName != null)
+                                    {
+                                        advEntity.AdvertiseFileName = model.AdvertiseFileName;
+                                    }
+                                    if (model.AdvertiseFilePath != null)
+                                    {
+                                        advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
+                                    }
+                                    //advEntity.AdvertiseFileName = model.AdvertiseFileName;
+                                    //advEntity.AdvertiseFilePath = model.AdvertiseFilePath;
+                                    advEntity.IsGlobal = model.IsGlobal;
+                                    advEntity.ContentTypeId = model.ContentTypeId;
+                                    advEntity.IsFree = model.IsFree;
+                                    advEntity.StartDate = model.StartDate;
+                                    advEntity.EndDate = model.EndDate;
+                                    advEntity.Approved = null;
+                                    advEntity.UpdatedBy = model.UpdatedBy;
+                                    advEntity.UpdatedDate = DateTime.Now;
+                                    advEntity.FinalPrice = model.FinalPrice;
+                                    advEntity.IsDeleted = false;
+                                    context.AdvContentDetails.Update(advEntity);
+                                    context.SaveChanges();
+                                    transaction.Commit();
+                                    message = GlobalConstants.AdvContentDetailUpdateMessage;
+                                }
+                                else
+                                {
+                                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                                    message = "Player Id does not exist";
+                                }
+                            }
+                       }
+                        var userAuditLog = new UserAuditLogModel();
+                        userAuditLog.Action = "Edit Advertise Content Details";
+                        userAuditLog.Description = "Advertise Content Details Updated Successfully";
+                        userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+                        userAuditLog.UpdatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+                        userAuditLog.UpdatedDate = DateTime.Now;
+                        _userAuditLogService.AddUserAuditLog(userAuditLog);
+                   }
+                   catch (Exception ex)
+                   {
+                        int? userIdForLog;
+                        if (model.UpdatedBy != 0)
+                        {
+                            userIdForLog = model.UpdatedBy;
+                        }
+                        else
+                        {
+                            userIdForLog = model.CreatedBy;
+                        }
+                        transaction.Rollback();
+                        var errorMessage = _logService.SaveErrorLogs(new LogEntry
+                        {
+                            LogType = "Error",
+                            StackTrace = ex.StackTrace,
+                            AdditionalInformation = ex.Message,
+                            CreatedDate = DateTime.Now,
+                            LogSource = "Add/EditAddAdvContentDetail",
+                            UserId = userIdForLog,
+                            LogMessage = "Exception occurred in AddAdvContentDetail method"
+                        });
+                        return "Something went wrong!";
+                   }
+              }
             return message;
-        }
+          }
 
 
         /// <summary>
@@ -155,7 +193,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Approve Advertise Content Details";
-            userAuditLog.Description = "Advertise Content Details Approved";
+            userAuditLog.Description = "Advertise Content Details Approved Successfully";
             userAuditLog.UserId = (int)userplayerEntity.CreatedBy;
             userAuditLog.CreatedBy = userplayerEntity.CreatedBy;
             userAuditLog.CreatedDate= DateTime.Now;
@@ -173,36 +211,69 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             string Message = "";
-            var advtcontentEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == AdvertiseContentId);
-            if (advtcontentEntity != null)
+            using (var transaction = context.Database.BeginTransaction())
             {
-                if (advtcontentEntity.Approved == true)
-                {
-                    errorResponseModel.StatusCode = HttpStatusCode.BadRequest;
-                    Message = "Cannot delete approved advtcontent";
-                    return Message;
-                }
-                if (advtcontentEntity.IsDeleted == true)
-                {
-                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                    errorResponseModel.Message = "Advt content details already deleted.";
-                    return null;
-                }
-                advtcontentEntity.IsDeleted = true;
-                context.SaveChanges();
-                Message = GlobalConstants.AdvContentDetailDeleteMessage;
-
+                var advtcontentEntity = context.AdvContentDetails.FirstOrDefault(x => x.AdvertiseContentId == AdvertiseContentId);               
+                  try
+                  {
+                      if (advtcontentEntity != null)
+                      {
+                            if (advtcontentEntity.Approved == true)
+                            {
+                                errorResponseModel.StatusCode = HttpStatusCode.BadRequest;
+                                Message = "Cannot delete approved advtcontent";
+                                return Message;
+                            }
+                            if (advtcontentEntity.IsDeleted == true)
+                            {
+                                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                                errorResponseModel.Message = "Advt content details already deleted.";
+                                return null;
+                            }
+                            advtcontentEntity.IsDeleted = true;
+                            context.SaveChanges();
+                            transaction.Commit();
+                            Message = GlobalConstants.AdvContentDetailDeleteMessage;
+                      }
+                      var userAuditLog = new UserAuditLogModel();
+                      userAuditLog.Action = " Delete Advertise Content Details";
+                      userAuditLog.Description = "Advertise Content Details Deleted Successfully";
+                      userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
+                      userAuditLog.CreatedDate = DateTime.Now;
+                      userAuditLog.CreatedBy = advtcontentEntity.CreatedBy;
+                      userAuditLog.UpdatedBy = advtcontentEntity.CreatedBy;
+                      userAuditLog.UpdatedDate = DateTime.Now;
+                      _userAuditLogService.AddUserAuditLog(userAuditLog);
+                  }
+                  catch(Exception ex)
+                  {
+                        int? userIdForLog = null;
+                        if (advtcontentEntity != null)
+                        {
+                            if (advtcontentEntity.UpdatedBy != 0)
+                            {
+                                userIdForLog = advtcontentEntity.UpdatedBy;
+                            }
+                            else
+                            {
+                                userIdForLog = advtcontentEntity.CreatedBy;
+                            }
+                        }
+                        transaction.Rollback();
+                        var errorMessage = _logService.SaveErrorLogs(new LogEntry
+                        {
+                            LogType = "Error",
+                            StackTrace = ex.StackTrace,
+                            AdditionalInformation = ex.Message,
+                            CreatedDate = DateTime.Now,
+                            LogSource = "DeleteAdvContentMapping",
+                            UserId = userIdForLog,
+                            LogMessage = "Exception occurred in DeleteAdvContentMapping method"
+                        });
+                        return "Something went wrong!";
+                  }
+                 return "{\"message\": \"" + Message + "\"}";
             }
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = " Delete Advertise Content Details";
-            userAuditLog.Description = "Advertise Content Details Deleted";
-            userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
-            userAuditLog.CreatedDate = DateTime.Now;
-            userAuditLog.CreatedBy = advtcontentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = advtcontentEntity.CreatedBy;
-            userAuditLog.UpdatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
-            return "{\"message\": \"" + Message + "\"}";
         }
 
         public string DeniedAdvContentDetail(AdvContentComment model, ref ErrorResponseModel errorResponseModel)
@@ -218,7 +289,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Denie Advertise Content Details";
-            userAuditLog.Description = "Advertise Content Details Denied";
+            userAuditLog.Description = "Advertise Content Details Denied Successfully";
             userAuditLog.UserId = (int)contentupdateEntity.CreatedBy;
             userAuditLog.UpdatedBy = contentupdateEntity.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;

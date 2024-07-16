@@ -55,7 +55,7 @@ namespace IM10.BAL.Implementaion
                 message = GlobalConstants.EndorsmentTypeSaveMessage;
                 var userAuditLog = new UserAuditLogModel();
                 userAuditLog.Action = " Add Endorsment Type";
-                userAuditLog.Description = "Endorsment Type Added";
+                userAuditLog.Description = "Endorsment Type Added Successfully";
                 userAuditLog.UserId = (int)model.CreatedBy;
                 userAuditLog.CreatedBy = model.CreatedBy;
                 userAuditLog.CreatedDate = DateTime.Now;
@@ -77,7 +77,7 @@ namespace IM10.BAL.Implementaion
                     message = GlobalConstants.EndorsmentTypeUpdateMessage;
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Update Endorsment Type ";
-                    userAuditLog.Description = "Endorsment Type Updated";
+                    userAuditLog.Description = "Endorsment Type Updated Successfully";
                     userAuditLog.UserId = (int)model.UpdatedBy;
                     userAuditLog.UpdatedBy = model.UpdatedBy;
                     userAuditLog.UpdatedDate = DateTime.Now;
@@ -113,7 +113,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Endorsment Type";
-            userAuditLog.Description = " Endorsment Type Deleted";
+            userAuditLog.Description = " Endorsment Type Deleted Successfully";
             userAuditLog.UserId = (int)endorsmentEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = endorsmentEntity.CreatedBy;

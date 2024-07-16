@@ -38,7 +38,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllState")]
-        [Authorize]
         [ProducesResponseType(typeof(StateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -71,7 +70,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllCountry")]
-        [Authorize]
         [ProducesResponseType(typeof(CountryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -102,7 +100,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllCity")]
-        [Authorize]
         [ProducesResponseType(typeof(CityModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -133,7 +130,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllLanguage")]
-        [Authorize]
         [ProducesResponseType(typeof(LanguageModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -166,7 +162,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllCategory")]
-        [Authorize]
         [ProducesResponseType(typeof(CategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -198,7 +193,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllSubCategory")]
-        [Authorize]
         [ProducesResponseType(typeof(SubCategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -231,7 +225,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllContentType")]
-        [Authorize]
         [ProducesResponseType(typeof(ContentTypeModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -262,7 +255,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByStateId/{stateId}")]
-        [Authorize]
         [ProducesResponseType(typeof(StateModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -293,7 +285,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByCountryId/{countryId}")]
-        [Authorize]
         [ProducesResponseType(typeof(CountryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -324,7 +315,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByCityId/{cityId}")]
-        [Authorize]
         [ProducesResponseType(typeof(CityModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -355,7 +345,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByLanguageId/{languageId}")]
-        [Authorize]
         [ProducesResponseType(typeof(LanguageModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -387,7 +376,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByCategoryId/{categoryId}")]
-        [Authorize]
         [ProducesResponseType(typeof(CategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -419,7 +407,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetBySubCategoryId/{subcategoryId}")]
-        [Authorize]
         [ProducesResponseType(typeof(SubCategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -451,7 +438,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetByContentTypeId/{contenttypeId}")]
-        [Authorize]
         [ProducesResponseType(typeof(ContentTypeModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -538,7 +524,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetSubcategoryByCategoryId/{categoryId}")]
-        [Authorize]
         [ProducesResponseType(typeof(SubCategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -572,7 +557,6 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpGet("GetAllSports")]
-        [Authorize]
         [ProducesResponseType(typeof(SportModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -593,7 +577,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message );
+                return StatusCode(StatusCodes.Status500InternalServerError,"Something went wrong!" );
             }
         }
 
@@ -604,7 +588,6 @@ namespace IM10.API.Controllers
         /// <param name="sportId"></param>
         /// <returns></returns>
         [HttpGet("GetAllCategoryBySportId/{sportId}")]
-        [Authorize]
         [ProducesResponseType(typeof(CategoryModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -625,7 +608,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
     }

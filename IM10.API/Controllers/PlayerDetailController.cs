@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 
 namespace IM10.API.Controllers
@@ -227,9 +228,14 @@ namespace IM10.API.Controllers
                     productModel = playerDetailService.AddPlayerDetail(model, ref errorMessage);
                 
                 if (!string.IsNullOrEmpty(productModel))
-                {
-                    return Ok(productModel);
-                }
+                    if (productModel != "player already exist with same pan card number")
+                    {
+                        return Ok(productModel);
+                    }
+                    else if (productModel == "player already exist with same pan card number")
+                    {
+                        return NotFound(productModel);
+                    }
                 return ReturnErrorResponse(errorMessage);
             }
             catch (Exception ex)
@@ -350,15 +356,17 @@ namespace IM10.API.Controllers
                     }
                 }
                 string productModel = "";
-
                 if (model.PlayerId != 0)
-
-                   productModel = playerDetailService.EditPlayerDetail(model, ref errorMessage);
-
+                productModel = playerDetailService.EditPlayerDetail(model, ref errorMessage);
                 if (!string.IsNullOrEmpty(productModel))
-                {
-                    return Ok(productModel);
-                }
+                    if (productModel != "player already exist with same pan card number")
+                    {
+                        return Ok(productModel);
+                    }
+                    else if (productModel == "player already exist with same pan card number")
+                    {
+                        return NotFound(productModel);
+                    }
                 return ReturnErrorResponse(errorMessage);
             }
             catch (Exception ex)
@@ -391,7 +399,14 @@ namespace IM10.API.Controllers
                 {
                     return Ok(Model);
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception)
             {
@@ -597,16 +612,20 @@ namespace IM10.API.Controllers
                 {
                     return Ok(Model);
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
-
-
-
 
 
         /// <summary>

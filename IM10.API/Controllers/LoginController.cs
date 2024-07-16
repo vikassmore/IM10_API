@@ -90,7 +90,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -131,7 +131,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
         /// <summary>
@@ -141,7 +141,7 @@ namespace IM10.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpPost("VerifyOtp")]
-        public IActionResult VerifyOtp(string otp, int userId, string deviceToken)
+        public IActionResult VerifyOtp(string otp, long userId, string deviceToken)
         {
             ErrorResponseModel errorResponseModel = null;
             try
@@ -174,24 +174,28 @@ namespace IM10.API.Controllers
                     {
                         token = new JwtSecurityTokenHandler().WriteToken(token),
                         authData.RoleId,
-                        authData.Role,
                         authData.UserId,
                         authData.MobileNo,
                         authData.CountryCode,
                         authData.StateId,
                         authData.CityId,
-                        authData.DeviceToken
+                        authData.DeviceToken,
+                        authData.FullName
                     });
                 }
                 else if(errorResponseModel != null && errorResponseModel.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     return StatusCode((int)HttpStatusCode.Unauthorized, errorResponseModel.Message);
                 }
+                else if (errorResponseModel != null && errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return StatusCode((int)HttpStatusCode.NotFound, errorResponseModel.Message);
+                }
                 return ReturnErrorResponse(errorResponseModel);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
 
             }
         }
@@ -227,7 +231,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -243,15 +247,12 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileUserProfile(int userId)
+        public IActionResult GetMobileUserProfile(long userId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (userId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+               
                 var userModel = _authService.GetMobileUserProfile(userId, ref errorResponseModel);
 
                 if (userModel != null)
@@ -263,7 +264,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -285,11 +286,41 @@ namespace IM10.API.Controllers
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (userId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+                
                 var userModel =_authService.MobileLogOut (userId,  deviceToken, ref errorResponseModel);
+
+                if (userModel != null)
+                {
+                    return Ok(userModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,"Something went wrong!");
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// method for check login status of  user 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpPost("DeleteStatusOfUser")]
+        [ProducesResponseType(typeof(LoginStaus), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult DeleteStatusOfUser(long userId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {               
+                var userModel = _authService.DeleteStatusOfUser(userId);
 
                 if (userModel != null)
                 {
@@ -303,40 +334,6 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
             }
         }
-
-
-
-
-        /*/// <summary>
-        /// Get Mobile User Profile
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        [HttpPost("LoginStatusOfUser")]
-        [ProducesResponseType(typeof(LoginStaus), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
-        public IActionResult LoginStatusOfUser(string Mobile)
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-                
-                var userModel = _authService.LoginStatusOfUser(Mobile);
-
-                if (userModel != null)
-                {
-                    return Ok(userModel);
-                }
-
-                return ReturnErrorResponse(errorResponseModel);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
-            }
-        }*/
 
 
 
@@ -367,9 +364,44 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
+
+        /// <summary>
+        /// method for Delete Mobile User Account 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="deviceToken"></param>
+        /// <returns></returns>
+        [HttpPost("DeleteMobileUserAccount")]
+        [ProducesResponseType(typeof(DeleteAccountModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult DeleteMobileUserAccount(long userId,string deviceToken)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                
+                var userModel = _authService.DeleteMobileUserAccount(userId,deviceToken);
+
+                if (userModel != null)
+                {
+                    return Ok(userModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
+            }
+        }
+
     }
 }
 

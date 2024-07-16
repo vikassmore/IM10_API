@@ -64,7 +64,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add Content Update Details";
-            userAuditLog.Description = "Content Update Details Added";
+            userAuditLog.Description = "Content Update Details Added Successfully";
             userAuditLog.UserId = (int)model.CreatedBy;
             userAuditLog.CreatedBy = model.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
@@ -106,7 +106,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Content Update Details";
-            userAuditLog.Description = " Content Update Details Deleted";
+            userAuditLog.Description = " Content Update Details Deleted Successfully";
             userAuditLog.UserId = (int)contentEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = contentEntity.CreatedBy;
@@ -127,7 +127,6 @@ namespace IM10.BAL.Implementaion
                 context.SaveChanges();
                 Message = GlobalConstants.DeniedSuccessfully;
             }
-
             return Message;
         }
 

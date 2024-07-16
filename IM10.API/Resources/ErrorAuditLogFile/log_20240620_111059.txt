@@ -1,0 +1,42 @@
+
+Log Entry : 11:10:59 20 June 2024
+  :
+  :DeviceId: dWmFTTPMQnm_dpO5t8h9py:APA91bEzjczlsRdeCXpj1z_WrftVaKeiQKmCh5eIU_ZZzx3XH66o3oJeEg9nfJd7qMUTxKJkHWVjg5CCNS7Ki-1AS3a3WG5ISeW4KEfx18wnzKg8199C_0B-0eAqMfBTNjRJn4Ff0q0k
+AccessToken: ya29.c.c0AY_VpZjifdIumb0IDcsqx9X52pyMOLF9PdfyBWQx6z1s4lZRAeC5dsnAPVlUL8flXaMBVBnaGLJ9P8sNq_Gl75XuE9UmFrYYdyGb9Yc7VHXeablHwUsKOVMSrN0Uk0QhbHM58NBa0Kyzpy4pegs1F0DRYPNWBmQuCkYDWiXUsndFcAwWhHkfVeVD0wKBUAnOv5xCJjt2Odw-FDLCHTuxx8ZMTV-rd6TR9kBRP3jqVPhaujMTh3DbhegmNAXwfKYCrB_aKAKu1U0SFgLdjdTDTBM3B3eBAE18KPuFlkH4eOCTCYItdf88afAG3ASV0Zy4KNSYshVZogEp7gWmUEoUX8H00WyFLimln7piET1tilvzfaXOQ1Ddsx0zEwMH388Cz6aOst9U1nioR6tbkBJy_Wy654QBMsgVx0wRauwwWneRkuQglRRacs-RMduh65huOow706ueS0SwZtfX6kjqIqIVm_Xqb7owhS-eBonQxWdqFao1UdnqzMrx8qil_UtO-xfoyk1kV_S0ew1bhwf2k84pib-RR7VXbIwBroIe8XYJ6YYdy64Wk9sBllVSeXchbFS7pBO_ctyQB58l9fwg57dj_zYr1wq9M-tFl_qfvf_1RcMrg35JrJ7cq38dWIa1y7Y_ujf0UqquZi6tcVMqecW95h0ibZsutiV38RM-YwbtUth_gYameIvitq_-6aMpxXgUynFyvvy3kxv0QuOtOxvpj9a61jRiFi0783kwn4s6fFxIb7yxyXaurXuw_jhmjMWyXdtydrzhRJeJcjBYltnU4tg6u90eoqzmpzXZVZUcvl0O5blFkq-XX_bIeSjcesv5gUidFmufrjsX6OY0a5v00Yi9YZ2258Z7-OgVyZForuqtFkjoteFaJlO-1buoBqSj4bXQvcmv7QmZ0JMq0Fr7IdZ22xnfxdMuW8OsBuWloft7zvcV2kn73sov9Mklh0QSJxxfbjjBUjYlihctX5jnOIhpxu3Wn12axmbQZQz1X_p67dmbY29
+Error: {
+  "error": {
+    "code": 403,
+    "message": "SenderId mismatch",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+        "errorCode": "SENDER_ID_MISMATCH"
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"dWmFTTPMQnm_dpO5t8h9py:APA91bEzjczlsRdeCXpj1z_WrftVaKeiQKmCh5eIU_ZZzx3XH66o3oJeEg9nfJd7qMUTxKJkHWVjg5CCNS7Ki-1AS3a3WG5ISeW4KEfx18wnzKg8199C_0B-0eAqMfBTNjRJn4Ff0q0k","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hello dipali","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: dWmFTTPMQnm_dpO5t8h9py:APA91bEzjczlsRdeCXpj1z_WrftVaKeiQKmCh5eIU_ZZzx3XH66o3oJeEg9nfJd7qMUTxKJkHWVjg5CCNS7Ki-1AS3a3WG5ISeW4KEfx18wnzKg8199C_0B-0eAqMfBTNjRJn4Ff0q0k
+AccessToken: ya29.c.c0AY_VpZjifdIumb0IDcsqx9X52pyMOLF9PdfyBWQx6z1s4lZRAeC5dsnAPVlUL8flXaMBVBnaGLJ9P8sNq_Gl75XuE9UmFrYYdyGb9Yc7VHXeablHwUsKOVMSrN0Uk0QhbHM58NBa0Kyzpy4pegs1F0DRYPNWBmQuCkYDWiXUsndFcAwWhHkfVeVD0wKBUAnOv5xCJjt2Odw-FDLCHTuxx8ZMTV-rd6TR9kBRP3jqVPhaujMTh3DbhegmNAXwfKYCrB_aKAKu1U0SFgLdjdTDTBM3B3eBAE18KPuFlkH4eOCTCYItdf88afAG3ASV0Zy4KNSYshVZogEp7gWmUEoUX8H00WyFLimln7piET1tilvzfaXOQ1Ddsx0zEwMH388Cz6aOst9U1nioR6tbkBJy_Wy654QBMsgVx0wRauwwWneRkuQglRRacs-RMduh65huOow706ueS0SwZtfX6kjqIqIVm_Xqb7owhS-eBonQxWdqFao1UdnqzMrx8qil_UtO-xfoyk1kV_S0ew1bhwf2k84pib-RR7VXbIwBroIe8XYJ6YYdy64Wk9sBllVSeXchbFS7pBO_ctyQB58l9fwg57dj_zYr1wq9M-tFl_qfvf_1RcMrg35JrJ7cq38dWIa1y7Y_ujf0UqquZi6tcVMqecW95h0ibZsutiV38RM-YwbtUth_gYameIvitq_-6aMpxXgUynFyvvy3kxv0QuOtOxvpj9a61jRiFi0783kwn4s6fFxIb7yxyXaurXuw_jhmjMWyXdtydrzhRJeJcjBYltnU4tg6u90eoqzmpzXZVZUcvl0O5blFkq-XX_bIeSjcesv5gUidFmufrjsX6OY0a5v00Yi9YZ2258Z7-OgVyZForuqtFkjoteFaJlO-1buoBqSj4bXQvcmv7QmZ0JMq0Fr7IdZ22xnfxdMuW8OsBuWloft7zvcV2kn73sov9Mklh0QSJxxfbjjBUjYlihctX5jnOIhpxu3Wn12axmbQZQz1X_p67dmbY29
+Error: {
+  "error": {
+    "code": 403,
+    "message": "SenderId mismatch",
+    "status": "PERMISSION_DENIED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+        "errorCode": "SENDER_ID_MISMATCH"
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"dWmFTTPMQnm_dpO5t8h9py:APA91bEzjczlsRdeCXpj1z_WrftVaKeiQKmCh5eIU_ZZzx3XH66o3oJeEg9nfJd7qMUTxKJkHWVjg5CCNS7Ki-1AS3a3WG5ISeW4KEfx18wnzKg8199C_0B-0eAqMfBTNjRJn4Ff0q0k","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hello dipali","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+

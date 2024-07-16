@@ -21,7 +21,7 @@ namespace IM10.Models
         public string MobileNo { get; set; }
         public string? DeviceToken { get; set; }
         public string? CountryCode { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public int? CityId { get; set; }
         public int? StateId { get; set; }
         public string FirstName { get; set; } = null!;

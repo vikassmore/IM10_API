@@ -1,0 +1,52 @@
+
+Log Entry : 10:50:39 12 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: 
+Error: {
+  "error": {
+    "code": 401,
+    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "status": "UNAUTHENTICATED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "CREDENTIALS_MISSING",
+        "domain": "googleapis.com",
+        "metadata": {
+          "method": "google.firebase.fcm.v1.FcmService.SendMessage",
+          "service": "fcm.googleapis.com"
+        }
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: 
+Error: {
+  "error": {
+    "code": 401,
+    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "status": "UNAUTHENTICATED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "CREDENTIALS_MISSING",
+        "domain": "googleapis.com",
+        "metadata": {
+          "method": "google.firebase.fcm.v1.FcmService.SendMessage",
+          "service": "fcm.googleapis.com"
+        }
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+

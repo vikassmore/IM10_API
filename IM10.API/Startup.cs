@@ -1,5 +1,5 @@
-
 using Castle.Core.Smtp;
+using Google.Apis.Auth.OAuth2;
 using IM10.API.Hubs;
 using IM10.BAL.Implementaion;
 using IM10.BAL.Interface;
@@ -7,6 +7,7 @@ using IM10.Entity.DataModels;
 using IM10.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -44,7 +45,7 @@ namespace IM10.API
 
             services.AddOptions();
             services.AddControllers();
-            
+            services.AddHttpClient();
             //configure SignalR
             services.AddSignalR();
             services.AddCors(options => {
@@ -68,10 +69,9 @@ namespace IM10.API
             services.AddHsts(options =>
             {
                 options.IncludeSubDomains = true; 
-                options.Preload = true; 
+                options.Preload = true;
                 options.MaxAge = TimeSpan.FromDays(365); 
             });
-
 
             services.Configure<FormOptions>(options =>
             {
@@ -102,8 +102,9 @@ namespace IM10.API
             services.AddScoped<IUserAuditLogService, UserAuditLogService>();
             services.AddScoped<IFCMNotificationService, FCMNotificationService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IEncryptionService, EncryptionService>();
             services.Configure<FcmNotificationSetting>(Configuration.GetSection("FcmNotification"));
-            services.Configure<SMSSettingModel>(Configuration.GetSection("SMSSettingTwilioModel"));
+            //services.Configure<SMSSettingModel>(Configuration.GetSection("SMSSettingTwilioModel"));
             // Adding jwtBearer Authentication  
 
             services.AddAuthentication(options =>
@@ -164,7 +165,7 @@ namespace IM10.API
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {                     
+        {
             if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
@@ -203,7 +204,7 @@ namespace IM10.API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-               Path.Combine(Directory.GetCurrentDirectory(), "Resources", "CompanyLogoFile")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Resources", "CompanyLogoFile")),
                 RequestPath = "/CompanyLogoFile",
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "video/image"
@@ -220,7 +221,7 @@ namespace IM10.API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-               Path.Combine(Directory.GetCurrentDirectory(), "Resources", "PlayerDataDetails")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Resources", "PlayerDataDetails")),
                 RequestPath = "/PlayerDataDetails",
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "video/image"
@@ -229,7 +230,7 @@ namespace IM10.API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-               Path.Combine(Directory.GetCurrentDirectory(), "Resources", "ScreenShotFile")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Resources", "ScreenShotFile")),
                 RequestPath = "/ScreenShotFile",
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "video/image"
@@ -238,10 +239,18 @@ namespace IM10.API
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-              Path.Combine(Directory.GetCurrentDirectory(), "Resources", "ErrorAuditLogFile")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Resources", "ErrorAuditLogFile")),
                 RequestPath = "/ErrorAuditLogFile",
                 ServeUnknownFileTypes = true,
                 
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Resources", "JsonFolder")),
+                RequestPath = "/JsonFolder",
+                ServeUnknownFileTypes = true,
             });
 
             app.UseSwagger();

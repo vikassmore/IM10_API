@@ -1,5 +1,4 @@
 ﻿using IM10.API.Hubs;
-using IM10.BAL.Implementaion;
 using IM10.BAL.Interface;
 using IM10.Common;
 using IM10.Models;
@@ -8,14 +7,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using StartUpX.Common;
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
@@ -26,28 +25,27 @@ namespace IM10.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ContentDetailController : BaseAPIController
     {
         IContentDetailService contentDetailService;
         private readonly IWebHostEnvironment iwebhostingEnvironment;
+        private readonly IConfiguration _configuration;
 
-        static String URLffmpeg;
-        private ConfigurationModel _configurationModel;
-        private readonly IHubContext<NotificationsHubService> _hubContext;
 
         /// <summary>
         /// Used to initialize controller and inject contentDetails service
         /// </summary>
         /// <param name="userPlayerService"></param>
-        public ContentDetailController(IContentDetailService _contentDetailService, IOptions<ConfigurationModel> config, IWebHostEnvironment _iwebhostingEnvironment, IHubContext<NotificationsHubService> hubContext)
+        public ContentDetailController(IContentDetailService _contentDetailService, IConfiguration configuration,IWebHostEnvironment _iwebhostingEnvironment)
         {
             contentDetailService = _contentDetailService;
-            URLffmpeg = config.Value.URLffmpeg;
             iwebhostingEnvironment = _iwebhostingEnvironment;
-            _hubContext= hubContext;
+            _configuration = configuration;
         }
 
+
+        
 
 
         /// <summary>
@@ -266,27 +264,6 @@ namespace IM10.API.Controllers
             }
 
         }
-
-
-        public static void GetThumbnail(string video, string thumbnail)
-        {
-            var cmd = "-y  -i " + '"' + video + '"' + " -an -vf scale=320x240 " + '"' + thumbnail + '"';
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = URLffmpeg,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                Arguments = cmd
-            };
-
-            using (var process = new Process { StartInfo = startInfo })
-            {
-                process.Start();
-                process.WaitForExit(5000);
-            }
-        }
-
 
         /// <summary>
         /// Update an contentDetails
@@ -508,7 +485,14 @@ namespace IM10.API.Controllers
                 {
                     return BadRequest(contentModel);
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception)
             {
@@ -562,7 +546,7 @@ namespace IM10.API.Controllers
         /// <param name="contentId"></param>
         /// <returns></returns>
         [HttpPost("ApproveContentDetail/{contentId}")]
-        [Authorize]
+       // [Authorize]
         [DisableRequestSizeLimit]
         [ProducesResponseType(typeof(ContentDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
@@ -579,12 +563,19 @@ namespace IM10.API.Controllers
                 if (contentModel != null)
                 {
                    return Ok(contentModel);                  
-                } 
-                return ReturnErrorResponse(errorResponseModel);               
+                }
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 

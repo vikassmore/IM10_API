@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.VisualBasic;
 using System;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -145,9 +146,16 @@ namespace IM10.API.Controllers
 
                 if (contentModel != null)
                 {
-                    return Ok(contentModel);
+                    return Ok(contentModel );
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception)
             {

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 
 namespace IM10.API.Controllers
@@ -224,7 +225,14 @@ namespace IM10.API.Controllers
                 {
                     return Ok(listingModel);
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception)
             {

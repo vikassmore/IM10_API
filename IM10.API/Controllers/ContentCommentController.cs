@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Twilio.TwiML.Messaging;
 
@@ -65,7 +66,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -76,7 +77,7 @@ namespace IM10.API.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpPost("AddContentCommentReply")]
-       // [Authorize(Roles = "Player Representative Admin")]
+        //[Authorize(Roles = "Player Representative Admin")]
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
@@ -94,18 +95,24 @@ namespace IM10.API.Controllers
             try
             {
 
-                CommentNotificationModel commentModel =await contentCommentService.AddContentCommentReply(model);
+               CommentNotificationModel commentModel =await contentCommentService.AddContentCommentReply(model);
 
                 if (commentModel != null)
                 {
                     return Ok(commentModel);
                 }
-
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -139,8 +146,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -169,11 +175,18 @@ namespace IM10.API.Controllers
                 {
                     return Ok(Model);
                 }
-                return ReturnErrorResponse(errorResponseModel);
+                else if (errorResponseModel.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound(errorResponseModel.Message);
+                }
+                else
+                {
+                    return ReturnErrorResponse(errorResponseModel);
+                }
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
 
@@ -205,7 +218,7 @@ namespace IM10.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
     }

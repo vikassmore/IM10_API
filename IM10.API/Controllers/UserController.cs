@@ -36,8 +36,8 @@ namespace IM10.API.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetUserById/{userId}")]
-        [Authorize]
-        [ProducesResponseType(typeof(UserModel), 200)]
+       // [Authorize]
+        [ProducesResponseType(typeof(UserInformation), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
@@ -169,7 +169,7 @@ namespace IM10.API.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
                 }
 
             }

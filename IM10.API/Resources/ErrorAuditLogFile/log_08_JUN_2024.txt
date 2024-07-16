@@ -1,0 +1,694 @@
+
+Log Entry : 13:14:55 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 13:14:56 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 13:14:56 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 13:14:56 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 13:14:56 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Starting to get access token
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Starting to get access token
+IsException: False
+DataPayload: 
+
+
+Log Entry : 13:14:57 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Access token retrieved: ya29.c.c0AY_VpZiG0hrNJCcCl2FSe0MG2K29TpaXt2Nme6eLzyGArMIVPS1y5v6um2c8o1g3qeg_AK62FzMowU5onCGpMuUj6txytmsZr_PvT8Zc8GWmSP-39a4vH0ddX8i3daPkQBAJ4hulK1KwjgqGMe03lO9oHHOsVte1y5ZajogZ_nTyVcCWY61PH8ojG9Id9ZVSRBdNGQhXxsa3QeHw9O7D-jk7JmTmLEpiapiEKVfjrhkkplsR3IyCe_FX381m1Wxg4Xb6kV6KAcPijM2kG-pORUDk2tRvLailw6HnXFefybbUQIKJUlzmr8Mzpx5AW65YH4IwpSAfb9hKN7oQWBbQ09N7vv7Fx1FhpxayhUi-GZotr_al_s07zJ5bL385DbebMsoWah9h9S_YbYlYwQtQp2O8dvMRwJYeepa--bz_g10Wz4d2hX6r8k8VrlhZ5lmu-zwFmOzFFr4y01rOkSpxwmbB5t2Igf1wmv6f61f0gec1o_jMJpruvFyWImIs8nMQOzZjsZWic0tb1l_rqUImddx5uFZJUwVfQv9xwah6pzQR_3e6uBqSmSabZmoWfcQ96x2F94cYsXuk4WkgYu_WOv9g0z1uZ8Vnbx-kfikWF129jOW_S1YvqyR_oZoXzpuU2VfMWj1YiJ_4O_sp1dB74q30x1ysleRJmaUyQa8uk4lJRl7r5UeWqJtZMvwtzSO8RaIojnMyo3zzUWdYFn7avcq2Bb7r0dn1Q778IMitt755qum-vJQm8qzfS6d2whWfpIhe6o5_y72X6u904bodOR0Zo_fiZO9W0lR-ts8oj9WY3YBsfmssiRuutQhnvSdRmB1ht4JbwbOgp69JVJUdmfoQlOJYV9ulgI2IuzdhkZoIBk5hJyt27mcbivJZkud8ckJhetaawO_lehBsaeQa20vWpYmcOVB7l_p0tootdBW-YgIjg_sZMlwbuR_97k2qv6YUb8Xyr3rrY4zWWQ4rS429Ifrebsv9xJIjuadB5feJ1ebtY-FuVhd
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Access token retrieved: ya29.c.c0AY_VpZiG0hrNJCcCl2FSe0MG2K29TpaXt2Nme6eLzyGArMIVPS1y5v6um2c8o1g3qeg_AK62FzMowU5onCGpMuUj6txytmsZr_PvT8Zc8GWmSP-39a4vH0ddX8i3daPkQBAJ4hulK1KwjgqGMe03lO9oHHOsVte1y5ZajogZ_nTyVcCWY61PH8ojG9Id9ZVSRBdNGQhXxsa3QeHw9O7D-jk7JmTmLEpiapiEKVfjrhkkplsR3IyCe_FX381m1Wxg4Xb6kV6KAcPijM2kG-pORUDk2tRvLailw6HnXFefybbUQIKJUlzmr8Mzpx5AW65YH4IwpSAfb9hKN7oQWBbQ09N7vv7Fx1FhpxayhUi-GZotr_al_s07zJ5bL385DbebMsoWah9h9S_YbYlYwQtQp2O8dvMRwJYeepa--bz_g10Wz4d2hX6r8k8VrlhZ5lmu-zwFmOzFFr4y01rOkSpxwmbB5t2Igf1wmv6f61f0gec1o_jMJpruvFyWImIs8nMQOzZjsZWic0tb1l_rqUImddx5uFZJUwVfQv9xwah6pzQR_3e6uBqSmSabZmoWfcQ96x2F94cYsXuk4WkgYu_WOv9g0z1uZ8Vnbx-kfikWF129jOW_S1YvqyR_oZoXzpuU2VfMWj1YiJ_4O_sp1dB74q30x1ysleRJmaUyQa8uk4lJRl7r5UeWqJtZMvwtzSO8RaIojnMyo3zzUWdYFn7avcq2Bb7r0dn1Q778IMitt755qum-vJQm8qzfS6d2whWfpIhe6o5_y72X6u904bodOR0Zo_fiZO9W0lR-ts8oj9WY3YBsfmssiRuutQhnvSdRmB1ht4JbwbOgp69JVJUdmfoQlOJYV9ulgI2IuzdhkZoIBk5hJyt27mcbivJZkud8ckJhetaawO_lehBsaeQa20vWpYmcOVB7l_p0tootdBW-YgIjg_sZMlwbuR_97k2qv6YUb8Xyr3rrY4zWWQ4rS429Ifrebsv9xJIjuadB5feJ1ebtY-FuVhd
+IsException: False
+DataPayload: 
+
+
+Log Entry : 13:15:22 08 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZiG0hrNJCcCl2FSe0MG2K29TpaXt2Nme6eLzyGArMIVPS1y5v6um2c8o1g3qeg_AK62FzMowU5onCGpMuUj6txytmsZr_PvT8Zc8GWmSP-39a4vH0ddX8i3daPkQBAJ4hulK1KwjgqGMe03lO9oHHOsVte1y5ZajogZ_nTyVcCWY61PH8ojG9Id9ZVSRBdNGQhXxsa3QeHw9O7D-jk7JmTmLEpiapiEKVfjrhkkplsR3IyCe_FX381m1Wxg4Xb6kV6KAcPijM2kG-pORUDk2tRvLailw6HnXFefybbUQIKJUlzmr8Mzpx5AW65YH4IwpSAfb9hKN7oQWBbQ09N7vv7Fx1FhpxayhUi-GZotr_al_s07zJ5bL385DbebMsoWah9h9S_YbYlYwQtQp2O8dvMRwJYeepa--bz_g10Wz4d2hX6r8k8VrlhZ5lmu-zwFmOzFFr4y01rOkSpxwmbB5t2Igf1wmv6f61f0gec1o_jMJpruvFyWImIs8nMQOzZjsZWic0tb1l_rqUImddx5uFZJUwVfQv9xwah6pzQR_3e6uBqSmSabZmoWfcQ96x2F94cYsXuk4WkgYu_WOv9g0z1uZ8Vnbx-kfikWF129jOW_S1YvqyR_oZoXzpuU2VfMWj1YiJ_4O_sp1dB74q30x1ysleRJmaUyQa8uk4lJRl7r5UeWqJtZMvwtzSO8RaIojnMyo3zzUWdYFn7avcq2Bb7r0dn1Q778IMitt755qum-vJQm8qzfS6d2whWfpIhe6o5_y72X6u904bodOR0Zo_fiZO9W0lR-ts8oj9WY3YBsfmssiRuutQhnvSdRmB1ht4JbwbOgp69JVJUdmfoQlOJYV9ulgI2IuzdhkZoIBk5hJyt27mcbivJZkud8ckJhetaawO_lehBsaeQa20vWpYmcOVB7l_p0tootdBW-YgIjg_sZMlwbuR_97k2qv6YUb8Xyr3rrY4zWWQ4rS429Ifrebsv9xJIjuadB5feJ1ebtY-FuVhd
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1717832711980385%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"341","commentId":"1","title":"New Comment Arrived!","message":"heyyyyyyyyyy","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZiG0hrNJCcCl2FSe0MG2K29TpaXt2Nme6eLzyGArMIVPS1y5v6um2c8o1g3qeg_AK62FzMowU5onCGpMuUj6txytmsZr_PvT8Zc8GWmSP-39a4vH0ddX8i3daPkQBAJ4hulK1KwjgqGMe03lO9oHHOsVte1y5ZajogZ_nTyVcCWY61PH8ojG9Id9ZVSRBdNGQhXxsa3QeHw9O7D-jk7JmTmLEpiapiEKVfjrhkkplsR3IyCe_FX381m1Wxg4Xb6kV6KAcPijM2kG-pORUDk2tRvLailw6HnXFefybbUQIKJUlzmr8Mzpx5AW65YH4IwpSAfb9hKN7oQWBbQ09N7vv7Fx1FhpxayhUi-GZotr_al_s07zJ5bL385DbebMsoWah9h9S_YbYlYwQtQp2O8dvMRwJYeepa--bz_g10Wz4d2hX6r8k8VrlhZ5lmu-zwFmOzFFr4y01rOkSpxwmbB5t2Igf1wmv6f61f0gec1o_jMJpruvFyWImIs8nMQOzZjsZWic0tb1l_rqUImddx5uFZJUwVfQv9xwah6pzQR_3e6uBqSmSabZmoWfcQ96x2F94cYsXuk4WkgYu_WOv9g0z1uZ8Vnbx-kfikWF129jOW_S1YvqyR_oZoXzpuU2VfMWj1YiJ_4O_sp1dB74q30x1ysleRJmaUyQa8uk4lJRl7r5UeWqJtZMvwtzSO8RaIojnMyo3zzUWdYFn7avcq2Bb7r0dn1Q778IMitt755qum-vJQm8qzfS6d2whWfpIhe6o5_y72X6u904bodOR0Zo_fiZO9W0lR-ts8oj9WY3YBsfmssiRuutQhnvSdRmB1ht4JbwbOgp69JVJUdmfoQlOJYV9ulgI2IuzdhkZoIBk5hJyt27mcbivJZkud8ckJhetaawO_lehBsaeQa20vWpYmcOVB7l_p0tootdBW-YgIjg_sZMlwbuR_97k2qv6YUb8Xyr3rrY4zWWQ4rS429Ifrebsv9xJIjuadB5feJ1ebtY-FuVhd
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1717832711980385%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"341","commentId":"1","title":"New Comment Arrived!","message":"heyyyyyyyyyy","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 14:43:38 08 June 2024
+  :
+  :DeviceId: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+AccessToken:    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.ErrorAuditLogService.SaveErrorLogs(LogEntry logEntry) in D:\IM10NewRepository\IM10.BAL\Implementaion\ErrorAuditLogService.cs:line 252
+   at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 249
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 399
+Error: Core Microsoft SqlClient Data Provider
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+AccessToken:    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.ErrorAuditLogService.SaveErrorLogs(LogEntry logEntry) in D:\IM10NewRepository\IM10.BAL\Implementaion\ErrorAuditLogService.cs:line 252
+   at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 249
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 399
+Error: Core Microsoft SqlClient Data Provider
+IsException: False
+DataPayload: 
+
+
+Log Entry : 14:44:17 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 14:44:17 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 14:44:17 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 14:44:18 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 14:44:18 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Starting to get access token
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Starting to get access token
+IsException: False
+DataPayload: 
+
+
+Log Entry : 14:44:20 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Access token retrieved: ya29.c.c0AY_VpZh0Z_4cWNgxLVRRcpVQkBHx5TvZnbyELYiSQ8M6ohyes5oEzQjh1kJsy9cQEzj_AH3_Ew_vDUVSGXnQpvTfb1LOSVOK7gkKGM6G-PBnP3jbWc27nzt9dodPoDE9iGYebHZvlbQEv3_asDTQemMonokDO-mboJrZg0G0Xt5E9pptHdCzVAcWNGpxKllD8MsKp_HOQ-dYudy3hggGEgqpHEoSUWWvzBb_MCsgKLWKUA7nV_vdlOylQC-4KSSItKnbpMF50t6SBJuXwdpf4gm6h7Opx-xi4qPf2CbvsjhLcfaApE6Ag0OonjTuQu6OYUCMFSDM4a3PXWc0mIpsRNbt7mpOVLfEO8cjTIe0JTH_3rm2bLBOFd4L384DQOwXV9ld66zbkxsOpOhkgiFhdSlkQQto_VbFj71r01j24gIzS7M9dovIoYMmnRW7e5rWlxgQ6sv9ec8bdY_zop6rudZxl7BRO_pcJXp5e7ztijgefuRmX3kVrBYn8u1p_QOteJkbWYoSdhaOkJ948Sckc9ftktfBm1hyoJUhykXjbikjI77imyzr3y3Vlsmm055eU_Wyb29lqI33dxup4sYeexVb2pO001t9OebcpM5MrZvz8qgBj39sQn-qkgVe8q_h3WI1y7t91p6pYRQ3uJ1V_Zif6meQfkvd2XF7__qSaYwngQxW-ytr05gp05l2WIfMoI-JgogUkwWOiwemsIBUZ4XY_YWov9woa0SdQJtzuutsz8Z6q3ysxu4SbgdpM5Y5fUmuB42o0meVMb13lgny-xYhmZbh5_7V1Fj7eBkrIxkz4_uxfQmwFZ0rhWahpURbZ2diipuj2oc0myW5_YpJ7Qmp_pr6xqp3W3oXl5RR8t39xy7o1z3vkx9Undx40W14y1iOyoYbpMRyxsg9OSXgY_4h11yMQczuScSwsqdqzquzFf7cFFRqenlQYq94oJ2gYrqM-fcRinZ12uedurieQROM2em_oXizdRMFcvrRdXRwWVw38rc21sF
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Access token retrieved: ya29.c.c0AY_VpZh0Z_4cWNgxLVRRcpVQkBHx5TvZnbyELYiSQ8M6ohyes5oEzQjh1kJsy9cQEzj_AH3_Ew_vDUVSGXnQpvTfb1LOSVOK7gkKGM6G-PBnP3jbWc27nzt9dodPoDE9iGYebHZvlbQEv3_asDTQemMonokDO-mboJrZg0G0Xt5E9pptHdCzVAcWNGpxKllD8MsKp_HOQ-dYudy3hggGEgqpHEoSUWWvzBb_MCsgKLWKUA7nV_vdlOylQC-4KSSItKnbpMF50t6SBJuXwdpf4gm6h7Opx-xi4qPf2CbvsjhLcfaApE6Ag0OonjTuQu6OYUCMFSDM4a3PXWc0mIpsRNbt7mpOVLfEO8cjTIe0JTH_3rm2bLBOFd4L384DQOwXV9ld66zbkxsOpOhkgiFhdSlkQQto_VbFj71r01j24gIzS7M9dovIoYMmnRW7e5rWlxgQ6sv9ec8bdY_zop6rudZxl7BRO_pcJXp5e7ztijgefuRmX3kVrBYn8u1p_QOteJkbWYoSdhaOkJ948Sckc9ftktfBm1hyoJUhykXjbikjI77imyzr3y3Vlsmm055eU_Wyb29lqI33dxup4sYeexVb2pO001t9OebcpM5MrZvz8qgBj39sQn-qkgVe8q_h3WI1y7t91p6pYRQ3uJ1V_Zif6meQfkvd2XF7__qSaYwngQxW-ytr05gp05l2WIfMoI-JgogUkwWOiwemsIBUZ4XY_YWov9woa0SdQJtzuutsz8Z6q3ysxu4SbgdpM5Y5fUmuB42o0meVMb13lgny-xYhmZbh5_7V1Fj7eBkrIxkz4_uxfQmwFZ0rhWahpURbZ2diipuj2oc0myW5_YpJ7Qmp_pr6xqp3W3oXl5RR8t39xy7o1z3vkx9Undx40W14y1iOyoYbpMRyxsg9OSXgY_4h11yMQczuScSwsqdqzquzFf7cFFRqenlQYq94oJ2gYrqM-fcRinZ12uedurieQROM2em_oXizdRMFcvrRdXRwWVw38rc21sF
+IsException: False
+DataPayload: 
+
+
+Log Entry : 14:44:26 08 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZh0Z_4cWNgxLVRRcpVQkBHx5TvZnbyELYiSQ8M6ohyes5oEzQjh1kJsy9cQEzj_AH3_Ew_vDUVSGXnQpvTfb1LOSVOK7gkKGM6G-PBnP3jbWc27nzt9dodPoDE9iGYebHZvlbQEv3_asDTQemMonokDO-mboJrZg0G0Xt5E9pptHdCzVAcWNGpxKllD8MsKp_HOQ-dYudy3hggGEgqpHEoSUWWvzBb_MCsgKLWKUA7nV_vdlOylQC-4KSSItKnbpMF50t6SBJuXwdpf4gm6h7Opx-xi4qPf2CbvsjhLcfaApE6Ag0OonjTuQu6OYUCMFSDM4a3PXWc0mIpsRNbt7mpOVLfEO8cjTIe0JTH_3rm2bLBOFd4L384DQOwXV9ld66zbkxsOpOhkgiFhdSlkQQto_VbFj71r01j24gIzS7M9dovIoYMmnRW7e5rWlxgQ6sv9ec8bdY_zop6rudZxl7BRO_pcJXp5e7ztijgefuRmX3kVrBYn8u1p_QOteJkbWYoSdhaOkJ948Sckc9ftktfBm1hyoJUhykXjbikjI77imyzr3y3Vlsmm055eU_Wyb29lqI33dxup4sYeexVb2pO001t9OebcpM5MrZvz8qgBj39sQn-qkgVe8q_h3WI1y7t91p6pYRQ3uJ1V_Zif6meQfkvd2XF7__qSaYwngQxW-ytr05gp05l2WIfMoI-JgogUkwWOiwemsIBUZ4XY_YWov9woa0SdQJtzuutsz8Z6q3ysxu4SbgdpM5Y5fUmuB42o0meVMb13lgny-xYhmZbh5_7V1Fj7eBkrIxkz4_uxfQmwFZ0rhWahpURbZ2diipuj2oc0myW5_YpJ7Qmp_pr6xqp3W3oXl5RR8t39xy7o1z3vkx9Undx40W14y1iOyoYbpMRyxsg9OSXgY_4h11yMQczuScSwsqdqzquzFf7cFFRqenlQYq94oJ2gYrqM-fcRinZ12uedurieQROM2em_oXizdRMFcvrRdXRwWVw38rc21sF
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1717838061380760%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"notification controller check","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZh0Z_4cWNgxLVRRcpVQkBHx5TvZnbyELYiSQ8M6ohyes5oEzQjh1kJsy9cQEzj_AH3_Ew_vDUVSGXnQpvTfb1LOSVOK7gkKGM6G-PBnP3jbWc27nzt9dodPoDE9iGYebHZvlbQEv3_asDTQemMonokDO-mboJrZg0G0Xt5E9pptHdCzVAcWNGpxKllD8MsKp_HOQ-dYudy3hggGEgqpHEoSUWWvzBb_MCsgKLWKUA7nV_vdlOylQC-4KSSItKnbpMF50t6SBJuXwdpf4gm6h7Opx-xi4qPf2CbvsjhLcfaApE6Ag0OonjTuQu6OYUCMFSDM4a3PXWc0mIpsRNbt7mpOVLfEO8cjTIe0JTH_3rm2bLBOFd4L384DQOwXV9ld66zbkxsOpOhkgiFhdSlkQQto_VbFj71r01j24gIzS7M9dovIoYMmnRW7e5rWlxgQ6sv9ec8bdY_zop6rudZxl7BRO_pcJXp5e7ztijgefuRmX3kVrBYn8u1p_QOteJkbWYoSdhaOkJ948Sckc9ftktfBm1hyoJUhykXjbikjI77imyzr3y3Vlsmm055eU_Wyb29lqI33dxup4sYeexVb2pO001t9OebcpM5MrZvz8qgBj39sQn-qkgVe8q_h3WI1y7t91p6pYRQ3uJ1V_Zif6meQfkvd2XF7__qSaYwngQxW-ytr05gp05l2WIfMoI-JgogUkwWOiwemsIBUZ4XY_YWov9woa0SdQJtzuutsz8Z6q3ysxu4SbgdpM5Y5fUmuB42o0meVMb13lgny-xYhmZbh5_7V1Fj7eBkrIxkz4_uxfQmwFZ0rhWahpURbZ2diipuj2oc0myW5_YpJ7Qmp_pr6xqp3W3oXl5RR8t39xy7o1z3vkx9Undx40W14y1iOyoYbpMRyxsg9OSXgY_4h11yMQczuScSwsqdqzquzFf7cFFRqenlQYq94oJ2gYrqM-fcRinZ12uedurieQROM2em_oXizdRMFcvrRdXRwWVw38rc21sF
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1717838061380760%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"notification controller check","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 17:15:45 08 June 2024
+  :
+  :DeviceId: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+AccessToken:    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.ErrorAuditLogService.SaveErrorLogs(LogEntry logEntry) in D:\IM10NewRepository\IM10.BAL\Implementaion\ErrorAuditLogService.cs:line 252
+   at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 249
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 399
+Error: Core Microsoft SqlClient Data Provider
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+AccessToken:    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.ErrorAuditLogService.SaveErrorLogs(LogEntry logEntry) in D:\IM10NewRepository\IM10.BAL\Implementaion\ErrorAuditLogService.cs:line 252
+   at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 249
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 399
+Error: Core Microsoft SqlClient Data Provider
+IsException: False
+DataPayload: 
+
+
+Log Entry : 17:16:47 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 17:16:47 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 17:16:48 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:16:48 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:16:49 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Error creating credential: Could not find a part of the path 'C:\Work\IAM10\API\JsonFile\firebase.json'.
+IsException: True
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Error creating credential: Could not find a part of the path 'C:\Work\IAM10\API\JsonFile\firebase.json'.
+IsException: True
+DataPayload: 
+
+
+Log Entry : 17:16:49 08 June 2024
+  :
+  :DeviceId: Error creating credential: Could not find a part of the path 'C:\Work\IAM10\API\JsonFile\firebase.json'.
+AccessToken:    at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 383
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 399
+Error: IM10.BAL
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: Error creating credential: Could not find a part of the path 'C:\Work\IAM10\API\JsonFile\firebase.json'.
+AccessToken:    at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 383
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 399
+Error: IM10.BAL
+IsException: False
+DataPayload: 
+
+
+Log Entry : 17:17:07 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 17:17:14 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 17:17:16 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:17:19 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:20:56 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://im10api.meshbagroup.com\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://im10api.meshbagroup.com\JsonFile\firebase.json
+
+
+Log Entry : 17:21:05 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://im10api.meshbagroup.com\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://im10api.meshbagroup.com\JsonFile\firebase.json
+
+
+Log Entry : 17:21:07 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:21:09 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:35:42 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 17:35:43 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 17:35:43 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:35:43 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 17:35:44 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Starting to get access token
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Starting to get access token
+IsException: False
+DataPayload: 
+
+
+Log Entry : 17:35:46 08 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Access token retrieved: ya29.c.c0AY_VpZiwQgJPu7SorIdoFTcNJx6iujffkPE2ojgSppLSVp5zrWsNUdWNXQYPSbX7315rzC_Tgvf5yUCDz5X2AIk1YswKbUQpoIj78Y_Bn7bDAJ6JLxFwh4cofHjZgtJeR7vMHb92fgiauywqIMIxwPP7a9fN9LVCCa8rN5ioEGdbHFk9saYLdXBBMrnFbiBNfnDvdzoYmL6s4nKSRrYOuDaNdI8IteKHEYg_gxbKqZwYaZ2cdymFM5hSsbUq66ELJqRUr6TjEN2iLhS-0XZUObsQdX7i2_eFIWLzUpy3__UBCfVEqrDUPE21bs6FdjMfkgBh0c3tlLO6i8Sz5-H0BbhIiDbAeT66tpKJK2Oavz1WMrZ-T8uj6oPKH385D8BMi8JIez5RswlIY44in_8_S7tQy2RFt_M5_M_rFd8linfyuOZ8yw9-4lfWBMkbpxkRf4apoaiay0qt1soMmz9SJiwWiMokgn4uzgf2JfYjvenqu6iW--_ri6XoF0MRh6cQx_2WJq1y9VqyrxFrjr_Qmq50Ow6Jf0mq45eeS4it2jtjdM4S55FSBgB-VInM54jzdX43Bd9zazWg45_aWqeYncIjnUX7Oq3gpUYksM_eFsja9qQ4twJ7ueUwksJefVJ_o8lcaYBfipO3rJhxRMv2zajy5Jd7klu--dvUVxB2MatlIBFjYuBureJafcUh78Bds17l92ZO2e9RIex-JyBYk3rzjeIyRar_J1XhMb07zfUaRaf05Y3yrMshnzm57hXljs10lzfc38FIasUZxiu3maalJBzdzFR1eBF2d7Q1sXn5XYVWeBQv1X2_gQdMzsw0FIXMfQboZJRbzVMku5RwB5c-cYvqOkYxczhyvSrI0olbyxx0bMIs8rg2hoI_M-J_t7npxUdzYeMOQ1kibj-w1l8brZihMBJ5o_egbBpI6MMedW7172800XXg5Y1yatQ1q1mn5Ju2mdwrjIM63uUiJFBFq_d_qvzmZ1txnJqaX9yBVM22Zn9cd2x
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Access token retrieved: ya29.c.c0AY_VpZiwQgJPu7SorIdoFTcNJx6iujffkPE2ojgSppLSVp5zrWsNUdWNXQYPSbX7315rzC_Tgvf5yUCDz5X2AIk1YswKbUQpoIj78Y_Bn7bDAJ6JLxFwh4cofHjZgtJeR7vMHb92fgiauywqIMIxwPP7a9fN9LVCCa8rN5ioEGdbHFk9saYLdXBBMrnFbiBNfnDvdzoYmL6s4nKSRrYOuDaNdI8IteKHEYg_gxbKqZwYaZ2cdymFM5hSsbUq66ELJqRUr6TjEN2iLhS-0XZUObsQdX7i2_eFIWLzUpy3__UBCfVEqrDUPE21bs6FdjMfkgBh0c3tlLO6i8Sz5-H0BbhIiDbAeT66tpKJK2Oavz1WMrZ-T8uj6oPKH385D8BMi8JIez5RswlIY44in_8_S7tQy2RFt_M5_M_rFd8linfyuOZ8yw9-4lfWBMkbpxkRf4apoaiay0qt1soMmz9SJiwWiMokgn4uzgf2JfYjvenqu6iW--_ri6XoF0MRh6cQx_2WJq1y9VqyrxFrjr_Qmq50Ow6Jf0mq45eeS4it2jtjdM4S55FSBgB-VInM54jzdX43Bd9zazWg45_aWqeYncIjnUX7Oq3gpUYksM_eFsja9qQ4twJ7ueUwksJefVJ_o8lcaYBfipO3rJhxRMv2zajy5Jd7klu--dvUVxB2MatlIBFjYuBureJafcUh78Bds17l92ZO2e9RIex-JyBYk3rzjeIyRar_J1XhMb07zfUaRaf05Y3yrMshnzm57hXljs10lzfc38FIasUZxiu3maalJBzdzFR1eBF2d7Q1sXn5XYVWeBQv1X2_gQdMzsw0FIXMfQboZJRbzVMku5RwB5c-cYvqOkYxczhyvSrI0olbyxx0bMIs8rg2hoI_M-J_t7npxUdzYeMOQ1kibj-w1l8brZihMBJ5o_egbBpI6MMedW7172800XXg5Y1yatQ1q1mn5Ju2mdwrjIM63uUiJFBFq_d_qvzmZ1txnJqaX9yBVM22Zn9cd2x
+IsException: False
+DataPayload: 
+

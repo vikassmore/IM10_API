@@ -15,7 +15,7 @@ namespace IM10.Models
 
         }
         public long ContentFlagId { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public long ContentId { get; set; }
         public string? ContentTitle { get; set; }
         public string? ContentFileName { get; set; }
@@ -52,14 +52,14 @@ namespace IM10.Models
 
     public class ContentDetailMobileModel
     {
-        
+
         public long ContentId { get; set; }
 
         public string? ContentFileName { get; set; }
         public string? ContentFilePath { get; set; }
         public string? ContentFileName1 { get; set; }
         public string? ContentFilePath1 { get; set; }
-       
+
         public string? Title { get; set; }
         public string? Description { get; set; }
 
@@ -162,9 +162,9 @@ namespace IM10.Models
         public DateTime? CreatedDate { get; set; }
     }
     public class ListingLogoDetailsModel
-    {     
+    {
         public long ListingId { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public string? CompanyName { get; set; }
         public string? Description { get; set; }
         public string? CompanyLogoFileName { get; set; }
@@ -177,13 +177,13 @@ namespace IM10.Models
         public List<ListingLogoDetailsModel> listingLogoDetailsModels { get; set; }
         public List<MobileContentData> mobileContentDatas { get; set; }
         public List<CategoryArticleModel> categoryArticleModels { get; set; }
-      //  public List<ListingLogoDetailsModel> listingDetailsModels { get; set; }
+        //  public List<ListingLogoDetailsModel> listingDetailsModels { get; set; }
     }
 
     public class ContentModelFlag
     {
         public long ContentFlagId { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public long UserId { get; set; }
         public long ContentId { get; set; }
         public bool? MostLiked { get; set; }
@@ -196,7 +196,7 @@ namespace IM10.Models
     public class ContentModelView
     {
         public long ContentViewId { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public long ContentId { get; set; }
         public bool? Trending { get; set; }
         public int? ContentSequence { get; set; }
@@ -207,7 +207,7 @@ namespace IM10.Models
     public class PlayerMobileDataModel
     {
         public int PlayerDataId { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public string? FileName { get; set; }
         public string? FilePath { get; set; }
 
@@ -217,5 +217,14 @@ namespace IM10.Models
     {
         public List<MobileContentData> videoContentData { get; set; }
         public List<CategoryArticleModel> articleContentData { get; set; }
+    }
+
+
+    public class ExploreData
+    {
+        public int Id { get; set; }
+        public int? CategoryId { get; set; }
+        public string? CategoryName { get; set; }
+        public int? ContentTypeId { get; set; }
     }
 }

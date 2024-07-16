@@ -78,7 +78,7 @@ namespace IM10.BAL.Implementaion
                     message = GlobalConstants.ListingDetailAddedSuccessfully;
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Add Listing Details";
-                    userAuditLog.Description = "Listing Details Added";
+                    userAuditLog.Description = "Listing Details Added Successfully";
                     userAuditLog.UserId = (int)model.CreatedBy;
                     userAuditLog.CreatedBy = model.CreatedBy;
                     userAuditLog.CreatedDate = DateTime.Now;
@@ -134,7 +134,7 @@ namespace IM10.BAL.Implementaion
                         message = GlobalConstants.ListingDetailUpdateSuccessfully;
                         var userAuditLog = new UserAuditLogModel();
                         userAuditLog.Action = " Update Listing Details";
-                        userAuditLog.Description = "Listing Details Updated";
+                        userAuditLog.Description = "Listing Details Updated Successfully";
                         userAuditLog.UserId = (int)model.UpdatedBy;
                         userAuditLog.UpdatedBy = model.UpdatedBy;
                         userAuditLog.UpdatedDate = DateTime.Now;
@@ -177,7 +177,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Listing Details";
-            userAuditLog.Description = "Listing Details Deleted";
+            userAuditLog.Description = "Listing Details Deleted Successfully";
             userAuditLog.UserId = (int)listingEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = listingEntity.CreatedBy;

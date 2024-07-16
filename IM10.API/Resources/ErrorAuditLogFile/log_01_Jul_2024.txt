@@ -1,0 +1,144 @@
+
+Log Entry : 12:07:47 01 July 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error:  creating credentialPath: D:\IM10NewRepository\IM10.API\Resources\JsonFolder\firebase.json
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error:  creating credentialPath: D:\IM10NewRepository\IM10.API\Resources\JsonFolder\firebase.json
+IsException: False
+DataPayload: 
+
+
+Log Entry : 12:07:55 01 July 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: open stream System.IO.FileStream
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: open stream System.IO.FileStream
+IsException: False
+DataPayload: 
+
+
+Log Entry : 12:07:59 01 July 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: open credentialContent {
+  "type": "service_account",
+  "project_id": "im10-f32bd",
+  "private_key_id": "c74db79fc17071b9d80734039cc3f78d8b7f30fa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCixeUwsCJ+7G4j\n016s98drSArxbyZk79Kh15C4s9wvEVKhslQ9NE3DMe3LjW5CAg7Lvii+8+yNGsSW\ndDCEkCEnneqCljvRj5vFa8CT7pitQe5qpe1KKwt9MPoJV1g58kGzQapHgj+C9z98\nySdlui87V2wOi0EK6M0ig5KY5etMpXvjr9F5TFqbTDcTwYnIGFSA2ktHYyyZSdBr\nZcUS3cu0WIJYPh7ts+yGEJo/8Idke9Mrh779VOVVy1ecY1WH5bzmgu7LCmZPhyEJ\nCsS4cAZmdzRWwGZ64LEYjI0QxFhjtxVvhofwfANG+VtDkSuGLFlaABzwyKFTr0XM\nXJgBlx6jAgMBAAECggEAB/+2KnCh+DGhnIo7I64AU1VQIhHEPK0DPNDLErZD/gL+\nM2ZJL8Htq8eqoQYiOYVSpxmlvc7MjtBNXWmvJmbTXtgqpzJ2OYGOSGMOmn+Ts2/w\n2/8ZIzvsklOF0XREzRQvKutfK/ImDNmL528WlR3BJrliypQtSYLQWv+OhLBsWN6r\nvmRrfNqqwcOFykwHp/xPHP8xxmqwfJxK1R8hQj7DeJ6yCdjL6j6XZdlC/8wrI7LH\nSW4nqw1wEfH6UJVKpSJdSWT70wM47/19CuwFE2XxQhsZ+FoF/0gwRTAs97Ba/uLK\nEfV1iw7eflBgZKq6f/HqYB/5OmCQ9B9eFiCcUaQOgQKBgQDXKff50NTbwViefKSL\ncZpnoMdjNPMVRxr5+Vz4201TEY6pW1AD6+nKNOGZU3V4ouRAGwLJAcUZie/ewCKH\nv/F3ifYFQDT6tpf1pginuP16QDNMHBmc6LAXP6ZSH87pnMjTXx09qTwjKH3aLc34\nSsTLZo8MzsMiRqqK10QBUqhdpwKBgQDBqnF4Wghsa82RUHki5s0fXzWGbBwlo6du\nxS7PA8f6I28Qc3BIMAMNy/P6Y7wkNMROJG+drTYQ4yHmwqqQFiL0TUouT9xIdSz/\neehQR8rXdK5TVTlcLmewOMu2xe3zpvKiKeKbc8aoBPQ/o6+k2QhBerRFdBfay2c2\nQDy7YyNupQKBgB6TTzLH00e7LP2wlq1eImPxfAQEBTsT1KiLIAQZHd7dEtnMKQ21\nm45pf1mLe5j+BNN7QyUPRFQBvv13bjC+PPEQwM40NpMeGXAF/RrgddzGfMOnBpi+\nlC9pkxf+fyfBaORokr4ta2dPnLrBYZCUB20kENXwF9iqFBgQyRArD9PnAoGBAIjE\nH4IIwu4ea3v1wrZdG/rNt/UIIBCMtE9LvTTAzNbfcy3A+Ehib6WspM3s5Q8EnKU6\nogBONGJUpLpcOyuqFmFEu+Bc0YnyBicdJmybZqolYn7DLtDkjKEsWuDmgpaRDcRr\no/Z4GpDJftv6cq4N/wCO8QQjaj0/a9IqJzmGV51pAoGBALv6FI2BkXyRfNYMl68Q\n1x4eLS22oWfNPdXfLbvwIQmjiVRaGPOxCOjst/a8KhmEtRpqJ+wBzVqdRXB3qI5R\nxUivcaeJYAs0r+vNL14dDpK/ad8hqhebTJjLB4+sKLEBbVOrLBJR+C9/DpG9/ED1\nJRVKvfUChNdSRMTb9UBP8bH+\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ajn37@im10-f32bd.iam.gserviceaccount.com",
+  "client_id": "103792140188979151595",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ajn37%40im10-f32bd.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: open credentialContent {
+  "type": "service_account",
+  "project_id": "im10-f32bd",
+  "private_key_id": "c74db79fc17071b9d80734039cc3f78d8b7f30fa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCixeUwsCJ+7G4j\n016s98drSArxbyZk79Kh15C4s9wvEVKhslQ9NE3DMe3LjW5CAg7Lvii+8+yNGsSW\ndDCEkCEnneqCljvRj5vFa8CT7pitQe5qpe1KKwt9MPoJV1g58kGzQapHgj+C9z98\nySdlui87V2wOi0EK6M0ig5KY5etMpXvjr9F5TFqbTDcTwYnIGFSA2ktHYyyZSdBr\nZcUS3cu0WIJYPh7ts+yGEJo/8Idke9Mrh779VOVVy1ecY1WH5bzmgu7LCmZPhyEJ\nCsS4cAZmdzRWwGZ64LEYjI0QxFhjtxVvhofwfANG+VtDkSuGLFlaABzwyKFTr0XM\nXJgBlx6jAgMBAAECggEAB/+2KnCh+DGhnIo7I64AU1VQIhHEPK0DPNDLErZD/gL+\nM2ZJL8Htq8eqoQYiOYVSpxmlvc7MjtBNXWmvJmbTXtgqpzJ2OYGOSGMOmn+Ts2/w\n2/8ZIzvsklOF0XREzRQvKutfK/ImDNmL528WlR3BJrliypQtSYLQWv+OhLBsWN6r\nvmRrfNqqwcOFykwHp/xPHP8xxmqwfJxK1R8hQj7DeJ6yCdjL6j6XZdlC/8wrI7LH\nSW4nqw1wEfH6UJVKpSJdSWT70wM47/19CuwFE2XxQhsZ+FoF/0gwRTAs97Ba/uLK\nEfV1iw7eflBgZKq6f/HqYB/5OmCQ9B9eFiCcUaQOgQKBgQDXKff50NTbwViefKSL\ncZpnoMdjNPMVRxr5+Vz4201TEY6pW1AD6+nKNOGZU3V4ouRAGwLJAcUZie/ewCKH\nv/F3ifYFQDT6tpf1pginuP16QDNMHBmc6LAXP6ZSH87pnMjTXx09qTwjKH3aLc34\nSsTLZo8MzsMiRqqK10QBUqhdpwKBgQDBqnF4Wghsa82RUHki5s0fXzWGbBwlo6du\nxS7PA8f6I28Qc3BIMAMNy/P6Y7wkNMROJG+drTYQ4yHmwqqQFiL0TUouT9xIdSz/\neehQR8rXdK5TVTlcLmewOMu2xe3zpvKiKeKbc8aoBPQ/o6+k2QhBerRFdBfay2c2\nQDy7YyNupQKBgB6TTzLH00e7LP2wlq1eImPxfAQEBTsT1KiLIAQZHd7dEtnMKQ21\nm45pf1mLe5j+BNN7QyUPRFQBvv13bjC+PPEQwM40NpMeGXAF/RrgddzGfMOnBpi+\nlC9pkxf+fyfBaORokr4ta2dPnLrBYZCUB20kENXwF9iqFBgQyRArD9PnAoGBAIjE\nH4IIwu4ea3v1wrZdG/rNt/UIIBCMtE9LvTTAzNbfcy3A+Ehib6WspM3s5Q8EnKU6\nogBONGJUpLpcOyuqFmFEu+Bc0YnyBicdJmybZqolYn7DLtDkjKEsWuDmgpaRDcRr\no/Z4GpDJftv6cq4N/wCO8QQjaj0/a9IqJzmGV51pAoGBALv6FI2BkXyRfNYMl68Q\n1x4eLS22oWfNPdXfLbvwIQmjiVRaGPOxCOjst/a8KhmEtRpqJ+wBzVqdRXB3qI5R\nxUivcaeJYAs0r+vNL14dDpK/ad8hqhebTJjLB4+sKLEBbVOrLBJR+C9/DpG9/ED1\nJRVKvfUChNdSRMTb9UBP8bH+\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ajn37@im10-f32bd.iam.gserviceaccount.com",
+  "client_id": "103792140188979151595",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ajn37%40im10-f32bd.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+
+IsException: False
+DataPayload: 
+
+
+Log Entry : 12:08:01 01 July 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: open scopes System.String[]
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: open scopes System.String[]
+IsException: False
+DataPayload: 
+
+
+Log Entry : 12:08:07 01 July 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: open googleCredential Google.Apis.Auth.OAuth2.GoogleCredential
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: open googleCredential Google.Apis.Auth.OAuth2.GoogleCredential
+IsException: False
+DataPayload: 
+
+
+Log Entry : 12:08:11 01 July 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: generate accesstoken ya29.c.c0AY_VpZhiCAxZTQBW7a4Ftlx0VGaNAnitaEcDO2nvDV5a4amf_FISp7Hyokp2Mf4--Yh_seXasDQPoNycFUQLcDvY-KrzzSkg5sDa2EFdPhOguhraMwAyEC7l7P5OBv1yjEmLjNodGFyRqmWkNPlgAE62WDc1i0US0vNJzLiWSlEf-Pxn7m8NJEti2ICENwSrxhOAKcsqBaB8fFUbz5z-Qg67xKqfRrPh1eQntPlkowkpwwI5xJPRJUTCcN5sDNl1ggte3TBCs4cscwru7gOHoKIA5FHPae3N5pXDc3ztlSF-LTJKzow5n5Akh3zf2VKl0q2eNeTVGSXJUZgtouLvrs7W1z5FLfxquNAU3zRQLfUDuBtcUjlq3OTWT385K0O05kZ162U6ymFSYt6JU2F-I5S319Uh1gUyFvax4x44V798i22-ha1b8-dlOOYYo01aJ9tBOZcpRM4Xb0fOxltjxxZ9ZgkofuvO5t4lg74ftQJhBnq-JJytJpiZZ93bFiOm5bWfbMhFjzQ9pnr1nSjeluj90aemtJ5BSaqMfv9cfYZddSxaRflVlwqJka4M9RvUiU8248v1bUykrIoiZdJ_U-v4bJM4eWvdzwo2nfSzJlmc1R92Rjdi926Y9mF9ZtOmYcW55-avBFhmvfy1R1mR0i4VkZ_y2vvbi_ocvybzm1QlwuirnBM0wsO8OJZbIxidRt50f7F8SO5W9U9jxqoQkc6SiSBF09t-uFhORauS7SnpM3RJ1V4Os5d2eoZRxIvWJ0j58znssnkwUp3ghjmFBeRpdmqSy9p994xp-0j6xUmywIVZc8ro1vM_RkvS0tz-zdn794I2_U2FI9VQ85S6W_b6_rpXfv14MYUf5p8mkSZgF70JsmJ3vBjMbze1JIh51bXUo-S9iBambj_2w_I4cj3keXtIUuXq_US9tVvkUOmJtWyZfdkMjBnQw1mmw8kUgRsn88nxSIxFji0ja4fXYhdUigehg3_vybh3S0drssQkYifF_qri0ZX
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: generate accesstoken ya29.c.c0AY_VpZhiCAxZTQBW7a4Ftlx0VGaNAnitaEcDO2nvDV5a4amf_FISp7Hyokp2Mf4--Yh_seXasDQPoNycFUQLcDvY-KrzzSkg5sDa2EFdPhOguhraMwAyEC7l7P5OBv1yjEmLjNodGFyRqmWkNPlgAE62WDc1i0US0vNJzLiWSlEf-Pxn7m8NJEti2ICENwSrxhOAKcsqBaB8fFUbz5z-Qg67xKqfRrPh1eQntPlkowkpwwI5xJPRJUTCcN5sDNl1ggte3TBCs4cscwru7gOHoKIA5FHPae3N5pXDc3ztlSF-LTJKzow5n5Akh3zf2VKl0q2eNeTVGSXJUZgtouLvrs7W1z5FLfxquNAU3zRQLfUDuBtcUjlq3OTWT385K0O05kZ162U6ymFSYt6JU2F-I5S319Uh1gUyFvax4x44V798i22-ha1b8-dlOOYYo01aJ9tBOZcpRM4Xb0fOxltjxxZ9ZgkofuvO5t4lg74ftQJhBnq-JJytJpiZZ93bFiOm5bWfbMhFjzQ9pnr1nSjeluj90aemtJ5BSaqMfv9cfYZddSxaRflVlwqJka4M9RvUiU8248v1bUykrIoiZdJ_U-v4bJM4eWvdzwo2nfSzJlmc1R92Rjdi926Y9mF9ZtOmYcW55-avBFhmvfy1R1mR0i4VkZ_y2vvbi_ocvybzm1QlwuirnBM0wsO8OJZbIxidRt50f7F8SO5W9U9jxqoQkc6SiSBF09t-uFhORauS7SnpM3RJ1V4Os5d2eoZRxIvWJ0j58znssnkwUp3ghjmFBeRpdmqSy9p994xp-0j6xUmywIVZc8ro1vM_RkvS0tz-zdn794I2_U2FI9VQ85S6W_b6_rpXfv14MYUf5p8mkSZgF70JsmJ3vBjMbze1JIh51bXUo-S9iBambj_2w_I4cj3keXtIUuXq_US9tVvkUOmJtWyZfdkMjBnQw1mmw8kUgRsn88nxSIxFji0ja4fXYhdUigehg3_vybh3S0drssQkYifF_qri0ZX
+IsException: False
+DataPayload: 
+
+
+Log Entry : 12:08:12 01 July 2024
+  :
+  :DeviceId: cZfdLtm7Sm-opofat6Wf1W:APA91bEdPYafEI6iWKHbboJyllNkuNbO-w38RupjtQTtlnXYNO0hmfwEiPBELerzQiK7tnbH0j6CBWzc3pDoZNcMRTN8HhpQ8c4X4TFaICfTR_enxWox8AfrtmX0mgc4WutzqyAUHh8l
+AccessToken: ya29.c.c0AY_VpZhiCAxZTQBW7a4Ftlx0VGaNAnitaEcDO2nvDV5a4amf_FISp7Hyokp2Mf4--Yh_seXasDQPoNycFUQLcDvY-KrzzSkg5sDa2EFdPhOguhraMwAyEC7l7P5OBv1yjEmLjNodGFyRqmWkNPlgAE62WDc1i0US0vNJzLiWSlEf-Pxn7m8NJEti2ICENwSrxhOAKcsqBaB8fFUbz5z-Qg67xKqfRrPh1eQntPlkowkpwwI5xJPRJUTCcN5sDNl1ggte3TBCs4cscwru7gOHoKIA5FHPae3N5pXDc3ztlSF-LTJKzow5n5Akh3zf2VKl0q2eNeTVGSXJUZgtouLvrs7W1z5FLfxquNAU3zRQLfUDuBtcUjlq3OTWT385K0O05kZ162U6ymFSYt6JU2F-I5S319Uh1gUyFvax4x44V798i22-ha1b8-dlOOYYo01aJ9tBOZcpRM4Xb0fOxltjxxZ9ZgkofuvO5t4lg74ftQJhBnq-JJytJpiZZ93bFiOm5bWfbMhFjzQ9pnr1nSjeluj90aemtJ5BSaqMfv9cfYZddSxaRflVlwqJka4M9RvUiU8248v1bUykrIoiZdJ_U-v4bJM4eWvdzwo2nfSzJlmc1R92Rjdi926Y9mF9ZtOmYcW55-avBFhmvfy1R1mR0i4VkZ_y2vvbi_ocvybzm1QlwuirnBM0wsO8OJZbIxidRt50f7F8SO5W9U9jxqoQkc6SiSBF09t-uFhORauS7SnpM3RJ1V4Os5d2eoZRxIvWJ0j58znssnkwUp3ghjmFBeRpdmqSy9p994xp-0j6xUmywIVZc8ro1vM_RkvS0tz-zdn794I2_U2FI9VQ85S6W_b6_rpXfv14MYUf5p8mkSZgF70JsmJ3vBjMbze1JIh51bXUo-S9iBambj_2w_I4cj3keXtIUuXq_US9tVvkUOmJtWyZfdkMjBnQw1mmw8kUgRsn88nxSIxFji0ja4fXYhdUigehg3_vybh3S0drssQkYifF_qri0ZX
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1719815892134171%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cZfdLtm7Sm-opofat6Wf1W:APA91bEdPYafEI6iWKHbboJyllNkuNbO-w38RupjtQTtlnXYNO0hmfwEiPBELerzQiK7tnbH0j6CBWzc3pDoZNcMRTN8HhpQ8c4X4TFaICfTR_enxWox8AfrtmX0mgc4WutzqyAUHh8l","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hello dipali","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cZfdLtm7Sm-opofat6Wf1W:APA91bEdPYafEI6iWKHbboJyllNkuNbO-w38RupjtQTtlnXYNO0hmfwEiPBELerzQiK7tnbH0j6CBWzc3pDoZNcMRTN8HhpQ8c4X4TFaICfTR_enxWox8AfrtmX0mgc4WutzqyAUHh8l
+AccessToken: ya29.c.c0AY_VpZhiCAxZTQBW7a4Ftlx0VGaNAnitaEcDO2nvDV5a4amf_FISp7Hyokp2Mf4--Yh_seXasDQPoNycFUQLcDvY-KrzzSkg5sDa2EFdPhOguhraMwAyEC7l7P5OBv1yjEmLjNodGFyRqmWkNPlgAE62WDc1i0US0vNJzLiWSlEf-Pxn7m8NJEti2ICENwSrxhOAKcsqBaB8fFUbz5z-Qg67xKqfRrPh1eQntPlkowkpwwI5xJPRJUTCcN5sDNl1ggte3TBCs4cscwru7gOHoKIA5FHPae3N5pXDc3ztlSF-LTJKzow5n5Akh3zf2VKl0q2eNeTVGSXJUZgtouLvrs7W1z5FLfxquNAU3zRQLfUDuBtcUjlq3OTWT385K0O05kZ162U6ymFSYt6JU2F-I5S319Uh1gUyFvax4x44V798i22-ha1b8-dlOOYYo01aJ9tBOZcpRM4Xb0fOxltjxxZ9ZgkofuvO5t4lg74ftQJhBnq-JJytJpiZZ93bFiOm5bWfbMhFjzQ9pnr1nSjeluj90aemtJ5BSaqMfv9cfYZddSxaRflVlwqJka4M9RvUiU8248v1bUykrIoiZdJ_U-v4bJM4eWvdzwo2nfSzJlmc1R92Rjdi926Y9mF9ZtOmYcW55-avBFhmvfy1R1mR0i4VkZ_y2vvbi_ocvybzm1QlwuirnBM0wsO8OJZbIxidRt50f7F8SO5W9U9jxqoQkc6SiSBF09t-uFhORauS7SnpM3RJ1V4Os5d2eoZRxIvWJ0j58znssnkwUp3ghjmFBeRpdmqSy9p994xp-0j6xUmywIVZc8ro1vM_RkvS0tz-zdn794I2_U2FI9VQ85S6W_b6_rpXfv14MYUf5p8mkSZgF70JsmJ3vBjMbze1JIh51bXUo-S9iBambj_2w_I4cj3keXtIUuXq_US9tVvkUOmJtWyZfdkMjBnQw1mmw8kUgRsn88nxSIxFji0ja4fXYhdUigehg3_vybh3S0drssQkYifF_qri0ZX
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1719815892134171%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cZfdLtm7Sm-opofat6Wf1W:APA91bEdPYafEI6iWKHbboJyllNkuNbO-w38RupjtQTtlnXYNO0hmfwEiPBELerzQiK7tnbH0j6CBWzc3pDoZNcMRTN8HhpQ8c4X4TFaICfTR_enxWox8AfrtmX0mgc4WutzqyAUHh8l","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hello dipali","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+

@@ -9,67 +9,85 @@ namespace IM10.BAL.Implementaion
 {
     public class EncryptionHelper
     {
-        /// <summary>
-        /// encrypt
-        /// </summary>
-        /// <param name="encryptString"></param>
-        /// <returns></returns>
-        public static string Encrypt(string encryptString)
-        {
-            string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            byte[] clearBytes = Encoding.Unicode.GetBytes(encryptString);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
-            0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    encryptString = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return encryptString;
-        }
 
         /// <summary>
-        /// Descypt
+        /// EncryptData
         /// </summary>
-        /// <param name="cipherText"></param>
+        /// <param name="plainText"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
         /// <returns></returns>
-        public static string Decrypt(string cipherText)
+        public static string EncryptData(string plainText, string key, string iv)
         {
-            string EncryptionKey = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             try
             {
-                cipherText = cipherText.Replace(" ", "+");
-                byte[] cipherBytes = Convert.FromBase64String(cipherText);
-                using (Aes encryptor = Aes.Create())
+                using (DES desAlg = DES.Create())
                 {
-                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[]
-                    {0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76});
-                    encryptor.Key = pdb.GetBytes(32);
-                    encryptor.IV = pdb.GetBytes(16);
-                    using (MemoryStream ms = new MemoryStream())
+                    desAlg.Key = Encoding.UTF8.GetBytes(key);
+                    desAlg.IV = Encoding.UTF8.GetBytes(iv);
+
+                    ICryptoTransform encryptor = desAlg.CreateEncryptor(desAlg.Key, desAlg.IV);
+
+                    using (MemoryStream msEncrypt = new MemoryStream())
                     {
-                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                        using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                         {
-                            cs.Write(cipherBytes, 0, cipherBytes.Length);
-                            cs.Close();
+                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                            {
+                                swEncrypt.Write(plainText);
+                            }
                         }
-                        cipherText = Encoding.Unicode.GetString(ms.ToArray());
+
+                        byte[] encryptedBytes = msEncrypt.ToArray();
+                        return Convert.ToBase64String(encryptedBytes);
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("Error during encryption: " + ex.Message);
+                return null;
             }
-            return cipherText;
+        }
+
+
+        /// <summary>
+        /// DecryptData
+        /// </summary>
+        /// <param name="base64EncodedCipherText"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
+        /// <returns></returns>
+        public static string DecryptData(string base64EncodedCipherText, string key, string iv)
+        {
+            try
+            {
+                byte[] cipherTextBytes = Convert.FromBase64String(base64EncodedCipherText);
+
+                using (DES desAlg = DES.Create())
+                {
+                    desAlg.Key = Encoding.UTF8.GetBytes(key);
+                    desAlg.IV = Encoding.UTF8.GetBytes(iv);
+
+                    ICryptoTransform decryptor = desAlg.CreateDecryptor(desAlg.Key, desAlg.IV);
+
+                    using (MemoryStream msDecrypt = new MemoryStream(cipherTextBytes))
+                    {
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                        {
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
+                                return srDecrypt.ReadToEnd();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error during decryption: " + ex.Message);
+                return null;
+            }
         }
     }
 }

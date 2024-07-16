@@ -2,7 +2,6 @@
 using IM10.Common;
 using IM10.Entity.DataModels;
 using IM10.Models;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -171,32 +170,41 @@ namespace IM10.BAL.Implementaion
             string message = "";
             if (model.PlayerId == 0)
             {
-                var playerEntity = new PlayerDetail();
-                playerEntity.PlayerId = model.PlayerId;
-                playerEntity.AadharCardFilePath = model.AadharCardFilePath;
-                playerEntity.AadharCardFileName = model.AadharCardFileName;
-                playerEntity.PanCardFileName = model.PanCardFileName;
-                playerEntity.PanCardFilePath = model.PanCardFilePath;
-                playerEntity.VotingCardFileName = model.VotingCardFileName;
-                playerEntity.VotingCardFilePath = model.VotingCardFilePath;
-                playerEntity.DrivingLicenceFileName = model.DrivingLicenceFileName;
-                playerEntity.DrivingLicenceFilePath = model.DrivingLicenceFilePath;
-                playerEntity.BankAcountNo = model.BankAcountNo;
-                playerEntity.PancardNo = model.PancardNo;
-                playerEntity.FirstName = model.FirstName;
-                playerEntity.LastName = model.LastName;
-                playerEntity.SportId = model.SportId;
-                playerEntity.Address = model.Address;
-                playerEntity.Dob = model.Dob;
-                playerEntity.ProfileImageFileName = model.ProfileImageFileName;
-                playerEntity.ProfileImageFilePath = model.ProfileImageFilePath;
-                playerEntity.CreatedBy = model.CreatedBy;
-                playerEntity.CreatedDate = DateTime.Now;
-                playerEntity.UpdatedDate = DateTime.Now;
-                playerEntity.IsDeleted = false;
-                context.PlayerDetails.Add(playerEntity);
-                context.SaveChanges();
-                message = GlobalConstants.PlayerDetailAddSuccessfully;
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PancardNo == model.PancardNo && x.IsDeleted == false);
+                if (existingPlayerEntity == null) 
+                {
+                    var playerEntity = new PlayerDetail();
+                    playerEntity.PlayerId = model.PlayerId;
+                    playerEntity.AadharCardFilePath = model.AadharCardFilePath;
+                    playerEntity.AadharCardFileName = model.AadharCardFileName;
+                    playerEntity.PanCardFileName = model.PanCardFileName;
+                    playerEntity.PanCardFilePath = model.PanCardFilePath;
+                    playerEntity.VotingCardFileName = model.VotingCardFileName;
+                    playerEntity.VotingCardFilePath = model.VotingCardFilePath;
+                    playerEntity.DrivingLicenceFileName = model.DrivingLicenceFileName;
+                    playerEntity.DrivingLicenceFilePath = model.DrivingLicenceFilePath;
+                    playerEntity.BankAcountNo = model.BankAcountNo;
+                    playerEntity.PancardNo = model.PancardNo;
+                    playerEntity.FirstName = model.FirstName;
+                    playerEntity.LastName = model.LastName;
+                    playerEntity.SportId = model.SportId;
+                    playerEntity.Address = model.Address;
+                    playerEntity.Dob = model.Dob;
+                    playerEntity.ProfileImageFileName = model.ProfileImageFileName;
+                    playerEntity.ProfileImageFilePath = model.ProfileImageFilePath;
+                    playerEntity.CreatedBy = model.CreatedBy;
+                    playerEntity.CreatedDate = DateTime.Now;
+                    playerEntity.UpdatedDate = DateTime.Now;
+                    playerEntity.IsDeleted = false;
+                    context.PlayerDetails.Add(playerEntity);
+                    context.SaveChanges();
+                    message = GlobalConstants.PlayerDetailAddSuccessfully;
+                }
+                else
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "player already exist with same pan card number";
+                }
             }
 
             else
@@ -205,7 +213,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Add Player Details";
-            userAuditLog.Description = "Player Details Added";
+            userAuditLog.Description = "Player Details Added Successfully";
             userAuditLog.UserId = (int)model.CreatedBy;
             userAuditLog.CreatedBy = model.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
@@ -225,75 +233,83 @@ namespace IM10.BAL.Implementaion
             var playerEntity = context.PlayerDetails.Where(x => x.PlayerId == playerModel.PlayerId).FirstOrDefault();
             if (playerEntity != null)
             {
-
-                playerEntity.PlayerId = playerModel.PlayerId;
-                if (playerModel.AadharCardFileName != null)
+                var existingPlayerEntity = context.PlayerDetails.FirstOrDefault(x => x.PancardNo == playerModel.PancardNo && x.IsDeleted == false);
+                if (existingPlayerEntity == null)
                 {
-                    playerEntity.AadharCardFileName = playerModel.AadharCardFileName;
-                }
+                    playerEntity.PlayerId = playerModel.PlayerId;
+                    if (playerModel.AadharCardFileName != null)
+                    {
+                        playerEntity.AadharCardFileName = playerModel.AadharCardFileName;
+                    }
 
-                if (playerModel.AadharCardFilePath != null)
+                    if (playerModel.AadharCardFilePath != null)
+                    {
+                        playerEntity.AadharCardFilePath = playerModel.AadharCardFilePath;
+                    }
+
+                    if (playerModel.PanCardFileName != null)
+                    {
+                        playerEntity.PanCardFileName = playerModel.PanCardFileName;
+                    }
+
+                    if (playerModel.PanCardFilePath != null)
+                    {
+                        playerEntity.PanCardFilePath = playerModel.PanCardFilePath;
+                    }
+
+                    if (playerModel.VotingCardFileName != null)
+                    {
+                        playerEntity.VotingCardFileName = playerModel.VotingCardFileName;
+                    }
+
+                    if (playerModel.VotingCardFilePath != null)
+                    {
+                        playerEntity.VotingCardFilePath = playerModel.VotingCardFilePath;
+                    }
+
+                    if (playerModel.DrivingLicenceFileName != null)
+                    {
+                        playerEntity.DrivingLicenceFileName = playerModel.DrivingLicenceFileName;
+                    }
+
+                    if (playerModel.DrivingLicenceFilePath != null)
+                    {
+                        playerEntity.DrivingLicenceFilePath = playerModel.DrivingLicenceFilePath;
+                    }
+
+                    if (playerModel.ProfileImageFileName != null)
+                    {
+                        playerEntity.ProfileImageFileName = playerModel.ProfileImageFileName;
+                    }
+
+                    if (playerModel.ProfileImageFilePath != null)
+                    {
+                        playerEntity.ProfileImageFilePath = playerModel.ProfileImageFilePath;
+                    }
+
+                    playerEntity.BankAcountNo = playerModel.BankAcountNo;
+                    playerEntity.PancardNo = playerModel.PancardNo;
+                    playerEntity.FirstName = playerModel.FirstName;
+                    playerEntity.LastName = playerModel.LastName;
+                    playerEntity.SportId = playerModel.SportId;
+                    playerEntity.Dob = playerModel.Dob;
+                    playerEntity.Address = playerModel.Address;
+                    playerEntity.UpdatedBy = playerModel.UpdatedBy;
+                    playerEntity.UpdatedDate = DateTime.Now;
+                    playerEntity.IsDeleted = false;
+                    context.PlayerDetails.Update(playerEntity);
+                    context.SaveChanges();
+                    message = GlobalConstants.PlayerDetailUpdateSuccessfully;
+                }
+                else
                 {
-                    playerEntity.AadharCardFilePath = playerModel.AadharCardFilePath;
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    message = "player already exist with same pan card number";
                 }
-
-                if (playerModel.PanCardFileName != null)
-                {
-                    playerEntity.PanCardFileName = playerModel.PanCardFileName;
-                }
-
-                if (playerModel.PanCardFilePath != null)
-                {
-                    playerEntity.PanCardFilePath = playerModel.PanCardFilePath;
-                }
-
-                if (playerModel.VotingCardFileName != null)
-                {
-                    playerEntity.VotingCardFileName = playerModel.VotingCardFileName;
-                }
-
-                if (playerModel.VotingCardFilePath != null)
-                {
-                    playerEntity.VotingCardFilePath = playerModel.VotingCardFilePath;
-                }
-
-                if (playerModel.DrivingLicenceFileName != null)
-                {
-                    playerEntity.DrivingLicenceFileName = playerModel.DrivingLicenceFileName;
-                }
-
-                if (playerModel.DrivingLicenceFilePath != null)
-                {
-                    playerEntity.DrivingLicenceFilePath = playerModel.DrivingLicenceFilePath;
-                }
-
-                if (playerModel.ProfileImageFileName != null)
-                {
-                    playerEntity.ProfileImageFileName = playerModel.ProfileImageFileName;
-                }
-
-                if (playerModel.ProfileImageFilePath != null)
-                {
-                    playerEntity.ProfileImageFilePath = playerModel.ProfileImageFilePath;
-                }
-
-                playerEntity.BankAcountNo = playerModel.BankAcountNo;
-                playerEntity.PancardNo = playerModel.PancardNo;
-                playerEntity.FirstName = playerModel.FirstName;
-                playerEntity.LastName = playerModel.LastName;
-                playerEntity.SportId = playerModel.SportId;
-                playerEntity.Dob=playerModel.Dob;
-                playerEntity.Address = playerModel.Address;
-                playerEntity.UpdatedBy = playerModel.UpdatedBy;
-                playerEntity.UpdatedDate = DateTime.Now;
-                playerEntity.IsDeleted = false;
-                context.PlayerDetails.Update(playerEntity);
-                context.SaveChanges();
-                message = GlobalConstants.PlayerDetailUpdateSuccessfully;
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Update Player Details";
-            userAuditLog.Description = "Player Details Updated";
+            userAuditLog.Description = "Player Details Updated Successfully";
             userAuditLog.UserId = (int)playerModel.UpdatedBy;
             userAuditLog.UpdatedBy = playerModel.UpdatedBy;
             userAuditLog.UpdatedDate = DateTime.Now;
@@ -326,7 +342,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Player Details";
-            userAuditLog.Description = "Player Details Deleted";
+            userAuditLog.Description = "Player Details Deleted Successfully";
             userAuditLog.UserId = (int)playerEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = playerEntity.CreatedBy;
@@ -365,7 +381,7 @@ namespace IM10.BAL.Implementaion
                 message = GlobalConstants.AddPlayerDetaMessage;
                 var userAuditLog = new UserAuditLogModel();
                 userAuditLog.Action = " Add Player Data";
-                userAuditLog.Description = "Player Data Added";
+                userAuditLog.Description = "Player Data Added Successfully";
                 userAuditLog.UserId = (int)item.CreatedBy;
                 userAuditLog.CreatedBy = item.CreatedBy;
                 userAuditLog.CreatedDate = DateTime.Now;
@@ -428,6 +444,8 @@ namespace IM10.BAL.Implementaion
             });
             return playerDatalist;
         }
+
+
         private string ThumbnailPath(string filePath)
         {
             byte[]? ms = null;
@@ -467,7 +485,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Player Data";
-            userAuditLog.Description = "Player Data Deleted";
+            userAuditLog.Description = "Player Data Deleted Successfully";
             userAuditLog.UserId = (int)playerdataEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = playerdataEntity.CreatedBy;

@@ -31,27 +31,28 @@ namespace IM10.API.Controllers
             _hubContext = hubContext;
         }
 
+
+
         /// <summary>
-        /// To get ContentflagDetail by playerId 
+        /// To get ContentflagDetail by playerId, userid and countNumber
         /// </summary>
         /// <param name="playerId"></param>
+        /// <param name="userId"></param>
+        /// <param name="countNumber"></param>
         /// <returns></returns>
-        [HttpGet("GetTop5TrendingVideoContent/{playerId}/{userId}")]
+        [HttpGet("GetTop5TrendingVideoContent/{playerId}/{userId}/{countNumber}")]
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetTop5TrendingVideoContent(long playerId, long userId)
+        public async Task<IActionResult> GetTop5TrendingVideoContent(string playerId, long userId, int countNumber)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
-                var detailModel = services.GetTop5TrendingVideoContent(playerId, userId, ref errorResponseModel);
+                
+                var detailModel = services.GetTop5TrendingVideoContent(playerId, userId, countNumber, ref errorResponseModel);
 
                 if (detailModel.Count != 0)
                 {
@@ -69,6 +70,7 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
 
         /// <summary>
         /// To get MobileVideoView by contentId 
@@ -107,9 +109,10 @@ namespace IM10.API.Controllers
 
 
         /// <summary>
-        /// To get all Category top five video by playerId 
+        /// To get all Category top five video by playerId and userid 
         /// </summary>
         /// <param name="playerId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetAllCategoryTopFiveVideoContent/{playerId}/{userId}")]
         [ProducesResponseType(typeof(MobileVideoCategoryData), 200)]
@@ -117,15 +120,11 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllCategoryTopFiveVideoContent(long playerId, long userId)
+        public IActionResult GetAllCategoryTopFiveVideoContent(string playerId, long userId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
                 var detailModel = services.GetAllCategoryTopFiveVideoContent(playerId, userId, ref errorResponseModel);
 
                 if (detailModel.Count != 0)
@@ -140,27 +139,28 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
-        /// To get all video By Category
+        /// To get all video By Categoryid, playerid ,userid and countNumber
         /// </summary>
-        /// <param name="contentId"></param>
+        /// <param name="playerId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="userId"></param>
+        /// <param name="countNumber"></param>
         /// <returns></returns>
-        [HttpGet("GetVideoContentByCategory/{playerId}/{categoryId}/{userId}")]
+        [HttpGet("GetVideoContentByCategory/{playerId}/{categoryId}/{userId}/{countNumber}")]
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetVideoContentByCategory(long playerId, long categoryId, long userId)
+        public IActionResult GetVideoContentByCategory(string playerId, long categoryId, long userId,int countNumber)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
-                var contentdetailModel = services.GetVideoContentByCategory(playerId, categoryId,userId, ref errorResponseModel);
+                var contentdetailModel = services.GetVideoContentByCategory(playerId, categoryId,userId, countNumber,ref errorResponseModel);
 
                 if (contentdetailModel != null)
                 {
@@ -174,27 +174,30 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
+
+
         /// <summary>
-        /// To get all Category top five Article by playerId 
+        /// To get all Category top five Article by playerId and countNumber
         /// </summary>
         /// <param name="playerId"></param>
+        /// <param name="userId"></param>
+        /// <param name="countNumber"></param>
         /// <returns></returns>
-        [HttpGet("GetAllCategoryTopFiveArticleContent/{playerId}/{userId}")]
+        [HttpGet("GetAllCategoryTopFiveArticleContent/{playerId}/{userId}/{countNumber}")]
         [ProducesResponseType(typeof(MobileArticleCategoryData), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetAllCategoryTopFiveArticleContent(long playerId, long userId)
+        public IActionResult GetAllCategoryTopFiveArticleContent(string playerId, long userId, int countNumber)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
-                var detailModel = services.GetAllCategoryTopFiveArticleContent(playerId,userId, ref errorResponseModel);
+                
+                var detailModel = services.GetAllCategoryTopFiveArticleContent(playerId,userId, countNumber, ref errorResponseModel);
 
                 if (detailModel.Count != 0)
                 {
@@ -208,10 +211,14 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
-        /// To get all article By Category
+        /// To get all article content By Categoryid,playerid and userid
         /// </summary>
         /// <param name="playerId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetArticleContentByCategory/{playerId}/{categoryId}/{userId}")]
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
@@ -219,15 +226,11 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetArticleContentByCategory(long playerId, long categoryId, long userId)
+        public IActionResult GetArticleContentByCategory(string playerId, long categoryId, long userId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
                 var contentdetailModel = services.GetArticleContentByCategory(playerId, categoryId,userId, ref errorResponseModel);
 
                 if (contentdetailModel != null)
@@ -242,10 +245,13 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
-        /// To get MobileArticleView by contentId 
+        /// To get MobileArticleView by contentId and userid
         /// </summary>
         /// <param name="contentId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetMobileArticleView/{contentId}/{userId}")]
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
@@ -276,6 +282,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// To get all ListingDetail by playerId
         /// </summary>
@@ -287,15 +295,12 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetListingDetailByplayerId(long playerId)
+        public IActionResult GetListingDetailByplayerId(string playerId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+               
                 var detailModel = services.GetListingDetailByplayerId(playerId, ref errorResponseModel);
 
                 if (detailModel.Count != 0)
@@ -310,13 +315,15 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// To get ListingDetail by Listingid
         /// </summary>
-        /// <param name="playerId"></param>
+        /// <param name="listingId"></param>
         /// <returns></returns>
         [HttpGet("GetListingDetailById/{listingId}")]
-        [ProducesResponseType(typeof(ListingDetailModel), 200)]
+        [ProducesResponseType(typeof(MobileListingDetailModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
@@ -344,27 +351,27 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
-        /// To get To20ListingDetail by playerId
+        /// To get To20ListingDetail by playerId and countNumber
         /// </summary>
         /// <param name="playerId"></param>
+        /// <param name="countNumber"></param>
         /// <returns></returns>
-        [HttpGet("GetTop20ListingDetailByplayerId/{playerId}")]
+        [HttpGet("GetTop20ListingDetailByplayerId/{playerId}/{countNumber}")]
         [ProducesResponseType(typeof(ListingLogoDetailsModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetTop20ListingDetailByplayerId(long playerId)
+        public IActionResult GetTop20ListingDetailByplayerId(string playerId,int countNumber)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
-                var detailModel = services.GetTop20ListingDetailByplayerId(playerId, ref errorResponseModel);
+                
+                var detailModel = services.GetTop20ListingDetailByplayerId(playerId,countNumber, ref errorResponseModel);
 
                 if (detailModel.Count != 0)
                 {
@@ -378,11 +385,14 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// Get the search data by playerId and title
         /// </summary>
         /// <param name="playerId"></param>
         /// <param name="searchData"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetMobileSearchDetailByplayerId/{playerId}/{searchData}/{userId}")]
         [ProducesResponseType(typeof(MobileSearchDataModel), 200)]
@@ -390,15 +400,12 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileSearchDetailByplayerId(long playerId, string searchData, long userId)
+        public IActionResult GetMobileSearchDetailByplayerId(string playerId, string searchData, long userId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+                
                 var contentdetailModel = services.GetMobileSearchDetailByplayerId(playerId, searchData,userId, ref errorResponseModel);
 
                 if (contentdetailModel != null)
@@ -413,6 +420,7 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
 
         /// <summary>
         /// Method is used to add/edit comment
@@ -457,10 +465,11 @@ namespace IM10.API.Controllers
             }
         }
 
+
         /// <summary>
         /// Get contentcomment by contentId and userid
         /// </summary>
-        /// <param name="">contentId</param>
+        /// <param name="playerId"></param>
         /// <param name="UserId"></param>
         /// <returns></returns>
         [HttpGet("GetMobileCommentByContentId/{contentId}/{UserId}")]
@@ -489,12 +498,10 @@ namespace IM10.API.Controllers
         }
 
 
-
-
         /// <summary>
         /// Get MobileCommentCount by contentId and userid
         /// </summary>
-        /// <param name="">contentId</param>
+        /// <param name="contentId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet("GetMobileCommentCount/{contentId}/{userId}")]
@@ -526,7 +533,7 @@ namespace IM10.API.Controllers
         /// <summary>
         /// Get contentcomment by playerId
         /// </summary>
-        /// <param name="">playerId</param>
+        /// <param name="playerId</param>
         /// <returns></returns>
         [HttpGet("GetMobileCommentByPlayerId/{playerId}")]
         [ProducesResponseType(typeof(ContentCommentModel), 200)]
@@ -534,7 +541,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileCommentByPlayerId(long playerId)
+        public IActionResult GetMobileCommentByPlayerId(string playerId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
@@ -590,6 +597,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// Method is used to add like flag
         /// </summary>
@@ -631,6 +640,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// To get splash screen by playerid
         /// </summary>
@@ -642,15 +653,12 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileSplashScreenByplayerId(long playerId)
+        public IActionResult GetMobileSplashScreenByplayerId(string playerId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+                
                 var detailModel = services.GetMobileSplashScreenByplayerId(playerId, ref errorResponseModel);
 
                 if (detailModel != null)
@@ -665,6 +673,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// To get logo image by playerid
         /// </summary>
@@ -676,15 +686,11 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileLogoImageByplayerId(long playerId)
+        public IActionResult GetMobileLogoImageByplayerId(string playerId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
                 var detailModel = services.GetMobileLogoImageByplayerId(playerId, ref errorResponseModel);
 
                 if (detailModel != null)
@@ -699,6 +705,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// To get get slide image by playerid
         /// </summary>
@@ -710,15 +718,12 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileSlideImageByplayerId(long playerId)
+        public IActionResult GetMobileSlideImageByplayerId(string playerId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+               
                 var detailModel = services.GetMobileSlideImageByplayerId(playerId, ref errorResponseModel);
 
                 if (detailModel.Count != 0)
@@ -746,15 +751,12 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileLikeVideoArticle(long playerId, long userId)
+        public IActionResult GetMobileLikeVideoArticle(string playerId, long userId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
+                
                 var detailModel = services.GetMobileLikeVideoArticle(playerId, userId, ref errorResponseModel);
 
                 if (detailModel != null)
@@ -769,6 +771,8 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
         /// <summary>
         /// To get favourite video and article by playerId and userId
         /// </summary>
@@ -781,15 +785,11 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileFavouriteVideoArticle(long playerId, long userId)
+        public IActionResult GetMobileFavouriteVideoArticle(string playerId, long userId)
         {
             ErrorResponseModel errorResponseModel = null;
             try
             {
-                if (playerId <= 0)
-                {
-                    return BadRequest("Invalid data");
-                }
                 var detailModel = services.GetMobileFavouriteVideoArticle(playerId, userId, ref errorResponseModel);
 
                 if (detailModel != null)
@@ -804,5 +804,41 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
+        /// <summary>
+        /// To Get All CategoryList
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("GetAllCategoryList/{playerId}/{userId}")]
+        [ProducesResponseType(typeof(ExploreData), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 500)]
+        public async Task<IActionResult> GetAllCategoryList(string playerId, long userId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                var detailModel = services.GetAllCategoryList(playerId, userId, ref errorResponseModel);
+
+                if (detailModel.Count != 0)
+                {
+                    return Ok(detailModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
+
+
+        
     }
 }

@@ -1,0 +1,22 @@
+
+Log Entry : 20:21:35 18 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZgMIrb-UQuesJeFYxy_BVx6K5yf-m_k_j89BbHniJyLxLM3y4Jb4bsWrljuGh6cp_xGfqXWJ43jmYCSD8shyNT4IaKn28SHqm1i-EUnhKYCoI6FOqCun4_nT_WbBAlgJmAdIHKoqjfUnFF1TJiu-IBVkbiWogFaCuarx7oUEotOmXbbcPMJWW9nRA-iiNjE1GS8TLCI_1E6ckDhDpaw8sHG-vlJy5TNoQWQX2PROdZGrZA8bjGCquUGBqb9YMEN4Ybx6hgNRHECfZb2ndwrSge2wNAWgkJ7otzr6Ist8bHWg1Na6-YK2larrAJ1BytfAd5FIH-35fkJyDdR_uMWMtg5JGf2OUtbthGejkKIG1dXqd25ExtZG385C_i4cWsQSJYJYXIlSaoS0i0o_8uMFQz-BjSxtpmZ2Xy0zo0FVxWfng-Qyax9ZtW67n0ZB6FMO_tV-hS-cps_snfSYBnf-b-beb2M0XUoM_muUOlu0w3cn7kmzO2BmVzW3oSSeR_2Ssm0lqZQaB5W3neda-xeB_aIbIv-4tYmBRwsm-mtMnSnrlynpcnMJdr0xtzsc23hg4mQnI9S2yZz5so2k9VB01mt7yv70_3vwRWb0XcjXmm0_VVg1es7zhsu67IttIhgc-oIj5O1e2Qo67Fa9k5kydn87qu2nUOO2sMSkiqJj0B3-2rWQVQefj9IQJ0OUf2vfmMm_1eyF468aJOghl2zjJ_hbFrc_YOoB8sJu7_Jn337gWj15rw5S2cxXaqjSvs-3avmFJIMy37y0RraZquUtXyV1B4jVIrir-bzeoQgxB181Zhbk2vvFQw8YjStjbXbq-cWwdzXJ2rywmnbY2hzUB8kx1VrsfoU76vk3QYYpXo0vJuIvWqdZes6X1Uk6vke0B3cQmeXYbQFz_t3iVejcq_eM0cOsIW-rhMOJRQoc-614zVRjkn5lIXR4zU56J-_6pJMBefmR17jn8tUIv-2jSUsIkiMi184B_QVtQsaa_wfebmujh_
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718722295280653%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"ddsds","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZgMIrb-UQuesJeFYxy_BVx6K5yf-m_k_j89BbHniJyLxLM3y4Jb4bsWrljuGh6cp_xGfqXWJ43jmYCSD8shyNT4IaKn28SHqm1i-EUnhKYCoI6FOqCun4_nT_WbBAlgJmAdIHKoqjfUnFF1TJiu-IBVkbiWogFaCuarx7oUEotOmXbbcPMJWW9nRA-iiNjE1GS8TLCI_1E6ckDhDpaw8sHG-vlJy5TNoQWQX2PROdZGrZA8bjGCquUGBqb9YMEN4Ybx6hgNRHECfZb2ndwrSge2wNAWgkJ7otzr6Ist8bHWg1Na6-YK2larrAJ1BytfAd5FIH-35fkJyDdR_uMWMtg5JGf2OUtbthGejkKIG1dXqd25ExtZG385C_i4cWsQSJYJYXIlSaoS0i0o_8uMFQz-BjSxtpmZ2Xy0zo0FVxWfng-Qyax9ZtW67n0ZB6FMO_tV-hS-cps_snfSYBnf-b-beb2M0XUoM_muUOlu0w3cn7kmzO2BmVzW3oSSeR_2Ssm0lqZQaB5W3neda-xeB_aIbIv-4tYmBRwsm-mtMnSnrlynpcnMJdr0xtzsc23hg4mQnI9S2yZz5so2k9VB01mt7yv70_3vwRWb0XcjXmm0_VVg1es7zhsu67IttIhgc-oIj5O1e2Qo67Fa9k5kydn87qu2nUOO2sMSkiqJj0B3-2rWQVQefj9IQJ0OUf2vfmMm_1eyF468aJOghl2zjJ_hbFrc_YOoB8sJu7_Jn337gWj15rw5S2cxXaqjSvs-3avmFJIMy37y0RraZquUtXyV1B4jVIrir-bzeoQgxB181Zhbk2vvFQw8YjStjbXbq-cWwdzXJ2rywmnbY2hzUB8kx1VrsfoU76vk3QYYpXo0vJuIvWqdZes6X1Uk6vke0B3cQmeXYbQFz_t3iVejcq_eM0cOsIW-rhMOJRQoc-614zVRjkn5lIXR4zU56J-_6pJMBefmR17jn8tUIv-2jSUsIkiMi184B_QVtQsaa_wfebmujh_
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718722295280653%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"ddsds","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+

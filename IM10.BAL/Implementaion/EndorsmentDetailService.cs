@@ -62,7 +62,7 @@ namespace IM10.BAL.Implementaion
                     message = GlobalConstants.EndorsmentDetaisSaveMessage;
                     var userAuditLog = new UserAuditLogModel();
                     userAuditLog.Action = " Add Endorsment Details";
-                    userAuditLog.Description = " Endorsment Details Added";
+                    userAuditLog.Description = " Endorsment Details Added Successfully";
                     userAuditLog.UserId = (int)model.CreatedBy;
                     userAuditLog.CreatedBy = model.CreatedBy;
                     userAuditLog.CreatedDate = DateTime.Now;
@@ -98,7 +98,7 @@ namespace IM10.BAL.Implementaion
                         message = GlobalConstants.EndorsmentDetailsUpdateMessage;
                         var userAuditLog = new UserAuditLogModel();
                         userAuditLog.Action = " Update Endorsment Details";
-                        userAuditLog.Description = "Endorsment Details Update";
+                        userAuditLog.Description = "Endorsment Details Update Successfully";
                         userAuditLog.UserId = (int)model.UpdatedBy;
                         userAuditLog.UpdatedBy = (int)model.UpdatedBy;
                         userAuditLog.UpdatedDate = DateTime.Now;
@@ -140,7 +140,7 @@ namespace IM10.BAL.Implementaion
             }
             var userAuditLog = new UserAuditLogModel();
             userAuditLog.Action = " Delete Endorsment Details";
-            userAuditLog.Description = "Endorsment Details Deleted";
+            userAuditLog.Description = "Endorsment Details Deleted Successfully";
             userAuditLog.UserId = (int)endorsmentEntity.CreatedBy;
             userAuditLog.CreatedDate = DateTime.Now;
             userAuditLog.CreatedBy = endorsmentEntity.CreatedBy;
@@ -158,8 +158,7 @@ namespace IM10.BAL.Implementaion
         public EndorsmentDetailModel GetEndorsmentDetailById(long endorsmentId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel= new ErrorResponseModel();
-            var endorsmentEntity= (from detail in context.EndorsmentDetails
-                                   join
+            var endorsmentEntity= (from detail in context.EndorsmentDetails  join
                                    list in context.ListingDetails on detail.ListingId equals list.ListingId
                                    where detail.EndorsmentId==endorsmentId && detail.IsDeleted == false
                                    select new
@@ -181,7 +180,8 @@ namespace IM10.BAL.Implementaion
 
             if(endorsmentEntity==null )
             {
-
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
             return new EndorsmentDetailModel
             {

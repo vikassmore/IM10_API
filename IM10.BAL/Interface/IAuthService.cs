@@ -29,7 +29,7 @@ namespace IM10.BAL.Interface
         /// <param name="password"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        AuthModel AuthenticationForMobile(MobileLoginModel loginModel, ref ErrorResponseModel errorResponseModel);
+        AuthModelForMobile AuthenticationForMobile(MobileLoginModel loginModel, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Create OTP
@@ -45,7 +45,7 @@ namespace IM10.BAL.Interface
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        AuthModel OTPVerify(string otp, int userId,string deviceToken, ref ErrorResponseModel errorResponseModel);
+        AuthModelForMobile OTPVerify(string otp, long userId,string deviceToken, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Get Mobile User Profile
@@ -54,7 +54,7 @@ namespace IM10.BAL.Interface
         /// <param name="userId"></param>
         /// <param name="errorResponseModel"></param>
         /// <returns></returns>
-        UserProfileModel GetMobileUserProfile(int userId, ref ErrorResponseModel errorResponseModel);
+        UserProfileModel GetMobileUserProfile(long userId, ref ErrorResponseModel errorResponseModel);
 
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace IM10.BAL.Interface
         /// <summary>
         /// method for check login status of  user 
         /// </summary>
-        /// <param name="Mobile"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        LoginStaus LoginStatusOfUser(string Mobile);
+        LoginStaus DeleteStatusOfUser(long userId);
 
 
         /// <summary>
@@ -87,6 +87,18 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="countryCode"></param>
         CountryModel GetCountryIdbyContryCode(string countryCode);
+
+
+
+        /// <summary>
+        /// method for Delete Mobile User Account 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="deviceToken"></param>
+        /// <returns></returns>
+        string DeleteMobileUserAccount(long userId, string deviceToken);
+
+
 
     }
 }

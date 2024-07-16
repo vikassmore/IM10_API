@@ -1,0 +1,1260 @@
+
+Log Entry : 07:37:28 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 07:37:32 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 07:37:35 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 07:37:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:07:06 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:07:06 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:07:06 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:07:06 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:07:06 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+IsException: True
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+IsException: True
+DataPayload: 
+
+
+Log Entry : 10:07:06 10 June 2024
+  :
+  :DeviceId: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+AccessToken:    at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 406
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 422
+Error: IM10.BAL
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+AccessToken:    at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 406
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 422
+Error: IM10.BAL
+IsException: False
+DataPayload: 
+
+
+Log Entry : 10:07:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:07:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:07:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:07:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:07:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+IsException: True
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+IsException: True
+DataPayload: 
+
+
+Log Entry : 10:07:39 10 June 2024
+  :
+  :DeviceId: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+AccessToken:    at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 406
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 422
+Error: IM10.BAL
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: Error creating credential: Could not find file 'D:\IM10NewRepository\IM10.API\ firebase.json'.
+AccessToken:    at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 406
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 422
+Error: IM10.BAL
+IsException: False
+DataPayload: 
+
+
+Log Entry : 10:42:02 10 June 2024
+  :
+  :DeviceId: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+AccessToken:    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.ErrorAuditLogService.SaveErrorLogs(LogEntry logEntry) in D:\IM10NewRepository\IM10.BAL\Implementaion\ErrorAuditLogService.cs:line 252
+   at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 249
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 419
+Error: Core Microsoft SqlClient Data Provider
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+AccessToken:    at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, SqlConnectionString connectionOptions, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(StateManager stateManager, Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at IM10.BAL.Implementaion.ErrorAuditLogService.SaveErrorLogs(LogEntry logEntry) in D:\IM10NewRepository\IM10.BAL\Implementaion\ErrorAuditLogService.cs:line 252
+   at IM10.BAL.Implementaion.NotificationService.GetAccessToken() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 249
+   at IM10.BAL.Implementaion.NotificationService.GetAccessTokenWithTimeout() in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 419
+Error: Core Microsoft SqlClient Data Provider
+IsException: False
+DataPayload: 
+
+
+Log Entry : 10:42:43 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:42:43 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:42:43 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:42:43 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:43:07 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZihZsXiXIxUawUdXSjD7EJ9yAEmjFRWqQ6okKWQ73QhO-WskyG7UejYWbXCauzt6ruP9xQMUTKC6XTSu37VbTMlbG_0SxJACEzY8KuDqbh7wZnBZc1WkeDdzkrbZzqMEggHr1i4WL7HjdxrXIJZf-4pTsfWv_2z0susF-Rsy0ZhSL-bEWZ6o9UEA5ymAjvfr5KqMJI0QlrU5pLl0sYJpf-uzNeEAS6nfkO9I2b3QVllPpuWjGI-3dZRoJPR6yLOQQ8i8eTT0K_iit8QY3Oml_Ts3VF4WTG_Ev13S-g0CQYLfqQmIeAKY2x1-fqbJFJsg2K7HXfVR0WRXRA5IVTGkHio6fN8AKHviWGcWtEyXVboH5VHghbuN385Pd95du67bq1msZ1ytfpO8yc-a3h3QdO6wkMxz6rfkjJcV9ixyFbYFZFhQZJx34qs_BoBjFmhU46g_1oit-Qsm_IbYY-owUz9vO2yWFSnqzjIRX527pdS0piXguqM61dMMmY8oa-Jog-nIX1vjx-Jog5hIIfIf_W1mIqSyecWjj89WViFufFeBB4me07-RiZJcilia5_MFnZMlv7ycvWm6q8imtuyZO-U2r_3s87y_Ffcm9jrdq2IeoRgnffY9uXyQxU9sks4cXUOf7d497OWSfzVB94Vn9pM3Y7kS7tahdZiFvIQnq7s5OhQlVWbvhwf2vbeBd09XwjxeaOfOvk5eYrOhk44Ulbo4UYcW4V9IaYi-e4-b-ikBqudWep-UZl5cuxevuo7sIxi7eY58vMJpw1k7mgaeou0o7fUXWq2fro0km7iSc56uvggFws3J92iY-Fv01vm9IqVoiaOlVO-ue-7ZVXI30oyYmoMqvfYc32nqhkoFOZnd_wO3zqBIOFO32JxgMxyj3kBM48a03OR5Oz7hOrBQM27Z-FJ86IyRtQf4u-_4tw2JQ10n2U4macvbUIkOOZQubYcQ2ypeJ-_dZ7jllBOh_r9xu-xVgv5mbtnUpScokX2e9Q9re-
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1717996364245736%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZihZsXiXIxUawUdXSjD7EJ9yAEmjFRWqQ6okKWQ73QhO-WskyG7UejYWbXCauzt6ruP9xQMUTKC6XTSu37VbTMlbG_0SxJACEzY8KuDqbh7wZnBZc1WkeDdzkrbZzqMEggHr1i4WL7HjdxrXIJZf-4pTsfWv_2z0susF-Rsy0ZhSL-bEWZ6o9UEA5ymAjvfr5KqMJI0QlrU5pLl0sYJpf-uzNeEAS6nfkO9I2b3QVllPpuWjGI-3dZRoJPR6yLOQQ8i8eTT0K_iit8QY3Oml_Ts3VF4WTG_Ev13S-g0CQYLfqQmIeAKY2x1-fqbJFJsg2K7HXfVR0WRXRA5IVTGkHio6fN8AKHviWGcWtEyXVboH5VHghbuN385Pd95du67bq1msZ1ytfpO8yc-a3h3QdO6wkMxz6rfkjJcV9ixyFbYFZFhQZJx34qs_BoBjFmhU46g_1oit-Qsm_IbYY-owUz9vO2yWFSnqzjIRX527pdS0piXguqM61dMMmY8oa-Jog-nIX1vjx-Jog5hIIfIf_W1mIqSyecWjj89WViFufFeBB4me07-RiZJcilia5_MFnZMlv7ycvWm6q8imtuyZO-U2r_3s87y_Ffcm9jrdq2IeoRgnffY9uXyQxU9sks4cXUOf7d497OWSfzVB94Vn9pM3Y7kS7tahdZiFvIQnq7s5OhQlVWbvhwf2vbeBd09XwjxeaOfOvk5eYrOhk44Ulbo4UYcW4V9IaYi-e4-b-ikBqudWep-UZl5cuxevuo7sIxi7eY58vMJpw1k7mgaeou0o7fUXWq2fro0km7iSc56uvggFws3J92iY-Fv01vm9IqVoiaOlVO-ue-7ZVXI30oyYmoMqvfYc32nqhkoFOZnd_wO3zqBIOFO32JxgMxyj3kBM48a03OR5Oz7hOrBQM27Z-FJ86IyRtQf4u-_4tw2JQ10n2U4macvbUIkOOZQubYcQ2ypeJ-_dZ7jllBOh_r9xu-xVgv5mbtnUpScokX2e9Q9re-
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1717996364245736%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 10:43:25 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:43:29 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:43:32 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:43:34 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:49:46 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:49:49 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:49:51 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:49:53 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:56:55 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:56:57 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 10:57:00 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 10:57:02 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 11:55:32 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 11:55:32 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 11:55:35 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 11:55:58 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZiAvXc7f31ca8ASQIXokDuSN-_JcC_qmaedKZlLjjbtw9T9WoiEjyRkXiDJZwbh1qv6Wh3lBPKoukPWvkJpkURhxHfmuPfIITjRV6Pn8qJK5fKxmFgnejd5eDDKzs0c_2j6yjAzRzsPpyhkfSOeXCXvvgaaElx6DY22zL5ciD-LP9WIAOfvPlY9jLz2cRiqnS1bMFSav3aiV5fsZTfyu7Cyc6oMb5dsgnyVQjzj13t1QMmjceGmcvYa3GS-KNysY_hPJVPaQdJlZ-32VH8AzStoz-LE5zMHU06-B3u0ZXywvqMBgoLUHTXZvH34nL-6CGguAQGEuIm5HxU0SOVlkG4Z_sIffUXbwnohg3DRefTGwhUsuU6uL385A8u4SvqwuoS5vWsSRdZfRfibuwg7SkFqVw915dbfmFW3vVd3JylQkBt-7-7qr-cQW7Qy_7qYh8O2_gOvusl194Ibd50O2ri7lqjyO0rj89rFaXkjhSIxrcg2hUxOm56qgv1Z3-dcac-m41Fokd0pqW_V20mMgIX1pR5mdy6U246yarSB-twWFwvZjYr8-7B9cYWM_n0n8g2Ovl7JF6_ucZWlqQfVsRfIcmqmpxIge6yJjvrqV7jnQVJp2Oydgg8Qh5nyrM4F66nv-ysc6WUwvz0gaB4llQ40ngluXceOn_dssZhRs13Yc7ngQldrStOp0O03n1mYX6j6ajc4bF2jk-8twVlhscawmpxuQ74Qb1UvuVgjnq0eJh9_8vqz4JokhSMI4JVUdoIjySzum3MzSWbuXl841lw1mvYXXv-1vkZs1Mx0ajXgkRIWhomZRia_XI_ghFBqbw2f6_tbhyc4VBdx6i6372osb7_6WizuZUz_deSZxjiSIfMh3sbvc6h3zbQtj2zWIQOVagJ0hdyhcyli4s7Zlnz1VlOk7c946fztmU0_WB7l8m8rtFOoFMU6oMJS4prFcfFn2M42_l-Oebzzt41IVRzVpFJj5Y3q3-ffifRt9z0xM88cFu-
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718000756695610%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZiAvXc7f31ca8ASQIXokDuSN-_JcC_qmaedKZlLjjbtw9T9WoiEjyRkXiDJZwbh1qv6Wh3lBPKoukPWvkJpkURhxHfmuPfIITjRV6Pn8qJK5fKxmFgnejd5eDDKzs0c_2j6yjAzRzsPpyhkfSOeXCXvvgaaElx6DY22zL5ciD-LP9WIAOfvPlY9jLz2cRiqnS1bMFSav3aiV5fsZTfyu7Cyc6oMb5dsgnyVQjzj13t1QMmjceGmcvYa3GS-KNysY_hPJVPaQdJlZ-32VH8AzStoz-LE5zMHU06-B3u0ZXywvqMBgoLUHTXZvH34nL-6CGguAQGEuIm5HxU0SOVlkG4Z_sIffUXbwnohg3DRefTGwhUsuU6uL385A8u4SvqwuoS5vWsSRdZfRfibuwg7SkFqVw915dbfmFW3vVd3JylQkBt-7-7qr-cQW7Qy_7qYh8O2_gOvusl194Ibd50O2ri7lqjyO0rj89rFaXkjhSIxrcg2hUxOm56qgv1Z3-dcac-m41Fokd0pqW_V20mMgIX1pR5mdy6U246yarSB-twWFwvZjYr8-7B9cYWM_n0n8g2Ovl7JF6_ucZWlqQfVsRfIcmqmpxIge6yJjvrqV7jnQVJp2Oydgg8Qh5nyrM4F66nv-ysc6WUwvz0gaB4llQ40ngluXceOn_dssZhRs13Yc7ngQldrStOp0O03n1mYX6j6ajc4bF2jk-8twVlhscawmpxuQ74Qb1UvuVgjnq0eJh9_8vqz4JokhSMI4JVUdoIjySzum3MzSWbuXl841lw1mvYXXv-1vkZs1Mx0ajXgkRIWhomZRia_XI_ghFBqbw2f6_tbhyc4VBdx6i6372osb7_6WizuZUz_deSZxjiSIfMh3sbvc6h3zbQtj2zWIQOVagJ0hdyhcyli4s7Zlnz1VlOk7c946fztmU0_WB7l8m8rtFOoFMU6oMJS4prFcfFn2M42_l-Oebzzt41IVRzVpFJj5Y3q3-ffifRt9z0xM88cFu-
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718000756695610%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 12:08:07 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 12:08:07 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 12:08:07 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:08:07 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:08:19 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZhVQNPlT9ph963By2FJKxXcZrv-FW6i8-5rtpfOFx3e7t-whFR7t9V4KQ5WbihgeQ6ImYMJI69KQG0sKQjH47fmxrEXj8igQ-e0hJGLjZnDsKos2skZfDNVA-wNAXIuhpeEJMxk2ml5aMhnFmCPHsnABgeQTtilNvhcw9iG-iA0uSQ_FXp8JihU0lFmDXzd_77RVPztbN3j9bRAIOlY_0dCPUqtdhIAsvDE_SWaai9Z50aa3CWFrLmaF4NN8e0i2r7AOcBilq-qPjXYLIn8YhUNqQ7MyEeIFaXAlkKJnKBC5v43wOxw0drn0XorAMjN6VF6d75tg-IzmFiXDNYl3MULt1WkpbEhjPDEFeX3SUUwfGAtV2DT_QH387AnS962kfrBwYhyB98Xqj9f5oreWae9i5JzZYjMgo8Jm3unFQb7fwn0-ZRhdUkyjRcIZoeXv1WmubJegnWFvr27iZq892vjxx4uS300pX7UWQuseWzwwMi1Ioln0a3warbrU2nV2wilrSBvnnxR072an2QtcsskyJsrgo-nVjkoF7eBXxxMmBQoIFm_wXV26l1aorqbrSY0QtbceqQ3Va-mIdf6WORZdyZYoQ6e3tu15O6b2-72mxiqIOqRRJSykz50uV5aXexgut9l4O4jdXR4sf9ytb3tMhMhrna7Jq2BJyli81BYnufzysWsRpwl3gguJ5a50_fMBzaB37Ivuop4tegRX37cMS60zezr9gJ_UIJbu9SSXouqVi8qFzzvxgI-qzZJazZ8nFZrcaU4M1MUtqS49x_7aMBzl1bbSy9p-Qr2hvIdg_y0uf5tQ3zqw63n5i7M8FI_w25SW2571l7SBQis5WmfI9tV1z2r_ev16gxMfYYYYBmk-zY7xRngVc78in_XV-u-fFW_x2ihRJOc0dzV5105bQs8r9oYmer0O30lnt7UukgVSJ0qx3FasJ3w3MZQUs6vq_M5u7iROX8rtZegShhh1Qavkm9YWu_uogtRBdd6rhWp85f
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718001492285954%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"fridayyyyy","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZhVQNPlT9ph963By2FJKxXcZrv-FW6i8-5rtpfOFx3e7t-whFR7t9V4KQ5WbihgeQ6ImYMJI69KQG0sKQjH47fmxrEXj8igQ-e0hJGLjZnDsKos2skZfDNVA-wNAXIuhpeEJMxk2ml5aMhnFmCPHsnABgeQTtilNvhcw9iG-iA0uSQ_FXp8JihU0lFmDXzd_77RVPztbN3j9bRAIOlY_0dCPUqtdhIAsvDE_SWaai9Z50aa3CWFrLmaF4NN8e0i2r7AOcBilq-qPjXYLIn8YhUNqQ7MyEeIFaXAlkKJnKBC5v43wOxw0drn0XorAMjN6VF6d75tg-IzmFiXDNYl3MULt1WkpbEhjPDEFeX3SUUwfGAtV2DT_QH387AnS962kfrBwYhyB98Xqj9f5oreWae9i5JzZYjMgo8Jm3unFQb7fwn0-ZRhdUkyjRcIZoeXv1WmubJegnWFvr27iZq892vjxx4uS300pX7UWQuseWzwwMi1Ioln0a3warbrU2nV2wilrSBvnnxR072an2QtcsskyJsrgo-nVjkoF7eBXxxMmBQoIFm_wXV26l1aorqbrSY0QtbceqQ3Va-mIdf6WORZdyZYoQ6e3tu15O6b2-72mxiqIOqRRJSykz50uV5aXexgut9l4O4jdXR4sf9ytb3tMhMhrna7Jq2BJyli81BYnufzysWsRpwl3gguJ5a50_fMBzaB37Ivuop4tegRX37cMS60zezr9gJ_UIJbu9SSXouqVi8qFzzvxgI-qzZJazZ8nFZrcaU4M1MUtqS49x_7aMBzl1bbSy9p-Qr2hvIdg_y0uf5tQ3zqw63n5i7M8FI_w25SW2571l7SBQis5WmfI9tV1z2r_ev16gxMfYYYYBmk-zY7xRngVc78in_XV-u-fFW_x2ihRJOc0dzV5105bQs8r9oYmer0O30lnt7UukgVSJ0qx3FasJ3w3MZQUs6vq_M5u7iROX8rtZegShhh1Qavkm9YWu_uogtRBdd6rhWp85f
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718001492285954%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"fridayyyyy","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 12:37:12 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 12:37:12 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 12:37:12 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:37:13 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:37:44 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZjnlA5IZBPYmeTn8UmUbyjBNO0W8-LUMdZe26ZZfcViJG2skab2MJXjrVsmZw_PZwLC94_QbHOM2aj34A-ZTHmB7s19dU_-XPiZhgWIfjwcE_HSh2KWtrbHIyzWAylqLZwWwJ3Vpq9TSkgCjW3Ze8aQ30ds1zH1Hkh9pSylLIlhSKps4THKAGDfFGvrviZrF6KbmurykJjkvsHaF7Xy2Kz-h8AmpLAektvW-142ejdM2yON_hAbZKYREp2RRhAZhDqrT2M5lRzcTY_awCtE20nCA5BHTMczcUvSCYY5AD1-W6Dqto01R7fuz0ZQW7iZtvTT9ZZqamjH_FcQlsjIa7v1WJKO64wzkeZGBhgpYM10HHWdKO0FL385PR0mhmYMcjWRQ1Xe_i0vwqf2o3erB0QFoWam9iyr0OzwuR0MlhnSmt0S6BtmOpfV5RkumBSzXXv6iMqw8vQBaoWmrQyIi_q86tp1xZimdV3nBOvOqtyW0yajymY1v9Xin1na38YhSM0ld5zzk9RmWgkemQYvhz5suu6t-oUBancfqb4OI9xVyq3hn2d7Mxt2Yxk7OWfWMhicBciea-1nplUxb7Ft_O3n-y2Xm-zQlr7qgvwYcUomymb-23Q7RjgioyhgsiSm2dbZWBpejhI85jV5tgiJj4ioBeW7y2w0p_Z9fwJsna8y6MQVx6s1JVFts5ze3oWiRwr_S5WBn_xjzZVz7izJf28p-F39rx6xwsd2bM750xl1SorOsi5fveaZV40ysnRffb1rZoepxjnbMsotRq2YB0FMauF0YcarsM_5Y8jq8Bd6weesvXniUyknjz-xBIenxQ7MwMt3zMZ5qFU8zrJqcmRhq_8mpZvMd7fuFShwqF2n10lclvfql0Y1jUhtW7hfIt44x27Ueecws_8qQyXMBRWU6Jz753cfklZSd9t-g-njv6B8BxiR6vq_FOw29ZnejxmkrinUboy98ssvRWofwhgkU9grcrJIakafc7fRp8dmUmUope9
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718003258099612%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZjnlA5IZBPYmeTn8UmUbyjBNO0W8-LUMdZe26ZZfcViJG2skab2MJXjrVsmZw_PZwLC94_QbHOM2aj34A-ZTHmB7s19dU_-XPiZhgWIfjwcE_HSh2KWtrbHIyzWAylqLZwWwJ3Vpq9TSkgCjW3Ze8aQ30ds1zH1Hkh9pSylLIlhSKps4THKAGDfFGvrviZrF6KbmurykJjkvsHaF7Xy2Kz-h8AmpLAektvW-142ejdM2yON_hAbZKYREp2RRhAZhDqrT2M5lRzcTY_awCtE20nCA5BHTMczcUvSCYY5AD1-W6Dqto01R7fuz0ZQW7iZtvTT9ZZqamjH_FcQlsjIa7v1WJKO64wzkeZGBhgpYM10HHWdKO0FL385PR0mhmYMcjWRQ1Xe_i0vwqf2o3erB0QFoWam9iyr0OzwuR0MlhnSmt0S6BtmOpfV5RkumBSzXXv6iMqw8vQBaoWmrQyIi_q86tp1xZimdV3nBOvOqtyW0yajymY1v9Xin1na38YhSM0ld5zzk9RmWgkemQYvhz5suu6t-oUBancfqb4OI9xVyq3hn2d7Mxt2Yxk7OWfWMhicBciea-1nplUxb7Ft_O3n-y2Xm-zQlr7qgvwYcUomymb-23Q7RjgioyhgsiSm2dbZWBpejhI85jV5tgiJj4ioBeW7y2w0p_Z9fwJsna8y6MQVx6s1JVFts5ze3oWiRwr_S5WBn_xjzZVz7izJf28p-F39rx6xwsd2bM750xl1SorOsi5fveaZV40ysnRffb1rZoepxjnbMsotRq2YB0FMauF0YcarsM_5Y8jq8Bd6weesvXniUyknjz-xBIenxQ7MwMt3zMZ5qFU8zrJqcmRhq_8mpZvMd7fuFShwqF2n10lclvfql0Y1jUhtW7hfIt44x27Ueecws_8qQyXMBRWU6Jz753cfklZSd9t-g-njv6B8BxiR6vq_FOw29ZnejxmkrinUboy98ssvRWofwhgkU9grcrJIakafc7fRp8dmUmUope9
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718003258099612%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"hhhhhhhhhhhhhhhhhhh","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 12:44:19 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 12:44:23 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: C:\Work\IAM10\API\JsonFile\firebase.json
+
+
+Log Entry : 12:44:25 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:44:27 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:48:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 12:48:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 12:48:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:48:39 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 12:48:40 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZiMiEcvvi_dHvysTmriU9ZuaHKaHuTrzmNcNBA7lxCjybm93OpeSZvhl5LhJxZfdwhE2V61Ufd_vdvLxriQzh8G9DpUlI0KxMP1DnXp528sUmg-iYAtDP1bNeYQSHg8Qgcs8gGlZY1UzudR4flj0T8Tnfl8shJY4qcwlP6AhBphY9IPIQ9mPFlzj-avL_Z8XT3RcWVfUkuy6LgqaKIUPZwsnDcSSjWWxFjOlQSmiD2Nkp0aICQcO05K3AKXNGOlRj3aDb5USGTUXmn5Qg54Tak4Z-ixZp87-IIBwChUAKF73zVoOGV6Q8xjE_HQ-JQO47B4EzSv5hoZf_CIk05Ug8XP1bptOWfzy3H38gg3hBHEV32XdBQN384Ayvlr3rjodIxuogSxzWe87BeqmoswrBdfdn9pYoMrcvWV0Scmo4hY1Um1_pqdsin3zrFcekf628Q3BZf0XlxxsuM6fS3U1umdFo7cjrgQJ3ktgrtBwaBVb5O6-p_-aB-x4Xal0_WpS9UOOnhvnBgv9IqBeURJ-y1rzZbw6_goR9FyRlYMwRzyOXb3iYdZF4SOSV9cxe7f6qXOJfxBymjjIFxeF0fiBOps40O9XiMhViwfeMrkzum-qr1bB6_iag7x8iQfFJ7qOfIYMbt_awbUwtMbUm7eu_Ia0RhmSvJRUgSq2Ig3nun9MaU3wBU878JQWUurIj2kfMJ2d1v-iYkmjJr30MfBfq7fY6Y8QMYXSO0Ujn78zu7c3_5obfWf3WZfUoQqnuel6ZlaneRodQds0FxYMm1rYdQ32_8eUcqo1Otqjmjki8J7JBf085fsvBFMvgc9I-2j-zq-Vrh3Bfstjhb0nOJwxuFgjde0hoidFu8W7unFJ8VYUQ6X8QQJo6OxXoOYasquQ40jBxt5OI1qynx1-098V6n3BwwQ0mV1haV_shoY7wsf7ckq8--Fbhg6BpSjsvmvvtoObFjs_f63O66cj4imft6kv9cMe0XhkZWh-F2QqRSd8bWQbz4
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718003920277245%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"kkkkkkkkkkkkkkkkkkkkkkk","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZiMiEcvvi_dHvysTmriU9ZuaHKaHuTrzmNcNBA7lxCjybm93OpeSZvhl5LhJxZfdwhE2V61Ufd_vdvLxriQzh8G9DpUlI0KxMP1DnXp528sUmg-iYAtDP1bNeYQSHg8Qgcs8gGlZY1UzudR4flj0T8Tnfl8shJY4qcwlP6AhBphY9IPIQ9mPFlzj-avL_Z8XT3RcWVfUkuy6LgqaKIUPZwsnDcSSjWWxFjOlQSmiD2Nkp0aICQcO05K3AKXNGOlRj3aDb5USGTUXmn5Qg54Tak4Z-ixZp87-IIBwChUAKF73zVoOGV6Q8xjE_HQ-JQO47B4EzSv5hoZf_CIk05Ug8XP1bptOWfzy3H38gg3hBHEV32XdBQN384Ayvlr3rjodIxuogSxzWe87BeqmoswrBdfdn9pYoMrcvWV0Scmo4hY1Um1_pqdsin3zrFcekf628Q3BZf0XlxxsuM6fS3U1umdFo7cjrgQJ3ktgrtBwaBVb5O6-p_-aB-x4Xal0_WpS9UOOnhvnBgv9IqBeURJ-y1rzZbw6_goR9FyRlYMwRzyOXb3iYdZF4SOSV9cxe7f6qXOJfxBymjjIFxeF0fiBOps40O9XiMhViwfeMrkzum-qr1bB6_iag7x8iQfFJ7qOfIYMbt_awbUwtMbUm7eu_Ia0RhmSvJRUgSq2Ig3nun9MaU3wBU878JQWUurIj2kfMJ2d1v-iYkmjJr30MfBfq7fY6Y8QMYXSO0Ujn78zu7c3_5obfWf3WZfUoQqnuel6ZlaneRodQds0FxYMm1rYdQ32_8eUcqo1Otqjmjki8J7JBf085fsvBFMvgc9I-2j-zq-Vrh3Bfstjhb0nOJwxuFgjde0hoidFu8W7unFJ8VYUQ6X8QQJo6OxXoOYasquQ40jBxt5OI1qynx1-098V6n3BwwQ0mV1haV_shoY7wsf7ckq8--Fbhg6BpSjsvmvvtoObFjs_f63O66cj4imft6kv9cMe0XhkZWh-F2QqRSd8bWQbz4
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718003920277245%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"kkkkkkkkkkkkkkkkkkkkkkk","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+
+Log Entry : 15:46:06 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: 
+
+
+Log Entry : 15:47:02 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 15:47:03 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: D:\IM10NewRepository\IM10.API\JsonFile\firebase.json
+
+
+Log Entry : 15:47:03 10 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: https://www.googleapis.com/auth/firebase.messaging
+
+
+Log Entry : 15:47:04 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZgM5lJqi0mmrtm50w1sYLjszmicczW13SIdqob5QV2d0CbAITqAc7-x69whA5vA8SrYz8pxxvyraRN_javujOg33p4fDtAbYn02kO-fe0GTCfsjcvYhMJ_lKdxQW0tawlLGqCUDwEKrLFNvlDj-S6c9nuV_NodQE2bXTCkSQ5Xfx2cUqiWq_nkaXHlSIINSLspRqAqGCoOHgvUNmv6REwYWefl9ki2r_lvIbJtiATE5eZf9JFkDpik0gIIHtO4jz4nOCNFP3nycmGxvl9rjwIz_9aIWxBNeftQ6oygwzlGIBoFMBxh0d6JQwWAgr9rrWorKmgub761mszJ6wZqUFZVqJwUAF6W7hfZPpqw14mXjdVm6i-0kG385PkMYYYR0Rpszh3cgF6tjl04qkc1ksgg-IXROkftjpwFu9zIcsf35VpoFl0og2Vm_W2S5zo6WY4XmFwqntdd_RY-gm_Sm6njoyO3xfaXyJ2djq1alX63RdxkpqzQJ75Wyw00hr132Sz8ww91o7uB2qhOjuVhmq3hh7-2F0hF8vZt_4mBwtme9VcBitmBue3rSyIJVV4rxMJkWMunWWonMQ5908hw9mw1-7xtdk5f3bveR-_z6Zvr1xf6zfXSrRYfMU1YnIvjZis9WXjeMYr7l4MunerhBtURmn3Mqa0wnWX6mv4ixWv0UBX4Or-wnuzxqWXzkw31vo3-mVqYkaks9p7cRn2uif05pips_U5V2OWyVj5yenyZ1fYhBlBfbbYXXRFUYt6su32inMBcRz0p4qUi02oiu5k0_3ju-5Jzld8Z2QtxJcsIeBrf9YsQZc8J28e58Qw480vwZzgcdBx8jb12OmImyzgSW7bj1BuapsQjzbxSajv5kcqR38hxX8Yfja80SSwiM0ZQQS8vUolfzV-wSFi7_jORnYlrjzYV6o9iatityvhm9r8uYdUvZdZiUp6F4ugkYgJJlm5Xdt45cS1BZoBcR_mfFhwc0jgnyvWXqR3-0fsSkvyqr4n6
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718014623628800%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"playerId":"4","contentId":"431","title":"aaaaaaaaaa","categoryId":"11","contentTypeId":"2","thumbnail":"aaaaaaaaaaa","message":"aaaaaaaaaaa"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: ya29.c.c0AY_VpZgM5lJqi0mmrtm50w1sYLjszmicczW13SIdqob5QV2d0CbAITqAc7-x69whA5vA8SrYz8pxxvyraRN_javujOg33p4fDtAbYn02kO-fe0GTCfsjcvYhMJ_lKdxQW0tawlLGqCUDwEKrLFNvlDj-S6c9nuV_NodQE2bXTCkSQ5Xfx2cUqiWq_nkaXHlSIINSLspRqAqGCoOHgvUNmv6REwYWefl9ki2r_lvIbJtiATE5eZf9JFkDpik0gIIHtO4jz4nOCNFP3nycmGxvl9rjwIz_9aIWxBNeftQ6oygwzlGIBoFMBxh0d6JQwWAgr9rrWorKmgub761mszJ6wZqUFZVqJwUAF6W7hfZPpqw14mXjdVm6i-0kG385PkMYYYR0Rpszh3cgF6tjl04qkc1ksgg-IXROkftjpwFu9zIcsf35VpoFl0og2Vm_W2S5zo6WY4XmFwqntdd_RY-gm_Sm6njoyO3xfaXyJ2djq1alX63RdxkpqzQJ75Wyw00hr132Sz8ww91o7uB2qhOjuVhmq3hh7-2F0hF8vZt_4mBwtme9VcBitmBue3rSyIJVV4rxMJkWMunWWonMQ5908hw9mw1-7xtdk5f3bveR-_z6Zvr1xf6zfXSrRYfMU1YnIvjZis9WXjeMYr7l4MunerhBtURmn3Mqa0wnWX6mv4ixWv0UBX4Or-wnuzxqWXzkw31vo3-mVqYkaks9p7cRn2uif05pips_U5V2OWyVj5yenyZ1fYhBlBfbbYXXRFUYt6su32inMBcRz0p4qUi02oiu5k0_3ju-5Jzld8Z2QtxJcsIeBrf9YsQZc8J28e58Qw480vwZzgcdBx8jb12OmImyzgSW7bj1BuapsQjzbxSajv5kcqR38hxX8Yfja80SSwiM0ZQQS8vUolfzV-wSFi7_jORnYlrjzYV6o9iatityvhm9r8uYdUvZdZiUp6F4ugkYgJJlm5Xdt45cS1BZoBcR_mfFhwc0jgnyvWXqR3-0fsSkvyqr4n6
+Error: {
+  "name": "projects/im10-f32bd/messages/0:1718014623628800%d8a1da90f9fd7ecd"
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"playerId":"4","contentId":"431","title":"aaaaaaaaaa","categoryId":"11","contentTypeId":"2","thumbnail":"aaaaaaaaaaa","message":"aaaaaaaaaaa"}}}
+
+
+Log Entry : 15:58:22 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: 
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: 
+Error: 
+IsException: False
+DataPayload: 
+
+
+Log Entry : 16:17:34 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016448325306%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718016448325306%d8a1da90d8a1da90
+IsException: False
+DataPayload: JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016448325306%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718016448325306%d8a1da90d8a1da90
+IsException: False
+DataPayload: JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+
+
+Log Entry : 16:19:59 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016595274971%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718016595274971%d8a1da90d8a1da90
+IsException: False
+DataPayload: HELLO DIPALI..........................
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016595274971%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718016595274971%d8a1da90d8a1da90
+IsException: False
+DataPayload: HELLO DIPALI..........................
+
+
+Log Entry : 16:21:31 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016690605742%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016690605742%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016690605742%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016690605742%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+
+
+Log Entry : 16:21:32 10 June 2024
+  :
+  :DeviceId: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+AccessToken: projects/im10-f32bd/messages/1718016692143872
+Error: projects/im10-f32bd/messages/1718016692143872
+IsException: False
+DataPayload: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+
+-------------------------------
+DeviceId: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+AccessToken: projects/im10-f32bd/messages/1718016692143872
+Error: projects/im10-f32bd/messages/1718016692143872
+IsException: False
+DataPayload: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+
+
+Log Entry : 16:21:33 10 June 2024
+  :
+  :DeviceId: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+AccessToken: projects/im10-f32bd/messages/0:1718016693429572%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016693429572%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+
+-------------------------------
+DeviceId: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+AccessToken: projects/im10-f32bd/messages/0:1718016693429572%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016693429572%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+
+
+Log Entry : 16:23:32 10 June 2024
+  :
+  :DeviceId: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+AccessToken: projects/im10-f32bd/messages/0:1718016807293980%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718016807293980%d8a1da90d8a1da90
+IsException: False
+DataPayload: hello swati................
+
+-------------------------------
+DeviceId: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+AccessToken: projects/im10-f32bd/messages/0:1718016807293980%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718016807293980%d8a1da90d8a1da90
+IsException: False
+DataPayload: hello swati................
+
+
+Log Entry : 16:24:42 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016882152743%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016882152743%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718016882152743%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016882152743%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+
+
+Log Entry : 16:24:43 10 June 2024
+  :
+  :DeviceId: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+AccessToken: projects/im10-f32bd/messages/1718016883007286
+Error: projects/im10-f32bd/messages/1718016883007286
+IsException: False
+DataPayload: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+
+-------------------------------
+DeviceId: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+AccessToken: projects/im10-f32bd/messages/1718016883007286
+Error: projects/im10-f32bd/messages/1718016883007286
+IsException: False
+DataPayload: d4AASjMfukIHr7R8D2QdMX:APA91bGAEHDHlM3gBcjfhCGNvGN7H4dKUpKNed4-j94vUD8juIDQHaIwIxNBwdt-XCsPOG72vGX3CzvF4qJnWyi51cb_OzmV6QNChVIqcSGxqZ_fMCFFd29v9xxxOj_rorkiZnav61LC
+
+
+Log Entry : 16:24:44 10 June 2024
+  :
+  :DeviceId: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+AccessToken: projects/im10-f32bd/messages/0:1718016883792719%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016883792719%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+
+-------------------------------
+DeviceId: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+AccessToken: projects/im10-f32bd/messages/0:1718016883792719%d8a1da90f9fd7ecd
+Error: projects/im10-f32bd/messages/0:1718016883792719%d8a1da90f9fd7ecd
+IsException: False
+DataPayload: fjh3DhtzQqCnb1MmfI41mT:APA91bGMdkxgCVR0I2Y4b4GiAPreiLst-Jja5NMWxTkwGAvefbucaCpGm9iYWjYLCcWEnXGZZFhBmvMxOp_5KgyUu0uh7VjE5z_m1JkPBOYmhXg_g8k32-LhjC4c6t8ZR-zZSKg5P4Vp
+
+
+Log Entry : 20:13:50 10 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718030626448080%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718030626448080%d8a1da90d8a1da90
+IsException: False
+DataPayload: ffffffff
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718030626448080%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718030626448080%d8a1da90d8a1da90
+IsException: False
+DataPayload: ffffffff
+

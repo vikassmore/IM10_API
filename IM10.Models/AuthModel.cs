@@ -28,8 +28,10 @@ namespace IM10.Models
 
     public class LoginStaus
     {
-        public bool? IsLogin { get; set; }
         public long UserId { get; set; }
+        public bool? IsLogin { get; set; }
+        public bool AccountDeletedStatus { get; set; }
+
     }
 
 
@@ -56,5 +58,33 @@ namespace IM10.Models
         public int? CityId { get; set; }
         public string CityName { get; set; }
        
+    }
+
+    public class DeleteAccountModel
+    {
+        public bool? IsLogin { get; set; }
+        public long UserId { get; set; }
+        public string? DeviceToken { get; set; }
+    }
+
+
+
+    public class AuthModelForMobile
+    {
+        public long UserId { get; set; }
+
+        // public string Username { get; set; } = null!;
+        public string EmailId { get; set; } = null!;
+        public int RoleId { get; set; }
+        public string Role { get; set; } = null!;
+        public string FullName { get; set; } = null!;
+        public string? DeviceToken { get; set; }
+        public string MobileNo { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string? CountryCode { get; set; }
+        public int? CityId { get; set; }
+        public int? StateId { get; set; }
+
     }
 }

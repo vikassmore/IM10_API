@@ -135,5 +135,37 @@ namespace IM10.API.Controllers
             auditLogService.ErrorAuditLogRestore(logId, ref errorResponseModel);
             return File(bytes, contentType, Path.GetFileName(filePath));
         }
+
+
+       /* /// <summary>
+        /// Delete an ErrorLogs
+        /// </summary>
+        /// <param name="logId"></param>
+        /// <returns></returns>
+        [HttpDelete("DeleteErrorLogs")]
+        //[Authorize(Roles = "IT Support Admin")]
+        [ProducesResponseType(typeof(LogEntry), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult DeleteErrorLogs(long logId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                var errorModel = auditLogService.DeleteErrorLogs(logId);
+
+                if (errorModel != null)
+                {
+                    return Ok(errorModel);
+                }
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }*/
     }
 }

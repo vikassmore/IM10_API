@@ -16,10 +16,15 @@ namespace IM10.Models
     }
 
 
+
     public class FcmNotificationSetting
     {
         public string SenderId { get; set; }
         public string ServerKey { get; set; }
+
+        public string private_key { get; set; }
+        public string client_email { get; set; }
+        public string token_uri { get; set; }
     }
 
     public class ResponseModel

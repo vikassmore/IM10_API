@@ -82,6 +82,13 @@ namespace IM10.BAL.Implementaion
                             context.SaveChanges();
                             transaction.Commit();
                             message = GlobalConstants.AdvContentMappingAddedSuccessfully;
+                            var AuditLog = new UserAuditLogModel();
+                            AuditLog.Action = " Add Advertise Content mapping";
+                            AuditLog.Description = "Advertise Content mapping Added Successfully";
+                            AuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+                            AuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
+                            AuditLog.CreatedDate = DateTime.Now;                     
+                            _userAuditLogService.AddUserAuditLog(AuditLog);
                         }
                     }
                     else
@@ -114,11 +121,9 @@ namespace IM10.BAL.Implementaion
                         }
                     }
                     var userAuditLog = new UserAuditLogModel();
-                    userAuditLog.Action = " Add Advertise Content mapping Details";
-                    userAuditLog.Description = "Advertise Content mapping Details Added";
-                    userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
-                    userAuditLog.CreatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
-                    userAuditLog.CreatedDate = DateTime.Now;
+                    userAuditLog.Action = " Add Advertise Content mapping ";
+                    userAuditLog.Description = "Advertise Content mapping  updated Successfully";
+                    userAuditLog.UserId = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;                   
                     userAuditLog.UpdatedBy = model.CreatedBy != null ? (int)model.CreatedBy : model.UpdatedBy != null ? (int)model.UpdatedBy : 0;
                     userAuditLog.UpdatedDate = DateTime.Now;
                     _userAuditLogService.AddUserAuditLog(userAuditLog);
@@ -163,29 +168,69 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             string Message = "";
-            var advtcontentEntity = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == advcontentmapId);
-            if (advtcontentEntity != null)
+            using (var transaction = context.Database.BeginTransaction())
             {
-                if (advtcontentEntity.IsDeleted == true)
-                {
-                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                    errorResponseModel.Message = "Adv content mapping already deleted.";
-                    return null;
+                var advtcontentEntity = context.AdvContentMappings.FirstOrDefault(x => x.AdvContentMapId == advcontentmapId);
+                try
+                {                 
+                    if (advtcontentEntity == null)
+                    {
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        errorResponseModel.Message = "Adv content mapping not found.";
+                        return null;
+                    }
+                    if (advtcontentEntity != null)
+                    {
+                        if (advtcontentEntity.IsDeleted == true)
+                        {
+                            errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                            errorResponseModel.Message = "Adv content mapping already deleted.";
+                            return null;
+                        }
+                        advtcontentEntity.IsDeleted = true;
+                        context.SaveChanges();
+                        transaction.Commit();
+                        Message = GlobalConstants.AdvContentMappingDeleteSuccessfully;
+                    }
+                    var userAuditLog = new UserAuditLogModel();
+                    userAuditLog.Action = " Delete Advertise mapping Details";
+                    userAuditLog.Description = "Advertise Content mapping Deleted";
+                    userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
+                    userAuditLog.CreatedDate = DateTime.Now;
+                    userAuditLog.CreatedBy = advtcontentEntity.CreatedBy;
+                    userAuditLog.UpdatedBy = advtcontentEntity.CreatedBy;
+                    userAuditLog.UpdatedDate = DateTime.Now;
+                    _userAuditLogService.AddUserAuditLog(userAuditLog);
                 }
-                advtcontentEntity.IsDeleted = true;
-                context.SaveChanges();
-                Message = GlobalConstants.AdvContentMappingDeleteSuccessfully;
+                catch (Exception ex)
+                {
+                    int? userIdForLog =null;
+                    if (advtcontentEntity != null)
+                    {
+                        if (advtcontentEntity.UpdatedBy != 0)
+                        {
+                            userIdForLog = advtcontentEntity.UpdatedBy;
+                        }
+                        else
+                        {
+                            userIdForLog = advtcontentEntity.CreatedBy;
+                        }
+                    }
+                    transaction.Rollback();
+                    var errorMessage = _logService.SaveErrorLogs(new LogEntry
+                    {
+                        LogType = "Error",
+                        StackTrace = ex.StackTrace,
+                        AdditionalInformation = ex.Message,
+                        CreatedDate = DateTime.Now,
+                        LogSource = "DeleteAdvContentMapping",
+                        UserId = userIdForLog,
+                        LogMessage = "Exception occurred in DeleteAdvContentMapping method"
+                    });
+                    return "Something went wrong!";
+                }
+                return "{\"message\": \"" + Message + "\"}";
             }
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = " Delete Advertise Content Details";
-            userAuditLog.Description = "Advertise Content Details Deleted";
-            userAuditLog.UserId = (int)advtcontentEntity.CreatedBy;
-            userAuditLog.CreatedDate = DateTime.Now;
-            userAuditLog.CreatedBy = advtcontentEntity.CreatedBy;
-            userAuditLog.UpdatedBy = advtcontentEntity.CreatedBy;
-            userAuditLog.UpdatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
-            return "{\"message\": \"" + Message + "\"}";
         }
 
         /// <summary>
@@ -195,44 +240,72 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public List <AdvContentMappingModel1> GetAdvContentMappingByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel)
         {
-            errorResponseModel = new ErrorResponseModel();
-            var advcontentmappinglist=new List<AdvContentMappingModel1>();
-            var contentEntity = (from update in context.AdvContentMappings
-                                 join
-                                 content in context.ContentDetails
-                                 on update.ContentId equals content.ContentId
-                                 join advertise in context.AdvContentDetails
-                                 on update.AdvertiseContentId equals advertise.AdvertiseContentId
-                                 join category in context.Categories
-                                 on update.CategoryId equals category.CategoryId
-                                 join subcategory in context.SubCategories
-                                 on update.SubCategoryId equals subcategory.SubCategoryId
-                                 where content.PlayerId == playerId && advertise.IsDeleted==false &&  update.IsDeleted == false
-                                 && content.Approved==true && content.IsDeleted==false
-                                 orderby update.UpdatedDate descending
-
-                                 select new AdvContentMappingModel1
-                                 {
-                                     AdvContentMapId = update.AdvContentMapId,
-                                     ContentId = update.ContentId,
-                                     ContentName = content.Title,
-                                     AdvertiseContentId = update.AdvertiseContentId,
-                                     AdvertiseContentName = advertise.Title,
-                                     CategoryId = update.CategoryId,
-                                     CategoryName = category.Name,
-                                     SubCategoryId = update.SubCategoryId,
-                                     SubcategoryName = subcategory.Name,
-                                     Position = update.Position,
-                                 }).ToList();
-            if (contentEntity.Count == 0)
+            using (var transaction = context.Database.BeginTransaction())
             {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-                return null;
-
+                List<AdvContentMappingModel1>? contentEntity = null;
+                try
+                {
+                    errorResponseModel = new ErrorResponseModel();
+                    contentEntity = (from update in context.AdvContentMappings
+                                         join
+                                         content in context.ContentDetails on update.ContentId equals content.ContentId
+                                         join advertise in context.AdvContentDetails on update.AdvertiseContentId equals advertise.AdvertiseContentId
+                                         join category in context.Categories on update.CategoryId equals category.CategoryId
+                                         join subcategory in context.SubCategories on update.SubCategoryId equals subcategory.SubCategoryId
+                                         where content.PlayerId == playerId && advertise.IsDeleted == false && update.IsDeleted == false
+                                         && content.Approved == true && content.IsDeleted == false
+                                         orderby update.UpdatedDate descending
+                                         select new AdvContentMappingModel1
+                                         {
+                                             AdvContentMapId = update.AdvContentMapId,
+                                             ContentId = update.ContentId,
+                                             ContentName = content.Title,
+                                             AdvertiseContentId = update.AdvertiseContentId,
+                                             AdvertiseContentName = advertise.Title,
+                                             CategoryId = update.CategoryId,
+                                             CategoryName = category.Name,
+                                             SubCategoryId = update.SubCategoryId,
+                                             SubcategoryName = subcategory.Name,
+                                             Position = update.Position,
+                                         }).ToList();
+                    if (contentEntity.Count == 0)
+                    {
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                        return null;
+                    }
+                    transaction.Commit();
+                    return contentEntity.ToList();
+                }
+                catch (Exception ex)
+                {
+                    int? userIdForLog = null;
+                    AdvContentMappingModel1 advtcontentEntity = contentEntity?.FirstOrDefault();
+                    if (advtcontentEntity != null)
+                    {
+                        if (advtcontentEntity.UpdatedBy != 0)
+                        {
+                            userIdForLog = advtcontentEntity.UpdatedBy;
+                        }
+                        else
+                        {
+                            userIdForLog = advtcontentEntity.CreatedBy;
+                        }
+                    }
+                    transaction.Rollback();
+                    var errorMessage = _logService.SaveErrorLogs(new LogEntry
+                    {
+                        LogType = "Error",
+                        StackTrace = ex.StackTrace,
+                        AdditionalInformation = ex.Message,
+                        CreatedDate = DateTime.Now,
+                        LogSource = "GetAdvContentMappingByPlayerId",
+                        UserId = userIdForLog,
+                        LogMessage = "Exception occurred in GetAdvContentMappingByPlayerId method"
+                    });
+                    return null;
+                }
             }
-            return contentEntity.ToList();
-
         }
 
 
@@ -243,61 +316,73 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public AdvContentMappingModel1 GetAdvContentMappingById(long AdvcontentmapId, ref ErrorResponseModel errorResponseModel)
         {
-            errorResponseModel = new ErrorResponseModel();
-            var contentEntity = (from update in context.AdvContentMappings
-                                 join
-                                 content in context.ContentDetails
-                                 on update.ContentId equals content.ContentId
-                                 join advertise in context.AdvContentDetails
-                                 on update.AdvertiseContentId equals advertise.AdvertiseContentId
-                                 join category in context.Categories
-                                 on update.CategoryId equals category.CategoryId
-                                 join subcategory in context.SubCategories
-                                 on update.SubCategoryId equals subcategory.SubCategoryId
-                                 where update.AdvContentMapId==AdvcontentmapId && update.IsDeleted == false
-
-                                 select new AdvContentMappingModel1
-                                 {
-                                     AdvContentMapId = update.AdvContentMapId,
-                                     ContentId = update.ContentId,
-                                     ContentName = content.Title,
-                                     AdvertiseContentId = update.AdvertiseContentId,
-                                     AdvertiseContentName = advertise.Title,
-                                     CategoryId = update.CategoryId,
-                                     CategoryName = category.Name,
-                                     SubCategoryId = update.SubCategoryId,
-                                     SubcategoryName = subcategory.Name,
-                                     CreatedBy = update.CreatedBy,
-                                     CreatedDate = update.CreatedDate,
-                                     Position = update.Position,
-                                     UpdatedDate = DateTime.Now,
-                                     UpdatedBy = update.UpdatedBy,
-                                 }).FirstOrDefault();
-            if (contentEntity == null)
+            using (var transaction = context.Database.BeginTransaction())
             {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-                return null;
-
+                AdvContentMappingModel1? contentEntity = null;
+                try
+                {
+                    errorResponseModel = new ErrorResponseModel();
+                    contentEntity = (from update in context.AdvContentMappings join
+                                         content in context.ContentDetails on update.ContentId equals content.ContentId
+                                         join advertise in context.AdvContentDetails on update.AdvertiseContentId equals advertise.AdvertiseContentId
+                                         join category in context.Categories on update.CategoryId equals category.CategoryId
+                                         join subcategory in context.SubCategories on update.SubCategoryId equals subcategory.SubCategoryId
+                                         where update.AdvContentMapId == AdvcontentmapId && update.IsDeleted == false
+                                         select new AdvContentMappingModel1
+                                         {
+                                             AdvContentMapId = update.AdvContentMapId,
+                                             ContentId = update.ContentId,
+                                             ContentName = content.Title,
+                                             AdvertiseContentId = update.AdvertiseContentId,
+                                             AdvertiseContentName = advertise.Title,
+                                             CategoryId = update.CategoryId,
+                                             CategoryName = category.Name,
+                                             SubCategoryId = update.SubCategoryId,
+                                             SubcategoryName = subcategory.Name,
+                                             CreatedBy = update.CreatedBy,
+                                             CreatedDate = update.CreatedDate,
+                                             Position = update.Position,
+                                             UpdatedDate = DateTime.Now,
+                                             UpdatedBy = update.UpdatedBy,
+                                         }).FirstOrDefault();
+                    if (contentEntity == null)
+                    {
+                        errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                        errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                        return null;
+                    }
+                    transaction.Commit();
+                    return contentEntity;                   
+                }
+                catch (Exception ex)
+                {
+                    int? userIdForLog = null;
+                    AdvContentMappingModel1? advtcontentEntity = contentEntity;
+                    if (advtcontentEntity != null)
+                    {
+                        if (advtcontentEntity.UpdatedBy != 0)
+                        {
+                            userIdForLog = advtcontentEntity.UpdatedBy;
+                        }
+                        else
+                        {
+                            userIdForLog = advtcontentEntity.CreatedBy;
+                        }
+                    }
+                    transaction.Rollback();
+                    var errorMessage = _logService.SaveErrorLogs(new LogEntry
+                    {
+                        LogType = "Error",
+                        StackTrace = ex.StackTrace,
+                        AdditionalInformation = ex.Message,
+                        CreatedDate = DateTime.Now,
+                        LogSource = "GetAdvContentMappingById",
+                        UserId = userIdForLog,
+                        LogMessage = "Exception occurred in GetAdvContentMappingById method"
+                    });
+                    return null;
+                }
             }
-            return new AdvContentMappingModel1
-            {
-                AdvContentMapId = contentEntity.AdvContentMapId,
-                ContentId = contentEntity.ContentId,
-                ContentName = contentEntity.ContentName,
-                AdvertiseContentId = contentEntity.AdvertiseContentId,
-                AdvertiseContentName = contentEntity.AdvertiseContentName,
-                CategoryId = contentEntity.CategoryId,
-                CategoryName = contentEntity.CategoryName,
-                SubCategoryId = contentEntity.SubCategoryId,
-                SubcategoryName = contentEntity.SubcategoryName,
-                CreatedBy = contentEntity.CreatedBy,
-                CreatedDate = contentEntity.CreatedDate,
-                Position = contentEntity.Position,
-                UpdatedDate = DateTime.Now,
-                UpdatedBy = contentEntity.UpdatedBy,
-            };
         }
-
     }
 }

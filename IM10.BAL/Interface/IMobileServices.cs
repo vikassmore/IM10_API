@@ -21,14 +21,14 @@ namespace IM10.BAL.Interface
         /// <param name="playerId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<MobileContentData> GetTop5TrendingVideoContent(long playerId,long userId, ref ErrorResponseModel errorResponseModel);
+        List<MobileContentData> GetTop5TrendingVideoContent(string playerId,long userId,int countNumber, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get all Category top five video
         /// </summary>
         /// <param name="playerId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<MobileVideoCategoryData> GetAllCategoryTopFiveVideoContent(long playerId, long userId, ref ErrorResponseModel errorResponseModel);
+        List<MobileVideoCategoryData> GetAllCategoryTopFiveVideoContent(string playerId, long userId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get all video By Category
         /// </summary>
@@ -36,7 +36,7 @@ namespace IM10.BAL.Interface
         /// <param name="categoryId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        MobileVideoCategoryData GetVideoContentByCategory(long playerId, long categoryId, long userId, ref ErrorResponseModel errorResponseModel);
+        MobileVideoCategoryData GetVideoContentByCategory(string playerId, long categoryId, long userId, int countNumber, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Method is used to get mobileVideoview by contentId
@@ -50,7 +50,7 @@ namespace IM10.BAL.Interface
         /// <param name="playerId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<MobileArticleCategoryData> GetAllCategoryTopFiveArticleContent(long playerId, long userId, ref ErrorResponseModel errorResponseModel);
+        List<MobileArticleCategoryData> GetAllCategoryTopFiveArticleContent(string playerId, long userId, int countNumber, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get all article By Category
         /// </summary>
@@ -58,7 +58,7 @@ namespace IM10.BAL.Interface
         /// <param name="categoryId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        MobileArticleCategoryData GetArticleContentByCategory(long playerId, long categoryId, long userId, ref ErrorResponseModel errorResponseModel);
+        MobileArticleCategoryData GetArticleContentByCategory(string playerId, long categoryId, long userId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get mobilearticleview by contentId
         /// </summary>
@@ -72,19 +72,19 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        List<ListingLogoDetailsModel> GetListingDetailByplayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+        List<ListingLogoDetailsModel> GetListingDetailByplayerId(string playerId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get ListingDetail by id
         /// </summary>
         /// <param name="listingId"></param>
         /// <returns></returns>
-        ListingDetailModel GetListingDetailById(long listingId, ref ErrorResponseModel errorResponseModel);
+        MobileListingDetailModel GetListingDetailById(long listingId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get To20ListingDetail by playerId
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        List<ListingLogoDetailsModel> GetTop20ListingDetailByplayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+        List<ListingLogoDetailsModel> GetTop20ListingDetailByplayerId(string playerId, int countNumber, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get the serach data by playerId and title
         /// </summary>
@@ -92,7 +92,7 @@ namespace IM10.BAL.Interface
         /// <param name="searchData"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        MobileSearchDataModel GetMobileSearchDetailByplayerId(long playerId, string searchData, long userId, ref ErrorResponseModel errorResponseModel);
+        MobileSearchDataModel GetMobileSearchDetailByplayerId(string playerId, string searchData, long userId, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Method is used to add/edit comment
@@ -126,7 +126,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        List<ContentCommentModel> GetMobileCommentByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+        List<ContentCommentModel> GetMobileCommentByPlayerId(string playerId, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Method is used to add view flag
@@ -147,19 +147,19 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        PlayerMobileDataModel GetMobileSplashScreenByplayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+        PlayerMobileDataModel GetMobileSplashScreenByplayerId(string playerId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get logo image by playerid
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        PlayerMobileDataModel GetMobileLogoImageByplayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+        PlayerMobileDataModel GetMobileLogoImageByplayerId(string playerId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get slide image by playerid
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        List<PlayerMobileDataModel> GetMobileSlideImageByplayerId(long playerId, ref ErrorResponseModel errorResponseModel);
+        List<PlayerMobileDataModel> GetMobileSlideImageByplayerId(string playerId, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Method is used to get the liked data by playerId and userId
@@ -167,13 +167,22 @@ namespace IM10.BAL.Interface
         /// <param name="playerId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        PlayerMobileLikeFavouriteData GetMobileLikeVideoArticle(long playerId, long userId, ref ErrorResponseModel errorResponseModel);
+        PlayerMobileLikeFavouriteData GetMobileLikeVideoArticle(string playerId, long userId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get the favourite data by playerId and userId
         /// </summary>
         /// <param name="playerId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        PlayerMobileLikeFavouriteData GetMobileFavouriteVideoArticle(long playerId, long userId, ref ErrorResponseModel errorResponseModel);
+        PlayerMobileLikeFavouriteData GetMobileFavouriteVideoArticle(string playerId, long userId, ref ErrorResponseModel errorResponseModel);
+
+
+        /// <summary>
+        /// Method is used to get the GetAllCategoryList
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        List<ExploreData> GetAllCategoryList(string playerId, long userId, ref ErrorResponseModel errorResponseModel);     
     }
 }

@@ -1,0 +1,42 @@
+
+Log Entry : 10:24:47 17 June 2024
+  :
+  :DeviceId: 1
+AccessToken: ya29.c.c0AY_VpZiODR0S0LJrtpEKlSkWvEzpvGoWp-mB0U4fkmt8_DbmukXMLc14yJW7ugOk0iS4UKuIr3WbXJ4UUcQBixgAaAkieTDrVHSGFB0wvGZwYoqHMxrxzeiGXT8LX8HWvVH9bTy5v5dVKUrjKhUJ50HXfOMpiOhmFCo0Bajn7j6YVOf6rQXbDFXAoKyZX_AVhBn28sn1vJ_Us7gwOl-HEkuDGx1Ya_ncdjlSGfKDUUlFR-QFt24ZuvjPO9Z_KuudWhWYGZwvNnPl_n-dJ-ic3s7ZZOyJ6mGoCiqBlSu4SACZ1HrS7piJl6ZSINOaEP-wBNY1zb5MFepJgNgtSzCEbKrf46CxRYhYkBf9Xob0Gf_QvmvYZ3WEQJlBG385D7O3jZm4r5tY553tRcYZhBMd1_UZ9kjkO1lwBzk5lzl4rlRkJ8_kjXa8nepaXatWXF2igUbSm8OIw1b6fnr0haIOBZsv-Mec-_d0gvz-RMfuVSn0wql0Xpfj-fM_emXxxtt9vqVxkqwdrYoduVUFk7V1eZmQjhVog94ankRMjXU9Y1tBqQ9Z97_20pUlVnVZ5jYcRpIxZ2bRbylrbbh3yi8kuvM62SIUo4fBstry_f9tWiO2hYuoZ-S6cFFRUjtVxRZih621IinBmscuMXjrIb1fcp1WF1yJifO5S96J25-zX6bMpp72_pQ4urMffxV5qWaUp5BezizJJ2retzOzn6ccYBXQ5JvUcwJzhwcIzfhfFsFfqzWt09QXObvI5_e69rp9ka_ZMZ11XzdQzzrpugdJopuk13Y59vh9mY9aJ8do0eZv1kSwo0yff9QlaVvMe5v2v-uInqrUb-1Wem_rkVo-_JjwVlZ_WSfrdV1oIjI2l1V2Y3uwfYOOzf5Q48bzSwi0lFfr2lu-zjVySl_0dn7_br7w5Q4Ww1Qo0dvQkxjIYdeeBrMgYvg1rzQcsVdUiRZ6Uvrh1s0g1o242glknqOtcFYI38R0bqbcbWM1lg8QUgOqRFvddBg_knM
+Error: {
+  "error": {
+    "code": 400,
+    "message": "The registration token is not a valid FCM registration token",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+        "errorCode": "INVALID_ARGUMENT"
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"1","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"gm dipali","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: 1
+AccessToken: ya29.c.c0AY_VpZiODR0S0LJrtpEKlSkWvEzpvGoWp-mB0U4fkmt8_DbmukXMLc14yJW7ugOk0iS4UKuIr3WbXJ4UUcQBixgAaAkieTDrVHSGFB0wvGZwYoqHMxrxzeiGXT8LX8HWvVH9bTy5v5dVKUrjKhUJ50HXfOMpiOhmFCo0Bajn7j6YVOf6rQXbDFXAoKyZX_AVhBn28sn1vJ_Us7gwOl-HEkuDGx1Ya_ncdjlSGfKDUUlFR-QFt24ZuvjPO9Z_KuudWhWYGZwvNnPl_n-dJ-ic3s7ZZOyJ6mGoCiqBlSu4SACZ1HrS7piJl6ZSINOaEP-wBNY1zb5MFepJgNgtSzCEbKrf46CxRYhYkBf9Xob0Gf_QvmvYZ3WEQJlBG385D7O3jZm4r5tY553tRcYZhBMd1_UZ9kjkO1lwBzk5lzl4rlRkJ8_kjXa8nepaXatWXF2igUbSm8OIw1b6fnr0haIOBZsv-Mec-_d0gvz-RMfuVSn0wql0Xpfj-fM_emXxxtt9vqVxkqwdrYoduVUFk7V1eZmQjhVog94ankRMjXU9Y1tBqQ9Z97_20pUlVnVZ5jYcRpIxZ2bRbylrbbh3yi8kuvM62SIUo4fBstry_f9tWiO2hYuoZ-S6cFFRUjtVxRZih621IinBmscuMXjrIb1fcp1WF1yJifO5S96J25-zX6bMpp72_pQ4urMffxV5qWaUp5BezizJJ2retzOzn6ccYBXQ5JvUcwJzhwcIzfhfFsFfqzWt09QXObvI5_e69rp9ka_ZMZ11XzdQzzrpugdJopuk13Y59vh9mY9aJ8do0eZv1kSwo0yff9QlaVvMe5v2v-uInqrUb-1Wem_rkVo-_JjwVlZ_WSfrdV1oIjI2l1V2Y3uwfYOOzf5Q48bzSwi0lFfr2lu-zjVySl_0dn7_br7w5Q4Ww1Qo0dvQkxjIYdeeBrMgYvg1rzQcsVdUiRZ6Uvrh1s0g1o242glknqOtcFYI38R0bqbcbWM1lg8QUgOqRFvddBg_knM
+Error: {
+  "error": {
+    "code": 400,
+    "message": "The registration token is not a valid FCM registration token",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.firebase.fcm.v1.FcmError",
+        "errorCode": "INVALID_ARGUMENT"
+      }
+    ]
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"1","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"gm dipali","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+

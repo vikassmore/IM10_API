@@ -1,0 +1,16 @@
+
+Log Entry : 16:46:46 18 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error: Error creating credential: No such host is known. (oauth2.googleapis.com:443)
+IsException: True
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error: Error creating credential: No such host is known. (oauth2.googleapis.com:443)
+IsException: True
+DataPayload: 
+

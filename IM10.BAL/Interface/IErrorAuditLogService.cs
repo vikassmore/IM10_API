@@ -44,5 +44,13 @@ namespace IM10.BAL.Interface
         /// <param name="">logEntry</param>
         /// <returns></returns>
         string SaveErrorLogs(LogEntry logEntry);
+
+
+        /// <summary>
+        /// Method is used to delete  ErrorAuditLog
+        /// </summary>
+        /// <param name="">logEntry</param>
+        /// <returns></returns>
+        string DeleteErrorLogs(long logId);
     }
 }

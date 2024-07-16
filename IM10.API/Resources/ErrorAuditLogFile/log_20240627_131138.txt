@@ -1,0 +1,16 @@
+
+Log Entry : 13:11:38 27 June 2024
+  :
+  :DeviceId: 
+AccessToken: 
+Error:  creating credentialPath: D:\IM10NewRepository\IM10.API\Resources\JsonFolder\firebase.json
+IsException: True
+DataPayload: 
+
+-------------------------------
+DeviceId: 
+AccessToken: 
+Error:  creating credentialPath: D:\IM10NewRepository\IM10.API\Resources\JsonFolder\firebase.json
+IsException: True
+DataPayload: 
+

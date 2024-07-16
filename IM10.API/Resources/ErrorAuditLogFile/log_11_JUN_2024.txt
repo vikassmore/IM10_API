@@ -1,0 +1,276 @@
+
+Log Entry : 10:18:49 11 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081304489787%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081304489787%d8a1da90d8a1da90
+IsException: False
+DataPayload: hey dipali
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081304489787%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081304489787%d8a1da90d8a1da90
+IsException: False
+DataPayload: hey dipali
+
+
+Log Entry : 10:26:10 11 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081763304718%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081763304718%d8a1da90d8a1da90
+IsException: False
+DataPayload: hhhhhhhhhhhhhhhhhh
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081763304718%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081763304718%d8a1da90d8a1da90
+IsException: False
+DataPayload: hhhhhhhhhhhhhhhhhh
+
+
+Log Entry : 10:27:03 11 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081823182837%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081823182837%d8a1da90d8a1da90
+IsException: False
+DataPayload: hhhhhhhhhhhhhhhhhh
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081823182837%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081823182837%d8a1da90d8a1da90
+IsException: False
+DataPayload: hhhhhhhhhhhhhhhhhh
+
+
+Log Entry : 10:27:41 11 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081861346390%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081861346390%d8a1da90d8a1da90
+IsException: False
+DataPayload: jjjjsdjskd
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718081861346390%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718081861346390%d8a1da90d8a1da90
+IsException: False
+DataPayload: jjjjsdjskd
+
+
+Log Entry : 11:01:05 11 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718083865617318%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718083865617318%d8a1da90d8a1da90
+IsException: False
+DataPayload: dddddddddddd
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718083865617318%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718083865617318%d8a1da90d8a1da90
+IsException: False
+DataPayload: dddddddddddd
+
+
+Log Entry : 11:31:28 11 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718085688891638%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718085688891638%d8a1da90d8a1da90
+IsException: False
+DataPayload: hhhhhhhhhhhhhhhhhhh
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: projects/im10-f32bd/messages/0:1718085688891638%d8a1da90d8a1da90
+Error: projects/im10-f32bd/messages/0:1718085688891638%d8a1da90d8a1da90
+IsException: False
+DataPayload: hhhhhhhhhhhhhhhhhhh
+
+
+Log Entry : 17:24:55 11 June 2024
+  :
+  :DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+-------------------------------
+DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+
+Log Entry : 17:24:58 11 June 2024
+  :
+  :DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+-------------------------------
+DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+
+Log Entry : 17:25:03 11 June 2024
+  :
+  :DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+-------------------------------
+DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+
+Log Entry : 17:49:34 11 June 2024
+  :
+  :DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+-------------------------------
+DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+
+Log Entry : 17:49:36 11 June 2024
+  :
+  :DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+-------------------------------
+DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+
+Log Entry : 17:49:41 11 June 2024
+  :
+  :DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+
+-------------------------------
+DeviceId: eqXQV383Tuq1MYZEfZIia_:APA91bEAjCdVS3eeyGqMaoFMM64IcctuxcjeGlXHYJlMSi9hM5vcVaFNnKOeBWq3E4v19utubGFjCofXtlkgzM-TJOMVBFNUcCCe9DCpHm3a_eMb7lfZYz2VosMrnEPigMwl5_rQhDIZ
+AccessToken: 
+Error: Requested entity was not found.
+IsException: True
+DataPayload: FirebaseAdmin.Messaging.FirebaseMessagingException: Requested entity was not found.
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndReadAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Util.ErrorHandlingHttpClient`1.SendAndDeserializeAsync[TResult](HttpRequestMessage request, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessagingClient.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun, CancellationToken cancellationToken)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message, Boolean dryRun)
+   at FirebaseAdmin.Messaging.FirebaseMessaging.SendAsync(Message message)
+   at IM10.BAL.Implementaion.NotificationService.SendNotification(String DeviceId, Int64 playerId, Int64 contentId, String title, String description, Int32 contentTypeId, String thumbnail, Int32 categoryId) in D:\IM10NewRepository\IM10.BAL\Implementaion\NotificationService.cs:line 63
+

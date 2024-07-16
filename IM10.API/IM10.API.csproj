@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
+    <PackageReference Include="FirebaseAdmin" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
@@ -37,6 +37,7 @@
     <Folder Include="Resources\CompanyLogoFile\" />
     <Folder Include="Resources\ContentFile\thumbnail\" />
     <Folder Include="Resources\ErrorAuditLogFile\" />
+    <Folder Include="Resources\JsonFolder\" />
     <Folder Include="Resources\PlayerDataDetails\" />
     <Folder Include="Resources\ScreenShotFile\" />
   </ItemGroup>
@@ -45,9 +46,18 @@
     <Content Update="firebase.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="JsonFile\firebase.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Resources\JsonFolder\firebase.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="log.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\AdvContentFile\0acd5fd3-7181-44ce-b8b9-9ad256b8bdbf.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -139,6 +149,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\ErrorAuditLogFile\error_audit_log_1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ErrorAuditLogFile\log_20240607_103121.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\PlayerDocumentDetails\08076526-676e-4b37-b0ce-e9a54dc7b5df.jpg">

@@ -1,0 +1,30 @@
+
+Log Entry : 10:18:06 13 June 2024
+  :
+  :DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: eyJhbGciOiJSUzI1NiIsImtpZCI6ImMzYWJlNDEzYjIyNjhhZTk3NjQ1OGM4MmMxNTE3OTU0N2U5NzUyN2UiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2ZpcmViYXNlLm1lc3NhZ2luZy8xMjM0NDU2IiwiYXpwIjoiZmlyZWJhc2UtYWRtaW5zZGstZWEzYWpAaW0xMC1mMzJiZC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsImVtYWlsIjoiZmlyZWJhc2UtYWRtaW5zZGstZWEzYWpAaW0xMC1mMzJiZC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJleHAiOjE3MTgyNTc2ODYsImlhdCI6MTcxODI1NDA4NiwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50cy5nb29nbGUuY29tIiwic3ViIjoiMTE1NDU1NjE2NDM2ODU4Mzg0OTgyIn0.lCWjom96tpPIqPpSeUfMwn8GzZdp4sOG3GnWQxXyvbKuFB9QD3pndjJcmFi4WcO37hOrdLeVjhNoj_hC41_G6sEKqBkd8NAU6hb-vdxApSVgW5DB06du-XNyVJ2AuLiohy5JflZZ-CHifkwJesoMTpka7HUu5jdUuLMFOVfmAfs05XnZB43f1XmH0E3FlSCgCmDfCistIEp-86ZyVoG3O-CRX-R45_sPP3_Z4AfTMQEl_kH8kky0IC75-atiWtbzy_QKaSSLa9kQtAjFGLyUQflQH5Nkb2ZI4DH8U3vIy45QyGZJdzQISxzD9Lx0fsh9GCG50h65rb5MJal5Mu824A
+Error: {
+  "error": {
+    "code": 401,
+    "message": "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "status": "UNAUTHENTICATED"
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"jjjjjjjjjjjjjjjjj","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+
+-------------------------------
+DeviceId: cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE
+AccessToken: eyJhbGciOiJSUzI1NiIsImtpZCI6ImMzYWJlNDEzYjIyNjhhZTk3NjQ1OGM4MmMxNTE3OTU0N2U5NzUyN2UiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2ZpcmViYXNlLm1lc3NhZ2luZy8xMjM0NDU2IiwiYXpwIjoiZmlyZWJhc2UtYWRtaW5zZGstZWEzYWpAaW0xMC1mMzJiZC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsImVtYWlsIjoiZmlyZWJhc2UtYWRtaW5zZGstZWEzYWpAaW0xMC1mMzJiZC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJleHAiOjE3MTgyNTc2ODYsImlhdCI6MTcxODI1NDA4NiwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50cy5nb29nbGUuY29tIiwic3ViIjoiMTE1NDU1NjE2NDM2ODU4Mzg0OTgyIn0.lCWjom96tpPIqPpSeUfMwn8GzZdp4sOG3GnWQxXyvbKuFB9QD3pndjJcmFi4WcO37hOrdLeVjhNoj_hC41_G6sEKqBkd8NAU6hb-vdxApSVgW5DB06du-XNyVJ2AuLiohy5JflZZ-CHifkwJesoMTpka7HUu5jdUuLMFOVfmAfs05XnZB43f1XmH0E3FlSCgCmDfCistIEp-86ZyVoG3O-CRX-R45_sPP3_Z4AfTMQEl_kH8kky0IC75-atiWtbzy_QKaSSLa9kQtAjFGLyUQflQH5Nkb2ZI4DH8U3vIy45QyGZJdzQISxzD9Lx0fsh9GCG50h65rb5MJal5Mu824A
+Error: {
+  "error": {
+    "code": 401,
+    "message": "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "status": "UNAUTHENTICATED"
+  }
+}
+
+IsException: False
+DataPayload: {"message":{"token":"cHiEptaeSsuSyJU9nuROI4:APA91bHXDEIf7ttjBHIsI2ZVpJ_rptY8P50-NiVLN3fKrqjQhToh5xaZZ3zrWl1aK9Yt0h1zyoXSmsqj3KNj52x9qgG5gQBXiVisZqPINBqw2TUSsESncpJmC-Z5WQ1olyTG7vLS5nEE","data":{"contentId":"431","commentId":"1","title":"New Comment Arrived!","message":"jjjjjjjjjjjjjjjjj","categoryId":"11","contentTypeId":"2","IsPublic":"True"}}}
+

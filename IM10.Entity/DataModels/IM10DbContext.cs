@@ -425,7 +425,6 @@ public partial class IM10DbContext : DbContext
 
             entity.ToTable("LogInformation");
 
-            entity.Property(e => e.AdditionalInformation).HasMaxLength(200);
             entity.Property(e => e.LogMessage).HasMaxLength(200);
             entity.Property(e => e.LogSource).HasMaxLength(100);
             entity.Property(e => e.LogType).HasMaxLength(100);
@@ -609,7 +608,7 @@ public partial class IM10DbContext : DbContext
             entity.Property(e => e.EmailId).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(100);
             entity.Property(e => e.LastName).HasMaxLength(100);
-            entity.Property(e => e.MobileNo).HasMaxLength(15);
+            entity.Property(e => e.MobileNo).HasMaxLength(100);
             entity.Property(e => e.Password).HasMaxLength(100);
             entity.Property(e => e.Username).HasMaxLength(100);
         });

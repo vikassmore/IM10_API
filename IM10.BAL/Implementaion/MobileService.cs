@@ -10,6 +10,7 @@ using StartUpX.Common;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using static IM10.Models.MobileModel;
 
 
 namespace IM10.BAL.Implementaion
@@ -20,18 +21,26 @@ namespace IM10.BAL.Implementaion
         private ConfigurationModel _configuration;
         private readonly IUserAuditLogService _userAuditLogService;
         private readonly IEncryptionService _encryptionService;
+        private readonly AppSettings _config;
 
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public MobileService(IM10DbContext _context, IEncryptionService encryptionService ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
+        public MobileService(IM10DbContext _context, IOptions<AppSettings> config,IEncryptionService encryptionService ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
         {
             context = _context;
             _configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
             _encryptionService = encryptionService;
+            _config = config.Value;
+        }
+
+
+        private string GetHostName(bool? flag)
+        {
+            return (bool)flag ? _config.BunnyHostName : _configuration.HostName;
         }
 
 
@@ -117,6 +126,7 @@ namespace IM10.BAL.Implementaion
                                             adv.Title,
                                             advcontent.ContentId,
                                             advcontent.Position,
+                                            adv.ProductionFlag
                                         }).ToList();
                 //var advertiseContent = context.AdvContentMappings.Include(x => x.Content).Include(x => x.AdvertiseContent).Where(x => x.ContentId == item.ContentId.ContentId && x.IsDeleted == false).ToList();
                 var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId.ContentId && x.IsDeleted == false);
@@ -124,31 +134,33 @@ namespace IM10.BAL.Implementaion
                 if (contentVideo.ContentFileName != null)
                 {
                     var content1 = new ContentMobileModel();
-                    imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                    var hostname1 = GetHostName(contentVideo.ProductionFlag);
+                    imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
                     imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
                     imgmodel.FileName = (imgmodel.url);
 
                     content1.ContentId = contentVideo.ContentId;
                     content1.FileName = contentVideo.ContentFileName;
-                    content1.FilePath = _configuration.HostName + contentVideo.ContentFilePath;
+                    content1.FilePath = hostname1 + contentVideo.ContentFilePath;
                     content1.Title = contentVideo.Title;
                     content1.Description = contentVideo.Description;
                     content1.Position = Helper.FirstHalfContentPostion;
                     content1.CategoryName = contentVideo.Category.Name;
-                    content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                    content1.Thumbnail = hostname1 + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     contentList.Add(content1);
                 }
                 if (contentVideo.ContentFileName1 != null)
                 {
                     var content2 = new ContentMobileModel();
                     var imgmodel1 = new VideoImageModel();
-                    imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                    var hostname12 = GetHostName(contentVideo.ProductionFlag);
+                    imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
                     imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
                     imgmodel1.FileName = (imgmodel1.url);
 
                     content2.ContentId = contentVideo.ContentId;
                     content2.FileName = contentVideo.ContentFileName1;
-                    content2.FilePath = _configuration.HostName + contentVideo.ContentFilePath1;
+                    content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
                     content2.Title = contentVideo.Title;
                     content2.Description = contentVideo.Description;
                     content2.Position = Helper.SecondHalfContentPostion;
@@ -160,23 +172,26 @@ namespace IM10.BAL.Implementaion
                 {
                     var model = new ContentMobileModel();
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                    var hostname123 = GetHostName(advcontent.ProductionFlag);
+                    imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
                     imgmodel2.FileName = _configuration.HostName + (imgmodel2.url);
                     model.AdvertiseContentId = advcontent.AdvertiseContentId;
                     model.FileName = advcontent.AdvertiseFileName;
-                    model.FilePath = _configuration.HostName + advcontent.AdvertiseFilePath;
+                    model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
                     model.Title = advcontent.Title;
                     model.Thumbnail = imgmodel2.url;
                     model.ContentId = advcontent.ContentId;
                     model.Position = advcontent.Position;
                     contentList.Add(model);
                 }
+                var hostname = GetHostName(contentVideo.ProductionFlag);
+
                 topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
                 topModel.ContentId = contentVideo.ContentId;
                 topModel.Title = contentVideo.Title;
                 topModel.Description = contentVideo.Description;
-                topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                topModel.Thumbnail = hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -221,6 +236,7 @@ namespace IM10.BAL.Implementaion
         {
             bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
                                  .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
             errorResponseModel = new ErrorResponseModel();
             var decryptResult = _encryptionService.DecryptPlayerId(playerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -250,6 +266,7 @@ namespace IM10.BAL.Implementaion
                                            DisplayOrder = subflag != null ? subflag.Category.DisplayOrder : 0,
                                            HasAdvertisement = subflag != null 
                                        }).ToList();
+
             var categoryList = categoryEnitityList.GroupBy(x => new { x.CategoryId, x.Name }).Select(x => new { CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Max(x => x.DisplayOrder), count = x.Count() }).ToList();
             foreach (var item in categoryList)
             {
@@ -281,36 +298,39 @@ namespace IM10.BAL.Implementaion
                                                     adv.Title,
                                                     advcontent.ContentId,
                                                     advcontent.Position,
+                                                    adv.ProductionFlag
                                                 }).ToList();
                         var imgmodel = new VideoImageModel();
                         if (contentVideo.ContentFileName != null)
                         {
+                            var hostname1 = GetHostName(contentVideo.ProductionFlag);
                             var content1 = new ContentMobileModel();
-                            imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                            imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
                             imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
                             imgmodel.FileName = (imgmodel.url);
 
                             content1.ContentId = contentVideo.ContentId;
                             content1.FileName = contentVideo.ContentFileName;
-                            content1.FilePath = _configuration.HostName + contentVideo.ContentFilePath;
+                            content1.FilePath = hostname1 + contentVideo.ContentFilePath;
                             content1.Title = contentVideo.Title;
                             content1.Description = contentVideo.Description;
                             content1.Position = Helper.FirstHalfContentPostion;
                             content1.CategoryName = contentVideo.Category.Name;
-                            content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;// ThumbnailPath(imgmodel.url);
+                            content1.Thumbnail = hostname1 + contentVideo.Thumbnail1;// ThumbnailPath(imgmodel.url);
                             contentList.Add(content1);
                         }
                         if (contentVideo.ContentFileName1 != null)
                         {
+                            var hostname12 = GetHostName(contentVideo.ProductionFlag);
                             var content2 = new ContentMobileModel();
                             var imgmodel1 = new VideoImageModel();
-                            imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                            imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
                             imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
                             imgmodel1.FileName = (imgmodel1.url);
 
                             content2.ContentId = contentVideo.ContentId;
                             content2.FileName = contentVideo.ContentFileName1;
-                            content2.FilePath = _configuration.HostName + contentVideo.ContentFilePath1;
+                            content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
                             content2.Title = contentVideo.Title;
                             content2.Description = contentVideo.Description;
                             content2.Position = Helper.SecondHalfContentPostion;
@@ -320,25 +340,27 @@ namespace IM10.BAL.Implementaion
                         }
                         foreach (var advcontent in advertiseContent)
                         {
+                            var hostname123 = GetHostName(advcontent.ProductionFlag);
                             var model = new ContentMobileModel();
                             var imgmodel2 = new VideoImageModel();
-                            imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                            imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
                             imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
                             imgmodel2.FileName = (imgmodel2.url);
                             model.AdvertiseContentId = advcontent.AdvertiseContentId;
-                            model.FileName = _configuration.HostName + advcontent.AdvertiseFileName;
-                            model.FilePath = advcontent.AdvertiseFilePath;
+                            model.FileName = advcontent.AdvertiseFileName;
+                            model.FilePath = imgmodel2.FileName;
                             model.Title = advcontent.Title;
                             model.Thumbnail = imgmodel2.url;
                             model.ContentId = advcontent.ContentId;
                             model.Position = advcontent.Position;
                             contentList.Add(model);
                         }
+                        var hostname = GetHostName(contentVideo.ProductionFlag);
                         topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
                         topModel.ContentId = contentVideo.ContentId;
                         topModel.Title = contentVideo.Title;
                         topModel.Description = contentVideo.Description;
-                        topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                        topModel.Thumbnail =hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                         topModel.CategoryId = contentVideo.Category.CategoryId;
                         topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -459,35 +481,38 @@ namespace IM10.BAL.Implementaion
                                                 adv.Title,
                                                 advcontent.ContentId,
                                                 advcontent.Position,
+                                                adv.ProductionFlag
                                             }).ToList();
                     var imgmodel = new VideoImageModel();
                     if (contentVideo.ContentFileName != null)
                     {
+                        var hostname1 = GetHostName(contentVideo.ProductionFlag);
                         var content1 = new ContentMobileModel();
-                        imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                        imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
                         imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
                         imgmodel.FileName = (imgmodel.url);
                         content1.ContentId = contentVideo.ContentId;
                         content1.FileName = contentVideo.ContentFileName;
-                        content1.FilePath = _configuration.HostName + contentVideo.ContentFilePath;
+                        content1.FilePath = hostname1 + contentVideo.ContentFilePath;
                         content1.Title = contentVideo.Title;
                         content1.Description = contentVideo.Description;
                         content1.Position = Helper.FirstHalfContentPostion;
                         content1.CategoryName = contentVideo.Category.Name;
-                        content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                        content1.Thumbnail = hostname1 + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                         contentList.Add(content1);
                     }
                     if (contentVideo.ContentFileName1 != null)
                     {
+                        var hostname12 = GetHostName(contentVideo.ProductionFlag);
                         var content2 = new ContentMobileModel();
                         var imgmodel1 = new VideoImageModel();
-                        imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                        imgmodel1.url =hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
                         imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
                         imgmodel1.FileName = (imgmodel1.url);
 
                         content2.ContentId = contentVideo.ContentId;
                         content2.FileName = contentVideo.ContentFileName1;
-                        content2.FilePath = _configuration.HostName + contentVideo.ContentFilePath1;
+                        content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
                         content2.Title = contentVideo.Title;
                         content2.Description = contentVideo.Description;
                         content2.Position = Helper.SecondHalfContentPostion;
@@ -499,24 +524,26 @@ namespace IM10.BAL.Implementaion
                     {
                         var model = new ContentMobileModel();
                         var imgmodel2 = new VideoImageModel();
-                        imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                        var hostname123 = GetHostName(advcontent.ProductionFlag);
+                        imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
                         imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
                         imgmodel2.FileName = (imgmodel2.url);
                         model.AdvertiseContentId = advcontent.AdvertiseContentId;
                         model.FileName = advcontent.AdvertiseFileName;
-                        model.FilePath = _configuration.HostName + advcontent.AdvertiseFilePath;
+                        model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
                         model.Title = advcontent.Title;
                         model.Thumbnail = imgmodel2.url;
                         model.ContentId = advcontent.ContentId;
                         model.Position = advcontent.Position;
                         contentList.Add(model);
                     }
+                    var hostname = GetHostName(contentVideo.ProductionFlag);
                     topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
                     topModel.ContentId = contentVideo.ContentId;
                     topModel.Title = contentVideo.Title;
                     topModel.CategoryId = item1.CategoryId;
                     topModel.Description = contentVideo.Description;
-                    topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                    topModel.Thumbnail =hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
                     topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -555,8 +582,12 @@ namespace IM10.BAL.Implementaion
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        public ContentFlagModel GetMobileVideoView(long contentId, ref ErrorResponseModel errorResponseModel)
+        public ContentFlagModel GetMobileVideoView(long contentId, long userId, ref ErrorResponseModel errorResponseModel)
         {
+            bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
+                                 .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
+            errorResponseModel = new ErrorResponseModel();
             string message = "";
             var articleEntity = (from flag in context.ContentFlags
                                  join content in context.ContentDetails on flag.ContentId equals content.ContentId
@@ -568,6 +599,7 @@ namespace IM10.BAL.Implementaion
                                      flag.PlayerId,
                                      flag.ContentId,
                                      view.Trending,
+                                     flag.Favourite,
                                      flag.MostLiked,
                                      flag.ContentSequence,
                                      flag.ContentTypeId,
@@ -577,9 +609,15 @@ namespace IM10.BAL.Implementaion
                                      flag.UpdatedDate,
                                      content.ContentFileName,
                                      content.ContentFilePath,
+                                     content.ContentFileName1,
+                                     content.ContentFilePath1,
                                      content.Title,
                                      content.Description,
+                                     content.Category.Name,
+                                     content.Thumbnail1,
+                                     content.ProductionFlag
                                  }).FirstOrDefault();
+
             if (articleEntity == null)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -587,11 +625,99 @@ namespace IM10.BAL.Implementaion
                 return null;
             }
 
-            var imgmodel = new VideoImageModel();
-            imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(articleEntity.ContentFilePath) ? articleEntity.ContentFilePath : articleEntity.ContentFilePath);
-            imgmodel.Type = String.IsNullOrEmpty(articleEntity.ContentFilePath) ? "video" : "image";
-            // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
-            imgmodel.FileName = imgmodel.url;
+            var contentMobileModels = new List<ContentMobileModel>();
+
+            if (articleEntity.ContentFileName != null)
+            {
+                var content1 = new ContentMobileModel();
+                var imgmodel = new VideoImageModel();
+                var hostname1 = GetHostName(articleEntity.ProductionFlag);
+
+                imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(articleEntity.ContentFilePath) ? articleEntity.ContentFilePath : articleEntity.ContentFilePath);
+                imgmodel.Type = String.IsNullOrEmpty(articleEntity.ContentFilePath) ? "video" : "image";
+                imgmodel.FileName = (imgmodel.url);
+
+                content1.ContentId = articleEntity.ContentId;
+                content1.FileName = articleEntity.ContentFileName;
+                content1.FilePath = imgmodel.FileName;
+                content1.Title = articleEntity.Title;
+                content1.Description = articleEntity.Description;
+                content1.Position = Helper.FirstHalfContentPostion;
+                content1.CategoryName = articleEntity.Name;
+                content1.Thumbnail = hostname1 + articleEntity.Thumbnail1; 
+                contentMobileModels.Add(content1);
+            }
+
+            if (articleEntity.ContentFileName1 != null)
+            {
+                var content2 = new ContentMobileModel();
+                var imgmodel1 = new VideoImageModel();
+                var hostname12 = GetHostName(articleEntity.ProductionFlag);
+
+                imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(articleEntity.ContentFilePath1) ? articleEntity.ContentFilePath1 : articleEntity.ContentFilePath1);
+                imgmodel1.Type = String.IsNullOrEmpty(articleEntity.ContentFilePath1) ? "video" : "image";
+                imgmodel1.FileName = (imgmodel1.url);
+
+                content2.ContentId = articleEntity.ContentId;
+                content2.FileName = articleEntity.ContentFileName1;
+                content2.FilePath = imgmodel1.FileName;
+                content2.Title = articleEntity.Title;
+                content2.Description = articleEntity.Description;
+                content2.Position = Helper.SecondHalfContentPostion;
+                content2.CategoryName = articleEntity.Name;
+                content2.Thumbnail = ThumbnailPath(imgmodel1.url);
+                contentMobileModels.Add(content2);
+            }
+
+            var advertiseContent = (from advcontent in context.AdvContentMappings
+                                    join adv in context.AdvContentDetails on advcontent.AdvertiseContentId equals adv.AdvertiseContentId
+                                    where advcontent.ContentId == articleEntity.ContentId && advcontent.IsDeleted == false
+                                    select new
+                                    {
+                                        adv.AdvertiseContentId,
+                                        adv.AdvertiseFileName,
+                                        adv.AdvertiseFilePath,
+                                        adv.Title,
+                                        advcontent.ContentId,
+                                        advcontent.Position,
+                                        adv.ProductionFlag
+                                    }).ToList();
+
+            foreach (var adv in advertiseContent)
+            {
+                var model = new ContentMobileModel();
+                var imgmodel2 = new VideoImageModel();
+                var hostname123 = GetHostName(adv.ProductionFlag);
+
+                imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(adv.AdvertiseFilePath) ? adv.AdvertiseFilePath : adv.AdvertiseFilePath);
+                imgmodel2.Type = String.IsNullOrEmpty(adv.AdvertiseFilePath) ? "video" : "image";
+                imgmodel2.FileName = (imgmodel2.url);
+
+                model.AdvertiseContentId = adv.AdvertiseContentId;
+                model.FileName = adv.AdvertiseFileName;
+                model.FilePath = imgmodel2.FileName;
+                model.Title = adv.Title;
+                model.Thumbnail = imgmodel2.FileName;
+                model.ContentId = adv.ContentId;
+                model.Position = adv.Position;
+                contentMobileModels.Add(model);
+            }
+            int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
+            int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
+            int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+            var publicEntity = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+            int CommentCount;
+            if (userIsLoggedIn == true)
+            {
+                var commentList = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
+                var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
+                 CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+            }
+            else
+            {
+                 CommentCount = publicEntity;
+            }
+            var hostname = GetHostName(articleEntity.ProductionFlag);
 
             return new ContentFlagModel
             {
@@ -600,6 +726,11 @@ namespace IM10.BAL.Implementaion
                 PlayerId = _encryptionService.GetEncryptedId(articleEntity.PlayerId.ToString()),
                 Trending = articleEntity.Trending,
                 MostLiked = articleEntity.MostLiked,
+                ViewNo = ViewNo,
+                LikedNo = Liked,
+                CommentCount = CommentCount,
+                FavouriteNo = Favourite,
+                Favourite = articleEntity.Favourite,
                 ContentSequence = articleEntity.ContentSequence,
                 ContentTypeId = articleEntity.ContentTypeId,
                 CreatedBy = articleEntity.CreatedBy,
@@ -607,28 +738,12 @@ namespace IM10.BAL.Implementaion
                 UpdatedBy = articleEntity.UpdatedBy,
                 UpdatedDate = articleEntity.UpdatedDate,
                 ContentFileName = articleEntity.ContentFileName,
-                ContentFilePath = imgmodel.url,
-                ContentTitle = articleEntity.Title
+                ContentFilePath = hostname + articleEntity.ContentFilePath,
+                ContentTitle = articleEntity.Title,
+                contentMobileModels = contentMobileModels.OrderBy(z => z.Position).ToList()
             };
         }
 
-
-
-        public bool IsValidBase64String(string base64)
-        {
-            if (string.IsNullOrEmpty(base64) || base64.Length % 4 != 0
-                || base64.Contains(" ") || base64.Contains("\t") || base64.Contains("\r") || base64.Contains("\n"))
-                return false;
-            try
-            {
-                Convert.FromBase64String(base64);
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-        }
 
         /// <summary>
         /// Method is used to get all Category top five Article
@@ -641,6 +756,7 @@ namespace IM10.BAL.Implementaion
         {
             bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
                                  .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
             errorResponseModel = new ErrorResponseModel();
             var decryptResult = _encryptionService.DecryptPlayerId(playerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -681,17 +797,20 @@ namespace IM10.BAL.Implementaion
                     if (contentArticle != null)
                     {
                         CategoryArticleModel articleModel = new CategoryArticleModel();
+                        var hostname1 = GetHostName(contentArticle.ProductionFlag);
+
                         var imgmodel2 = new VideoImageModel();
-                        imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
+                        imgmodel2.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
                         imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath) ? "video" : "image";
                         imgmodel2.FileName = (imgmodel2.url);
+
                         articleModel.ContentId = contentArticle.ContentId;
                         articleModel.Title = contentArticle.Title;
                         articleModel.Description = contentArticle.Description;
                         articleModel.CategoryName = contentArticle.Category.Name;
                         articleModel.FileName = contentArticle.ContentFileName;
-                        articleModel.FilePath = imgmodel2.url;
-                        articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
+                        articleModel.FilePath = imgmodel2.FileName;
+                        articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                         articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -740,6 +859,7 @@ namespace IM10.BAL.Implementaion
         {
             bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
                                  .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
             errorResponseModel = new ErrorResponseModel();
             var decryptResult = _encryptionService.DecryptPlayerId(playerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -773,18 +893,21 @@ namespace IM10.BAL.Implementaion
                 if (contentArticle != null)
                 {
                     CategoryArticleModel articleModel = new CategoryArticleModel();
+                    var hostname1 = GetHostName(contentArticle.ProductionFlag);
+
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
+                    imgmodel2.url =hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
-                    articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
+
+                    articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                     articleModel.ContentId = contentArticle.ContentId;
                     articleModel.Title = contentArticle.Title;
                     articleModel.Description = contentArticle.Description;
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.CategoryId = item.CategoryId;
                     articleModel.FileName = contentArticle.ContentFileName;
-                    articleModel.FilePath = imgmodel2.url;
+                    articleModel.FilePath = imgmodel2.FileName;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -840,7 +963,8 @@ namespace IM10.BAL.Implementaion
                                      content.Title,
                                      content.Description,
                                      content.ContentTypeId,
-                                     content.CreatedDate
+                                     content.CreatedDate,
+                                     content.ProductionFlag
                                  }).FirstOrDefault();
             if (articleEntity == null)
             {
@@ -850,9 +974,11 @@ namespace IM10.BAL.Implementaion
             }
 
             var imgmodel = new VideoImageModel();
-            imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(articleEntity.ContentFilePath) ? articleEntity.ContentFilePath : articleEntity.ContentFilePath);
+            var hostname1 = GetHostName(articleEntity.ProductionFlag);
+
+            imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(articleEntity.ContentFilePath) ? articleEntity.ContentFilePath : articleEntity.ContentFilePath);
             imgmodel.Type = String.IsNullOrEmpty(articleEntity.ContentFilePath) ? "video" : "image";
-            // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
+            
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
             int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
             int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
@@ -870,6 +996,7 @@ namespace IM10.BAL.Implementaion
                 ContentTypeId = articleEntity.ContentTypeId,
                 ViewNo = ViewNo,
                 LikedNo = Liked,
+               
                 FavouriteNo = Favourite,
                 CommentCount = CommentCount,
                 MostLiked = Like,
@@ -1159,107 +1286,141 @@ namespace IM10.BAL.Implementaion
             }
             var tredinggroupList = tredingEntity.GroupBy(x => new { x.ContentId }).Select(x => new { ContentId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).ToList();
             List<MobileContentData> topList = new List<MobileContentData>();
-            foreach (var item in tredinggroupList)
-            {
-                var topModel = new MobileContentData();
-                var contentList = new List<ContentMobileModel>();
-                var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId.ContentId && x.Approved == true && x.IsDeleted == false);
-                if (contentVideo != null)
+                foreach (var item in tredinggroupList)
                 {
-                    var advertiseContent = (from advcontent in context.AdvContentMappings
-                                            join adv in context.AdvContentDetails on advcontent.AdvertiseContentId equals adv.AdvertiseContentId
-                                            where advcontent.ContentId == item.ContentId.ContentId && advcontent.IsDeleted == false
-                                            select new
-                                            {
-                                                adv.AdvertiseContentId,
-                                                adv.AdvertiseFileName,
-                                                adv.AdvertiseFilePath,
-                                                adv.Title,
-                                                advcontent.ContentId,
-                                                advcontent.Position,
-                                            }).ToList();
-                    var imgmodel = new VideoImageModel();
-                    if (contentVideo.ContentFileName != null)
+                    var topModel = new MobileContentData();
+                    var contentList = new List<ContentMobileModel>();
+                    var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId.ContentId && x.Approved == true && x.IsDeleted == false);
+                    if (contentVideo != null)
                     {
-                        var content1 = new ContentMobileModel();
-                        imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
-                        imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
-                        imgmodel.FileName = (imgmodel.url);
+                        var advertiseContent = (from advcontent in context.AdvContentMappings
+                                                join adv in context.AdvContentDetails on advcontent.AdvertiseContentId equals adv.AdvertiseContentId
+                                                where advcontent.ContentId == item.ContentId.ContentId && advcontent.IsDeleted == false
+                                                select new
+                                                {
+                                                    adv.AdvertiseContentId,
+                                                    adv.AdvertiseFileName,
+                                                    adv.AdvertiseFilePath,
+                                                    adv.Title,
+                                                    advcontent.ContentId,
+                                                    advcontent.Position,
+                                                    adv.ProductionFlag
+                                                }).ToList();
+                        var imgmodel = new VideoImageModel();
+                        if (contentVideo.ContentFileName != null)
+                        {
+                            var content1 = new ContentMobileModel();
+                            var hostname1 = GetHostName(contentVideo.ProductionFlag);
 
-                        content1.ContentId = contentVideo.ContentId;
-                        content1.FileName = contentVideo.ContentFileName;
-                        content1.FilePath = _configuration.HostName + contentVideo.ContentFilePath;
-                        content1.Title = contentVideo.Title;
-                        content1.Description = contentVideo.Description;
-                        content1.Position = Helper.FirstHalfContentPostion;
-                        content1.CategoryName = contentVideo.Category.Name;
-                        content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
-                        contentList.Add(content1);
-                    }
-                    if (contentVideo.ContentFileName1 != null)
-                    {
-                        var content2 = new ContentMobileModel();
-                        var imgmodel1 = new VideoImageModel();
-                        imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
-                        imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
-                        imgmodel1.FileName = (imgmodel1.url);
+                            imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                            imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
+                            imgmodel.FileName = (imgmodel.url);
 
-                        content2.ContentId = contentVideo.ContentId;
-                        content2.FileName = contentVideo.ContentFileName1;
-                        content2.FilePath = _configuration.HostName + contentVideo.ContentFilePath1;
-                        content2.Title = contentVideo.Title;
-                        content2.Description = contentVideo.Description;
-                        content2.Position = Helper.SecondHalfContentPostion;
-                        content2.CategoryName = contentVideo.Category.Name;
-                        content2.Thumbnail = ThumbnailPath(imgmodel1.url);
-                        contentList.Add(content2);
-                    }
-                    foreach (var advcontent in advertiseContent)
-                    {
-                        var model = new ContentMobileModel();
-                        var imgmodel2 = new VideoImageModel();
-                        imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
-                        imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
-                        imgmodel2.FileName = (imgmodel2.url);
-                        model.AdvertiseContentId = advcontent.AdvertiseContentId;
-                        model.FileName = advcontent.AdvertiseFileName;
-                        model.FilePath = _configuration.HostName + advcontent.AdvertiseFilePath;
-                        model.Title = advcontent.Title;
-                        model.Thumbnail = imgmodel2.url;
-                        model.ContentId = advcontent.ContentId;
-                        model.Position = advcontent.Position;
-                        contentList.Add(model);
-                    }
-                    topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
-                    topModel.ContentId = contentVideo.ContentId;
-                    topModel.Title = contentVideo.Title;
-                    topModel.Description = contentVideo.Description;
-                    topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
-                    topModel.CategoryId = contentVideo.CategoryId;
-                    topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
-                    topModel.ContentTypeId = contentVideo.ContentTypeId;
-                    topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                    topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                            content1.ContentId = contentVideo.ContentId;
+                            content1.FileName = contentVideo.ContentFileName;
+                            content1.FilePath = hostname1 + contentVideo.ContentFilePath;
+                            content1.Title = contentVideo.Title;
+                            content1.Description = contentVideo.Description;
+                            content1.Position = Helper.FirstHalfContentPostion;
+                            content1.CategoryName = contentVideo.Category.Name;
+                            content1.Thumbnail = hostname1 + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
+                            contentList.Add(content1);
+                        }
+                        if (contentVideo.ContentFileName1 != null)
+                        {
+                            var content2 = new ContentMobileModel();
+                            var hostname12 = GetHostName(contentVideo.ProductionFlag);
 
-                    if (userIsLoggedIn == true)
-                    {
-                        var commentList = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                        var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                        topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                            var imgmodel1 = new VideoImageModel();
+                            imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                            imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
+                            imgmodel1.FileName = (imgmodel1.url);
+
+                            content2.ContentId = contentVideo.ContentId;
+                            content2.FileName = contentVideo.ContentFileName1;
+                            content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
+                            content2.Title = contentVideo.Title;
+                            content2.Description = contentVideo.Description;
+                            content2.Position = Helper.SecondHalfContentPostion;
+                            content2.CategoryName = contentVideo.Category.Name;
+                            content2.Thumbnail = ThumbnailPath(imgmodel1.url);
+                            contentList.Add(content2);
+                        }
+                        foreach (var advcontent in advertiseContent)
+                        {
+                            var model = new ContentMobileModel();
+                            var hostname123 = GetHostName(advcontent.ProductionFlag);
+
+                            var imgmodel2 = new VideoImageModel();
+                            imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                            imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
+                            imgmodel2.FileName = (imgmodel2.url);
+
+                            model.AdvertiseContentId = advcontent.AdvertiseContentId;
+                            model.FileName = advcontent.AdvertiseFileName;
+                            model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
+                            model.Title = advcontent.Title;
+                            model.Thumbnail = imgmodel2.url;
+                            model.ContentId = advcontent.ContentId;
+                            model.Position = advcontent.Position;
+                            contentList.Add(model);
+                        }
+                        var hostname = GetHostName(contentVideo.ProductionFlag);
+
+                        topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
+                        topModel.ContentId = contentVideo.ContentId;
+                        topModel.Title = contentVideo.Title;
+                        topModel.Description = contentVideo.Description;
+                        topModel.Thumbnail = hostname + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
+                        topModel.CategoryId = contentVideo.CategoryId;
+                        topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
+                        topModel.ContentTypeId = contentVideo.ContentTypeId;
+                        topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
+                        topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                        var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+
+                        if (userIsLoggedIn == true)
+                        {
+                            var commentList = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
+                            var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
+                            topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                        }
+                        else
+                        {
+                            topModel.CommentCount = publicEntity;
+                        }
+                        // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
+                        topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                        topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                        topModel.CreatedDate = contentVideo.CreatedDate;
+
+                        topList.Add(topModel);
                     }
-                    else
-                    {
-                        topModel.CommentCount = publicEntity;
-                    }
-                   // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
-                    topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                    topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
-                    topModel.CreatedDate = contentVideo.CreatedDate;
-                    topList.Add(topModel);
+                
+                }
+            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList() 
+                   }).ToList();
+
+            var indexedContent = new List<MobileContentData>();
+
+            foreach (var group in groupedContent)
+            {
+                int index = 0; 
+                foreach (var content in group.Contents)
+                {
+                    content.AutoIndex = index; 
+                    indexedContent.Add(content);
+                    index++;
                 }
             }
-            mobileSearchDataModel.mobileContentDatas = topList;
+
+            mobileSearchDataModel.mobileContentDatas = indexedContent;
+
             List<MobileArticleCategoryData> mobileArticleList = new List<MobileArticleCategoryData>();
             var categoryEnitityList = (from content in context.ContentDetails
                                        where content.ContentTypeId == ContentTypeHelper.ArticleContentTypeId && content.IsDeleted == false && content.Approved == true && content.PlayerId == decryptplayerId
@@ -1270,7 +1431,8 @@ namespace IM10.BAL.Implementaion
                                            content.ContentId,
                                            content.CategoryId,
                                            content.Category.Name,
-                                           content.Category.DisplayOrder
+                                           content.Category.DisplayOrder,
+                                          
                                        }).ToList();
             var categoryList = categoryEnitityList.GroupBy(x => new { x.ContentId, x.CategoryId, x.Name, x.DisplayOrder }).Select(x => new { ContentId = x.Key.ContentId, CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Key.DisplayOrder, count = x.Count() }).ToList();
             if (categoryEnitityList.Count == 0)
@@ -1290,10 +1452,13 @@ namespace IM10.BAL.Implementaion
                     if (contentArticle != null)
                     {
                         CategoryArticleModel articleModel = new CategoryArticleModel();
+                        var hostname1 = GetHostName(contentArticle.ProductionFlag);
+
                         var imgmodel2 = new VideoImageModel();
-                        imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
+                        imgmodel2.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
                         imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath) ? "video" : "image";
                         imgmodel2.FileName = (imgmodel2.url);
+
                         articleModel.ContentId = contentArticle.ContentId;
                         articleModel.Title = contentArticle.Title;
                         articleModel.Description = contentArticle.Description;
@@ -1301,7 +1466,7 @@ namespace IM10.BAL.Implementaion
                         articleModel.FileName = contentArticle.ContentFileName1;
                         articleModel.FilePath = imgmodel2.url;
                         articleModel.CategoryId = contentArticle.CategoryId;
-                        articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
+                        articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                         articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -1337,6 +1502,8 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string AddMobileContentComment(ContentCommentModel1 model, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
+
             string message = "";
             if (model.CommentId == 0)
             {
@@ -1659,6 +1826,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string AddMobileViewCount(ContentModelView model, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string message = "";
             var decryptResult = _encryptionService.DecryptPlayerId(model.PlayerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -1697,6 +1865,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string AddMobileLikeFavouriteCount(ContentModelFlag model, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             string message = "";
             var decryptResult = _encryptionService.DecryptPlayerId(model.PlayerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -1916,37 +2085,42 @@ namespace IM10.BAL.Implementaion
                                             adv.Title,
                                             advcontent.ContentId,
                                             advcontent.Position,
+                                            adv.ProductionFlag
                                         }).ToList();
                 var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId && x.IsDeleted == false);
                 var imgmodel = new VideoImageModel();
                 if (contentVideo.ContentFileName != null)
                 {
                     var content1 = new ContentMobileModel();
-                    imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                    var hostname1 = GetHostName(contentVideo.ProductionFlag);
+
+                    imgmodel.url =hostname1. TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
                     imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
                     imgmodel.FileName = (imgmodel.url);
 
                     content1.ContentId = contentVideo.ContentId;
                     content1.FileName = contentVideo.ContentFileName;
-                    content1.FilePath = _configuration.HostName + contentVideo.ContentFilePath;
+                    content1.FilePath = hostname1 + contentVideo.ContentFilePath;
                     content1.Title = contentVideo.Title;
                     content1.Description = contentVideo.Description;
                     content1.Position = Helper.FirstHalfContentPostion;
                     content1.CategoryName = contentVideo.Category.Name;
-                    content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1; 
+                    content1.Thumbnail = hostname1 + contentVideo.Thumbnail1; 
                     contentList.Add(content1);
                 }
                 if (contentVideo.ContentFileName1 != null)
                 {
                     var content2 = new ContentMobileModel();
+                    var hostname12 = GetHostName(contentVideo.ProductionFlag);
+
                     var imgmodel1 = new VideoImageModel();
-                    imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                    imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
                     imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
                     imgmodel1.FileName = (imgmodel1.url);
 
                     content2.ContentId = contentVideo.ContentId;
                     content2.FileName = contentVideo.ContentFileName1;
-                    content2.FilePath = _configuration.HostName + contentVideo.ContentFilePath1;
+                    content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
                     content2.Title = contentVideo.Title;
                     content2.Description = contentVideo.Description;
                     content2.Position = Helper.SecondHalfContentPostion;
@@ -1958,23 +2132,27 @@ namespace IM10.BAL.Implementaion
                 {
                     var model = new ContentMobileModel();
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                    var hostname123 = GetHostName(advcontent.ProductionFlag);
+
+                    imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
                     model.AdvertiseContentId = advcontent.AdvertiseContentId;
                     model.FileName = advcontent.AdvertiseFileName;
-                    model.FilePath = _configuration.HostName + advcontent.AdvertiseFilePath;
+                    model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
                     model.Title = advcontent.Title;
                     model.Thumbnail = imgmodel2.url;
                     model.ContentId = advcontent.ContentId;
                     model.Position = advcontent.Position;
                     contentList.Add(model);
                 }
+                var hostname = GetHostName(contentVideo.ProductionFlag);
+
                 topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
                 topModel.ContentId = contentVideo.ContentId;
                 topModel.Title = contentVideo.Title;
                 topModel.Description = contentVideo.Description;
-                topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;
+                topModel.Thumbnail =hostname + contentVideo.Thumbnail1;
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -1998,7 +2176,30 @@ namespace IM10.BAL.Implementaion
                 topModel.CreatedDate = contentVideo.CreatedDate;
                 topList.Add(topModel);
             }
-            playerMobileLikeFavouriteData.videoContentData = topList;
+
+            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent = new List<MobileContentData>();
+
+            foreach (var group in groupedContent)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.AutoIndex = index;
+                    indexedContent.Add(content);
+                    index++;
+                }
+            }
+
+            playerMobileLikeFavouriteData.videoContentData = indexedContent;
+
             var likedArticleEntity = (from flag in context.ContentFlags
                                       join player in context.PlayerDetails on flag.PlayerId equals player.PlayerId
                                       join content in context.ContentDetails on flag.ContentId equals content.ContentId
@@ -2016,17 +2217,20 @@ namespace IM10.BAL.Implementaion
                 if (contentArticle != null)
                 {
                     CategoryArticleModel articleModel = new CategoryArticleModel();
+                    var hostname1 = GetHostName(contentArticle.ProductionFlag);
+
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
+                    imgmodel2.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
+
                     articleModel.ContentId = contentArticle.ContentId;
                     articleModel.Title = contentArticle.Title;
-                    articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
+                    articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                     articleModel.Description = contentArticle.Description;
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.FileName = contentArticle.ContentFileName;
-                    articleModel.FilePath = imgmodel2.url;
+                    articleModel.FilePath = imgmodel2.FileName;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -2071,6 +2275,7 @@ namespace IM10.BAL.Implementaion
         {
             bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
                                  .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
             errorResponseModel = new ErrorResponseModel();
             var decryptResult = _encryptionService.DecryptPlayerId(playerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -2110,37 +2315,42 @@ namespace IM10.BAL.Implementaion
                                             adv.Title,
                                             advcontent.ContentId,
                                             advcontent.Position,
+                                            adv.ProductionFlag
                                         }).ToList();
                 var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId && x.IsDeleted == false);
                 var imgmodel = new VideoImageModel();
                 if (contentVideo.ContentFileName != null)
                 {
                     var content1 = new ContentMobileModel();
-                    imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                    var hostname1 = GetHostName(contentVideo.ProductionFlag);
+
+                    imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
                     imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
                     imgmodel.FileName = (imgmodel.url);
 
                     content1.ContentId = contentVideo.ContentId;
                     content1.FileName = contentVideo.ContentFileName;
-                    content1.FilePath = _configuration.HostName + contentVideo.ContentFilePath;
+                    content1.FilePath = hostname1 + contentVideo.ContentFilePath;
                     content1.Title = contentVideo.Title;
                     content1.Description = contentVideo.Description;
                     content1.Position = Helper.FirstHalfContentPostion;
                     content1.CategoryName = contentVideo.Category.Name;
-                    content1.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;
+                    content1.Thumbnail = hostname1 + contentVideo.Thumbnail1;
                     contentList.Add(content1);
                 }
                 if (contentVideo.ContentFileName1 != null)
                 {
                     var content2 = new ContentMobileModel();
                     var imgmodel1 = new VideoImageModel();
-                    imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                    var hostname12 = GetHostName(contentVideo.ProductionFlag);
+
+                    imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
                     imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
                     imgmodel1.FileName = (imgmodel1.url);
 
                     content2.ContentId = contentVideo.ContentId;
                     content2.FileName = contentVideo.ContentFileName1;
-                    content2.FilePath = _configuration.HostName + contentVideo.ContentFilePath1;
+                    content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
                     content2.Title = contentVideo.Title;
                     content2.Description = contentVideo.Description;
                     content2.Position = Helper.SecondHalfContentPostion;
@@ -2152,23 +2362,27 @@ namespace IM10.BAL.Implementaion
                 {
                     var model = new ContentMobileModel();
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                    var hostname123 = GetHostName(advcontent.ProductionFlag);
+
+                    imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
                     model.AdvertiseContentId = advcontent.AdvertiseContentId;
                     model.FileName = advcontent.AdvertiseFileName;
-                    model.FilePath = _configuration.HostName + advcontent.AdvertiseFilePath;
+                    model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
                     model.Title = advcontent.Title;
                     model.Thumbnail = imgmodel2.url;
                     model.ContentId = advcontent.ContentId;
                     model.Position = advcontent.Position;
                     contentList.Add(model);
                 }
+                var hostname = GetHostName(contentVideo.ProductionFlag);
+
                 topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
                 topModel.ContentId = contentVideo.ContentId;
                 topModel.Title = contentVideo.Title;
                 topModel.Description = contentVideo.Description;
-                topModel.Thumbnail = _configuration.HostName + contentVideo.Thumbnail1;
+                topModel.Thumbnail = hostname + contentVideo.Thumbnail1;
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
@@ -2189,10 +2403,33 @@ namespace IM10.BAL.Implementaion
                 //topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                topModel.AutoIndex = -1;
                 topModel.CreatedDate = contentVideo.CreatedDate;
                 topList.Add(topModel);
             }
-            playerMobileLikeFavouriteData.videoContentData = topList;
+            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent = new List<MobileContentData>();
+
+            foreach (var group in groupedContent)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.AutoIndex = index;
+                    indexedContent.Add(content);
+                    index++;
+                }
+            }
+
+            playerMobileLikeFavouriteData.videoContentData = indexedContent;
+
             var likedArticleEntity = (from flag in context.ContentFlags
                                       join player in context.PlayerDetails on flag.PlayerId equals player.PlayerId
                                       join content in context.ContentDetails on flag.ContentId equals content.ContentId
@@ -2210,8 +2447,10 @@ namespace IM10.BAL.Implementaion
                 if (contentArticle != null)
                 {
                     CategoryArticleModel articleModel = new CategoryArticleModel();
+                    var hostname1 = GetHostName(contentArticle.ProductionFlag);
+
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
+                    imgmodel2.url =hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
                     articleModel.ContentId = contentArticle.ContentId;
@@ -2220,7 +2459,7 @@ namespace IM10.BAL.Implementaion
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.FileName = contentArticle.ContentFileName;
                     articleModel.FilePath = imgmodel2.url;
-                    articleModel.Thumbnail = _configuration.HostName + contentArticle.Thumbnail1;
+                    articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
@@ -2455,6 +2694,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public List<ExploreData> GetAllCategoryList(string playerId, long userId, ref ErrorResponseModel errorResponseModel)
         {
+            errorResponseModel = new ErrorResponseModel();
             var trendingCategoryId = 1;
             var decryptResult = _encryptionService.DecryptPlayerId(playerId);
             if (decryptResult.DecryptedPlayerId == null)
@@ -2505,9 +2745,6 @@ namespace IM10.BAL.Implementaion
             finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Listing", CategoryId = null, ContentTypeId = null });
             finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Social Brand", CategoryId = null, ContentTypeId = null });
             return finalList;
-        }
-
-
-        
+        }    
     }
 }

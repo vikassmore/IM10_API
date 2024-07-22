@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Serilog;
 using StartUpX.Common;
@@ -32,20 +33,28 @@ namespace IM10.BAL.Implementaion
         private readonly IUserAuditLogService _userAuditLogService;
         private readonly INotificationService _notificationService;
         private readonly IErrorAuditLogService _logService;
+        private readonly AppSettings _config;
+
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public ContentDetailService( IErrorAuditLogService logService,IM10DbContext _context, INotificationService notificationService,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
+        public ContentDetailService(IOptions<AppSettings> config, IErrorAuditLogService logService,IM10DbContext _context, INotificationService notificationService,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
         {
             context = _context;
             this._configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
             _notificationService = notificationService;
             _logService = logService;
+            _config = config.Value;
         }
 
+
+        private string GetHostName(bool? flag)
+        {
+            return (bool)flag ? _config.BunnyHostName : _configuration.HostName;
+        }
 
         /// <summary>
         /// Method to get contentDetails by userId
@@ -96,6 +105,7 @@ namespace IM10.BAL.Implementaion
                                              Approved = content.Approved,
                                              UpdatedDate = content.UpdatedDate,
                                              UpdatedBy = content.UpdatedBy,
+                                             ProductionFlag=content.ProductionFlag,
                                          }).FirstOrDefault();
                     if (contentEntity == null)
                     {
@@ -104,13 +114,14 @@ namespace IM10.BAL.Implementaion
                         return null;
                     }
                     var imgmodel = new VideoImageModel();
-                    imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath) ? contentEntity.ContentFilePath : contentEntity.ContentFilePath);
+                    var hostname = GetHostName(contentEntity.ProductionFlag);
+                    imgmodel.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath) ? contentEntity.ContentFilePath : contentEntity.ContentFilePath);
                     imgmodel.Type = String.IsNullOrEmpty(contentEntity.ContentFilePath) ? "video" : "image";
                     // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                     imgmodel.thumbnail = ThumbnailPath(imgmodel.url);
 
                     var imgmodel1 = new VideoImageModel();
-                    imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath1) ? contentEntity.ContentFilePath1 : contentEntity.ContentFilePath1);
+                    imgmodel1.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath1) ? contentEntity.ContentFilePath1 : contentEntity.ContentFilePath1);
                     imgmodel1.Type = String.IsNullOrEmpty(contentEntity.ContentFilePath1) ? "video" : "image";
                     // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                     imgmodel1.thumbnail = ThumbnailPath(imgmodel1.url);
@@ -120,10 +131,10 @@ namespace IM10.BAL.Implementaion
 
                         ContentId = contentEntity.ContentId,
                         ContentFileName = contentEntity.ContentFileName,
-                        ContentFilePath = contentEntity.ContentFilePath,
+                        ContentFilePath = imgmodel.url,
                         Title = contentEntity.Title,
                         ContentFileName1 = contentEntity.ContentFileName1,
-                        ContentFilePath1 = contentEntity.ContentFilePath1,
+                        ContentFilePath1 = imgmodel1.url,
                         Description = contentEntity.Description,
                         Thumbnail_2 = contentEntity.Thumbnail_2,
                         Thumbnail1 = contentEntity.Thumbnail1,//contentEntity.Thumbnail,
@@ -144,6 +155,7 @@ namespace IM10.BAL.Implementaion
                         Approved = contentEntity.Approved,
                         UpdatedBy = contentEntity.UpdatedBy,
                         UpdatedDate = contentEntity.UpdatedDate,
+                        ProductionFlag= contentEntity.ProductionFlag,
                     };
                 }
                 catch (Exception ex)
@@ -227,6 +239,7 @@ namespace IM10.BAL.Implementaion
                                                Approved = content.Approved,
                                                UpdatedDate = content.UpdatedDate,
                                                UpdatedBy = content.UpdatedBy,
+                                               ProductionFlag=content.ProductionFlag
                                            }).ToList();
                     if (contentdetailEntity.Count == 0)
                     {
@@ -236,14 +249,15 @@ namespace IM10.BAL.Implementaion
                     }
                     contentdetailEntity.ForEach(item =>
                     {
+                        var hostname = GetHostName(item.ProductionFlag);
                         var imgmodel = new VideoImageModel();
-                        imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
+                        imgmodel.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
                         imgmodel.Type = String.IsNullOrEmpty(item.ContentFilePath) ? "video" : "image";
                         // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                         imgmodel.thumbnail = ThumbnailPath(imgmodel.url);
 
                         var imgmodel1 = new VideoImageModel();
-                        imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath1) ? item.ContentFilePath1 : item.ContentFilePath1);
+                        imgmodel1.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath1) ? item.ContentFilePath1 : item.ContentFilePath1);
                         imgmodel1.Type = String.IsNullOrEmpty(item.ContentFilePath1) ? "video" : "image";
                         // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                         imgmodel1.thumbnail = ThumbnailPath(imgmodel1.url);
@@ -252,11 +266,11 @@ namespace IM10.BAL.Implementaion
                         {
                             ContentId = item.ContentId,
                             ContentFileName = item.ContentFileName,
-                            ContentFilePath = item.ContentFilePath,
+                            ContentFilePath = imgmodel.url,
                             Title = item.Title,
                             Description = item.Description,
                             ContentFileName1 = item.ContentFileName1,
-                            ContentFilePath1 = item.ContentFilePath1,
+                            ContentFilePath1 = imgmodel1.url,
                             Thumbnail_2 = imgmodel1.thumbnail,
                             //Thumbnail = ThumbnailPath(item.ContentFilePath),
                             Thumbnail1 = imgmodel.thumbnail,//item.Thumbnail,
@@ -277,6 +291,7 @@ namespace IM10.BAL.Implementaion
                             UpdatedBy = item.UpdatedBy,
                             CreatedBy = item.CreatedBy,
                             CreatedDate = item.CreatedDate,
+                            ProductionFlag = item.ProductionFlag,
                         });
                     });
                     transaction.Commit();
@@ -351,6 +366,7 @@ namespace IM10.BAL.Implementaion
                             contentEntity.LanguageId = model.LanguageId;
                             contentEntity.Approved = null;
                             contentEntity.IsDeleted = false;
+                            contentEntity.ProductionFlag = _config.ProductionFlag;
                             context.ContentDetails.Add(contentEntity);
                             context.SaveChanges();
                             transaction.Commit();
@@ -461,6 +477,7 @@ namespace IM10.BAL.Implementaion
                                     contentdetailEntity.UpdatedDate = DateTime.Now;
                                     contentdetailEntity.UpdatedBy = contentModel.UpdatedBy;
                                     contentdetailEntity.IsDeleted = false;
+                                    contentdetailEntity.ProductionFlag = _config.ProductionFlag;
                                     context.ContentDetails.Update(contentdetailEntity);
                                     context.SaveChanges();
                                     transaction.Commit();
@@ -594,6 +611,7 @@ namespace IM10.BAL.Implementaion
                                                  LanguageName = language.Name,
                                                  Comment = content.Comment,
                                                  Approved = content.Approved,
+                                                 ProductionFlag = content.ProductionFlag,
                                              }).ToList();
                     if (contentEntityList.Count == 0)
                     {
@@ -601,17 +619,18 @@ namespace IM10.BAL.Implementaion
                         errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                         return null;
                     }
-
                     contentEntityList.ForEach(item =>
                     {
+                        var hostName = GetHostName(item.ProductionFlag);
+
                         var imgmodel = new VideoImageModel();
-                        imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
+                        imgmodel.url = hostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
                         imgmodel.Type = String.IsNullOrEmpty(item.ContentFilePath) ? "video" : "image";
                         // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                         imgmodel.thumbnail = ThumbnailPath(imgmodel.url);
 
                         var imgmodel1 = new VideoImageModel();
-                        imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath1) ? item.ContentFilePath1 : item.ContentFilePath1);
+                        imgmodel1.url = hostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath1) ? item.ContentFilePath1 : item.ContentFilePath1);
                         imgmodel1.Type = String.IsNullOrEmpty(item.ContentFilePath1) ? "video" : "image";
                         // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                         imgmodel1.thumbnail = ThumbnailPath(imgmodel1.url);
@@ -623,7 +642,7 @@ namespace IM10.BAL.Implementaion
                             ContentFilePath = item.ContentFilePath,
                             ContentFileName1 = item.ContentFileName1,
                             ContentFilePath1 = item.ContentFilePath1,
-                            Thumbnail_2 = _configuration.HostName + item.Thumbnail3,
+                            Thumbnail_2 = hostName + item.Thumbnail3,
                             ContentThumbnail_2 = imgmodel1.thumbnail,
                             Title = item.Title,
                             Description = item.Description,
@@ -642,6 +661,7 @@ namespace IM10.BAL.Implementaion
                             LanguageName = item.LanguageName,
                             Comment = item.Comment,
                             Approved = item.Approved,
+                            ProductionFlag = item.ProductionFlag,
                         });
                     });
                     transaction.Commit();
@@ -719,6 +739,7 @@ namespace IM10.BAL.Implementaion
                                          LanguageName = language.Name,
                                          Comment = content.Comment,
                                          Approved = content.Approved,
+                                         ProductionFlag = content.ProductionFlag,
                                      }).ToList();
             if (contentEntityList.Count == 0)
             {
@@ -729,14 +750,15 @@ namespace IM10.BAL.Implementaion
 
             contentEntityList.ForEach(item =>
             {
+                var hostname= GetHostName(item.ProductionFlag);
                 var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
+                imgmodel.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
                 imgmodel.Type = String.IsNullOrEmpty(item.ContentFilePath) ? "video" : "image";
                 // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                 imgmodel.thumbnail = ThumbnailPath(imgmodel.url);
 
                 var imgmodel1 = new VideoImageModel();
-                imgmodel1.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath1) ? item.ContentFilePath1 : item.ContentFilePath1);
+                imgmodel1.url =hostname.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath1) ? item.ContentFilePath1 : item.ContentFilePath1);
                 imgmodel1.Type = String.IsNullOrEmpty(item.ContentFilePath1) ? "video" : "image";
                 // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                 imgmodel1.thumbnail = ThumbnailPath(imgmodel1.url);
@@ -766,6 +788,7 @@ namespace IM10.BAL.Implementaion
                     LanguageName = item.LanguageName,
                     Comment = item.Comment,
                     Approved = item.Approved,
+                    ProductionFlag = item.ProductionFlag,
                 });
             });
             return contentList;
@@ -799,34 +822,6 @@ namespace IM10.BAL.Implementaion
                         message.ContentTypeId = contentEntity.ContentTypeId;
                         message.Message = GlobalConstants.ApprovedSuccessfully;
                         message.Thumbnail = ThumbnailPath(_configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(contentEntity.ContentFilePath) ? contentEntity.ContentFilePath : contentEntity.ContentFilePath));
-                        
-/*                        var existing = context.Fcmnotifications.Where(x => x.PlayerId == contentEntity.PlayerId && x.IsDeleted == false).ToList();
-*/                      /*  foreach (var item in existing)
-                        {
-                            var notificationResponse = await _notificationService.SendNotification(item.DeviceToken, message.PlayerId, message.ContentId, message.Title, message.Description, message.ContentTypeId, message.Thumbnail, message.CategoryId);
-                            if (notificationResponse.IsSuccess == 0)
-                            {
-                                var fcmNotification = context.Fcmnotifications.FirstOrDefault(x => x.DeviceToken == item.DeviceToken);
-                                if (fcmNotification != null)
-                                {
-                                    fcmNotification.IsDeleted = true;
-                                    context.Fcmnotifications.Update(fcmNotification);
-                                    context.SaveChanges();
-                                }
-
-                                // Set IsDeleted to true for the device token in UserDeviceMapping table
-                                var userMapping = context.UserDeviceMappings.Where(x => x.DeviceToken == item.DeviceToken).ToList();
-                                foreach (var mapping in userMapping)
-                                {
-                                    if (mapping != null)
-                                    {
-                                        mapping.IsDeleted = true;
-                                        context.UserDeviceMappings.Update(mapping);
-                                        context.SaveChanges();
-                                    }
-                                }
-                            }
-                        }*/
                         var userAuditLog = new UserAuditLogModel();
                         userAuditLog.Action = "Approve Content Details";
                         userAuditLog.Description = "Content Details Approved Successfully";
@@ -908,12 +903,6 @@ namespace IM10.BAL.Implementaion
                 extension = Path.GetExtension(filePath);
                 if (!String.IsNullOrWhiteSpace(extension))
                 {
-                    // filePath = filePath.Replace(extension, "*");
-                    //filePath = filePath.Replace("/Resources/ContentFile/");
-                     //ms = System.IO.File.ReadAllBytes(filePath);
-
-                    //var string1 = filePath;
-                    //filePath = string1.Replace(extension, ".jpeg");
                 }
             }
 

@@ -104,6 +104,10 @@ namespace IM10.API
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IEncryptionService, EncryptionService>();
             services.Configure<FcmNotificationSetting>(Configuration.GetSection("FcmNotification"));
+            services.Configure<AppSettings>(Configuration.GetSection("ConfigurationModel"));
+            services.Configure<AppSettings>(Configuration.GetSection("BunnyNet"));
+            services.Configure<AppSettings>(Configuration);
+
             //services.Configure<SMSSettingModel>(Configuration.GetSection("SMSSettingTwilioModel"));
             // Adding jwtBearer Authentication  
 

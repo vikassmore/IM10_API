@@ -37,6 +37,8 @@ public partial class AdvContentDetail
 
     public bool? Approved { get; set; }
 
+    public bool? ProductionFlag { get; set; }
+
     public DateTime? CreatedDate { get; set; }
 
     public int? CreatedBy { get; set; }

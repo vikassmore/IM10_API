@@ -48,6 +48,7 @@ namespace IM10.Models
         public int? LanguageId { get; set; }
         public string? LanguageName { get; set; }
         public string? Comment { get; set; }
+        public bool? ProductionFlag { get; set; }
 
         public bool? Approved { get; set; }
 
@@ -86,6 +87,7 @@ namespace IM10.Models
       
         public int? LanguageId { get; set; }
 
+        public bool? ProductionFlag { get; set; }
 
         public int? UpdatedBy { get; set; }
 

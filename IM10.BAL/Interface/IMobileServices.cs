@@ -43,7 +43,7 @@ namespace IM10.BAL.Interface
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        ContentFlagModel GetMobileVideoView(long contentId, ref ErrorResponseModel errorResponseModel);
+        ContentFlagModel GetMobileVideoView(long contentId, long userId, ref ErrorResponseModel errorResponseModel);
         /// <summary>
         /// Method is used to get all Category top five Article
         /// </summary>

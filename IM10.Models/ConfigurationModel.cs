@@ -10,5 +10,13 @@ namespace IM10.Models
     {
         public string HostName { get; set; }
         public string URLffmpeg { get; set; }
+
     }
+
+    public class AppSettings
+    {
+        public string BunnyHostName { get; set; }
+        public bool ProductionFlag { get; set; }
+    }
+
 }

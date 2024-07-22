@@ -41,6 +41,8 @@ public partial class ContentDetail
 
     public bool? Approved { get; set; }
 
+    public bool? ProductionFlag { get; set; }
+
     public DateTime? UpdatedDate { get; set; }
 
     public int? UpdatedBy { get; set; }

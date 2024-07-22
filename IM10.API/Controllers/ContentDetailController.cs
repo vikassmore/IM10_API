@@ -49,14 +49,15 @@ namespace IM10.API.Controllers
         {
             var apiKey = _configuration["BunnyNet:ApiKey"];
             var storageZoneName = _configuration["BunnyNet:StorageZoneName"];
-
-            var directoryPath = isThumbnail ? $"Player_{playerId}/Resources/ContentFile/thumbnail" : $"Player_{playerId}/Resources/ContentFile";
             var bunnyHostName = _configuration["BunnyNet:HostName"];
 
             if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(storageZoneName) || string.IsNullOrEmpty(bunnyHostName))
             {
                 throw new InvalidOperationException("BunnyNet configuration is missing.");
             }
+
+            var directoryPath = isThumbnail ? $"Player_{playerId}/Resources/ContentFile/thumbnail" : $"Player_{playerId}/Resources/ContentFile";
+
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("AccessKey", apiKey);
@@ -65,20 +66,28 @@ namespace IM10.API.Controllers
                 {
                     content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
 
-                    var response = await client.PutAsync($"https://storage.bunnycdn.com/{storageZoneName}/{directoryPath}/{fileName}", content);
+                    var requestUri = $"https://sg.storage.bunnycdn.com/{storageZoneName}/{directoryPath}/{fileName}";
+                    var response = await client.PutAsync(requestUri, content);
 
                     if (response.IsSuccessStatusCode)
                     {
                         Console.WriteLine("File uploaded successfully.");
-                        return $"{bunnyHostName}/{directoryPath}/{fileName}";
+                        return $"/{directoryPath}/{fileName}";
                     }
                     else
                     {
                         var errorResponse = await response.Content.ReadAsStringAsync();
                         Console.WriteLine($"Failed to upload file. Status Code: {response.StatusCode}, Response: {errorResponse}");
-                        throw new HttpRequestException($"Unauthorized: {response.StatusCode}");
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        {
+                            throw new HttpRequestException("Unauthorized: Check if your API key is correct and has the necessary permissions.");
+                        }
+                        else
+                        {
+                            throw new HttpRequestException($"Failed to upload file: {response.StatusCode}");
+                        }
                     }
-                  
                 }
             }
         }
@@ -310,8 +319,6 @@ namespace IM10.API.Controllers
                 }
 
                 return ReturnErrorResponse(errorMessage);
-
-
             }
             catch (Exception ex)
             {
@@ -333,7 +340,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult EditContentDetail(IFormCollection formdata)
+        public async Task<IActionResult> EditContentDetail(IFormCollection formdata)
         {
 
             ContentDetailModel1 model = new ContentDetailModel1();
@@ -383,25 +390,49 @@ namespace IM10.API.Controllers
                         }
                     }
 
+                    bool productionFlag = bool.Parse(_configuration["ProductionFlag"]);
+
                     if (Request.Form.Files.Count > 0)
                     {
                         var folder = iwebhostingEnvironment.WebRootPath;
                         var files = Request.Form.Files;
                         foreach (var file in files)
                         {
-                            var folderName = Path.Combine("Resources", "ContentFile");
-                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
                             if (file.Length > 0)
                             {
                                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                                 var uniqueId = Guid.NewGuid().ToString();
                                 var fileExtension = Path.GetExtension(fileName);
                                 var uniqueFileName = $"{uniqueId}{fileExtension}";
-                                var fullPath = Path.Combine(pathToSave, uniqueFileName);
-                                var dbPath = Path.Combine(folderName, uniqueFileName);
-
-                                if (file.Name.StartsWith("contentFilePath"))
+                                if (productionFlag)
                                 {
+                                    // Upload to Bunny.net
+                                    string bunnyNetUrl = await UploadFileToBunnyNetAsync(file.OpenReadStream(), uniqueFileName, model.PlayerId, file.Name.StartsWith("thumbnail"));
+
+                                    if (file.Name == "contentFilePath")
+                                    {
+                                        model.ContentFilePath = bunnyNetUrl;
+                                        model.ContentFileName = uniqueFileName;
+                                    }
+                                    else if (file.Name == "contentFilePath_1")
+                                    {
+                                        model.ContentFilePath1 = bunnyNetUrl;
+                                        model.ContentFileName1 = uniqueFileName;
+                                    }
+                                    else if (file.Name == "thumbnail1")
+                                    {
+                                        model.Thumbnail3 = bunnyNetUrl;
+                                    }
+                                }
+                                else
+                                {
+                                    var folderName = Path.Combine("Resources", "ContentFile");
+                                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                                    var fullPath = Path.Combine(pathToSave, uniqueFileName);
+                                    var dbPath = Path.Combine(folderName, uniqueFileName);
+                                    Directory.CreateDirectory(pathToSave);
+
                                     using (var stream = new FileStream(fullPath, FileMode.Create))
                                     {
                                         file.CopyTo(stream);
@@ -417,21 +448,20 @@ namespace IM10.API.Controllers
                                         model.ContentFilePath1 = "/ContentFile/" + uniqueFileName;
                                         model.ContentFileName1 = uniqueFileName;
                                     }
-                                }
-                                else if (file.Name == "thumbnail1")
-                                {
-                                    var thumbnailFolder = Path.Combine(pathToSave, "thumbnail");
-                                    var thumbnailFullPath = Path.Combine(thumbnailFolder, uniqueFileName);
-
-                                    Directory.CreateDirectory(thumbnailFolder);
-                                    using (var thumbnailStream = new FileStream(thumbnailFullPath, FileMode.Create))
+                                    else if (file.Name == "thumbnail1")
                                     {
-                                        file.CopyTo(thumbnailStream);
-                                    }
-                                    model.Thumbnail3 = "/ContentFile/thumbnail/" + uniqueFileName;
-                                }
+                                        var thumbnailFolder = Path.Combine(pathToSave, "thumbnail");
+                                        var thumbnailFullPath = Path.Combine(thumbnailFolder, uniqueFileName);
 
-                                model.ContentId = Convert.ToInt32(formdata["contentId"]);
+                                        Directory.CreateDirectory(thumbnailFolder);
+                                        using (var thumbnailStream = new FileStream(thumbnailFullPath, FileMode.Create))
+                                        {
+                                            file.CopyTo(thumbnailStream);
+                                        }
+                                        model.Thumbnail3 = "/ContentFile/thumbnail/" + uniqueFileName;
+                                    }
+                                    model.ContentId = Convert.ToInt32(formdata["contentId"]);
+                                }
                             }
                         }
                     }

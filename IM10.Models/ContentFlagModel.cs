@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 namespace IM10.Models
 {
     public class ContentFlagModel
-    {
-        public ContentFlagModel()
-        {
-            this.ContentDetails = new List<ContentDetailMobileModel>();
-            this.advertiseMobileModels = new List<AdvertiseMobileModel>();
-
-        }
+    {    
         public long ContentFlagId { get; set; }
         public string PlayerId { get; set; }
         public long ContentId { get; set; }
@@ -32,36 +26,30 @@ namespace IM10.Models
         public int? CommentCount { get; set; }
         public int? ViewNo { get; set; }
         public int? LikedNo { get; set; }
-        public int? FavouriteNo { get; set; }
-
-        public List<ContentDetailMobileModel> ContentDetails { get; set; }
-        public List<AdvertiseMobileModel> advertiseMobileModels { get; set; }
+        public int? FavouriteNo { get; set; }    
+        public List<ContentMobileModel> contentMobileModels { get; set; }
 
     }
 
-    public class model
-    {
-        public model()
-        {
-            this.ContentDetails = new List<ContentDetailMobileModel>();
-            this.advertiseMobileModels = new List<AdvertiseMobileModel>();
-        }
-        public List<ContentDetailMobileModel> ContentDetails { get; set; }
-        public List<AdvertiseMobileModel> advertiseMobileModels { get; set; }
-    }
+
 
     public class ContentDetailMobileModel
     {
-
+        public ContentDetailMobileModel()
+        {
+            this.advertiseMobileModels = new List<AdvertiseMobileModel>();
+        }
         public long ContentId { get; set; }
+        public string? Thumbnail { get; set; }
 
         public string? ContentFileName { get; set; }
         public string? ContentFilePath { get; set; }
         public string? ContentFileName1 { get; set; }
         public string? ContentFilePath1 { get; set; }
-
         public string? Title { get; set; }
         public string? Description { get; set; }
+        public List<AdvertiseMobileModel> advertiseMobileModels { get; set; }
+
 
     }
 
@@ -73,8 +61,9 @@ namespace IM10.Models
         public string? AdvertiseTitle { get; set; }
         public string? AdvertiseFileName { get; set; }
         public string? AdvertiseFilePath { get; set; }
-
+        public int? Position { get; set; }
     }
+
     public class ContentMobileModel
     {
         public long ContentId { get; set; }
@@ -85,7 +74,6 @@ namespace IM10.Models
         public string? Title { get; set; }
         public string? Description { get; set; }
         public int? Position { get; set; }
-
         public string? CategoryName { get; set; }
 
     }
@@ -103,6 +91,7 @@ namespace IM10.Models
         public long ContentId { get; set; }
         public bool Liked { get; set; }
         public bool Favourite { get; set; }
+        public int AutoIndex { get; set; }
         public DateTime? CreatedDate { get; set; }
         public List<ContentMobileModel> contentMobileModels { get; set; }
     }
@@ -122,19 +111,7 @@ namespace IM10.Models
         public int? DisplayOrder { get; set; }
         public List<MobileContentData> mobileContentDatas { get; set; }
     }
-    //public class CategoryVideoModel
-    //{
-    //    public long ContentId { get; set; }
-    //    public long AdvertiseContentId { get; set; }
-    //    public string? FileName { get; set; }
-    //    public string? FilePath { get; set; }
-    //    public string? Thumbnail { get; set; }
-    //    public string? Title { get; set; }
-    //    public string? Description { get; set; }
-    //    public int? Position { get; set; }
-    //    public string CategoryName { get; set; }
-
-    //}
+    
     public class MobileArticleCategoryData
     {
         public string CategoryName { get; set; }
@@ -177,7 +154,6 @@ namespace IM10.Models
         public List<ListingLogoDetailsModel> listingLogoDetailsModels { get; set; }
         public List<MobileContentData> mobileContentDatas { get; set; }
         public List<CategoryArticleModel> categoryArticleModels { get; set; }
-        //  public List<ListingLogoDetailsModel> listingDetailsModels { get; set; }
     }
 
     public class ContentModelFlag

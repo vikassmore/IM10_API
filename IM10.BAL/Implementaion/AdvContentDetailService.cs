@@ -23,27 +23,33 @@ namespace IM10.BAL.Implementaion
         private ConfigurationModel _configuration;
         private readonly IUserAuditLogService _userAuditLogService;
         private readonly IErrorAuditLogService _logService;
+        private readonly AppSettings _config;
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public AdvContentDetailService(IErrorAuditLogService auditLogService, IM10DbContext _context ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
+        public AdvContentDetailService(IOptions<AppSettings> config, IErrorAuditLogService auditLogService, IM10DbContext _context ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
         {
              context= _context;
             _configuration= hostName.Value;
             _userAuditLogService= userAuditLogService;
             _logService = auditLogService;
+            _config= config.Value;
         }
 
+        private string GetHostName(bool? flag)
+        {
+            return (bool)flag ? _config.BunnyHostName : _configuration.HostName;
+        }
 
-         /// <summary>
-         /// Method to add AdvContentDetail
-         /// </summary>
-         /// <param name="model"></param>
-         /// <param name="errorResponseModel"></param>
-         /// <returns></returns>
-          public string AddAdvContentDetail(AdvContentDetailsModel1 model, ref ErrorResponseModel errorResponseModel)
+        /// <summary>
+        /// Method to add AdvContentDetail
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="errorResponseModel"></param>
+        /// <returns></returns>
+        public string AddAdvContentDetail(AdvContentDetailsModel1 model, ref ErrorResponseModel errorResponseModel)
           {
               string message = "";
               using (var transaction = context.Database.BeginTransaction())
@@ -74,6 +80,7 @@ namespace IM10.BAL.Implementaion
                                 contentDetail.CreatedDate = DateTime.Now;
                                 contentDetail.FinalPrice = model.FinalPrice;
                                 contentDetail.IsDeleted = false;
+                                contentDetail.ProductionFlag = _config.ProductionFlag;
                                 context.AdvContentDetails.Add(contentDetail);
                                 context.SaveChanges();
                                 transaction.Commit();
@@ -126,6 +133,7 @@ namespace IM10.BAL.Implementaion
                                     advEntity.UpdatedDate = DateTime.Now;
                                     advEntity.FinalPrice = model.FinalPrice;
                                     advEntity.IsDeleted = false;
+                                    advEntity.ProductionFlag=_config.ProductionFlag;
                                     context.AdvContentDetails.Update(advEntity);
                                     context.SaveChanges();
                                     transaction.Commit();
@@ -326,7 +334,8 @@ namespace IM10.BAL.Implementaion
                                      Comment = adv.Comment,
                                      Approved= adv.Approved,
                                      FinalPrice = adv.FinalPrice,
-                                     IsFree = adv.IsFree                                
+                                     IsFree = adv.IsFree,      
+                                     ProductionFlag = adv.ProductionFlag,
                                  }).ToList();
             if (advEntityList.Count == 0)
             {
@@ -336,10 +345,10 @@ namespace IM10.BAL.Implementaion
             }
             advEntityList.ForEach(item =>
             {
+                var hostname= GetHostName(item.ProductionFlag);
                 var imgmodel = new VideoImageModel();
-                imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.AdvertiseFilePath) ? item.AdvertiseFilePath : item.AdvertiseFilePath);
+                imgmodel.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(item.AdvertiseFilePath) ? item.AdvertiseFilePath : item.AdvertiseFilePath);
                 imgmodel.Type = String.IsNullOrEmpty(item.AdvertiseFilePath) ? "video" : "image";
-                // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
                 imgmodel.FileName = (imgmodel.url);
                 advList.Add(new AdvContentDetailsModel
                 {
@@ -432,7 +441,7 @@ namespace IM10.BAL.Implementaion
                                      CreatedDate = adv.CreatedDate,
                                      UpdatedBy = adv.UpdatedBy,
                                      UpdatedDate = adv.UpdatedDate,
-
+                                     ProductionFlag = adv.ProductionFlag,
                                  }).FirstOrDefault();
             if (advEntity == null)
             {
@@ -440,11 +449,10 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
                 return null;
             }
-
+            var hostname= GetHostName(advEntity.ProductionFlag);
             var imgmodel = new VideoImageModel();
-            imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(advEntity.AdvertiseFilePath) ? advEntity.AdvertiseFilePath : advEntity.AdvertiseFilePath);
+            imgmodel.url = hostname.TrimEnd('/') + (String.IsNullOrEmpty(advEntity.AdvertiseFilePath) ? advEntity.AdvertiseFilePath : advEntity.AdvertiseFilePath);
             imgmodel.Type = String.IsNullOrEmpty(advEntity.AdvertiseFilePath) ? "video" : "image";
-            // imgModel.thumbnail = _configuration.HostName.TrimEnd('/') + "/thumbnail/" + imgModel.url
             imgmodel.FileName = (imgmodel.url);
             return new AdvContentDetailsModel
             {
@@ -471,6 +479,7 @@ namespace IM10.BAL.Implementaion
                 CreatedDate = advEntity.CreatedDate,
                 UpdatedBy = advEntity.UpdatedBy,
                 UpdatedDate = advEntity.UpdatedDate,
+                ProductionFlag= advEntity.ProductionFlag,
             };          
         }       
     }

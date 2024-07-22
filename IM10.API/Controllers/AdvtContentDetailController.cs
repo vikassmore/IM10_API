@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace IM10.API.Controllers
 {
@@ -22,22 +25,66 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AdvtContentDetailController : BaseAPIController
     {
         IAdvContentDetailService  advContentservice;
         private readonly IWebHostEnvironment iwebhostingEnvironment;
+        private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Used to initialize controller and inject advcontentdetails service
         /// </summary>
         /// <param name="_advContentservice"></param>
-        public AdvtContentDetailController(IAdvContentDetailService _advContentservice, IWebHostEnvironment _iwebhostingEnvironment)
+        public AdvtContentDetailController(IConfiguration configuration, IAdvContentDetailService _advContentservice, IWebHostEnvironment _iwebhostingEnvironment)
         {
             advContentservice = _advContentservice;
             iwebhostingEnvironment = _iwebhostingEnvironment;
+            _configuration = configuration;
         }
 
+
+        private async Task<string> UploadFileToBunnyNetAsync(Stream fileStream, string fileName, long playerId)
+        {
+            var apiKey = _configuration["BunnyNet:ApiKey"];
+            var storageZoneName = _configuration["BunnyNet:StorageZoneName"];
+            var directoryPath = $"Player_{playerId}/Resources/AdvtContentFile";
+            var bunnyHostName = _configuration["BunnyNet:HostName"];
+
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("AccessKey", apiKey);
+
+                using (var content = new StreamContent(fileStream))
+                {
+                    content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+
+                    var requestUri = $"https://sg.storage.bunnycdn.com/{storageZoneName}/{directoryPath}/{fileName}";
+                    var response = await client.PutAsync(requestUri, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("File uploaded successfully.");
+                        return $"/{directoryPath}/{fileName}";
+                    }
+                    else
+                    {
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine($"Failed to upload file. Status Code: {response.StatusCode}, Response: {errorResponse}");
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        {
+                            throw new HttpRequestException("Unauthorized: Check if your API key is correct and has the necessary permissions.");
+                        }
+                        else
+                        {
+                            throw new HttpRequestException($"Failed to upload file: {response.StatusCode}");
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// To get AdvContentDetail by AdvertiseContentId 
@@ -88,7 +135,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult AddAdvContentDetail(IFormCollection formdata)
+        public async Task<IActionResult> AddAdvContentDetail(IFormCollection formdata)
         {
             AdvContentDetailsModel1 model= new AdvContentDetailsModel1();
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
@@ -140,6 +187,7 @@ namespace IM10.API.Controllers
                             model.AdvertiseFilePath = formdata["imageUrl"];
                         }
                     }
+                    bool productionFlag = bool.Parse(_configuration["ProductionFlag"]);
 
                     if (Request.Form.Files.Count > 0)
                     {
@@ -147,27 +195,45 @@ namespace IM10.API.Controllers
                         var files = Request.Form.Files;
                         foreach (var file in files)
                         {
-                            var folderName = Path.Combine("Resources", "AdvtContentFile");
-                            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
                             if (file.Length > 0)
                             {
                                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                                 var uniqueId = Guid.NewGuid().ToString();
-                                var fileExtension = Path.GetExtension(fileName);
+                                var fileExtension = Path.GetExtension(file.FileName);
                                 var uniqueFileName = $"{uniqueId}{fileExtension}";
-                                var fullPath = Path.Combine(pathToSave, uniqueFileName);
-                                var dbPath = Path.Combine(folderName, uniqueFileName);
-                                using (var stream = new FileStream(fullPath, FileMode.Create))
+                                if (productionFlag)
                                 {
-                                    file.CopyTo(stream);
+                                    // Upload to Bunny.net
+                                    string bunnyNetUrl = await UploadFileToBunnyNetAsync(file.OpenReadStream(), uniqueFileName, model.PlayerId);
+
+                                    if (file.Name == "advertiseFilePath")
+                                    {
+                                        model.AdvertiseFilePath = bunnyNetUrl;
+                                        model.AdvertiseFileName = uniqueFileName;
+                                    }
+
                                 }
-                                model.AdvertiseFilePath = "/AdvtContentFile/" + uniqueFileName;
-                                model.AdvertiseContentId = Convert.ToInt32(formdata["advertisecontentId"]);
-                                model.AdvertiseFileName = uniqueFileName;
-                                
+                                else
+                                {
+                                    var folderName = Path.Combine("Resources", "AdvtContentFile");
+                                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                                    var fullPath = Path.Combine(pathToSave, uniqueFileName);
+                                    var dbPath = Path.Combine(folderName, uniqueFileName);
+
+                                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                                    {
+                                        file.CopyTo(stream);
+                                    }
+
+                                    model.AdvertiseFilePath = "/AdvtContentFile/" + uniqueFileName;
+                                    model.AdvertiseContentId = Convert.ToInt32(formdata["advertisecontentId"]);
+                                    model.AdvertiseFileName = uniqueFileName;
+                                }
                             }
                         }
                     }
+
                 }
                 string productModel = "";
 

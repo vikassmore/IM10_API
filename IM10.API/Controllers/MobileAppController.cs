@@ -48,7 +48,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> GetTop5TrendingVideoContent(string playerId, long userId, int countNumber)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 
@@ -76,23 +76,24 @@ namespace IM10.API.Controllers
         /// To get MobileVideoView by contentId 
         /// </summary>
         /// <param name="contentId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("GetMobileVideoView/{contentId}")]
+        [HttpGet("GetMobileVideoView/{contentId}/{userId}")]
         [ProducesResponseType(typeof(ContentFlagModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public IActionResult GetMobileVideoView(long contentId)
+        public IActionResult GetMobileVideoView(long contentId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel() ;
             try
             {
                 if (contentId <= 0)
                 {
                     return BadRequest("Invalid data");
                 }
-                var contentdetailModel = services.GetMobileVideoView(contentId, ref errorResponseModel);
+                var contentdetailModel = services.GetMobileVideoView(contentId,userId ,ref errorResponseModel);
 
                 if (contentdetailModel != null)
                 {
@@ -122,7 +123,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCategoryTopFiveVideoContent(string playerId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var detailModel = services.GetAllCategoryTopFiveVideoContent(playerId, userId, ref errorResponseModel);
@@ -157,7 +158,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetVideoContentByCategory(string playerId, long categoryId, long userId,int countNumber)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var contentdetailModel = services.GetVideoContentByCategory(playerId, categoryId,userId, countNumber,ref errorResponseModel);
@@ -193,7 +194,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetAllCategoryTopFiveArticleContent(string playerId, long userId, int countNumber)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 
@@ -228,7 +229,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetArticleContentByCategory(string playerId, long categoryId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var contentdetailModel = services.GetArticleContentByCategory(playerId, categoryId,userId, ref errorResponseModel);
@@ -261,7 +262,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileArticleView(long contentId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 if (contentId <= 0)
@@ -297,7 +298,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetListingDetailByplayerId(string playerId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                
@@ -330,7 +331,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetListingDetailById(long listingId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 if (listingId <= 0)
@@ -367,7 +368,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetTop20ListingDetailByplayerId(string playerId,int countNumber)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 
@@ -402,7 +403,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileSearchDetailByplayerId(string playerId, string searchData, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 
@@ -480,7 +481,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileCommentByContentId(long contentId,long UserId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var commentModel = services.GetMobileCommentByContentId(contentId, UserId,ref errorResponseModel);
@@ -512,7 +513,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileCommentCount(long contentId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var commentModel = services.GetMobileCommentCount (contentId, userId, ref errorResponseModel);
@@ -543,7 +544,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileCommentByPlayerId(string playerId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
 
@@ -655,7 +656,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileSplashScreenByplayerId(string playerId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 
@@ -688,7 +689,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileLogoImageByplayerId(string playerId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var detailModel = services.GetMobileLogoImageByplayerId(playerId, ref errorResponseModel);
@@ -720,7 +721,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileSlideImageByplayerId(string playerId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                
@@ -753,7 +754,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileLikeVideoArticle(string playerId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 
@@ -787,7 +788,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public IActionResult GetMobileFavouriteVideoArticle(string playerId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var detailModel = services.GetMobileFavouriteVideoArticle(playerId, userId, ref errorResponseModel);
@@ -820,7 +821,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> GetAllCategoryList(string playerId, long userId)
         {
-            ErrorResponseModel errorResponseModel = null;
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
             {
                 var detailModel = services.GetAllCategoryList(playerId, userId, ref errorResponseModel);

@@ -268,8 +268,6 @@ namespace IM10.BAL.Implementaion
                 userEntity.Password = _encryptionservice.GetDecryotedId(userEntity.Password.ToString());
                 try
                 {
-                    //string subject = "Forgot password link sent on your email. Please check.";
-
                     StringBuilder strBody = new StringBuilder();
                     strBody.Append("<body>");
                     strBody.Append("Hello  " + userEntity.FirstName);
@@ -290,15 +288,7 @@ namespace IM10.BAL.Implementaion
                 {
                    return ex.Message;
                 }
-
-            }
-            var userAuditLog = new UserAuditLogModel();
-            userAuditLog.Action = "Forget Password";
-            userAuditLog.Description = "Forget Password Successfully";
-            userAuditLog.UserId = (int)userEntity.CreatedBy;
-            userAuditLog.UpdatedBy = userEntity.UpdatedBy;
-            userAuditLog.UpdatedDate = DateTime.Now;
-            _userAuditLogService.AddUserAuditLog(userAuditLog);
+            }   
             return message;
         }
 

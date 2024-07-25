@@ -13140,3 +13140,8 @@ Log Entry : 19:50:03 11 June 2024
 Error: An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
 IsException: False
 -------------------------------
+
+Log Entry : 15:15:16 25 July 2024
+  :
+  :The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+-------------------------------

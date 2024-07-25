@@ -23,16 +23,13 @@ namespace IM10.BAL.Implementaion
     /// </summary>
     public class EmailSenderService : IEmailSenderService
     {
-        private ConfigurationModel _configuration;
-
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="emailSettings"></param>
-        public EmailSenderService(IOptions<EmailSettings> emailSettings, IOptions<ConfigurationModel> hostName)
+        public EmailSenderService(IOptions<EmailSettings> emailSettings)
         {
             _emailSettings = emailSettings.Value;
-            this._configuration = hostName.Value;
         }
 
         public EmailSettings _emailSettings { get; }
@@ -67,7 +64,6 @@ namespace IM10.BAL.Implementaion
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    //Catch and show the exception if needed. Donot supress. :)  
                 }
             }
             return Task.FromResult(0);
@@ -112,7 +108,6 @@ namespace IM10.BAL.Implementaion
                                     Log(ex.Message, w);
                                     Log(ex.InnerException.Message, w);
                                 }
-
                                 using (StreamReader r = File.OpenText("log.txt"))
                                 {
                                     DumpLog(r);
@@ -120,8 +115,7 @@ namespace IM10.BAL.Implementaion
                             }
                             catch (Exception ex1)
                             {
-                                Console.WriteLine(ex.Message);
-
+                                throw;
                             }
                             await Task.FromResult(ex.Message);
                         }
@@ -134,9 +128,7 @@ namespace IM10.BAL.Implementaion
             }
             catch (SmtpException ex)
             {
-
                 await Task.FromResult(ex.Message);
-
             }
         }
 

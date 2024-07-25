@@ -386,7 +386,27 @@ namespace IM10.BAL.Implementaion
                         modelList = modelList.OrderByDescending(x => x.CreatedDate).ToList();
                     }
                 }
-                categoryModel.mobileContentDatas = modelList;
+                var groupedContent = modelList.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+                var indexedContent = new List<MobileContentData>();
+
+                foreach (var group in groupedContent)
+                {
+                    int index = 0;
+                    foreach (var content in group.Contents)
+                    {
+                        content.AutoIndex = index;
+                        indexedContent.Add(content);
+                        index++;
+                    }
+                }
+
+                categoryModel.mobileContentDatas = indexedContent;
                 if (modelList.Any())
                 {
                     mobileVideoCategoryData.Add(categoryModel);
@@ -834,6 +854,7 @@ namespace IM10.BAL.Implementaion
                         categoryArticleList.Add(articleModel);
                     }
                 }
+
                 categoryModel.categoryArticleModels = categoryArticleList;
                 mobileArticleList.Add(categoryModel);
             }
@@ -1051,7 +1072,7 @@ namespace IM10.BAL.Implementaion
                     Position = item.Position
                 });
             });
-            return listdetailEntity;
+            return listdetailEntity.OrderBy(z=>z.Position).ToList();
         }
 
 

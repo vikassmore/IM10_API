@@ -1,29 +1,11 @@
-﻿using Azure;
-using IM10.BAL.Interface;
+﻿using IM10.BAL.Interface;
 using IM10.Common;
 using IM10.Entity.DataModels;
 using IM10.Models;
-using Microsoft.SqlServer.Server;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Net;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
 using System.Net.Http.Headers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
 namespace IM10.BAL.Implementaion
 {
@@ -59,49 +41,28 @@ namespace IM10.BAL.Implementaion
             errorResponseModel = new ErrorResponseModel();
             var errorList = new List<ErrorAuditLogModel>();
             var errorEntity = (from user in context12.UserMasters
-                               join log in context12.LogInformations
-                               on (int)user.UserId equals log.UserId
-                               where user.IsDeleted == false
-                               orderby log.LogId descending
-
-                               select new
+                               join log in context12.LogInformations on (int)user.UserId equals log.UserId
+                               where user.IsDeleted == false orderby log.LogId descending
+                               select new ErrorAuditLogModel
                                {
-                                   log.LogId,
-                                   log.UserId,
-                                   log.LogType,
-                                   log.StackTrace,
-                                   log.AdditionalInformation,
-                                   log.LogSource,
-                                   log.CreatedDate,
-                                   log.LogMessage,
-                                   user.FirstName,
-                                   user.LastName,
-                                   user.EmailId
+                                     LogId=log.LogId,
+                                     UserId=log.UserId,
+                                     LogType=log.LogType,
+                                     StackTrace=log.StackTrace,
+                                     AdditionalInformation=log.AdditionalInformation,
+                                     LogSource=log.LogSource,
+                                     CreatedDate=log.CreatedDate,
+                                     LogMessage=log.LogMessage,
+                                     FirstName=user.FirstName,
+                                     LastName=user.LastName,
+                                     EmailId= user.EmailId
                                }).ToList();
             if (errorEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }
-            errorEntity.ForEach(item =>
-            {
-                errorList.Add(new ErrorAuditLogModel
-                {
-                    LogId = item.LogId,
-                    LogType = item.LogType,
-                    StackTrace = item.StackTrace,
-                    AdditionalInformation = item.AdditionalInformation,
-                    CreatedDate = DateTime.Now,
-                    LogSource = item.LogSource,
-                    UserId = item.UserId,
-                    LogMessage = item.LogMessage,
-                    FirstName = item.FirstName,
-                    LastName = item.LastName,
-                    FullName = item.FirstName + " " + item.LastName,
-                    EmailId = item.EmailId,
-                });
-            });
-            return errorList;
+            }        
+            return errorEntity.ToList();
         }
 
 
@@ -182,8 +143,7 @@ namespace IM10.BAL.Implementaion
         {
             errorResponseModel = new ErrorResponseModel();
             var errorEntity = (from user in context12.UserMasters
-                               join log in context12.LogInformations
-                               on (int)user.UserId equals log.UserId
+                               join log in context12.LogInformations on (int)user.UserId equals log.UserId
                                where log.LogId == logId
                                select new
                                {

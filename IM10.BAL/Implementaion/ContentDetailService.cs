@@ -715,7 +715,7 @@ namespace IM10.BAL.Implementaion
                                      join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                      join language in context.Languages on content.LanguageId equals language.LanguageId
                                      where content.PlayerId == playerId && content.IsDeleted == false && 
-                                     content.Approved==true && content.ContentTypeId == ContentTypeHelper.VideoContentTypeId && player.IsDeleted==false
+                                     content.Approved==true && player.IsDeleted==false
                                      orderby content.UpdatedDate descending
                                      select new ContentDetailModel
                                      {
@@ -943,6 +943,30 @@ namespace IM10.BAL.Implementaion
                                      {
                                          ContentId = (int)content.ContentId,
                                          Title = update.ContentTitle != null && update.Approved == true ? $"{content.Title} ({update.ContentTitle})" : content.Title,
+                                     }).ToList();
+            if (contentEntityList.Count == 0)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                return null;
+            }
+            return contentEntityList.ToList();
+        }
+
+
+        public List<ContentTitleModel> GetApprovedContentTitles(long playerId, long contenttypeId, ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel = new ErrorResponseModel();
+            var contentEntityList = (from content in context.ContentDetails
+                                     join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                     where content.PlayerId == playerId && content.IsDeleted == false &&
+                                     content.ContentTypeId == contenttypeId &&
+                                     content.Approved == true && player.IsDeleted == false
+                                     orderby content.UpdatedDate descending
+                                     select new ContentTitleModel
+                                     {
+                                         ContentId = (int)content.ContentId,
+                                         Title = content.Title,
                                      }).ToList();
             if (contentEntityList.Count == 0)
             {

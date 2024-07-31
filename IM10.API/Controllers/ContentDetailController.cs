@@ -765,7 +765,43 @@ namespace IM10.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
+        }
 
+
+        /// <summary>
+        /// To get GetApprovedContentTitles by playerId,contenttypeid
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="contenttypeId"></param>
+        /// <returns></returns>
+        [HttpGet("GetApprovedContentTitles/{playerId}/{contenttypeId}")]
+        [ProducesResponseType(typeof(ContentTitleModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetApprovedContentTitles(long playerId, long contenttypeId)
+        {
+            ErrorResponseModel errorResponseModel = null;
+            try
+            {
+                if (playerId <= 0)
+                {
+                    return BadRequest("Invalid data");
+                }
+                var contentdetailModel = contentDetailService.GetApprovedContentTitles(playerId, contenttypeId, ref errorResponseModel);
+
+                if (contentdetailModel != null)
+                {
+                    return Ok(contentdetailModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
         }
     }
 }

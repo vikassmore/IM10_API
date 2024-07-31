@@ -70,13 +70,21 @@ namespace IM10.BAL.Interface
         /// <returns></returns>
         List<ContentDetailModel> GetApprovedContentdetailByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
 
+        /// <summary>
+        /// Method is used to get GetApprovedContentTitles by id
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <param name="contenttypeId"></param>
+        /// <returns></returns>
+        List<ContentTitleModel> GetApprovedContentTitles(long playerId,long contenttypeId, ref ErrorResponseModel errorResponseModel);
+
 
         /// <summary>
         /// Method is used to approve contentdetails by id
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        Task <NotificationModel> ApproveContentDetail(long contentId);
+        Task<NotificationModel> ApproveContentDetail(long contentId);
 
 
 

@@ -57,7 +57,7 @@ namespace IM10.API.Controllers
 
                 if (filepath != null)
                 {
-                    var responseObj1 = new { filepath }; // Create anonymous object
+                    var responseObj1 = new { filepath }; 
                     string jsonResponse1 = System.Text.Json.JsonSerializer.Serialize(responseObj1); // Convert to JSON
                     return Ok(jsonResponse1);
                 }

@@ -136,6 +136,7 @@ namespace IM10.Models
         public int CommentCount { get; set; }
         public bool Liked { get; set; }
         public bool Favourite { get; set; }
+        public int CategoryAutoIndex { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
     public class ListingLogoDetailsModel

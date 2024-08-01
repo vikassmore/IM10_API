@@ -169,8 +169,8 @@ namespace IM10.BAL.Implementaion
                         var errorMessage = _logService.SaveErrorLogs(new LogEntry
                         {
                             LogType = "Error",
-                            StackTrace = ex.StackTrace,
-                            AdditionalInformation = ex.Message,
+                            StackTrace = "Stack Trace: " + ex.StackTrace,
+                            AdditionalInformation = "Inner Exception: " + ex.InnerException + "Message: " + ex.Message,
                             CreatedDate = DateTime.Now,
                             LogSource = "Add/EditAddAdvContentDetail",
                             UserId = userIdForLog,
@@ -271,8 +271,8 @@ namespace IM10.BAL.Implementaion
                         var errorMessage = _logService.SaveErrorLogs(new LogEntry
                         {
                             LogType = "Error",
-                            StackTrace = ex.StackTrace,
-                            AdditionalInformation = ex.Message,
+                            StackTrace ="Stack Trace: " + ex.StackTrace,
+                            AdditionalInformation = "Inner Exception: " + ex.InnerException +"Message: " + ex.Message,
                             CreatedDate = DateTime.Now,
                             LogSource = "DeleteAdvContentMapping",
                             UserId = userIdForLog,

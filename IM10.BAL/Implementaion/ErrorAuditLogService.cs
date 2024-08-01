@@ -25,7 +25,7 @@ namespace IM10.BAL.Implementaion
         public ErrorAuditLogService(ILogger<ErrorAuditLogService> logger, IM10DbContext _context1, IOptions<ConfigurationModel> hostName)
         {
             context12 = _context1;
-            this._configuration = hostName.Value;
+            _configuration = hostName.Value;
             _logger = logger;
         }
 
@@ -38,31 +38,43 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public List<ErrorAuditLogModel> GetAllErrorAuditLog(ref ErrorResponseModel errorResponseModel)
         {
-            errorResponseModel = new ErrorResponseModel();
-            var errorList = new List<ErrorAuditLogModel>();
-            var errorEntity = (from user in context12.UserMasters
-                               join log in context12.LogInformations on (int)user.UserId equals log.UserId
-                               where user.IsDeleted == false orderby log.LogId descending
-                               select new ErrorAuditLogModel
-                               {
-                                     LogId=log.LogId,
-                                     UserId=log.UserId,
-                                     LogType=log.LogType,
-                                     StackTrace=log.StackTrace,
-                                     AdditionalInformation=log.AdditionalInformation,
-                                     LogSource=log.LogSource,
-                                     CreatedDate=log.CreatedDate,
-                                     LogMessage=log.LogMessage,
-                                     FirstName=user.FirstName,
-                                     LastName=user.LastName,
-                                     EmailId= user.EmailId
-                               }).ToList();
-            if (errorEntity.Count == 0)
+            try
             {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }        
-            return errorEntity.ToList();
+                errorResponseModel = new ErrorResponseModel();
+                var errorList = new List<ErrorAuditLogModel>();
+                var errorEntity = (from user in context12.UserMasters
+                                   join log in context12.LogInformations on (int)user.UserId equals log.UserId
+                                   where user.IsDeleted == false
+                                   orderby log.LogId descending
+                                   select new ErrorAuditLogModel
+                                   {
+                                       LogId = log.LogId,
+                                       UserId = log.UserId,
+                                       LogType = log.LogType,
+                                       StackTrace = log.StackTrace,
+                                       AdditionalInformation = log.AdditionalInformation,
+                                       LogSource = log.LogSource,
+                                       CreatedDate = log.CreatedDate,
+                                       LogMessage = log.LogMessage,
+                                       FirstName = user.FirstName,
+                                       LastName = user.LastName,
+                                       EmailId = user.EmailId,
+                                       FullName=user.FirstName + " " + user.LastName
+                                   }).ToList();
+                if (errorEntity.Count == 0)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                }
+                return errorEntity.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all error audit logs.");
+                errorResponseModel.StatusCode = HttpStatusCode.InternalServerError;
+                errorResponseModel.Message = ex.InnerException + ex.StackTrace + ex.Message;
+                return new List<ErrorAuditLogModel>();
+            }
         }
 
 
@@ -73,14 +85,24 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string ErrorAuditLogRestore(long logId, ref ErrorResponseModel errorResponseModel)
         {
-            string message = "";
-            var dataEntity = context12.LogInformations.FirstOrDefault(x => x.LogId == logId);
-
-            if (dataEntity != null)
+            try
             {
-                message = GlobalConstants.ErrorAuditLogDownloadSuccessfully;
+                string message = "";
+                var dataEntity = context12.LogInformations.FirstOrDefault(x => x.LogId == logId);
+
+                if (dataEntity != null)
+                {
+                    message = GlobalConstants.ErrorAuditLogDownloadSuccessfully;
+                }
+                return message;
             }
-            return message;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all error audit logs.");
+                errorResponseModel.StatusCode = HttpStatusCode.InternalServerError;
+                errorResponseModel.Message = ex.InnerException + ex.StackTrace + ex.Message;
+                return null;
+            }
         }
 
 
@@ -91,15 +113,15 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         private string WriteErrorListToFile(ErrorAuditLogModel error)
         {
-            var folderName = Path.Combine("Resources", "ErrorAuditLogFile");
-            string fileName = $"error_audit_log_{error.LogId}.txt";
-            string pathtosave = "/ErrorAuditLogFile/" + fileName;
-            var hostName = _configuration.HostName;
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), folderName + "/" + fileName);
-            string fileUrl = $"{hostName}{pathtosave}";
-
             try
             {
+                var folderName = Path.Combine("Resources", "ErrorAuditLogFile");
+                string fileName = $"error_audit_log_{error.LogId}.txt";
+                string pathtosave = "/ErrorAuditLogFile/" + fileName;
+                var hostName = _configuration.HostName;
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), folderName + "/" + fileName);
+                string fileUrl = $"{hostName}{pathtosave}";
+
                 using (StreamWriter writer = File.CreateText(filePath))
                 {
                     writer.WriteLine($"Log ID: {error.LogId}");
@@ -128,8 +150,8 @@ namespace IM10.BAL.Implementaion
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred while writing the error audit log file: " + ex.Message);
-                return ex.Message;
+                _logger.LogError(ex.InnerException + ex.StackTrace + ex.Message, $"Error writing audit log to file for Log ID {error.LogId}.");
+                return null;
             }
         }
 
@@ -141,52 +163,61 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string GetErrorAuditLogById(long logId, ref ErrorResponseModel errorResponseModel)
         {
-            errorResponseModel = new ErrorResponseModel();
-            var errorEntity = (from user in context12.UserMasters
-                               join log in context12.LogInformations on (int)user.UserId equals log.UserId
-                               where log.LogId == logId
-                               select new
-                               {
-                                   log.LogId,
-                                   log.UserId,
-                                   log.LogType,
-                                   log.StackTrace,
-                                   log.AdditionalInformation,
-                                   log.LogSource,
-                                   log.CreatedDate,
-                                   log.LogMessage,
-                                   user.FirstName,
-                                   user.LastName,
-                                   user.EmailId
-                               }).FirstOrDefault();
-
-            if (errorEntity == null)
+            try
             {
-                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
-                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                errorResponseModel = new ErrorResponseModel();
+                var errorEntity = (from user in context12.UserMasters
+                                   join log in context12.LogInformations on (int)user.UserId equals log.UserId
+                                   where log.LogId == logId
+                                   select new
+                                   {
+                                       log.LogId,
+                                       log.UserId,
+                                       log.LogType,
+                                       log.StackTrace,
+                                       log.AdditionalInformation,
+                                       log.LogSource,
+                                       log.CreatedDate,
+                                       log.LogMessage,
+                                       user.FirstName,
+                                       user.LastName,
+                                       user.EmailId
+                                   }).FirstOrDefault();
+
+                if (errorEntity == null)
+                {
+                    errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                    errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                    return null;
+                }
+
+                var error = new ErrorAuditLogModel
+                {
+                    LogId = errorEntity.LogId,
+                    LogType = errorEntity.LogType,
+                    StackTrace = errorEntity.StackTrace,
+                    AdditionalInformation = errorEntity.AdditionalInformation,
+                    CreatedDate = errorEntity.CreatedDate,
+                    LogSource = errorEntity.LogSource,
+                    UserId = errorEntity.UserId,
+                    LogMessage = errorEntity.LogMessage,
+                    FirstName = errorEntity.FirstName,
+                    LastName = errorEntity.LastName,
+                    FullName = errorEntity.FirstName + " " + errorEntity.LastName,
+                    EmailId = errorEntity.EmailId,
+                };
+                Console.WriteLine(error);
+                string downloadFile = WriteErrorListToFile(error);
+                return downloadFile;
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, $"Error fetching audit log by ID {logId}.");
+                errorResponseModel.StatusCode = HttpStatusCode.InternalServerError;
+                errorResponseModel.Message =ex.InnerException+ ex.StackTrace + ex.Message;
                 return null;
             }
-
-            var error = new ErrorAuditLogModel
-            {
-                LogId = errorEntity.LogId,
-                LogType = errorEntity.LogType,
-                StackTrace = errorEntity.StackTrace,
-                AdditionalInformation = errorEntity.AdditionalInformation,
-                CreatedDate = DateTime.Now,
-                LogSource = errorEntity.LogSource,
-                UserId = errorEntity.UserId,
-                LogMessage = errorEntity.LogMessage,
-                FirstName = errorEntity.FirstName,
-                LastName = errorEntity.LastName,
-                FullName = errorEntity.FirstName + " " + errorEntity.LastName,
-                EmailId = errorEntity.EmailId,
-            };
-            string downloadFile = WriteErrorListToFile(error);
-            return downloadFile;
         }
-
-
 
 
         /// <summary>
@@ -196,22 +227,30 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string SaveErrorLogs(LogEntry logEntry)
         {
-            using (var newcontext = new IM10DbContext())
+            try
             {
-                var log = new LogInformation
+                using (var newcontext = new IM10DbContext())
                 {
-                    LogType = logEntry.LogType,
-                    StackTrace = logEntry.StackTrace,
-                    AdditionalInformation = logEntry.AdditionalInformation,
-                    CreatedDate = logEntry.CreatedDate,
-                    LogSource = logEntry.LogSource,
-                    UserId = logEntry.UserId,
-                    LogMessage = logEntry.LogMessage,
-                };
-                newcontext.LogInformations.Add(log);
-                newcontext.SaveChanges(); 
+                    var log = new LogInformation
+                    {
+                        LogType = logEntry.LogType,
+                        StackTrace = logEntry.StackTrace,
+                        AdditionalInformation = logEntry.AdditionalInformation,
+                        CreatedDate = logEntry.CreatedDate,
+                        LogSource = logEntry.LogSource,
+                        UserId = logEntry.UserId,
+                        LogMessage = logEntry.LogMessage,
+                    };
+                    newcontext.LogInformations.Add(log);
+                    newcontext.SaveChanges();
+                }
+                return "Error log saved successfully.";
             }
-            return "Error log saved successfully.";           
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving audit log to the database.");
+                return null;
+            }
         }
 
         /// <summary>
@@ -221,17 +260,23 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string DeleteErrorLogs(long logId)
         {
-           ErrorResponseModel errorResponseModel = new ErrorResponseModel();
-            string Message = "";
-            var logEntity = context12.LogInformations.FirstOrDefault(x => x.LogId == logId);
-            if (logEntity != null)
+            try
             {
-                context12.LogInformations.Remove(logEntity); 
-                context12.SaveChanges();
-                Message = GlobalConstants.ErrorLogDeleteSuccessfully;
-            }           
-            return "{\"message\": \"" + Message + "\"}";
-        }
-        
+                string Message = "";
+                var logEntity = context12.LogInformations.FirstOrDefault(x => x.LogId == logId);
+                if (logEntity != null)
+                {
+                    context12.LogInformations.Remove(logEntity);
+                    context12.SaveChanges();
+                    Message = GlobalConstants.ErrorLogDeleteSuccessfully;
+                }
+                return "{\"message\": \"" + Message + "\"}";
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.InnerException + ex.StackTrace + ex.Message, $"Error deleting audit log with ID {logId}.");
+                return "{\"message\": \"An error occurred while deleting the log.\"}";
+            }
+        }        
     }
 }

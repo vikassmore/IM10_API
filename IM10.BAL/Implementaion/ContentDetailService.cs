@@ -177,8 +177,8 @@ namespace IM10.BAL.Implementaion
                     var errorMessage = _logService.SaveErrorLogs(new LogEntry
                     {
                         LogType = "Error",
-                        StackTrace = ex.StackTrace,
-                        AdditionalInformation = ex.Message,
+                        StackTrace = "Stack Trace: " + ex.StackTrace,
+                        AdditionalInformation = "Inner Exception: " + ex.InnerException + "Message: " + ex.Message,
                         CreatedDate = DateTime.Now,
                         LogSource = "GetContentCommentByPlayerId",
                         UserId = userIdForLog,
@@ -316,8 +316,8 @@ namespace IM10.BAL.Implementaion
                     var errorMessage = _logService.SaveErrorLogs(new LogEntry
                     {
                         LogType = "Error",
-                        StackTrace = ex.StackTrace,
-                        AdditionalInformation = ex.Message,
+                        StackTrace = "Stack Trace: " + ex.StackTrace,
+                        AdditionalInformation = "Inner Exception: " + ex.InnerException  + "Message: " + ex.Message,
                         CreatedDate = DateTime.Now,
                         LogSource = "Getallcontendetail",
                         UserId = userIdForLog,
@@ -406,8 +406,8 @@ namespace IM10.BAL.Implementaion
                     var errorMessage = _logService.SaveErrorLogs(new LogEntry
                     {
                         LogType = "Error",
-                        StackTrace = ex.StackTrace,
-                        AdditionalInformation = ex.Message,
+                        StackTrace = "Stack Trace: " + ex.StackTrace,
+                        AdditionalInformation = "Inner Exception: " + ex.InnerException + "Message: " + ex.Message,
                         CreatedDate = DateTime.Now,
                         LogSource = "AddContentDetail",
                         UserId = userIdForLog,
@@ -512,8 +512,8 @@ namespace IM10.BAL.Implementaion
                             var errorMessage = _logService.SaveErrorLogs(new LogEntry
                             {
                                 LogType = "Error",
-                                StackTrace = ex.StackTrace,
-                                AdditionalInformation = ex.Message,
+                                StackTrace = "Stack Trace: " + ex.StackTrace,
+                                AdditionalInformation = "Inner Exception: " + ex.InnerException + "Message: " + ex.Message,
                                 CreatedDate = DateTime.Now,
                                 LogSource = "EditContentDetails",
                                 UserId = userIdForLog,
@@ -686,8 +686,8 @@ namespace IM10.BAL.Implementaion
                     var errorMessage = _logService.SaveErrorLogs(new LogEntry
                     {
                         LogType = "Error",
-                        StackTrace = ex.StackTrace,
-                        AdditionalInformation = ex.Message,
+                        StackTrace = "Stack Trace: " + ex.StackTrace,
+                        AdditionalInformation = "Inner Exception: " + ex.InnerException + "Message: " + ex.Message,
                         CreatedDate = DateTime.Now,
                         LogSource = "GetContentdetailByPlayerId",
                         UserId = userIdForLog,

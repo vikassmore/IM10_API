@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using StartUpX.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -215,12 +216,32 @@ namespace IM10.BAL.Implementaion
                 topList.Add(topModel);
 
             }
+            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent = new List<MobileContentData>();
+
+            foreach (var group in groupedContent)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.AutoIndex = index;
+                    indexedContent.Add(content);
+                    index++;
+                }
+            }
             if (tredingEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            return topList;
+            return indexedContent;
         }
 
 
@@ -586,12 +607,32 @@ namespace IM10.BAL.Implementaion
                     topList.Add(topModel);
                 }
             }
+            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent = new List<MobileContentData>();
+
+            foreach (var group in groupedContent)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.AutoIndex = index;
+                    indexedContent.Add(content);
+                    index++;
+                }
+            }
             if (categoryEnitityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            videoModel.mobileContentDatas = topList.OrderByDescending(x => x.CreatedDate).ToList();
+            videoModel.mobileContentDatas = indexedContent;
             return videoModel;
         }
 
@@ -826,6 +867,7 @@ namespace IM10.BAL.Implementaion
 
                         articleModel.ContentId = contentArticle.ContentId;
                         articleModel.Title = contentArticle.Title;
+                        articleModel.CategoryId = contentArticle.CategoryId;
                         articleModel.Description = contentArticle.Description;
                         articleModel.CategoryName = contentArticle.Category.Name;
                         articleModel.FileName = contentArticle.ContentFileName;
@@ -854,8 +896,27 @@ namespace IM10.BAL.Implementaion
                         categoryArticleList.Add(articleModel);
                     }
                 }
+                var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
+                var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
+                       .Select(g => new
+                       {
+                           Category = g.Key,
+                           Contents = g.ToList()
+                       }).ToList();
 
-                categoryModel.categoryArticleModels = categoryArticleList;
+                var indexedContent1 = new List<CategoryArticleModel>();
+
+                foreach (var group in groupedContent1)
+                {
+                    int index = 0;
+                    foreach (var content in group.Contents)
+                    {
+                        content.CategoryAutoIndex = index;
+                        indexedContent1.Add(content);
+                        index++;
+                    }
+                }
+                categoryModel.categoryArticleModels = indexedContent1;
                 mobileArticleList.Add(categoryModel);
             }
             if (categoryEnitityList.Count == 0)
@@ -952,12 +1013,32 @@ namespace IM10.BAL.Implementaion
                     categoryArticleList.Add(articleModel);
                 }
             }
+            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent1 = new List<CategoryArticleModel>();
+
+            foreach (var group in groupedContent1)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.CategoryAutoIndex = index;
+                    indexedContent1.Add(content);
+                    index++;
+                }
+            }
             if (categoryEnitityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            categoryModel.categoryArticleModels = categoryArticleList;
+            categoryModel.categoryArticleModels = indexedContent1;
             return categoryModel;
         }
 
@@ -1512,7 +1593,27 @@ namespace IM10.BAL.Implementaion
                     }
                 }
             }
-            mobileSearchDataModel.categoryArticleModels = categoryArticleList;
+            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent1 = new List<CategoryArticleModel>();
+
+            foreach (var group in groupedContent1)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.CategoryAutoIndex = index;
+                    indexedContent1.Add(content);
+                    index++;
+                }
+            }
+            mobileSearchDataModel.categoryArticleModels = indexedContent1;
             return mobileSearchDataModel;
         }
 
@@ -2249,6 +2350,7 @@ namespace IM10.BAL.Implementaion
                     articleModel.Title = contentArticle.Title;
                     articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                     articleModel.Description = contentArticle.Description;
+                    articleModel.CategoryId = contentArticle.CategoryId;
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.FileName = contentArticle.ContentFileName;
                     articleModel.FilePath = imgmodel2.FileName;
@@ -2275,7 +2377,27 @@ namespace IM10.BAL.Implementaion
                     categoryArticleList.Add(articleModel);
                 }
             }
-            playerMobileLikeFavouriteData.articleContentData = categoryArticleList;
+            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent1 = new List<CategoryArticleModel>();
+
+            foreach (var group in groupedContent1)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.CategoryAutoIndex = index;
+                    indexedContent1.Add(content);
+                    index++;
+                }
+            }
+            playerMobileLikeFavouriteData.articleContentData = indexedContent1;
             if (likedVideoEntity.Count == 0 && likedArticleEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -2424,7 +2546,6 @@ namespace IM10.BAL.Implementaion
                 //topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
-                topModel.AutoIndex = -1;
                 topModel.CreatedDate = contentVideo.CreatedDate;
                 topList.Add(topModel);
             }
@@ -2480,6 +2601,7 @@ namespace IM10.BAL.Implementaion
                     articleModel.CategoryName = contentArticle.Category.Name;
                     articleModel.FileName = contentArticle.ContentFileName;
                     articleModel.FilePath = imgmodel2.url;
+                    articleModel.CategoryId = contentArticle.CategoryId;
                     articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
@@ -2504,7 +2626,27 @@ namespace IM10.BAL.Implementaion
                     categoryArticleList.Add(articleModel);
                 }
             }
-            playerMobileLikeFavouriteData.articleContentData = categoryArticleList;
+            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
+            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
+                   .Select(g => new
+                   {
+                       Category = g.Key,
+                       Contents = g.ToList()
+                   }).ToList();
+
+            var indexedContent1 = new List<CategoryArticleModel>();
+
+            foreach (var group in groupedContent1)
+            {
+                int index = 0;
+                foreach (var content in group.Contents)
+                {
+                    content.CategoryAutoIndex = index;
+                    indexedContent1.Add(content);
+                    index++;
+                }
+            }
+            playerMobileLikeFavouriteData.articleContentData = indexedContent1;
             if (likedVideoEntity.Count == 0 && likedArticleEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;

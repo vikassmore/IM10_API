@@ -25,7 +25,7 @@ namespace IM10.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+
     public class AdvtContentDetailController : BaseAPIController
     {
         IAdvContentDetailService  advContentservice;
@@ -149,7 +149,6 @@ namespace IM10.API.Controllers
                 return BadRequest("Invalid request, please verify details");
             }
 
-
             try
             {
                 var errorMessage = new ErrorResponseModel();            
@@ -212,7 +211,6 @@ namespace IM10.API.Controllers
                                         model.AdvertiseFilePath = bunnyNetUrl;
                                         model.AdvertiseFileName = uniqueFileName;
                                     }
-
                                 }
                                 else
                                 {
@@ -233,7 +231,6 @@ namespace IM10.API.Controllers
                             }
                         }
                     }
-
                 }
                 string productModel = "";
 
@@ -257,7 +254,6 @@ namespace IM10.API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, GlobalConstants.Status500Message);
             }
-
         }
 
 

@@ -25,7 +25,7 @@ namespace IM10.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ContentDetailController : BaseAPIController
     {
         IContentDetailService contentDetailService;

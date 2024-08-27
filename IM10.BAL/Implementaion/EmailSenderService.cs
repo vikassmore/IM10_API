@@ -50,13 +50,15 @@ namespace IM10.BAL.Implementaion
                 {
                     web.Proxy = null;
                     // MeshBA's sms gateway                   
-                    string url = "http://sms6.rmlconnect.net:8080/bulksms/bulksms?username=MeshBaS&password=P7nO!k8)&type=0&dlr=1&destination="
+                    string url = "https://sms6.rmlconnect.net:8443/bulksms/messagesubmit?username=SerumIndia&password=y92E-%5BlP&dlr=1&destination="
                                     + phonenumber
                                     + "&source=MESHBA&message=Dear User,"
                                     + otp + " "
                                     + " is the OTP for your login. In case you have not requested this, please contact us.-MeshBA&entityid=1701159146303386050&tempid=1707171283812216615";
-                  
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+
+                
+                                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                     string result = web.DownloadString(url);
                     Console.WriteLine(result);
                   

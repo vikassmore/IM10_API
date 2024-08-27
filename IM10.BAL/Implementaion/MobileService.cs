@@ -29,7 +29,7 @@ namespace IM10.BAL.Implementaion
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public MobileService(IM10DbContext _context, IOptions<AppSettings> config,IEncryptionService encryptionService ,IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
+        public MobileService(IM10DbContext _context, IOptions<AppSettings> config, IEncryptionService encryptionService, IOptions<ConfigurationModel> hostName, IUserAuditLogService userAuditLogService)
         {
             context = _context;
             _configuration = hostName.Value;
@@ -198,18 +198,16 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
                 topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                 topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                 if (userIsLoggedIn == true)
                 {
                     var commentList = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                    var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                    topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                    var commentData = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                    var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                    topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                 }
-                else
-                {
-                    topModel.CommentCount = publicEntity;
-                }
+
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
@@ -285,7 +283,7 @@ namespace IM10.BAL.Implementaion
                                            CategoryId = subflag != null ? subflag.CategoryId : content.CategoryId,
                                            Name = subflag != null ? subflag.Category.Name : content.Category.Name,
                                            DisplayOrder = subflag != null ? subflag.Category.DisplayOrder : 0,
-                                           HasAdvertisement = subflag != null 
+                                           HasAdvertisement = subflag != null
                                        }).ToList();
 
             var categoryList = categoryEnitityList.GroupBy(x => new { x.CategoryId, x.Name }).Select(x => new { CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Max(x => x.DisplayOrder), count = x.Count() }).ToList();
@@ -381,24 +379,21 @@ namespace IM10.BAL.Implementaion
                         topModel.ContentId = contentVideo.ContentId;
                         topModel.Title = contentVideo.Title;
                         topModel.Description = contentVideo.Description;
-                        topModel.Thumbnail =hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                        topModel.Thumbnail = hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                         topModel.CategoryId = contentVideo.Category.CategoryId;
                         topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         topModel.ContentTypeId = contentVideo.ContentTypeId;
                         topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                         topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                       // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
-                        var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                        // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
+                        var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                         if (userIsLoggedIn == true)
                         {
                             var commentList = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                            var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                            topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
-                        }
-                        else
-                        {
-                            topModel.CommentCount = publicEntity;
+                            var commentData = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                            var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                            topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                         }
                         topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -451,7 +446,7 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public MobileVideoCategoryData GetVideoContentByCategory(string playerId, long categoryId, long userId, int countNumber, ref ErrorResponseModel errorResponseModel)
         {
-            bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted==false)
+            bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
                                   .Select(z => z.IsLogin).FirstOrDefault() ?? false;
 
             errorResponseModel = new ErrorResponseModel();
@@ -547,7 +542,7 @@ namespace IM10.BAL.Implementaion
                         var hostname12 = GetHostName(contentVideo.ProductionFlag);
                         var content2 = new ContentMobileModel();
                         var imgmodel1 = new VideoImageModel();
-                        imgmodel1.url =hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                        imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
                         imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
                         imgmodel1.FileName = (imgmodel1.url);
 
@@ -584,23 +579,21 @@ namespace IM10.BAL.Implementaion
                     topModel.Title = contentVideo.Title;
                     topModel.CategoryId = item1.CategoryId;
                     topModel.Description = contentVideo.Description;
-                    topModel.Thumbnail =hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
+                    topModel.Thumbnail = hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
                     topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                     topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                    var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                    var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
                     {
-                        var commentList= context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId==userId && x.IsDeleted == false && x.IsPublic==false).Select(x => x.CommentId).ToList();
-                        var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                        topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                        var commentList = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic==false).Select(x => x.CommentId).ToList();
+                        var commentData = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                        var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic==false && x.IsDeleted == false).ToList();
+                        topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
-                    else 
-                    {
-                        topModel.CommentCount = publicEntity;
-                    }
+                    
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
@@ -705,7 +698,7 @@ namespace IM10.BAL.Implementaion
                 content1.Description = articleEntity.Description;
                 content1.Position = Helper.FirstHalfContentPostion;
                 content1.CategoryName = articleEntity.Name;
-                content1.Thumbnail = hostname1 + articleEntity.Thumbnail1; 
+                content1.Thumbnail = hostname1 + articleEntity.Thumbnail1;
                 contentMobileModels.Add(content1);
             }
 
@@ -766,17 +759,16 @@ namespace IM10.BAL.Implementaion
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
             int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
             int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-            var publicEntity = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
-            int CommentCount;
+            int CommentCount=0;
+
+            var publicEntity = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+
             if (userIsLoggedIn == true)
             {
                 var commentList = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                 CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
-            }
-            else
-            {
-                 CommentCount = publicEntity;
+                var commentData = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
             }
             var hostname = GetHostName(articleEntity.ProductionFlag);
 
@@ -877,19 +869,16 @@ namespace IM10.BAL.Implementaion
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                         articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                        var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                        var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                         if (userIsLoggedIn == true)
                         {
                             var commentList = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                            var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                            articleModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                            var commentData = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                            var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                            articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                         }
-                        else
-                        {
-                            articleModel.CommentCount = publicEntity;
-                        }
-                       // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
+                        // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         articleModel.CreatedDate = contentArticle.CreatedDate;
@@ -978,7 +967,7 @@ namespace IM10.BAL.Implementaion
                     var hostname1 = GetHostName(contentArticle.ProductionFlag);
 
                     var imgmodel2 = new VideoImageModel();
-                    imgmodel2.url =hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
+                    imgmodel2.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentArticle.ContentFilePath) ? contentArticle.ContentFilePath : contentArticle.ContentFilePath);
                     imgmodel2.Type = String.IsNullOrEmpty(contentArticle.ContentFilePath) ? "video" : "image";
                     imgmodel2.FileName = (imgmodel2.url);
 
@@ -994,19 +983,16 @@ namespace IM10.BAL.Implementaion
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                     articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
                     {
                         var commentList = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                        var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                        articleModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                        var commentData = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                        var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                        articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
-                    else
-                    {
-                        articleModel.CommentCount = publicEntity;
-                    }
-                   // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsDeleted==false).Select(x => x.CommentId).Count();
+                    // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsDeleted==false).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     articleModel.CreatedDate = contentArticle.CreatedDate;
@@ -1080,7 +1066,7 @@ namespace IM10.BAL.Implementaion
 
             imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(articleEntity.ContentFilePath) ? articleEntity.ContentFilePath : articleEntity.ContentFilePath);
             imgmodel.Type = String.IsNullOrEmpty(articleEntity.ContentFilePath) ? "video" : "image";
-            
+
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
             int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
             int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
@@ -1098,7 +1084,7 @@ namespace IM10.BAL.Implementaion
                 ContentTypeId = articleEntity.ContentTypeId,
                 ViewNo = ViewNo,
                 LikedNo = Liked,
-               
+                Description = articleEntity.Description,
                 FavouriteNo = Favourite,
                 CommentCount = CommentCount,
                 MostLiked = Like,
@@ -1127,7 +1113,7 @@ namespace IM10.BAL.Implementaion
 
             long decryptplayerId = decryptResult.DecryptedPlayerId.Value;
 
-            var listdetailEntity = new List<ListingLogoDetailsModel>();        
+            var listdetailEntity = new List<ListingLogoDetailsModel>();
             var listEntity1 = context.ListingDetails.Where(z => z.PlayerId == decryptplayerId && z.IsDeleted == false).OrderByDescending(d => d.UpdatedDate).ToList();
 
             if (listEntity1.Count == 0)
@@ -1153,7 +1139,7 @@ namespace IM10.BAL.Implementaion
                     Position = item.Position
                 });
             });
-            return listdetailEntity.OrderBy(z=>z.Position).ToList();
+            return listdetailEntity.OrderBy(z => z.Position).ToList();
         }
 
 
@@ -1204,8 +1190,8 @@ namespace IM10.BAL.Implementaion
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
-            }       
-            return listEntity;         
+            }
+            return listEntity;
         }
 
 
@@ -1216,7 +1202,7 @@ namespace IM10.BAL.Implementaion
         /// <param name="playerId"></param>
         /// <param name="countNumber"></param>
         /// <returns></returns>
-        public List<ListingLogoDetailsModel> GetTop20ListingDetailByplayerId(string playerId,int countNumber, ref ErrorResponseModel errorResponseModel)
+        public List<ListingLogoDetailsModel> GetTop20ListingDetailByplayerId(string playerId, int countNumber, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
 
@@ -1231,8 +1217,8 @@ namespace IM10.BAL.Implementaion
             long decryptplayerId = decryptResult.DecryptedPlayerId.Value;
 
             var listdetailEntity = new List<ListingLogoDetailsModel>();
-            var listEntity = context.ListingDetails.Where(z => z.PlayerId == decryptplayerId && z.IsDeleted == false).OrderByDescending(d=>d.UpdatedDate).ToList();
-                              
+            var listEntity = context.ListingDetails.Where(z => z.PlayerId == decryptplayerId && z.IsDeleted == false).OrderByDescending(d => d.UpdatedDate).ToList();
+
             if (listEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -1274,7 +1260,7 @@ namespace IM10.BAL.Implementaion
             bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
                                  .Select(z => z.IsLogin).FirstOrDefault() ?? false;
             errorResponseModel = new ErrorResponseModel();
-           
+
             var mobileSearchDataModel = new MobileSearchDataModel
             {
                 listingLogoDetailsModels = new List<ListingLogoDetailsModel>(),
@@ -1303,7 +1289,7 @@ namespace IM10.BAL.Implementaion
                               select new MobileListingDetailModel
                               {
                                   ListingId = list.ListingId,
-                                  PlayerId =playerId,
+                                  PlayerId = playerId,
                                   RoleId = user.RoleId,
                                   CompanyEmailId = list.CompanyEmailId,
                                   CompanyLogoFileName = list.CompanyLogoFileName,
@@ -1350,7 +1336,7 @@ namespace IM10.BAL.Implementaion
                 mobileSearchDataModel.listingLogoDetailsModels.Add(new ListingLogoDetailsModel
                 {
                     ListingId = item.ListingId,
-                    PlayerId = playerId,             
+                    PlayerId = playerId,
                     CompanyName = item.CompanyName,
                     Description = Regex.Replace(item.Description, @"\t|\n|\r", ""),
                     CompanyLogoFileName = item.CompanyLogoFileName,
@@ -1388,134 +1374,131 @@ namespace IM10.BAL.Implementaion
             }
             var tredinggroupList = tredingEntity.GroupBy(x => new { x.ContentId }).Select(x => new { ContentId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).ToList();
             List<MobileContentData> topList = new List<MobileContentData>();
-                foreach (var item in tredinggroupList)
+            foreach (var item in tredinggroupList)
+            {
+                var topModel = new MobileContentData();
+                var contentList = new List<ContentMobileModel>();
+                var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId.ContentId && x.Approved == true && x.IsDeleted == false);
+                if (contentVideo != null)
                 {
-                    var topModel = new MobileContentData();
-                    var contentList = new List<ContentMobileModel>();
-                    var contentVideo = context.ContentDetails.Include(x => x.Category).FirstOrDefault(x => x.ContentId == item.ContentId.ContentId && x.Approved == true && x.IsDeleted == false);
-                    if (contentVideo != null)
+                    var advertiseContent = (from advcontent in context.AdvContentMappings
+                                            join adv in context.AdvContentDetails on advcontent.AdvertiseContentId equals adv.AdvertiseContentId
+                                            where advcontent.ContentId == item.ContentId.ContentId && advcontent.IsDeleted == false
+                                            select new
+                                            {
+                                                adv.AdvertiseContentId,
+                                                adv.AdvertiseFileName,
+                                                adv.AdvertiseFilePath,
+                                                adv.Title,
+                                                advcontent.ContentId,
+                                                advcontent.Position,
+                                                adv.ProductionFlag
+                                            }).ToList();
+                    var imgmodel = new VideoImageModel();
+                    if (contentVideo.ContentFileName != null)
                     {
-                        var advertiseContent = (from advcontent in context.AdvContentMappings
-                                                join adv in context.AdvContentDetails on advcontent.AdvertiseContentId equals adv.AdvertiseContentId
-                                                where advcontent.ContentId == item.ContentId.ContentId && advcontent.IsDeleted == false
-                                                select new
-                                                {
-                                                    adv.AdvertiseContentId,
-                                                    adv.AdvertiseFileName,
-                                                    adv.AdvertiseFilePath,
-                                                    adv.Title,
-                                                    advcontent.ContentId,
-                                                    advcontent.Position,
-                                                    adv.ProductionFlag
-                                                }).ToList();
-                        var imgmodel = new VideoImageModel();
-                        if (contentVideo.ContentFileName != null)
-                        {
-                            var content1 = new ContentMobileModel();
-                            var hostname1 = GetHostName(contentVideo.ProductionFlag);
+                        var content1 = new ContentMobileModel();
+                        var hostname1 = GetHostName(contentVideo.ProductionFlag);
 
-                            imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
-                            imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
-                            imgmodel.FileName = (imgmodel.url);
+                        imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath) ? contentVideo.ContentFilePath : contentVideo.ContentFilePath);
+                        imgmodel.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath) ? "video" : "image";
+                        imgmodel.FileName = (imgmodel.url);
 
-                            content1.ContentId = contentVideo.ContentId;
-                            content1.FileName = contentVideo.ContentFileName;
-                            content1.FilePath = hostname1 + contentVideo.ContentFilePath;
-                            content1.Title = contentVideo.Title;
-                            content1.Description = contentVideo.Description;
-                            content1.Position = Helper.FirstHalfContentPostion;
-                            content1.CategoryName = contentVideo.Category.Name;
-                            content1.Thumbnail = hostname1 + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
-                            contentList.Add(content1);
-                        }
-                        if (contentVideo.ContentFileName1 != null)
-                        {
-                            var content2 = new ContentMobileModel();
-                            var hostname12 = GetHostName(contentVideo.ProductionFlag);
-
-                            var imgmodel1 = new VideoImageModel();
-                            imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
-                            imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
-                            imgmodel1.FileName = (imgmodel1.url);
-
-                            content2.ContentId = contentVideo.ContentId;
-                            content2.FileName = contentVideo.ContentFileName1;
-                            content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
-                            content2.Title = contentVideo.Title;
-                            content2.Description = contentVideo.Description;
-                            content2.Position = Helper.SecondHalfContentPostion;
-                            content2.CategoryName = contentVideo.Category.Name;
-                            content2.Thumbnail = ThumbnailPath(imgmodel1.url);
-                            contentList.Add(content2);
-                        }
-                        foreach (var advcontent in advertiseContent)
-                        {
-                            var model = new ContentMobileModel();
-                            var hostname123 = GetHostName(advcontent.ProductionFlag);
-
-                            var imgmodel2 = new VideoImageModel();
-                            imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
-                            imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
-                            imgmodel2.FileName = (imgmodel2.url);
-
-                            model.AdvertiseContentId = advcontent.AdvertiseContentId;
-                            model.FileName = advcontent.AdvertiseFileName;
-                            model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
-                            model.Title = advcontent.Title;
-                            model.Thumbnail = imgmodel2.url;
-                            model.ContentId = advcontent.ContentId;
-                            model.Position = advcontent.Position;
-                            contentList.Add(model);
-                        }
-                        var hostname = GetHostName(contentVideo.ProductionFlag);
-
-                        topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
-                        topModel.ContentId = contentVideo.ContentId;
-                        topModel.Title = contentVideo.Title;
-                        topModel.Description = contentVideo.Description;
-                        topModel.Thumbnail = hostname + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
-                        topModel.CategoryId = contentVideo.CategoryId;
-                        topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
-                        topModel.ContentTypeId = contentVideo.ContentTypeId;
-                        topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                        topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                        var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
-
-                        if (userIsLoggedIn == true)
-                        {
-                            var commentList = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                            var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                            topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
-                        }
-                        else
-                        {
-                            topModel.CommentCount = publicEntity;
-                        }
-                        // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
-                        topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                        topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
-                        topModel.CreatedDate = contentVideo.CreatedDate;
-
-                        topList.Add(topModel);
+                        content1.ContentId = contentVideo.ContentId;
+                        content1.FileName = contentVideo.ContentFileName;
+                        content1.FilePath = hostname1 + contentVideo.ContentFilePath;
+                        content1.Title = contentVideo.Title;
+                        content1.Description = contentVideo.Description;
+                        content1.Position = Helper.FirstHalfContentPostion;
+                        content1.CategoryName = contentVideo.Category.Name;
+                        content1.Thumbnail = hostname1 + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
+                        contentList.Add(content1);
                     }
-                
+                    if (contentVideo.ContentFileName1 != null)
+                    {
+                        var content2 = new ContentMobileModel();
+                        var hostname12 = GetHostName(contentVideo.ProductionFlag);
+
+                        var imgmodel1 = new VideoImageModel();
+                        imgmodel1.url = hostname12.TrimEnd('/') + (String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? contentVideo.ContentFilePath1 : contentVideo.ContentFilePath1);
+                        imgmodel1.Type = String.IsNullOrEmpty(contentVideo.ContentFilePath1) ? "video" : "image";
+                        imgmodel1.FileName = (imgmodel1.url);
+
+                        content2.ContentId = contentVideo.ContentId;
+                        content2.FileName = contentVideo.ContentFileName1;
+                        content2.FilePath = hostname12 + contentVideo.ContentFilePath1;
+                        content2.Title = contentVideo.Title;
+                        content2.Description = contentVideo.Description;
+                        content2.Position = Helper.SecondHalfContentPostion;
+                        content2.CategoryName = contentVideo.Category.Name;
+                        content2.Thumbnail = ThumbnailPath(imgmodel1.url);
+                        contentList.Add(content2);
+                    }
+                    foreach (var advcontent in advertiseContent)
+                    {
+                        var model = new ContentMobileModel();
+                        var hostname123 = GetHostName(advcontent.ProductionFlag);
+
+                        var imgmodel2 = new VideoImageModel();
+                        imgmodel2.url = hostname123.TrimEnd('/') + (String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? advcontent.AdvertiseFilePath : advcontent.AdvertiseFilePath);
+                        imgmodel2.Type = String.IsNullOrEmpty(advcontent.AdvertiseFilePath) ? "video" : "image";
+                        imgmodel2.FileName = (imgmodel2.url);
+
+                        model.AdvertiseContentId = advcontent.AdvertiseContentId;
+                        model.FileName = advcontent.AdvertiseFileName;
+                        model.FilePath = hostname123 + advcontent.AdvertiseFilePath;
+                        model.Title = advcontent.Title;
+                        model.Thumbnail = imgmodel2.url;
+                        model.ContentId = advcontent.ContentId;
+                        model.Position = advcontent.Position;
+                        contentList.Add(model);
+                    }
+                    var hostname = GetHostName(contentVideo.ProductionFlag);
+
+                    topModel.contentMobileModels = contentList.OrderBy(x => x.Position).ToList();
+                    topModel.ContentId = contentVideo.ContentId;
+                    topModel.Title = contentVideo.Title;
+                    topModel.Description = contentVideo.Description;
+                    topModel.Thumbnail = hostname + contentVideo.Thumbnail1;//ThumbnailPath(imgmodel.url);
+                    topModel.CategoryId = contentVideo.CategoryId;
+                    topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
+                    topModel.ContentTypeId = contentVideo.ContentTypeId;
+                    topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
+                    topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+
+                    if (userIsLoggedIn == true)
+                    {
+                        var commentList = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
+                        var commentData = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                        var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                        topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
+                    }
+                    // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
+                    topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                    topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                    topModel.CreatedDate = contentVideo.CreatedDate;
+
+                    topList.Add(topModel);
                 }
+
+            }
             var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
             var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
                    .Select(g => new
                    {
                        Category = g.Key,
-                       Contents = g.ToList() 
+                       Contents = g.ToList()
                    }).ToList();
 
             var indexedContent = new List<MobileContentData>();
 
             foreach (var group in groupedContent)
             {
-                int index = 0; 
+                int index = 0;
                 foreach (var content in group.Contents)
                 {
-                    content.AutoIndex = index; 
+                    content.AutoIndex = index;
                     indexedContent.Add(content);
                     index++;
                 }
@@ -1534,7 +1517,7 @@ namespace IM10.BAL.Implementaion
                                            content.CategoryId,
                                            content.Category.Name,
                                            content.Category.DisplayOrder,
-                                          
+
                                        }).ToList();
             var categoryList = categoryEnitityList.GroupBy(x => new { x.ContentId, x.CategoryId, x.Name, x.DisplayOrder }).Select(x => new { ContentId = x.Key.ContentId, CategoryId = x.Key.CategoryId, Name = x.Key.Name, DisplayOrder = x.Key.DisplayOrder, count = x.Count() }).ToList();
             if (categoryEnitityList.Count == 0)
@@ -1546,7 +1529,7 @@ namespace IM10.BAL.Implementaion
             var distinctCategoryid = categoryList.DistinctBy(x => x.CategoryId).ToList();
             foreach (var item in distinctCategoryid)
             {
-               
+
                 var contentEntity = categoryEnitityList.Where(x => x.CategoryId == item.CategoryId).ToList();
                 foreach (var item1 in contentEntity)
                 {
@@ -1573,17 +1556,14 @@ namespace IM10.BAL.Implementaion
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                         articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                        var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                        var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                         if (userIsLoggedIn == true)
                         {
                             var commentList = context.Comments.Where(x => x.ContentId == item1.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                            var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                            articleModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
-                        }
-                        else
-                        {
-                            articleModel.CommentCount = publicEntity;
+                            var commentData = context.Comments.Where(x => x.ContentId == item1.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                            var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                            articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                         }
                         //articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId).Select(x => x.CommentId).Count();
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
@@ -1698,17 +1678,23 @@ namespace IM10.BAL.Implementaion
         public CommentListData GetMobileCommentByContentId(long contentId, long UserId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
+
+            bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == UserId && z.IsDeleted == false)
+                                .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
             List<ContentCommentModelData> commentModelList = new List<ContentCommentModelData>();
             List<ContentCommentModel> ContentcommentList = new List<ContentCommentModel>();
             CommentListData commentListData = new CommentListData();
             commentListData.commentCount = 0;
             var PubliccommentEntity = (from comment in context.Comments
                                        join content in context.ContentDetails on comment.ContentId equals content.ContentId
-                                       join user in context.UserMasters on comment.UserId equals user.UserId where user.IsDeleted==false
+                                       join user in context.UserMasters on comment.UserId equals user.UserId
+                                       where user.IsDeleted == false
                                        join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
-                                       join player in context.PlayerDetails on content.PlayerId equals player.PlayerId where player.IsDeleted==false
+                                       join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                       where player.IsDeleted == false
                                        where comment.ContentId == contentId && comment.IsDeleted == false
-                                       && comment.IsPublic == true 
+                                       && comment.IsPublic == true
                                        orderby comment.CreatedDate descending
                                        select new ContentCommentModel
                                        {
@@ -1736,9 +1722,11 @@ namespace IM10.BAL.Implementaion
 
             var PrivatecommentEntity = (from comment in context.Comments
                                         join content in context.ContentDetails on comment.ContentId equals content.ContentId
-                                        join user in context.UserMasters on comment.UserId equals user.UserId where user.IsDeleted==false
+                                        join user in context.UserMasters on comment.UserId equals user.UserId
+                                        where user.IsDeleted == false
                                         join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
-                                        join player in context.PlayerDetails on content.PlayerId equals player.PlayerId where player.IsDeleted==false
+                                        join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                        where player.IsDeleted == false
                                         where comment.ContentId == contentId && comment.IsDeleted == false
                                         && comment.IsPublic == false && comment.UserId == UserId
                                         orderby comment.CreatedDate descending
@@ -1779,41 +1767,86 @@ namespace IM10.BAL.Implementaion
 
             foreach (var item in ContentcommentList)
             {
-
                 ContentCommentModelData modelData = new ContentCommentModelData();
                 if (item.CommentId != null && item.ParentCommentId == null)
                 {
                     modelData.CommentId = item.CommentId;
                     List<ContentCommentModel> commentList = new List<ContentCommentModel>();
-                    var model = new ContentCommentModel();
-                    model.CommentId = item.CommentId;
-                    model.ContentId = item.ContentId;
-                    model.UserId = item.UserId;
-                    model.Comment1 = item.Comment1;
-                    model.ParentCommentId = item.ParentCommentId;
-                    model.DeviceId = item.DeviceId;
-                    model.Location = item.Location;
-                    model.Liked = item.Liked;
-                    model.Shared = item.Shared;
-                    model.IsPublic = item.IsPublic;
-                    model.EmailId = item.EmailId;
-                    model.CreatedDate = item.CreatedDate;
-                    model.CreatedBy = item.CreatedBy;
-                    model.FirstName = item.FirstName;
-                    model.LastName = item.LastName;
-                    model.FullName = item.FirstName + " " + item.LastName;
-                    model.ContentTypeId = item.ContentTypeId;
-                    model.ContentTypeName = item.ContentTypeName;
-                    model.UpdatedBy = item.UpdatedBy;
-                    model.UpdatedDate = item.UpdatedDate;
+                    var model = new ContentCommentModel
+                    {
+                        CommentId = item.CommentId,
+                        ContentId = item.ContentId,
+                        UserId = item.UserId,
+                        Comment1 = item.Comment1,
+                        ParentCommentId = item.ParentCommentId,
+                        DeviceId = item.DeviceId,
+                        Location = item.Location,
+                        Liked = item.Liked,
+                        Shared = item.Shared,
+                        IsPublic = item.IsPublic,
+                        EmailId = item.EmailId,
+                        CreatedDate = item.CreatedDate,
+                        CreatedBy = item.CreatedBy,
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        FullName = item.FirstName + " " + item.LastName,
+                        ContentTypeId = item.ContentTypeId,
+                        ContentTypeName = item.ContentTypeName,
+                        UpdatedBy = item.UpdatedBy,
+                        UpdatedDate = item.UpdatedDate
+                    };
                     commentList.Add(model);
-                    var commentreplyEntity = (from comment in context.Comments
+
+                    List<ContentCommentModel> filteredReplies = new List<ContentCommentModel>();
+
+                    // Fetch Public Replies
+                    var publicReplies = (from comment in context.Comments
+                                         join content in context.ContentDetails on comment.ContentId equals content.ContentId
+                                         join user in context.UserMasters on comment.UserId equals user.UserId
+                                         where user.IsDeleted == false
+                                         join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
+                                         join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                         where player.IsDeleted == false
+                                         where comment.ContentId == contentId && comment.IsDeleted == false
+                                         && comment.ParentCommentId == item.CommentId && comment.IsPublic == true
+                                         select new ContentCommentModel
+                                         {
+                                             CommentId = comment.CommentId,
+                                             ContentId = comment.ContentId,
+                                             UserId = comment.UserId,
+                                             EmailId = user.EmailId,
+                                             FirstName = user.FirstName,
+                                             ReplyedAdminName = "IM" + player.FirstName,
+                                             LastName = user.LastName,
+                                             FullName = user.FirstName + " " + user.LastName,
+                                             DeviceId = comment.DeviceId,
+                                             Location = comment.Location,
+                                             CommentedUserId = model.UserId,
+                                             Liked = comment.Liked,
+                                             Comment1 = comment.Comment1,
+                                             Shared = comment.Shared,
+                                             IsPublic = comment.IsPublic,
+                                             CreatedBy = comment.CreatedBy,
+                                             CreatedDate = comment.CreatedDate,
+                                             ParentCommentId = comment.ParentCommentId,
+                                             ContentTypeId = content.ContentTypeId,
+                                             ContentTypeName = contenttype.ContentName,
+                                             UpdatedDate = comment.UpdatedDate,
+                                             UpdatedBy = comment.UpdatedBy
+                                         }).ToList();
+
+                    // Fetch Private Replies
+                    if (item.UserId == UserId && userIsLoggedIn)
+                    {
+                        var privateReplies = (from comment in context.Comments
                                               join content in context.ContentDetails on comment.ContentId equals content.ContentId
-                                              join user in context.UserMasters on comment.UserId equals user.UserId where user.IsDeleted==false
+                                              join user in context.UserMasters on comment.UserId equals user.UserId
+                                              where user.IsDeleted == false
                                               join contenttype in context.ContentTypes on comment.ContentTypeId equals contenttype.ContentTypeId
-                                              join player in context.PlayerDetails on content.PlayerId equals player.PlayerId where player.IsDeleted==false
+                                              join player in context.PlayerDetails on content.PlayerId equals player.PlayerId
+                                              where player.IsDeleted == false
                                               where comment.ContentId == contentId && comment.IsDeleted == false
-                                              && comment.ParentCommentId == item.CommentId
+                                              && comment.ParentCommentId == item.CommentId && comment.IsPublic == false
                                               select new ContentCommentModel
                                               {
                                                   CommentId = comment.CommentId,
@@ -1837,39 +1870,45 @@ namespace IM10.BAL.Implementaion
                                                   ContentTypeId = content.ContentTypeId,
                                                   ContentTypeName = contenttype.ContentName,
                                                   UpdatedDate = comment.UpdatedDate,
-                                                  UpdatedBy = comment.UpdatedBy,
+                                                  UpdatedBy = comment.UpdatedBy
                                               }).ToList();
-                    // var commentreplyEntity = context.Comments.FirstOrDefault(x => x.ParentCommentId == item.CommentId);
-                    if (commentreplyEntity.Count != 0)
+                                   filteredReplies.AddRange(privateReplies);                       
+                    }
+
+                    filteredReplies.AddRange(publicReplies);
+                    if (filteredReplies.Count != 0)
                     {
-                        foreach (var item1 in commentreplyEntity)
+                        foreach (var item1 in filteredReplies)
                         {
-                            var model1 = new ContentCommentModel();
-                            model1.CommentId = item1.CommentId;
-                            model1.ContentId = item1.ContentId;
-                            model1.UserId = item1.UserId;
-                            model1.Comment1 = item1.Comment1;
-                            model1.ParentCommentId = item1.ParentCommentId;
-                            model1.DeviceId = item1.DeviceId;
-                            model1.Location = item1.Location;
-                            model1.Liked = item1.Liked;
-                            model1.ReplyedAdminName = item1.ReplyedAdminName;
-                            model1.CommentedUserId = item1.CommentedUserId;
-                            model1.Shared = item1.Shared;
-                            model1.IsPublic = item1.IsPublic;
-                            model1.EmailId = item1.EmailId;
-                            model1.CreatedDate = item1.CreatedDate;
-                            model1.CreatedBy = item1.CreatedBy;
-                            model1.FirstName = item1.FirstName;
-                            model1.LastName = item1.LastName;
-                            model1.FullName = item1.FirstName + " " + item1.LastName;
-                            model1.ContentTypeId = item1.ContentTypeId;
-                            model1.ContentTypeName = item1.ContentTypeName;
-                            model1.UpdatedBy = item1.UpdatedBy;
-                            model1.UpdatedDate = item1.UpdatedDate;
+                            var model1 = new ContentCommentModel
+                            {
+                                CommentId = item1.CommentId,
+                                ContentId = item1.ContentId,
+                                UserId = item1.UserId,
+                                Comment1 = item1.Comment1,
+                                ParentCommentId = item1.ParentCommentId,
+                                DeviceId = item1.DeviceId,
+                                Location = item1.Location,
+                                Liked = item1.Liked,
+                                ReplyedAdminName = item1.ReplyedAdminName,
+                                CommentedUserId = item1.CommentedUserId,
+                                Shared = item1.Shared,
+                                IsPublic = item1.IsPublic,
+                                EmailId = item1.EmailId,
+                                CreatedDate = item1.CreatedDate,
+                                CreatedBy = item1.CreatedBy,
+                                FirstName = item1.FirstName,
+                                LastName = item1.LastName,
+                                FullName = item1.FirstName + " " + item1.LastName,
+                                ContentTypeId = item1.ContentTypeId,
+                                ContentTypeName = item1.ContentTypeName,
+                                UpdatedBy = item1.UpdatedBy,
+                                UpdatedDate = item1.UpdatedDate
+                            };
                             commentList.Add(model1);
                         }
                     }
+
                     modelData.contentCommentModels = commentList;
                     modelData.CommentCount = commentList.Count();
                     commentListData.commentCount = modelData.CommentCount + commentListData.commentCount;
@@ -1881,6 +1920,7 @@ namespace IM10.BAL.Implementaion
             commentListData.lstdatamodel = commentModelList1;
             return commentListData;
         }
+
 
 
 
@@ -2280,19 +2320,16 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
                 topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                 topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                 if (userIsLoggedIn == true)
                 {
                     var commentList = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                    var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                    topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                    var commentData = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                    var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                    topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                 }
-                else
-                {
-                    topModel.CommentCount = publicEntity;
-                }
-               // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
+                // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
@@ -2358,17 +2395,14 @@ namespace IM10.BAL.Implementaion
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                     articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
                     {
                         var commentList = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                        var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                        articleModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
-                    }
-                    else
-                    {
-                        articleModel.CommentCount = publicEntity;
+                        var commentData = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                        var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                        articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
                     //articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
@@ -2531,17 +2565,14 @@ namespace IM10.BAL.Implementaion
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
                 topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                 topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                 if (userIsLoggedIn == true)
                 {
                     var commentList = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                    var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                    topModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
-                }
-                else
-                {
-                    topModel.CommentCount = publicEntity;
+                    var commentData = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                    var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                    topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                 }
                 //topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
@@ -2607,19 +2638,16 @@ namespace IM10.BAL.Implementaion
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
                     articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
                     articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+                    var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
                     {
                         var commentList = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
-                        var replyEntity = context.Comments.Where(x => commentList.Contains((long)x.ParentCommentId) && x.IsDeleted == false).ToList();
-                        articleModel.CommentCount = commentList.Count() + replyEntity.Count() + publicEntity;
+                        var commentData = context.Comments.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                        var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                        articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
-                    else
-                    {
-                        articleModel.CommentCount = publicEntity;
-                    }
-                   // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
+                    // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     articleModel.CreatedDate = contentArticle.CreatedDate;

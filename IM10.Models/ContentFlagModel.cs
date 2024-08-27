@@ -19,6 +19,8 @@ namespace IM10.Models
         public bool? Favourite { get; set; }
         public int? ContentSequence { get; set; }
         public int ContentTypeId { get; set; }
+        public string? Description { get; set; }
+
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
@@ -26,6 +28,7 @@ namespace IM10.Models
         public int? CommentCount { get; set; }
         public int? ViewNo { get; set; }
         public int? LikedNo { get; set; }
+
         public int? FavouriteNo { get; set; }    
         public List<ContentMobileModel> contentMobileModels { get; set; }
 

@@ -1040,6 +1040,9 @@ namespace IM10.BAL.Implementaion
         public ContentFlagModel GetMobileArticleView(long contentId, long userId, ref ErrorResponseModel errorResponseModel)
         {
             errorResponseModel = new ErrorResponseModel();
+            bool userIsLoggedIn = context.UserMasters.Where(z => z.UserId == userId && z.IsDeleted == false)
+                                .Select(z => z.IsLogin).FirstOrDefault() ?? false;
+
             string message = "";
             var articleEntity = (from content in context.ContentDetails
                                  where content.ContentId == contentId && content.IsDeleted == false && content.Approved == true && content.ContentTypeId == ContentTypeHelper.ArticleContentTypeId
@@ -1070,7 +1073,16 @@ namespace IM10.BAL.Implementaion
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
             int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
             int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
-            int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
+            var publicEntity = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+            int CommentCount = 0;
+            if (userIsLoggedIn == true)
+            {
+                var commentList = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.UserId == userId && x.IsDeleted == false && x.IsPublic == false).Select(x => x.CommentId).ToList();
+                var commentData = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.CommentId).ToList();
+                var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
+                CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
+            }
+            //int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
             bool Like = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
             bool Favourite1 = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
             imgmodel.FileName = imgmodel.url;

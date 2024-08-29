@@ -207,6 +207,10 @@ namespace IM10.BAL.Implementaion
                     var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                     topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                 }
+                else
+                {
+                    topModel.CommentCount = publicEntity.Count();
+                }
 
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -395,6 +399,11 @@ namespace IM10.BAL.Implementaion
                             var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                             topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                         }
+                        else
+                        {
+                            topModel.CommentCount = publicEntity.Count();
+                        }
+
                         topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         topModel.CreatedDate = contentVideo.CreatedDate;
@@ -593,7 +602,11 @@ namespace IM10.BAL.Implementaion
                         var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic==false && x.IsDeleted == false).ToList();
                         topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
-                    
+                    else
+                    {
+                        topModel.CommentCount = publicEntity.Count();
+                    }
+
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
@@ -770,6 +783,11 @@ namespace IM10.BAL.Implementaion
                 var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                 CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
             }
+            else
+            {
+               CommentCount = publicEntity.Count();
+            }
+
             var hostname = GetHostName(articleEntity.ProductionFlag);
 
             return new ContentFlagModel
@@ -878,6 +896,11 @@ namespace IM10.BAL.Implementaion
                             var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                             articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                         }
+                        else
+                        {
+                            articleModel.CommentCount = publicEntity.Count();
+                        }
+
                         // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -992,6 +1015,11 @@ namespace IM10.BAL.Implementaion
                         var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                         articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
+                    else
+                    {
+                        articleModel.CommentCount = publicEntity.Count();
+                    }
+
                     // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsDeleted==false).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -1082,6 +1110,11 @@ namespace IM10.BAL.Implementaion
                 var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                 CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
             }
+            else
+            {
+                CommentCount = publicEntity.Count();
+            }
+
             //int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
             bool Like = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
             bool Favourite1 = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -1486,6 +1519,11 @@ namespace IM10.BAL.Implementaion
                         var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                         topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
+                    else
+                    {
+                        topModel.CommentCount = publicEntity.Count();
+                    }
+
                     // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -1577,6 +1615,11 @@ namespace IM10.BAL.Implementaion
                             var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                             articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                         }
+                        else
+                        {
+                            articleModel.CommentCount = publicEntity.Count();
+                        }
+
                         //articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId).Select(x => x.CommentId).Count();
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -2341,6 +2384,11 @@ namespace IM10.BAL.Implementaion
                     var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                     topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                 }
+                else
+                {
+                    topModel.CommentCount = publicEntity.Count();
+                }
+
                 // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -2416,6 +2464,11 @@ namespace IM10.BAL.Implementaion
                         var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                         articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
+                    else
+                    {
+                        articleModel.CommentCount = publicEntity.Count();
+                    }
+
                     //articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -2586,6 +2639,11 @@ namespace IM10.BAL.Implementaion
                     var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                     topModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                 }
+                else
+                {
+                    topModel.CommentCount = publicEntity.Count();
+                }
+
                 //topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
@@ -2659,6 +2717,11 @@ namespace IM10.BAL.Implementaion
                         var replyData = context.Comments.Where(x => commentData.Contains((long)x.ParentCommentId) && x.IsPublic == false && x.IsDeleted == false).ToList();
                         articleModel.CommentCount = commentList.Count() + replyData.Count() + publicEntity.Count();
                     }
+                    else
+                    {
+                        articleModel.CommentCount = publicEntity.Count();
+                    }
+
                     // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;

@@ -36,11 +36,10 @@ namespace IM10.BAL.Implementaion
         
         /// <summary>
         /// Send SMS on mobile number
-        /// </summary>
         /// <param name="phonenumber"></param>
         /// <param name="userName"></param>
         /// <param name="otp"></param>
-        /// <returns></returns>
+        /// </summary>
         
         public Task SendSmsAsync(string phonenumber, string userName, string otp)
         {
@@ -52,16 +51,13 @@ namespace IM10.BAL.Implementaion
                     // MeshBA's sms gateway                   
                     string url = "https://sms6.rmlconnect.net:8443/bulksms/messagesubmit?username=SerumIndia&password=y92E-%5BlP&dlr=1&destination="
                                     + phonenumber
-                                    + "&source=MESHBA&message=Dear User,"
+                                    + "&source=MESHBA&message=Dear User, "
                                     + otp + " "
-                                    + " is the OTP for your login. In case you have not requested this, please contact us.-MeshBA&entityid=1701159146303386050&tempid=1707171283812216615";
-
-
-                
-                                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                                    + "is the OTP for your login. In case you have not requested this, please contact us. - MeshBA&entityid=1701159146303386050&tempid=1707171283812216615";
+                    
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                     string result = web.DownloadString(url);
-                    Console.WriteLine(result);
-                  
+                    Console.WriteLine(result);                 
                 }
                 catch (Exception ex)
                 {

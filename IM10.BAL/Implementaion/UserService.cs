@@ -230,6 +230,33 @@ namespace IM10.BAL.Implementaion
                     errorResponseModel.Message = "User already deleted.";
                     return null;
                 }
+                var commentUser = context.Comments.Where(z=>z.UserId==userId).ToList();
+                if (commentUser.Count > 0)
+                {
+                    foreach(var comment in commentUser)
+                    {
+                        var existingreply = context.Comments.Where(z => z.ParentCommentId == comment.CommentId).ToList();
+                        if (existingreply.Count > 0)
+                        {
+                            foreach (var commentreply in existingreply)
+                            {
+                                commentreply.IsDeleted = true;
+                                context.SaveChanges();
+                            }
+                        }                       
+                        comment.IsDeleted = true;
+                        context.SaveChanges();
+                    }                  
+                }
+                var likeEntity = context.ContentFlags.Where(z => z.UserId == userEntity.UserId).ToList();
+                if (likeEntity.Count > 0)
+                {
+                    foreach (var like in likeEntity)
+                    {
+                        like.IsDeleted = true;
+                        context.SaveChanges();
+                    }
+                }
                 userEntity.IsDeleted = true;
                 context.SaveChanges();
                 Message = GlobalConstants.UserDeleteMessage;

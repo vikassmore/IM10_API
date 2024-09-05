@@ -22,7 +22,6 @@ namespace IM10.BAL.Implementaion
 
     public interface INotificationService
     {
-        Task<string> GetAccessToken11();
         Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, int contentTypeId, string thumbnail, int categoryId);
         Task<ResponseModel> SendCommentNotification(string DeviceId, long contentId, long commentId, string message, int contentTypeId, int categoryId, bool IsPublic);
     }
@@ -47,7 +46,7 @@ namespace IM10.BAL.Implementaion
             try
             {
                 string accessToken = await GetAccessTokenWithTimeout();
-                var projectid = "im10-f32bd";
+                var projectid = "";
                 var url = $"https://fcm.googleapis.com/v1/projects/{projectid}/messages:send";
 
                 var data = new
@@ -98,21 +97,17 @@ namespace IM10.BAL.Implementaion
                         response.Message = "Error sending notification: " + responseString;
 
                         Console.WriteLine(responseString);
-                        LogErrorDetails(DeviceId, accessToken, responseString, false, json);
-
-                        
+                        LogErrorDetails(DeviceId, accessToken, responseString, false, json);                        
                     }
                 }
             }
 
             catch (Exception ex)
-            {
-                
+            {               
                 Console.WriteLine($"Exception: {ex.Message}");
                 response.IsSuccess = 0;
                 response.Message = ex.Message;
                 return response;
-
             }
             Console.WriteLine(response);
             return response;
@@ -129,7 +124,7 @@ namespace IM10.BAL.Implementaion
             {
                 string accessToken = await GetAccessTokenWithTimeout();
 
-                var projectid = "im10-f32bd";
+                var projectid = "";
                 var url = $"https://fcm.googleapis.com/v1/projects/{projectid}/messages:send";
 
                 var data = new
@@ -149,8 +144,6 @@ namespace IM10.BAL.Implementaion
                         },
                     }
                 };
-
-
                 using (var clientHandler = new System.Net.Http.HttpClientHandler())
                 {
                     var client = new System.Net.Http.HttpClient(clientHandler);
@@ -168,13 +161,11 @@ namespace IM10.BAL.Implementaion
 
                     if (result.IsSuccessStatusCode)
                     {
-
                         dynamic jsonResponse = JsonConvert.DeserializeObject(responseString);
                         Console.WriteLine(responseString + json);
                         response.IsSuccess = 1;
                         response.Message = jsonResponse.name;
-                        LogErrorDetails(DeviceId, accessToken, responseString, false, json);
-                        
+                        LogErrorDetails(DeviceId, accessToken, responseString, false, json);                        
                     }
                     else
                     {
@@ -199,11 +190,8 @@ namespace IM10.BAL.Implementaion
 
         public async Task<string> GetAccessToken()
         {
-
             var folderName = Path.Combine("Resources", "JsonFolder");
             var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), folderName + "\\firebase.json");
-            LogErrorDetails("", "", " creating credentialPath: " + credentialPath, false);
-
 
             if (string.IsNullOrEmpty(credentialPath))
             {               
@@ -217,14 +205,8 @@ namespace IM10.BAL.Implementaion
                 using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
                 {                                      
                     string[] scopes = new[] { "https://www.googleapis.com/auth/firebase.messaging" };
-                    LogErrorDetails("", "", "open scopes " + scopes, false);
-
                     GoogleCredential googleCredential = GoogleCredential.FromStream(stream).CreateScoped(scopes);
-                    LogErrorDetails("", "", "open googleCredential " + googleCredential, false);
-
                     bearertoken = await googleCredential.UnderlyingCredential.GetAccessTokenForRequestAsync();                
-                    LogErrorDetails("", "", "generate accesstoken " +  bearertoken, false);
-
                     return bearertoken;
                 }
             }
@@ -260,6 +242,7 @@ namespace IM10.BAL.Implementaion
                 throw;
             }
         }
+
 
         private void LogErrorDetails(string deviceId, string accessToken, string errorMessage, bool isException, string dataPayload = null)
         {
@@ -329,35 +312,6 @@ namespace IM10.BAL.Implementaion
         }
 
 
-        public async Task<string> GetAccessToken11()
-        {
-            var folder = _hostingEnvironment.WebRootPath;
-            var folderName = Path.Combine("Resources", "JsonFolder");
-            var credentialPath = Path.Combine(Directory.GetCurrentDirectory(), folderName + "\\firebase.json");
-
-            if (string.IsNullOrEmpty(credentialPath))
-            {
-                LogErrorDetails("", "", "Error creating credential: " + "something went wrong", true);
-                throw new InvalidOperationException("Environment variable GOOGLE_APPLICATION_CREDENTIALS is not set.");
-            }
-
-            try
-            {
-                var bearertoken = "";
-                using (var stream = new FileStream(credentialPath, FileMode.Open, FileAccess.Read))
-                {
-                    string[] scopes = new[] { "https://www.googleapis.com/auth/firebase.messaging" };
-
-                    GoogleCredential googleCredential = GoogleCredential.FromStream(stream).CreateScoped(scopes);                   
-                    bearertoken = await googleCredential.UnderlyingCredential.GetAccessTokenForRequestAsync().ConfigureAwait(false);                  
-                    return bearertoken;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }
 

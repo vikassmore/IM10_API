@@ -196,8 +196,8 @@ namespace IM10.BAL.Implementaion
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
-                topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.IsDeleted==false).Select(x => x.MostLiked).Count();
+                topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                 var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                 if (userIsLoggedIn == true)
@@ -212,8 +212,8 @@ namespace IM10.BAL.Implementaion
                     topModel.CommentCount = publicEntity.Count();
                 }
 
-                topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
                 topList.Add(topModel);
 
@@ -387,8 +387,8 @@ namespace IM10.BAL.Implementaion
                         topModel.CategoryId = contentVideo.Category.CategoryId;
                         topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         topModel.ContentTypeId = contentVideo.ContentTypeId;
-                        topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                        topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                        topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                        topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                         // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
                         var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
@@ -404,8 +404,8 @@ namespace IM10.BAL.Implementaion
                             topModel.CommentCount = publicEntity.Count();
                         }
 
-                        topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                        topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                        topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                        topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         topModel.CreatedDate = contentVideo.CreatedDate;
                         modelList.Add(topModel);
                         modelList = modelList.OrderByDescending(x => x.CreatedDate).ToList();
@@ -591,8 +591,8 @@ namespace IM10.BAL.Implementaion
                     topModel.Thumbnail = hostname + contentVideo.Thumbnail1; //ThumbnailPath(imgmodel.url);
                     topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
-                    topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                    topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                    topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                    topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                     var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
@@ -607,8 +607,8 @@ namespace IM10.BAL.Implementaion
                         topModel.CommentCount = publicEntity.Count();
                     }
 
-                    topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                    topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                    topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                    topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
                     topList.Add(topModel);
                 }
@@ -770,8 +770,8 @@ namespace IM10.BAL.Implementaion
                 contentMobileModels.Add(model);
             }
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
-            int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-            int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+            int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+            int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
             int CommentCount=0;
 
             var publicEntity = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
@@ -885,8 +885,8 @@ namespace IM10.BAL.Implementaion
                         articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                         articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
-                        articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                        articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                        articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                        articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                         var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                         if (userIsLoggedIn == true)
@@ -902,8 +902,8 @@ namespace IM10.BAL.Implementaion
                         }
 
                         // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId.ContentId).Select(x => x.CommentId).Count();
-                        articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                        articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                        articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                        articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         articleModel.CreatedDate = contentArticle.CreatedDate;
                         categoryArticleList.Add(articleModel);
                     }
@@ -1004,8 +1004,8 @@ namespace IM10.BAL.Implementaion
                     articleModel.FilePath = imgmodel2.FileName;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
-                    articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                    articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                    articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                    articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                     var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
@@ -1021,8 +1021,8 @@ namespace IM10.BAL.Implementaion
                     }
 
                     // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsDeleted==false).Select(x => x.CommentId).Count();
-                    articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                    articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                    articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                    articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     articleModel.CreatedDate = contentArticle.CreatedDate;
                     categoryArticleList.Add(articleModel);
                 }
@@ -1099,8 +1099,8 @@ namespace IM10.BAL.Implementaion
             imgmodel.Type = String.IsNullOrEmpty(articleEntity.ContentFilePath) ? "video" : "image";
 
             int ViewNo = context.ContentViews.Where(x => x.ContentId == articleEntity.ContentId && x.Trending == true).Select(x => x.Trending).Count();
-            int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-            int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+            int Liked = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+            int Favourite = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
             var publicEntity = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
             int CommentCount = 0;
             if (userIsLoggedIn == true)
@@ -1116,8 +1116,8 @@ namespace IM10.BAL.Implementaion
             }
 
             //int CommentCount = context.Comments.Where(x => x.ContentId == articleEntity.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).Count();
-            bool Like = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-            bool Favourite1 = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+            bool Like = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+            bool Favourite1 = context.ContentFlags.Where(x => x.ContentId == articleEntity.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
             imgmodel.FileName = imgmodel.url;
 
             return new ContentFlagModel
@@ -1508,8 +1508,8 @@ namespace IM10.BAL.Implementaion
                     topModel.CategoryId = contentVideo.CategoryId;
                     topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
-                    topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                    topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                    topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                    topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                     var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
@@ -1525,8 +1525,8 @@ namespace IM10.BAL.Implementaion
                     }
 
                     // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId).Select(x => x.CommentId).Count();
-                    topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                    topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                    topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                    topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
 
                     topList.Add(topModel);
@@ -1604,8 +1604,8 @@ namespace IM10.BAL.Implementaion
                         articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                         articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item1.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
-                        articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                        articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                        articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                        articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                         var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                         if (userIsLoggedIn == true)
@@ -1621,8 +1621,8 @@ namespace IM10.BAL.Implementaion
                         }
 
                         //articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item1.ContentId).Select(x => x.CommentId).Count();
-                        articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                        articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                        articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                        articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         articleModel.CreatedDate = contentArticle.CreatedDate;
                         categoryArticleList.Add(articleModel);
                     }
@@ -2373,8 +2373,8 @@ namespace IM10.BAL.Implementaion
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
-                topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                 var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                 if (userIsLoggedIn == true)
@@ -2390,8 +2390,8 @@ namespace IM10.BAL.Implementaion
                 }
 
                 // topModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
-                topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
                 topList.Add(topModel);
             }
@@ -2453,8 +2453,8 @@ namespace IM10.BAL.Implementaion
                     articleModel.FilePath = imgmodel2.FileName;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
-                    articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                    articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                    articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                    articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                     var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
@@ -2470,8 +2470,8 @@ namespace IM10.BAL.Implementaion
                     }
 
                     //articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId).Select(x => x.CommentId).Count();
-                    articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
-                    articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
+                    articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
+                    articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     articleModel.CreatedDate = contentArticle.CreatedDate;
                     categoryArticleList.Add(articleModel);
                 }
@@ -2628,8 +2628,8 @@ namespace IM10.BAL.Implementaion
                 topModel.CategoryId = contentVideo.CategoryId;
                 topModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                 topModel.ContentTypeId = contentVideo.ContentTypeId;
-                topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                 var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                 if (userIsLoggedIn == true)
@@ -2706,8 +2706,8 @@ namespace IM10.BAL.Implementaion
                     articleModel.Thumbnail = hostname1 + contentArticle.Thumbnail1;
                     articleModel.ViewNo = context.ContentViews.Where(x => x.ContentId == item.ContentId && x.Trending == true).Select(x => x.Trending).Count();
                     articleModel.ContentTypeId = contentArticle.ContentTypeId;
-                    articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true).Select(x => x.MostLiked).Count();
-                    articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true).Select(x => x.Favourite).Count();
+                    articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
+                    articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
                     var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)

@@ -122,6 +122,8 @@ namespace IM10.BAL.Implementaion
                 userEntity.CreatedDate = DateTime.Now;
                 userEntity.IsActive = true;
                 userEntity.IsDeleted = false;
+                userEntity.CreatedBy = 1;
+                userEntity.UpdatedBy = 1;
                 context.UserMasters.Add(userEntity);
                 context.SaveChanges();
 
@@ -427,23 +429,50 @@ namespace IM10.BAL.Implementaion
             string message = "";
             try
             {
-                var userEntitiy = context.UserMasters.FirstOrDefault(z => z.UserId == userId && z.IsDeleted==false);
-                if (userEntitiy == null)
+                var userEntity = context.UserMasters.FirstOrDefault(z => z.UserId == userId && z.IsDeleted==false);
+                if (userEntity == null)
                 {
                     message = "Record Not found";
                 }
-                if (userEntitiy != null)
+                if (userEntity != null)
                 {
-                    var deviceEntity = context.UserDeviceMappings.FirstOrDefault(z => z.DeviceToken == deviceToken && z.UserId == userEntitiy.UserId);
+                    var deviceEntity = context.UserDeviceMappings.FirstOrDefault(z => z.DeviceToken == deviceToken && z.UserId == userEntity.UserId);
                     if (deviceEntity != null)
                     {
                         deviceEntity.IsDeleted = true;
                         context.SaveChanges();
                     }
-                    userEntitiy.UserId = userId;
-                    userEntitiy.IsLogin = false;
-                    userEntitiy.IsActive = false;
-                    userEntitiy.IsDeleted = true;
+                    var commentUser = context.Comments.Where(z => z.UserId ==userEntity.UserId).ToList();
+                    if (commentUser.Count > 0)
+                    {
+                        foreach (var comment in commentUser)
+                        {
+                            var existingreply = context.Comments.Where(z => z.ParentCommentId == comment.CommentId).ToList();
+                            if (existingreply.Count > 0)
+                            {
+                                foreach (var commentreply in existingreply)
+                                {
+                                    commentreply.IsDeleted = true;
+                                    context.SaveChanges();
+                                }
+                            }
+                            comment.IsDeleted = true;
+                            context.SaveChanges();
+                        }
+                    }
+                    var likeEntity=context.ContentFlags.Where(z => z.UserId==userEntity.UserId).ToList();
+                    if (likeEntity.Count > 0)
+                    {
+                        foreach(var like in likeEntity)
+                        {
+                            like.IsDeleted = true;
+                            context.SaveChanges();
+                        }
+                    }
+                    userEntity.UserId = userId;
+                    userEntity.IsLogin = false;
+                    userEntity.IsActive = false;
+                    userEntity.IsDeleted = true;
                     context.SaveChanges();
                     message = GlobalConstants.DeleteMobileAccount;
                 }

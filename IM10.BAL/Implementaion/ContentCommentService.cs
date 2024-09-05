@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Twilio.TwiML.Messaging;
+using Twilio.TwiML.Voice;
 
 namespace IM10.BAL.Implementaion
 {
@@ -29,21 +30,27 @@ namespace IM10.BAL.Implementaion
         private readonly IUserAuditLogService _userAuditLogService;
         private readonly INotificationService _notificationService;
         private readonly IErrorAuditLogService _logService;
+        private readonly AppSettings _config;
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="context_"></param>
 
-        public ContentCommentService(IErrorAuditLogService auditLogService, IM10DbContext context_, IOptions<ConfigurationModel> hostName, INotificationService notificationService, IUserAuditLogService userAuditLogService)
+        public ContentCommentService(IErrorAuditLogService auditLogService, IOptions<AppSettings> config, IM10DbContext context_, IOptions<ConfigurationModel> hostName, INotificationService notificationService, IUserAuditLogService userAuditLogService)
         {
              context = context_;
              this._configuration = hostName.Value;
             _userAuditLogService = userAuditLogService;
             _notificationService = notificationService;
             _logService = auditLogService;
-        }
+            _config = config.Value;
 
+        }
+        private string GetHostName(bool? flag)
+        {
+            return (bool)flag ? _config.BunnyHostName : _configuration.HostName;
+        }
 
         /// <summary>
         /// Method to add content comment reply
@@ -59,17 +66,7 @@ namespace IM10.BAL.Implementaion
            {
                 try
                 {
-                    var commentEntity = context.Comments.Where(x => x.CommentId == model.CommentId).FirstOrDefault();
-                    var errorMessage = _logService.SaveErrorLogs(new LogEntry
-                    {
-                        LogType = "information",
-                        StackTrace = "data get successfully from commententity",
-                        AdditionalInformation = "data get successfully from commententity",
-                        CreatedDate = DateTime.Now,
-                        LogSource = "AddContentCommentReply",
-                        UserId = 0,
-                        LogMessage = "data get successfully from commententity"
-                    });
+                    var commentEntity = context.Comments.Where(x => x.CommentId == model.CommentId).FirstOrDefault();                    
                     var commentreply = new Comment();
                     commentreply.UserId = model.UserId;
                     commentreply.ContentId = commentEntity.ContentId;
@@ -242,6 +239,7 @@ namespace IM10.BAL.Implementaion
                                      join content in context.ContentTypes on
                                      comment.ContentTypeId equals content.ContentTypeId
                                      where comment.IsDeleted == false && comment.CommentId == commentId
+                                     && comment.IsDeleted==false
                                      select new
                                      {
                                        comment.CommentId,
@@ -312,6 +310,7 @@ namespace IM10.BAL.Implementaion
                                              Title = content.Title,
                                              ContentTypeId = content.ContentTypeId,
                                              ContentTypeName = contenttype.ContentName,
+                                             ProductionFlag=content.ProductionFlag
                                          }).ToList();
                     if (commentEntity.Count == 0)
                     {
@@ -323,10 +322,11 @@ namespace IM10.BAL.Implementaion
 
                     commentEntity.ForEach(item =>
                     {
+                        var hostname1 = GetHostName(item.ProductionFlag);
                         var imgmodel = new VideoImageModel();
-                        imgmodel.url = _configuration.HostName.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
+                        imgmodel.url = hostname1.TrimEnd('/') + (String.IsNullOrEmpty(item.ContentFilePath) ? item.ContentFilePath : item.ContentFilePath);
                         imgmodel.Type = String.IsNullOrEmpty(item.ContentFilePath) ? "video" : "image";
-                        imgmodel.thumbnail = ThumbnailPath(imgmodel.url);
+                        imgmodel.FileName = (imgmodel.url);
                         commentList.Add(new ContentCommentModel
                         {
                             CommentId = item.CommentId,
@@ -339,7 +339,7 @@ namespace IM10.BAL.Implementaion
                             IsPublic = item.IsPublic,
                             MobileNo = item.MobileNo,
                             Title = item.Title,
-                            Thumbnail1 = imgmodel.thumbnail,
+                            Thumbnail1 = imgmodel.FileName,
                             ContentFileName = item.ContentFileName,
                             ContentFilePath = item.ContentFilePath,
                             ContentTypeId = item.ContentTypeId,
@@ -447,28 +447,5 @@ namespace IM10.BAL.Implementaion
                 }
             }
         }
-
-
-        private string ThumbnailPath(string filePath)
-        {
-            byte[]? ms = null;
-            string extension = "";
-            if (!String.IsNullOrWhiteSpace(filePath))
-            {
-                extension = Path.GetExtension(filePath);
-                if (!String.IsNullOrWhiteSpace(extension))
-                {
-                    // filePath = filePath.Replace(extension, "*");
-                    //filePath = filePath.Replace("/Resources/ContentFile/");
-                    //ms = System.IO.File.ReadAllBytes(filePath);
-
-                    //var string1 = filePath;
-                    //filePath = string1.Replace(extension, ".jpeg");
-                }
-            }
-
-            return filePath;
-        }
-
     }
 }

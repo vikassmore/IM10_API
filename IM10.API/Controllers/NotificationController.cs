@@ -84,35 +84,5 @@ namespace IM10.API.Controllers
             }
         }
 
-
-        [HttpGet("GetAccessToken11")]
-        [ProducesResponseType(typeof(ResponseModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 401)]
-        [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetAccessToken11()
-        {
-            ErrorResponseModel errorResponseModel = null;
-            try
-            {
-                var detailModel = await service.GetAccessToken11();
-
-                if (detailModel != null)
-                {
-                    return Ok(detailModel);
-                }
-                else
-                {
-                    return ReturnErrorResponse(errorResponseModel);
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message + ex.InnerException + ex.StackTrace + ex.Source);
-            }
-        }
-
-
     }
 }

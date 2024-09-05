@@ -37,6 +37,7 @@ namespace IM10.Models
         public bool? Shared { get; set; }
 
         public bool? IsPublic { get; set; }
+        public bool? ProductionFlag { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 

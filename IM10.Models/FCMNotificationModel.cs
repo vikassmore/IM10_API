@@ -10,9 +10,12 @@ namespace IM10.Models
     {
         public long FcmnotificationId { get; set; }
         public string? DeviceToken { get; set; }
-        public long PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public long UserId { get; set; }
         public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+
     }
 
 

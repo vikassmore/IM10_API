@@ -231,9 +231,27 @@ namespace IM10.BAL.Implementaion
                         UpdatedDate = DateTime.Now,
                         IsDeleted = false
                     };
-                    context.UserDeviceMappings.Add(userDeviceMapping);
+                    context.UserDeviceMappings.Add(userDeviceMapping);                  
                 }
-
+                var fcmModel = context.Fcmnotifications.FirstOrDefault(f => f.DeviceToken == deviceToken);
+                if (fcmModel != null)
+                {
+                    fcmModel.UserId = User.UserId;
+                    fcmModel.UpdatedBy= (int?)User.UserId;
+                    fcmModel.UpdatedDate = DateTime.Now;
+                }
+                else
+                {
+                    // Create a new Fcmnotification record
+                    fcmModel = new Fcmnotification
+                    {
+                        UserId = User.UserId,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = (int?)User.UserId,
+                        UpdatedDate = DateTime.Now,
+                    };
+                    context.Fcmnotifications.Add(fcmModel);
+                }
                 context.SaveChanges();
                 var otpEntity = context.Otpautherizations.FirstOrDefault(x => x.Otp == otp && x.UserId == User.UserId && x.IsActive == true);
                 if (otpEntity != null)

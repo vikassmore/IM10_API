@@ -45,10 +45,10 @@ namespace IM10.API.Controllers
             try
             {
                 var errorMessage = new ErrorResponseModel();
-                var endorsmentModel = service.AddFCMNotificaion(model);
-                if (endorsmentModel != "")
+                var fcmModel = service.AddFCMNotificaion(model);
+                if (fcmModel != "")
                 {
-                    return Ok(endorsmentModel);
+                    return Ok(fcmModel);
                 }
                 return ReturnErrorResponse(errorMessage);
             }

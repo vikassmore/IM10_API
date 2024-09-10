@@ -16,16 +16,18 @@ namespace IM10.BAL.Implementaion
         IM10DbContext context;
         private readonly INotificationService _notificationService;
         private readonly IUserAuditLogService _userAuditLogService;
+        private readonly IEncryptionService _encryptionService;
 
         /// <summary>
         /// Creating constructor and injection dbContext
         /// </summary>
         /// <param name="_context"></param>
-        public FCMNotificationService(IM10DbContext _context, INotificationService notificationService, IUserAuditLogService userAuditLogService)
+        public FCMNotificationService(IM10DbContext _context, IEncryptionService encryptionService, INotificationService notificationService, IUserAuditLogService userAuditLogService)
         {
             context = _context;
             _notificationService = notificationService;
             _userAuditLogService = userAuditLogService;
+            _encryptionService= encryptionService;
         }
 
 
@@ -37,12 +39,19 @@ namespace IM10.BAL.Implementaion
         public string AddFCMNotificaion(FCMNotificationModel model)
         {
             string message = "";
+            var decryptResult = _encryptionService.DecryptPlayerId(model.PlayerId);
+            if (decryptResult.DecryptedPlayerId == null)
+            {
+                return message;
+            }
+            long decryptplayerId = decryptResult.DecryptedPlayerId.Value;
+
             if (model.FcmnotificationId == 0)
             {
                 Fcmnotification fcmnotification = new Fcmnotification();
                 fcmnotification.FcmnotificationId = model.FcmnotificationId;
                 fcmnotification.DeviceToken= model.DeviceToken;
-                fcmnotification.PlayerId = model.PlayerId;
+                fcmnotification.PlayerId =decryptplayerId;
                 fcmnotification.UserId= model.UserId;
                 fcmnotification.CreatedDate=DateTime.Now;
                 fcmnotification.CreatedBy= (int?)model.UserId;

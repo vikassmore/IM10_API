@@ -1673,7 +1673,7 @@ namespace IM10.BAL.Implementaion
                 comment.Liked = model.Liked;
                 comment.Comment1 = model.Comment1;
                 comment.Shared = false;
-                comment.CreatedBy = model.CreatedBy;
+                comment.CreatedBy = (int?)model.UserId;
                 comment.CreatedDate = DateTime.Now;
                 comment.UpdatedDate = DateTime.Now;
                 comment.IsDeleted = false;
@@ -2976,7 +2976,7 @@ namespace IM10.BAL.Implementaion
                                      join category in context.Categories on content.CategoryId equals category.CategoryId
                                      join contenttype in context.ContentTypes on content.ContentTypeId equals contenttype.ContentTypeId
                                      where content.PlayerId == decryptplayerId && content.IsDeleted == false
-                                     orderby contenttype.ContentTypeId
+                                     && content.ContentTypeId != 2 orderby contenttype.ContentTypeId 
                                      select new ExploreData
                                      {
                                          Id = category.CategoryId == trendingCategoryId ? 1 : 0,
@@ -3008,6 +3008,7 @@ namespace IM10.BAL.Implementaion
             }
 
             finalList.Insert(0, new ExploreData { Id = 1, CategoryName = "Trending", CategoryId = 0, ContentTypeId = 1 });
+            finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Articles", CategoryId = null, ContentTypeId = 2 });
             finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Listing", CategoryId = null, ContentTypeId = null });
             finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Social Brand", CategoryId = null, ContentTypeId = null });
             return finalList;

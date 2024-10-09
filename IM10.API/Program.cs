@@ -1,4 +1,3 @@
-using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Http;
 using IM10.BAL.Interface;

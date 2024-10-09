@@ -6,7 +6,6 @@ using IM10.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +14,6 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Twilio.TwiML.Messaging;
-using Twilio.TwiML.Voice;
 
 namespace IM10.BAL.Implementaion
 {

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System;
 using System.Threading.Tasks;
-using FirebaseAdmin.Messaging;
 using System.Collections.Generic;
 
 namespace IM10.API.Controllers

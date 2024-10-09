@@ -14,8 +14,7 @@ using System.Security.Cryptography;
 using Microsoft.Extensions.Options;
 using System.Runtime;
 using System;
-using FirebaseAdmin.Messaging;
-using FirebaseAdmin;
+
 
 namespace IM10.BAL.Implementaion
 {
@@ -34,7 +33,6 @@ namespace IM10.BAL.Implementaion
         public NotificationService( IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;       
-
         }
 
         public async Task<ResponseModel> SendNotification(string DeviceId, long playerId, long contentId, string title, string description, int contentTypeId, string thumbnail, int categoryId)
@@ -88,8 +86,7 @@ namespace IM10.BAL.Implementaion
                         Console.WriteLine(responseString + json);
                         response.IsSuccess = 1;
                         response.Message = jsonResponse.name;
-                        LogErrorDetails(DeviceId, accessToken, responseString, false, json);
-                       
+                        LogErrorDetails(DeviceId, accessToken, responseString, false, json);                      
                     }
                     else
                     {
@@ -237,8 +234,7 @@ namespace IM10.BAL.Implementaion
 
             }
             catch (Exception ex)
-            {
-                
+            {             
                 throw;
             }
         }

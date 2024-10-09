@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Serilog;
 using StartUpX.Common;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Twilio.TwiML.Messaging;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace IM10.BAL.Implementaion

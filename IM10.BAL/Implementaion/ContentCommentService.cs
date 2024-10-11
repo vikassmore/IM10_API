@@ -88,7 +88,30 @@ namespace IM10.BAL.Implementaion
                         context.Comments.Update(comment);
                         context.SaveChanges();
                     }
-                     
+
+                    if (model.IsPublic.HasValue && model.IsPublic.Value)
+                    {
+                        // If IsPublic is set to true, make all related comments public
+                        var threadComments = context.Comments.Where(c => c.ParentCommentId == commentEntity.CommentId).ToList();
+                        foreach (var threadComment in threadComments)
+                        {
+                            threadComment.IsPublic = true;
+                        }
+                        context.Comments.UpdateRange(threadComments);
+                        context.SaveChanges();
+                    }
+                    else if (model.IsPublic.HasValue && !model.IsPublic.Value)
+                    {
+                        // If IsPublic is set to false, make all related comments private
+                        var threadComments = context.Comments.Where(c => c.ParentCommentId == commentEntity.CommentId).ToList();
+                        foreach (var threadComment in threadComments)
+                        {
+                            threadComment.IsPublic = false;
+                        }
+                        context.Comments.UpdateRange(threadComments);
+                        context.SaveChanges();
+                    }
+
                     var existingcontentEntity = context.ContentDetails.FirstOrDefault(x => x.ContentId == commentreply.ContentId);
                     var existingMapping = context.UserDeviceMappings.Where(x => x.UserId == commentEntity.UserId && x.IsDeleted == false).ToList();
 

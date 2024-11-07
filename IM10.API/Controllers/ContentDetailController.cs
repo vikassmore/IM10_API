@@ -45,7 +45,7 @@ namespace IM10.API.Controllers
         }
 
 
-        private async Task<string> UploadFileToBunnyNetAsync(Stream fileStream, string fileName, long playerId, bool isThumbnail = false)
+        private async Task<string> UploadFileToBunnyNetAsync(Stream fileStream, string fileName, string playerName, bool isThumbnail = false)
         {
             var apiKey = _configuration["BunnyNet:ApiKey"];
             var storageZoneName = _configuration["BunnyNet:StorageZoneName"];
@@ -56,7 +56,7 @@ namespace IM10.API.Controllers
                 throw new InvalidOperationException("BunnyNet configuration is missing.");
             }
 
-            var directoryPath = isThumbnail ? $"Player_{playerId}/Resources/ContentFile/thumbnail" : $"Player_{playerId}/Resources/ContentFile";
+            var directoryPath = isThumbnail ? $"{playerName}/Resources/ContentFile/thumbnail" : $"{playerName}/Resources/ContentFile";
 
             using (var client = new HttpClient())
             {
@@ -227,6 +227,7 @@ namespace IM10.API.Controllers
                     }
 
                     bool productionFlag = bool.Parse(_configuration["ProductionFlag"]);
+                    var playerName = contentDetailService.Getplayername(model.PlayerId);
 
                     if (Request.Form.Files.Count > 0)
                     {
@@ -240,7 +241,7 @@ namespace IM10.API.Controllers
                                 if (productionFlag)
                                 {
 
-                                    string bunnyNetUrl = await UploadFileToBunnyNetAsync(file.OpenReadStream(), uniqueFileName, model.PlayerId, file.Name.StartsWith("thumbnail"));
+                                    string bunnyNetUrl = await UploadFileToBunnyNetAsync(file.OpenReadStream(), uniqueFileName, playerName, file.Name.StartsWith("thumbnail"));
 
                                     if (file.Name == "contentFilePath")
                                     {
@@ -405,10 +406,12 @@ namespace IM10.API.Controllers
                                 var uniqueId = Guid.NewGuid().ToString();
                                 var fileExtension = Path.GetExtension(fileName);
                                 var uniqueFileName = $"{uniqueId}{fileExtension}";
+                                var playerName = contentDetailService.Getplayername(model.PlayerId);
+
                                 if (productionFlag)
                                 {
                                     // Upload to Bunny.net
-                                    string bunnyNetUrl = await UploadFileToBunnyNetAsync(file.OpenReadStream(), uniqueFileName, model.PlayerId, file.Name.StartsWith("thumbnail"));
+                                    string bunnyNetUrl = await UploadFileToBunnyNetAsync(file.OpenReadStream(), uniqueFileName, playerName, file.Name.StartsWith("thumbnail"));
 
                                     if (file.Name == "contentFilePath")
                                     {

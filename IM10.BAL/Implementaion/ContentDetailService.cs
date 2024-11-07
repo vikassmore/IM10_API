@@ -696,6 +696,23 @@ namespace IM10.BAL.Implementaion
             }
         }
 
+
+
+        /// <summary>
+        /// Method is used to get Getplayername by playerid
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <returns></returns>
+        public string Getplayername(long playerid)
+        {
+            var existingdata = context.PlayerDetails.FirstOrDefault(z=>z.PlayerId==playerid);
+            if(existingdata != null)
+            {
+                return $"{existingdata.FirstName} {existingdata.LastName}";
+            }
+            return "Player not found";
+        }
+
         /// <summary>
         /// Method is used to get approvedcontentdetails by id
         /// </summary>

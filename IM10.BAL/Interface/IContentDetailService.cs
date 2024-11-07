@@ -111,5 +111,14 @@ namespace IM10.BAL.Interface
         /// <returns></returns>
         List<ContentTitleModel> GetContentTitlesByPlayerId(long playerId, ref ErrorResponseModel errorResponseModel);
 
+
+
+        /// <summary>
+        /// Method is used to get Getplayername by playerid
+        /// </summary>
+        /// <param name="PlayerId"></param>
+        /// <returns></returns>
+        string Getplayername(long playerid);
+
     }
 }

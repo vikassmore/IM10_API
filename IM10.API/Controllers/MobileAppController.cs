@@ -840,6 +840,36 @@ namespace IM10.API.Controllers
         }
 
 
-        
+
+
+        /// <summary>
+        /// To GetAllPlayerList
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAllPlayerList")]
+        [ProducesResponseType(typeof(PlayerListModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 500)]
+        public async Task<IActionResult> GetAllPlayerList()
+        {
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
+            try
+            {
+                var detailModel = services.GetAllPlayerList(ref errorResponseModel);
+
+                if (detailModel.Count != 0)
+                {
+                    return Ok(detailModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
     }
 }

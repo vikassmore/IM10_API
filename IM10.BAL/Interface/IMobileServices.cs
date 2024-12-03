@@ -183,6 +183,15 @@ namespace IM10.BAL.Interface
         /// <param name="playerId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<ExploreData> GetAllCategoryList(string playerId, long userId, ref ErrorResponseModel errorResponseModel);     
+        List<ExploreData> GetAllCategoryList(string playerId, long userId, ref ErrorResponseModel errorResponseModel);
+
+
+        /// <summary>
+        /// Method is used to get the GetAllPlayerList
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        List<PlayerListModel> GetAllPlayerList(ref ErrorResponseModel errorResponseModel);
     }
 }

@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols;
 using StartUpX.Common;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using static IM10.Models.MobileModel;
 
@@ -3012,6 +3014,42 @@ namespace IM10.BAL.Implementaion
             finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Listing", CategoryId = null, ContentTypeId = null });
             finalList.Add(new ExploreData { Id = nextStateId++, CategoryName = "Social Brand", CategoryId = null, ContentTypeId = null });
             return finalList;
-        }    
+        }
+
+
+        /// <summary>
+        /// Method is used to get the GetAllPlayerList
+        /// </summary>
+        /// <returns></returns>
+        public List<PlayerListModel> GetAllPlayerList(ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel = new ErrorResponseModel();
+            var hostname1 = _configuration.HostName;
+
+            var playerEntity = (from player in context.PlayerDetails join
+                                sports in context.SportMasters on player.SportId equals
+                                sports.SportId where player.IsDeleted == false
+                                select new PlayerListModel
+                                {
+                                    PlayerId =_encryptionService.GetEncryptedId(player.PlayerId.ToString()),
+                                    PlayerName = player.FirstName + "" + player.LastName,
+                                    ProfileImageFileName = player.ProfileImageFileName,
+                                    ProfileImageFilePath=hostname1 + player.ProfileImageFilePath,
+                                    SportName=sports.SportName
+                                }).ToList();
+            var playerListWithId = playerEntity
+                        .Select((item, index) => {
+                            item.Id = index + 1; 
+                            return item;
+                        }).ToList();
+
+            if (playerEntity.Count == 0)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                return null;
+            }
+            return playerEntity.ToList();
+        }
     }
 }

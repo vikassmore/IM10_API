@@ -54,4 +54,17 @@ namespace IM10.Models
     }
 
 
+
+    public class PlayerListModel
+    {
+         public int Id { get; set; }
+         public string PlayerId { get; set; }
+         public string? PlayerName { get; set; }       
+         public string? ProfileImageFileName { get; set; }
+         public string? ProfileImageFilePath { get; set; }
+         public string? SportName { get; set; }
+        //public bool? ProductionFlag { get; set; }
+    }
+
+    
 }

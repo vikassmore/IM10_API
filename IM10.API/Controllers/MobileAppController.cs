@@ -871,5 +871,37 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
+
+        /// <summary>
+        /// To GetCommonAppPlayerList
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetCommonAppPlayerList")]
+        [ProducesResponseType(typeof(ExploreCategoryModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetCommonAppPlayerList()
+        {
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
+            try
+            {
+                var detailModel = services.GetCommonAppPlayerList(ref errorResponseModel);
+
+                if (detailModel.Count != 0)
+                {
+                    return Ok(detailModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
     }
 }

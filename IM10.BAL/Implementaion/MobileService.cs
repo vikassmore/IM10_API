@@ -3051,5 +3051,78 @@ namespace IM10.BAL.Implementaion
             }
             return playerEntity.ToList();
         }
+
+
+        /// <summary>
+        /// Method is used to get the CommonAppPlayerList
+        /// </summary>
+        /// <returns></returns>
+        public List<ExploreCategoryModel> GetCommonAppPlayerList(ref ErrorResponseModel errorResponseModel)
+        {
+            errorResponseModel = new ErrorResponseModel();
+            var hostname1 = _configuration.HostName;
+
+            var playerEntity = (from player in context.PlayerDetails
+                                join sports in context.SportMasters on player.SportId equals sports.SportId
+                                where player.IsDeleted == false && player.PlayerId != 23
+                                select new PlayerListModel
+                                {
+                                    PlayerId = _encryptionService.GetEncryptedId(player.PlayerId.ToString()),
+                                    PlayerName = player.FirstName + " " + player.LastName,
+                                    ProfileImageFileName = player.ProfileImageFileName,
+                                    ProfileImageFilePath = hostname1 + player.ProfileImageFilePath,
+                                    SportName = sports.SportName
+                                }).ToList();
+
+            var exploreCategories = new List<ExploreCategoryModel>();
+            exploreCategories.Add(new ExploreCategoryModel
+            {
+                Id = "1",
+                PlayerId = "null",
+                CategoryName = "All Players",
+                Thumbnail = "null",
+                Sport = "null"
+            });
+
+            if (playerEntity.Count == 0)
+            {
+                errorResponseModel.StatusCode = HttpStatusCode.NotFound;
+                errorResponseModel.Message = GlobalConstants.NotFoundMessage;
+                return null;
+            }
+            for (int i = 0; i < playerEntity.Count; i++)
+            {
+                var player = playerEntity[i];
+
+                exploreCategories.Add(new ExploreCategoryModel
+                {
+                    Id = (i + 2).ToString(), 
+                    PlayerId = player.PlayerId,
+                    CategoryName = player.PlayerName,
+                    Thumbnail = player.ProfileImageFilePath,
+                    Sport = player.SportName
+                });
+            }
+
+            exploreCategories.Add(new ExploreCategoryModel
+            {
+                Id = (playerEntity.Count + 2).ToString(),
+                PlayerId = "null",
+                CategoryName = "Listing",
+                Thumbnail = "null",
+                Sport = "null"
+            });
+
+            exploreCategories.Add(new ExploreCategoryModel
+            {
+                Id = (playerEntity.Count + 3).ToString(),
+                PlayerId = "null",
+                CategoryName = "Social Brand",
+                Thumbnail = "null",
+                Sport = "null"
+            });
+            return exploreCategories;
+        }
+
     }
 }

@@ -66,5 +66,13 @@ namespace IM10.Models
         //public bool? ProductionFlag { get; set; }
     }
 
-    
+    public class ExploreCategoryModel
+    {
+        public string Id { get; set; }
+        public string PlayerId { get; set; }
+        public string CategoryName { get; set; }
+        public string Thumbnail { get; set; }
+        public string Sport { get; set; }
+    }
+
 }

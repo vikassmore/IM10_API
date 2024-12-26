@@ -1,0 +1,12 @@
+Log ID: 2
+Log Type: Error
+Created Date: 01-08-2024 11:16:47
+
+User ID: 2
+Email ID: /rKBhh4CtF2bklfnEeCwTdtzBeIzbxceCOqmNoQWVB0=
+Full Name: Dipali Varute
+
+Log Source: DeleteAdvContentMapping
+Error: Exception occurred in DeleteAdvContentMapping method
+Description: Object reference not set to an instance of an object.
+Stack Trace: Inner Exception Stack Trace    at IM10.BAL.Implementaion.AdvContentDetailService.DeleteAdvContentDetail(Int64 AdvertiseContentId, ErrorResponseModel& errorResponseModel) in D:\IM10NewRepository\IM10.BAL\Implementaion\AdvContentDetailService.cs:line 249

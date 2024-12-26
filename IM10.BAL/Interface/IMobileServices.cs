@@ -193,5 +193,13 @@ namespace IM10.BAL.Interface
         /// <param name=""></param>
         /// <returns></returns>
         List<PlayerListModel> GetAllPlayerList(ref ErrorResponseModel errorResponseModel);
+
+        /// <summary>
+        /// Method is used to get the GetCommonAppPlayerList
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        List<ExploreCategoryModel> GetCommonAppPlayerList(ref ErrorResponseModel errorResponseModel);
     }
 }

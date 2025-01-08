@@ -3028,17 +3028,18 @@ namespace IM10.BAL.Implementaion
 
             var playerEntity = (from player in context.PlayerDetails join
                                 sports in context.SportMasters on player.SportId equals
-                                sports.SportId where player.IsDeleted == false
+                                sports.SportId where player.IsDeleted == false && player.PlayerId != 23
                                 select new PlayerListModel
                                 {
                                     PlayerId =_encryptionService.GetEncryptedId(player.PlayerId.ToString()),
-                                    PlayerName = player.FirstName + "" + player.LastName,
+                                    PlayerName = player.FirstName + " " + player.LastName,
                                     ProfileImageFileName = player.ProfileImageFileName,
                                     ProfileImageFilePath=hostname1 + player.ProfileImageFilePath,
                                     SportName=sports.SportName
                                 }).ToList();
             var playerListWithId = playerEntity
-                        .Select((item, index) => {
+                        .Select((item, index) =>
+                        {
                             item.Id = index + 1; 
                             return item;
                         }).ToList();

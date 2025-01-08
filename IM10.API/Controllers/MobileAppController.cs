@@ -903,5 +903,45 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
+
+
+
+
+
+
+        /// <summary>
+        /// Get the search data by playerId and title
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="searchData"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("GetCommonAppSearchDetailByplayerId/{playerId}/{searchData}/{userId}")]
+        [ProducesResponseType(typeof(MobileSearchDataModel), 200)]
+        [ProducesResponseType(typeof(string), 404)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(string), 401)]
+        [ProducesResponseType(typeof(string), 500)]
+        public IActionResult GetCommonAppSearchDetailByplayerId(string playerId, string searchData, long userId)
+        {
+            ErrorResponseModel errorResponseModel = new ErrorResponseModel();
+            try
+            {
+
+                var contentdetailModel = services.GetCommonAppSearchDetailByplayerId(playerId, searchData, userId, ref errorResponseModel);
+
+                if (contentdetailModel != null)
+                {
+                    return Ok(contentdetailModel);
+                }
+
+                return ReturnErrorResponse(errorResponseModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
+            }
+        }
+
     }
 }

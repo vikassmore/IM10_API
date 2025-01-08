@@ -201,5 +201,18 @@ namespace IM10.BAL.Interface
         /// <param name=""></param>
         /// <returns></returns>
         List<ExploreCategoryModel> GetCommonAppPlayerList(ref ErrorResponseModel errorResponseModel);
+
+
+
+
+        /// <summary>
+        /// Method is used to get the serach data by playerId and title
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="searchData"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        MobileSearchDataModel GetCommonAppSearchDetailByplayerId(string playerId, string searchData, long userId, ref ErrorResponseModel errorResponseModel);
+
     }
 }

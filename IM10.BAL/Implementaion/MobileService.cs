@@ -3352,6 +3352,7 @@ namespace IM10.BAL.Implementaion
                     topModel.ContentTypeId = contentVideo.ContentTypeId;
                     topModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
                     topModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
+                    topModel.PlayerId =_encryptionService.GetEncryptedId(contentVideo.PlayerId.ToString());
                     var publicEntity = context.Comments.Where(x => x.ContentId == item.ContentId.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                     if (userIsLoggedIn == true)
@@ -3447,6 +3448,7 @@ namespace IM10.BAL.Implementaion
                         articleModel.ContentTypeId = contentArticle.ContentTypeId;
                         articleModel.LikedNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.IsDeleted == false).Select(x => x.MostLiked).Count();
                         articleModel.FavouriteNo = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.IsDeleted == false).Select(x => x.Favourite).Count();
+                        articleModel.PlayerId = _encryptionService.GetEncryptedId(contentArticle.PlayerId.ToString());
                         var publicEntity = context.Comments.Where(x => x.ContentId == item1.ContentId && x.IsPublic == true && x.IsDeleted == false).Select(x => x.CommentId).ToList();
 
                         if (userIsLoggedIn == true)

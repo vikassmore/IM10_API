@@ -96,6 +96,7 @@ namespace IM10.Models
         public bool Favourite { get; set; }
         public int AutoIndex { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public string? PlayerId { get; set; }
         public List<ContentMobileModel> contentMobileModels { get; set; }
     }
     public class MobileArticleContentData
@@ -141,6 +142,7 @@ namespace IM10.Models
         public bool Favourite { get; set; }
         public int CategoryAutoIndex { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public string? PlayerId {  get; set; }
     }
     public class ListingLogoDetailsModel
     {

@@ -203,8 +203,6 @@ namespace IM10.BAL.Interface
         List<ExploreCategoryModel> GetCommonAppPlayerList(ref ErrorResponseModel errorResponseModel);
 
 
-
-
         /// <summary>
         /// Method is used to get the serach data by playerId and title
         /// </summary>

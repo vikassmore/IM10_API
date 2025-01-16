@@ -840,8 +840,6 @@ namespace IM10.API.Controllers
         }
 
 
-
-
         /// <summary>
         /// To GetAllPlayerList
         /// </summary>
@@ -903,10 +901,6 @@ namespace IM10.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong!");
             }
         }
-
-
-
-
 
 
         /// <summary>

@@ -3126,15 +3126,6 @@ namespace IM10.BAL.Implementaion
         }
 
 
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Method is used to get the search data by playerId and title
         /// </summary>

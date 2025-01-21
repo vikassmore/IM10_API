@@ -6,12 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace IM10.BAL.Implementaion
 {
     public class EncryptionService:IEncryptionService
     {
-        private string key = "IM10$#^@";
+        private string key ="IM10$#^@";
         private string iv = "IM10$#^@";
 
 
@@ -38,34 +39,56 @@ namespace IM10.BAL.Implementaion
         /// <returns></returns>
         public string GetDecryotedId(string Id)
         {
+            string decodedId;
             if (string.IsNullOrEmpty(Id))
             {
                 throw new ArgumentException("Player ID cannot be null or empty", nameof(Id));
             }
-            string decryptedId = EncryptionHelper.DecryptData(Id, key, iv);
+            if (Id.Contains("%"))
+            {
+                decodedId = HttpUtility.UrlDecode(Id);
+            }
+            else
+            {
+                decodedId = Id;
+            }
+            string decryptedId = EncryptionHelper.DecryptData(decodedId, key, iv);
             return decryptedId;
         }
 
 
         public (long? DecryptedPlayerId, HttpStatusCode StatusCode, string Message) DecryptPlayerId(string Id)
         {
-
             long decryptedPlayerId;
             try
             {
-                if (IsValidBase64String(Id))
+                if (string.IsNullOrWhiteSpace(Id))
                 {
-                    string decryptedPlayerIdString = GetDecryotedId(Id);
-                    if (!long.TryParse(decryptedPlayerIdString, out decryptedPlayerId))
-                    {
-                        return (null, HttpStatusCode.BadRequest, "Invalid Player ID.");
-                    }
-                    return (decryptedPlayerId, HttpStatusCode.OK, null);
+                    return (null, HttpStatusCode.BadRequest, "Player ID cannot be null or empty.");
                 }
-                else
+
+                // Trim and validate the Base64 string
+                Id = Id.Trim();
+                if (!IsValidBase64String(Id))
                 {
                     return (null, HttpStatusCode.BadRequest, "Player ID is not a valid Base-64 string.");
                 }
+
+                // Handle Base64 padding if necessary
+                int mod4 = Id.Length % 4;
+                if (mod4 > 0)
+                {
+                    Id += new string('=', 4 - mod4);
+                }
+
+                // Decrypt the Player ID
+                string decryptedPlayerIdString = GetDecryotedId(Id);
+                if (string.IsNullOrEmpty(decryptedPlayerIdString) || !long.TryParse(decryptedPlayerIdString, out decryptedPlayerId))
+                {
+                    return (null, HttpStatusCode.BadRequest, "Invalid Player ID.");
+                }
+
+                return (decryptedPlayerId, HttpStatusCode.OK, null);
             }
             catch (Exception ex)
             {
@@ -74,12 +97,12 @@ namespace IM10.BAL.Implementaion
             }
         }
 
+
         public static bool IsValidBase64String(string base64String)
         {
-            if (string.IsNullOrEmpty(base64String) || base64String.Length % 4 != 0)
-            {
+            if (string.IsNullOrWhiteSpace(base64String) || base64String.Length % 4 != 0)
                 return false;
-            }
+
             try
             {
                 Convert.FromBase64String(base64String);
@@ -90,5 +113,6 @@ namespace IM10.BAL.Implementaion
                 return false;
             }
         }
+
     }
 }

@@ -30,7 +30,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetEncryptedId(string Id)
+        public IActionResult GetEncryptedId(string Id)
         {
             ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
@@ -64,7 +64,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetDecryotedId(string Id)
+        public IActionResult GetDecryotedId(string Id)
         {
             ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try

@@ -819,7 +819,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetAllCategoryList(string playerId, long userId)
+        public IActionResult GetAllCategoryList(string playerId, long userId)
         {
             ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try
@@ -850,7 +850,7 @@ namespace IM10.API.Controllers
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 401)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetAllPlayerList()
+        public IActionResult GetAllPlayerList()
         {
             ErrorResponseModel errorResponseModel = new ErrorResponseModel();
             try

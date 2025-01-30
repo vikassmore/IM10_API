@@ -20,6 +20,7 @@ namespace IM10.Models
         public int? ContentSequence { get; set; }
         public int ContentTypeId { get; set; }
         public string? Description { get; set; }
+        public int? AutoIndex { get; set; }
 
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
@@ -94,7 +95,7 @@ namespace IM10.Models
         public long ContentId { get; set; }
         public bool Liked { get; set; }
         public bool Favourite { get; set; }
-        public int AutoIndex { get; set; }
+        public int? AutoIndex { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? PlayerId { get; set; }
         public List<ContentMobileModel> contentMobileModels { get; set; }
@@ -140,7 +141,7 @@ namespace IM10.Models
         public int CommentCount { get; set; }
         public bool Liked { get; set; }
         public bool Favourite { get; set; }
-        public int CategoryAutoIndex { get; set; }
+        public int? CategoryAutoIndex { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? PlayerId {  get; set; }
     }

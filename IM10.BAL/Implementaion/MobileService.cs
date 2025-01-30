@@ -217,35 +217,17 @@ namespace IM10.BAL.Implementaion
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
+                topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                 topList.Add(topModel);
 
             }
-            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent = new List<MobileContentData>();
-
-            foreach (var group in groupedContent)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.AutoIndex = index;
-                    indexedContent.Add(content);
-                    index++;
-                }
-            }
+           
             if (tredingEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            return indexedContent;
+            return topList;
         }
 
 
@@ -409,31 +391,12 @@ namespace IM10.BAL.Implementaion
                         topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         topModel.CreatedDate = contentVideo.CreatedDate;
+                        topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                         modelList.Add(topModel);
                         modelList = modelList.OrderByDescending(x => x.CreatedDate).ToList();
                     }
-                }
-                var groupedContent = modelList.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-                var indexedContent = new List<MobileContentData>();
-
-                foreach (var group in groupedContent)
-                {
-                    int index = 0;
-                    foreach (var content in group.Contents)
-                    {
-                        content.AutoIndex = index;
-                        indexedContent.Add(content);
-                        index++;
-                    }
-                }
-
-                categoryModel.mobileContentDatas = indexedContent;
+                }  
+                categoryModel.mobileContentDatas = modelList;
                 if (modelList.Any())
                 {
                     mobileVideoCategoryData.Add(categoryModel);
@@ -612,27 +575,8 @@ namespace IM10.BAL.Implementaion
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
+                    topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                     topList.Add(topModel);
-                }
-            }
-            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent = new List<MobileContentData>();
-
-            foreach (var group in groupedContent)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.AutoIndex = index;
-                    indexedContent.Add(content);
-                    index++;
                 }
             }
             if (categoryEnitityList.Count == 0)
@@ -640,7 +584,7 @@ namespace IM10.BAL.Implementaion
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            videoModel.mobileContentDatas = indexedContent;
+            videoModel.mobileContentDatas = topList;
             return videoModel;
         }
 
@@ -804,7 +748,7 @@ namespace IM10.BAL.Implementaion
                 CommentCount = CommentCount,
                 FavouriteNo = Favourite,
                 Favourite = articleEntity.Favourite,
-                ContentSequence = articleEntity.ContentSequence,
+                AutoIndex = articleEntity.ContentSequence,
                 ContentTypeId = articleEntity.ContentTypeId,
                 CreatedBy = articleEntity.CreatedBy,
                 CreatedDate = articleEntity.CreatedDate,
@@ -907,30 +851,12 @@ namespace IM10.BAL.Implementaion
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         articleModel.CreatedDate = contentArticle.CreatedDate;
+                        articleModel.CategoryAutoIndex = context.ContentFlags.Where(x => x.ContentId == item1.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                         categoryArticleList.Add(articleModel);
                     }
                 }
-                var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
-                var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
-                       .Select(g => new
-                       {
-                           Category = g.Key,
-                           Contents = g.ToList()
-                       }).ToList();
-
-                var indexedContent1 = new List<CategoryArticleModel>();
-
-                foreach (var group in groupedContent1)
-                {
-                    int index = 0;
-                    foreach (var content in group.Contents)
-                    {
-                        content.CategoryAutoIndex = index;
-                        indexedContent1.Add(content);
-                        index++;
-                    }
-                }
-                categoryModel.categoryArticleModels = indexedContent1;
+                
+                categoryModel.categoryArticleModels = categoryArticleList;
                 mobileArticleList.Add(categoryModel);
             }
             if (categoryEnitityList.Count == 0)
@@ -1025,36 +951,18 @@ namespace IM10.BAL.Implementaion
                     // articleModel.CommentCount = context.Comments.Where(x => x.ContentId == item.ContentId && x.IsDeleted==false).Select(x => x.CommentId).Count();
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
-                    articleModel.CreatedDate = contentArticle.CreatedDate;
+                    articleModel.CreatedDate = contentArticle.CreatedDate; 
+                    articleModel.CategoryAutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                     categoryArticleList.Add(articleModel);
                 }
             }
-            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent1 = new List<CategoryArticleModel>();
-
-            foreach (var group in groupedContent1)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.CategoryAutoIndex = index;
-                    indexedContent1.Add(content);
-                    index++;
-                }
-            }
+            
             if (categoryEnitityList.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
                 errorResponseModel.Message = GlobalConstants.NotFoundMessage;
             }
-            categoryModel.categoryArticleModels = indexedContent1;
+            categoryModel.categoryArticleModels = categoryArticleList;
             return categoryModel;
         }
 
@@ -1530,33 +1438,13 @@ namespace IM10.BAL.Implementaion
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
-
+                    topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                     topList.Add(topModel);
                 }
 
             }
-            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent = new List<MobileContentData>();
-
-            foreach (var group in groupedContent)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.AutoIndex = index;
-                    indexedContent.Add(content);
-                    index++;
-                }
-            }
-
-            mobileSearchDataModel.mobileContentDatas = indexedContent;
+            
+            mobileSearchDataModel.mobileContentDatas = topList;
 
             List<MobileArticleCategoryData> mobileArticleList = new List<MobileArticleCategoryData>();
             var categoryEnitityList = (from content in context.ContentDetails
@@ -1626,31 +1514,13 @@ namespace IM10.BAL.Implementaion
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         articleModel.CreatedDate = contentArticle.CreatedDate;
+                        articleModel.CategoryAutoIndex = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                         categoryArticleList.Add(articleModel);
                     }
                 }
             }
-            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent1 = new List<CategoryArticleModel>();
-
-            foreach (var group in groupedContent1)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.CategoryAutoIndex = index;
-                    indexedContent1.Add(content);
-                    index++;
-                }
-            }
-            mobileSearchDataModel.categoryArticleModels = indexedContent1;
+           
+            mobileSearchDataModel.categoryArticleModels = categoryArticleList;
             return mobileSearchDataModel;
         }
 
@@ -2109,6 +1979,7 @@ namespace IM10.BAL.Implementaion
                 contentFlag.IsDeleted = false;
                 contentFlag.MostLiked = model.MostLiked;
                 contentFlag.Favourite = model.Favourite;
+                contentFlag.ContentSequence = model.ContentSequence;
                 context.ContentFlags.Add(contentFlag);
                 context.SaveChanges();
                 message = GlobalConstants.SaveMessage;
@@ -2127,6 +1998,7 @@ namespace IM10.BAL.Implementaion
                     contentFlagEntity.UserId = model.UserId;
                     contentFlagEntity.MostLiked = model.MostLiked;
                     contentFlagEntity.Favourite = model.Favourite;
+                    contentFlagEntity.ContentSequence = model.ContentSequence;
                     context.ContentFlags.Update(contentFlagEntity);
                     context.SaveChanges();
                     message = GlobalConstants.SaveMessage;
@@ -2395,31 +2267,11 @@ namespace IM10.BAL.Implementaion
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
+                topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                 topList.Add(topModel);
             }
-
-            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent = new List<MobileContentData>();
-
-            foreach (var group in groupedContent)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.AutoIndex = index;
-                    indexedContent.Add(content);
-                    index++;
-                }
-            }
-
-            playerMobileLikeFavouriteData.videoContentData = indexedContent;
+       
+            playerMobileLikeFavouriteData.videoContentData = topList;
 
             var likedArticleEntity = (from flag in context.ContentFlags
                                       join player in context.PlayerDetails on flag.PlayerId equals player.PlayerId
@@ -2475,30 +2327,12 @@ namespace IM10.BAL.Implementaion
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     articleModel.CreatedDate = contentArticle.CreatedDate;
+                    articleModel.CategoryAutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                     categoryArticleList.Add(articleModel);
                 }
             }
-            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent1 = new List<CategoryArticleModel>();
-
-            foreach (var group in groupedContent1)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.CategoryAutoIndex = index;
-                    indexedContent1.Add(content);
-                    index++;
-                }
-            }
-            playerMobileLikeFavouriteData.articleContentData = indexedContent1;
+            
+            playerMobileLikeFavouriteData.articleContentData = categoryArticleList;
             if (likedVideoEntity.Count == 0 && likedArticleEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -2650,30 +2484,11 @@ namespace IM10.BAL.Implementaion
                 topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                 topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                 topModel.CreatedDate = contentVideo.CreatedDate;
+                topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                 topList.Add(topModel);
             }
-            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent = new List<MobileContentData>();
-
-            foreach (var group in groupedContent)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.AutoIndex = index;
-                    indexedContent.Add(content);
-                    index++;
-                }
-            }
-
-            playerMobileLikeFavouriteData.videoContentData = indexedContent;
+            
+            playerMobileLikeFavouriteData.videoContentData = topList;
 
             var likedArticleEntity = (from flag in context.ContentFlags
                                       join player in context.PlayerDetails on flag.PlayerId equals player.PlayerId
@@ -2728,30 +2543,12 @@ namespace IM10.BAL.Implementaion
                     articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.MostLiked == true && x.UserId == userId).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.Favourite == true && x.UserId == userId).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     articleModel.CreatedDate = contentArticle.CreatedDate;
+                    articleModel.CategoryAutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                     categoryArticleList.Add(articleModel);
                 }
             }
-            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent1 = new List<CategoryArticleModel>();
-
-            foreach (var group in groupedContent1)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.CategoryAutoIndex = index;
-                    indexedContent1.Add(content);
-                    index++;
-                }
-            }
-            playerMobileLikeFavouriteData.articleContentData = indexedContent1;
+            
+            playerMobileLikeFavouriteData.articleContentData = categoryArticleList;
             if (likedVideoEntity.Count == 0 && likedArticleEntity.Count == 0)
             {
                 errorResponseModel.StatusCode = HttpStatusCode.NotFound;
@@ -3362,33 +3159,13 @@ namespace IM10.BAL.Implementaion
                     topModel.Liked = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                     topModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                     topModel.CreatedDate = contentVideo.CreatedDate;
-
+                    topModel.AutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                     topList.Add(topModel);
                 }
 
             }
-            var newtoplist = topList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent = newtoplist.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent = new List<MobileContentData>();
-
-            foreach (var group in groupedContent)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.AutoIndex = index;
-                    indexedContent.Add(content);
-                    index++;
-                }
-            }
-
-            mobileSearchDataModel.mobileContentDatas = indexedContent;
+            
+            mobileSearchDataModel.mobileContentDatas = topList;
 
             List<MobileArticleCategoryData> mobileArticleList = new List<MobileArticleCategoryData>();
             var categoryEnitityList = (from content in context.ContentDetails
@@ -3458,31 +3235,13 @@ namespace IM10.BAL.Implementaion
                         articleModel.Liked = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.MostLiked == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.MostLiked).Distinct().Count() >= 1 ? true : false;
                         articleModel.Favourite = context.ContentFlags.Where(x => x.ContentId == item1.ContentId && x.Favourite == true && x.UserId == userId && x.IsDeleted == false).Select(x => x.Favourite).Distinct().Count() >= 1 ? true : false;
                         articleModel.CreatedDate = contentArticle.CreatedDate;
+                        articleModel.CategoryAutoIndex = context.ContentFlags.Where(x => x.ContentId == item.ContentId && x.UserId == userId && x.IsDeleted == false).Select(x => x.ContentSequence).FirstOrDefault();
                         categoryArticleList.Add(articleModel);
                     }
                 }
             }
-            var newtoplist1 = categoryArticleList.OrderByDescending(z => z.CreatedDate).ToList();
-            var groupedContent1 = newtoplist1.GroupBy(c => c.CategoryId)
-                   .Select(g => new
-                   {
-                       Category = g.Key,
-                       Contents = g.ToList()
-                   }).ToList();
-
-            var indexedContent1 = new List<CategoryArticleModel>();
-
-            foreach (var group in groupedContent1)
-            {
-                int index = 0;
-                foreach (var content in group.Contents)
-                {
-                    content.CategoryAutoIndex = index;
-                    indexedContent1.Add(content);
-                    index++;
-                }
-            }
-            mobileSearchDataModel.categoryArticleModels = indexedContent1;
+           
+            mobileSearchDataModel.categoryArticleModels = categoryArticleList;
             return mobileSearchDataModel;
         }
 

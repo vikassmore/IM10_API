@@ -10,7 +10,8 @@ using System.Web;
 
 namespace IM10.BAL.Implementaion
 {
-    public class EncryptionService:IEncryptionService
+
+    public class EncryptionService : IEncryptionService
     {
         private string key ="IM10$#^@";
         private string iv = "IM10$#^@";
@@ -67,21 +68,23 @@ namespace IM10.BAL.Implementaion
                     return (null, HttpStatusCode.BadRequest, "Player ID cannot be null or empty.");
                 }
 
-                // Trim and validate the Base64 string
+                if (Id.Contains("%"))
+                {
+                    Id = HttpUtility.UrlDecode(Id);
+                }
+
                 Id = Id.Trim();
                 if (!IsValidBase64String(Id))
                 {
-                    return (null, HttpStatusCode.BadRequest, "Player ID is not a valid Base-64 string.");
+                  return (null, HttpStatusCode.BadRequest, "Player ID is not a valid Base-64 string.");
                 }
 
-                // Handle Base64 padding if necessary
                 int mod4 = Id.Length % 4;
                 if (mod4 > 0)
                 {
                     Id += new string('=', 4 - mod4);
                 }
 
-                // Decrypt the Player ID
                 string decryptedPlayerIdString = GetDecryotedId(Id);
                 if (string.IsNullOrEmpty(decryptedPlayerIdString) || !long.TryParse(decryptedPlayerIdString, out decryptedPlayerId))
                 {
@@ -96,7 +99,6 @@ namespace IM10.BAL.Implementaion
                 return (null, HttpStatusCode.InternalServerError, "Error decrypting Player ID.");
             }
         }
-
 
         public static bool IsValidBase64String(string base64String)
         {
@@ -113,6 +115,5 @@ namespace IM10.BAL.Implementaion
                 return false;
             }
         }
-
     }
 }

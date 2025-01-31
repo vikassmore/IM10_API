@@ -65,7 +65,7 @@ namespace IM10.BAL.Interface
         /// <param name="contentId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        ContentFlagModel GetMobileArticleView(long contentId, long userId, ref ErrorResponseModel errorResponseModel);
+        ArticleviewModel GetMobileArticleView(long contentId, long userId, ref ErrorResponseModel errorResponseModel);
 
         /// <summary>
         /// Method is used to get ListingDetail by playerId

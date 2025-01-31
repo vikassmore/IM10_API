@@ -210,4 +210,23 @@ namespace IM10.Models
         public string? CategoryName { get; set; }
         public int? ContentTypeId { get; set; }
     }
+
+
+    public class ArticleviewModel
+    {
+        public long ContentId { get; set; }
+        public string? ContentFileName { get; set; }
+        public string? ContentFilePath { get; set; }
+        public string? ContentTitle { get; set; }
+        public string? Description { get; set; }
+        public int? ViewNo { get; set; }
+        public int? LikedNo { get; set; }
+        public int? FavouriteNo { get; set; }
+        public int? CommentCount { get; set; }
+        public bool? MostLiked { get; set; }
+        public bool? Favourite { get; set; }
+        public int ContentTypeId { get; set; }
+        public DateTime? CreatedDate { get; set; }
+    }
+   
 }
